@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.Properties;
 
 import com.milk.common.model.vo.PageInfo;
+import com.milk.notice.model.vo.Attachment;
 import com.milk.notice.model.vo.Notice;
 
 public class NoticeDao {
@@ -106,6 +107,41 @@ public class NoticeDao {
 			close(pstmt);
 		}
 		return result;
+		
+	}
+	
+	public int insertNotice(Connection conn,Notice n) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String sql= prop.getProperty("insertNotice");
+		
+		try {
+			pstmt= conn.prepareStatement(sql);
+			pstmt.setString(1, n.getNoticeTitle());
+			pstmt.setString(2, n.getNoticeContent());
+			pstmt.setInt(3, n.getWriterNo());
+			
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}
+		return result;
+
+		
+	}
+	public int insertAttachment(Connection conn , Attachment at) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String sql= prop.getProperty("insertAttachment");
+		
+		try {
+			pstmt=conn.prepareStatement(sql);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
 		
 	}
 

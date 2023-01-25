@@ -46,4 +46,24 @@
 	   ,?
 	    )
 	</entry>
+	<entry key="insertAttachment">
+	INSERT 
+	    INTO ATTACHMENT
+	    (
+	    FILE_NO
+	   ,REF_NO
+	   ,CHANGE_NAME
+	   ,FILE_PATH
+	   ,FILE_TYPE
+	    )
+	    VALUES
+	    (
+	    SEQ_ATNO.NEXTVAL
+	   ,SEQ_NNO.CURRVAL
+	   ,?
+	   ,?
+	   ,?
+	   ,?
+	    )
+	</entry>
 </properties>
