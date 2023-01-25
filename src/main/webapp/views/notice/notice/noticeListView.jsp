@@ -1,5 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@page import="com.milk.notice.model.vo.Notice, java.util.ArrayList , com.milk.common.model.vo.PageInfo" %>
+<% 
+	ArrayList<Notice>list= (ArrayList<Notice>)request.getAttribute("list");
+	PageInfo pi = (PageInfo)request.getAttribute("pi");
+	String contextPath= request.getContextPath();
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -35,23 +41,30 @@
                     <th width="100">조회</th>
                 </tr>
                 <!--공지사항 없을경우-->
+              	<%if(list.isEmpty()){ %>
                 <tr>
                     <td colspan="5">공지사항이 없습니다.</td>
                 </tr>
+                <%}else{ %>
                 <!--공지사항 있을경우-->
+                <%for(Notice n:list){ %>
                 <tr>
-                    <td>1</td>
-                    <td>제목자리</td>
-                    <td>2022.02.01</td>
-                    <td>관리자</td>
-                    <td>12</td>
+                    <td><%=n.getNoticeNo()%></td>
+                    <td><%=n.getNoticeTitle() %></td>
+                    <td><%=n.getEnrollDate() %></td>
+                    <td><%=n.getManagerName() %></td>
+                    <td><%=n.getCount() %></td>
                 </tr>
+                <%} %>
+                <%} %>
             </table>
             <br>
             <div class="paging-area" >
-                <button>&lt;</button>
-                <button>1</button>
-                <button>&gt;</button>
+                <button onclick="location.href='<%=contextPath%>/list.no?cpage=<%=pi.getCurrentPage()-1%>';">&lt;</button>
+                <%for(int p= pi.getStartPage(); p<pi.getEndPage(); p++){ %>
+                <button onclick="location.href='<%=contextPath%>/list.no?cpage=<%=p%>';"><%=p %></button>
+                <%} %>
+                <button onclick="location.href='<%=contextPath%>/list.no?cpage=<%=pi.getCurrentPage()+1%>';">&gt;</button>
             </div>
 
         </div>
