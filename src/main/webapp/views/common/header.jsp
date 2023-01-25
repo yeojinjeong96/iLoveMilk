@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<% String contextPath = request.getContextPath(); %>
+    pageEncoding="UTF-8" import="com.milk.member.model.vo.Member" %>
+<% String contextPath = request.getContextPath(); 
+Member loginMember = (Member)session.getAttribute("loginMember");
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -73,14 +75,16 @@
             <div class="header-4">
                 <div class="header-4a" align="right">
                 
-                    <!-- 로그인 전 -->
-                    <a href="" class="text-secondary">로그인</a>
-                    <a href="" class="text-secondary">회원가입</a>
-                    <a href="<%=contextPath%>/list.sv" class="text-secondary">고객센터</a>
-
-                    <!-- 로그인 후 -->
-                    <!-- <a href="" class="text-secondary">로그아웃</a>
-                    <a href="" class="text-secondary">고객센터</a> -->
+					<% if(loginMember ==null) { %>
+	                    <!-- 로그인 전 -->
+	                    <a href="<%= contextPath %>/loginpage.me" class="text-secondary">로그인</a>
+	                    <a href="" class="text-secondary">회원가입</a>
+	                    <a href="" class="text-secondary">고객센터</a>
+					<% }else { %>
+	                    <!-- 로그인 후 -->
+	                    <a href="" class="text-secondary">로그아웃</a>
+	                    <a href="" class="text-secondary">고객센터</a> 
+                    <% } %>
                     
                 </div>
                 <div class="header-4btn" align="right">
