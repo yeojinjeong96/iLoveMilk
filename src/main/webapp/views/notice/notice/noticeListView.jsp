@@ -62,20 +62,25 @@
             </table>
             <br>
             <div class="paging-area" >
+            <%if(pi.getCurrentPage()!=1){ %>
                 <button onclick="location.href='<%=contextPath%>/list.no?cpage=<%=pi.getCurrentPage()-1%>';">&lt;</button>
-                <%for(int p= pi.getStartPage(); p<pi.getEndPage(); p++){ %>
+            <%} %>   
+            <%for(int p= pi.getStartPage(); p<pi.getEndPage(); p++){ %>
                 <button onclick="location.href='<%=contextPath%>/list.no?cpage=<%=p%>';"><%=p %></button>
-                <%} %>
+            <%} %>
+            <%if(pi.getCurrentPage()!=pi.getEndPage()){ %>
                 <button onclick="location.href='<%=contextPath%>/list.no?cpage=<%=pi.getCurrentPage()+1%>';">&gt;</button>
+            <%} %>
             </div>
+            
 
         </div>
 
     </div>
 	<script>
 		$(function(){
-			%("#notice-list>tr").click(function(){
-				location.href=<%=contextPath%>"/detail.no?no="+ $(this).children().eq(0).text();
+			$("#notice-list>tr").click(function(){
+				location.href='<%=contextPath%>/detail.no?no='+ $(this).children().eq(0).text();
 			})
 		})
 	</script>

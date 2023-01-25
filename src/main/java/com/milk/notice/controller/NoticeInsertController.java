@@ -44,6 +44,7 @@ public class NoticeInsertController extends HttpServlet {
 			
 			if(multiRequest.getOriginalFileName("upfile")!=null) {
 				
+				
 			}
 		}
 		

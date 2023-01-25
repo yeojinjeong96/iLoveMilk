@@ -27,4 +27,17 @@ public class NoticeService {
 		ArrayList<Notice>list= new NoticeDao().selectNoticeList(conn,pi);
 		return list;
 	}
+	
+	public int increaseCount(int noticeNo) {
+		Connection conn = getConnection();
+		int result= new NoticeDao().increaseCount(conn, noticeNo);
+		
+		if(result>0) {
+			commit(conn);
+		}else {
+			rollback(conn);
+		}
+		close(conn);
+		return result;
+	}
 }

@@ -1,11 +1,16 @@
 package com.milk.notice.controller;
 
 import java.io.IOException;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import com.milk.notice.model.service.NoticeService;
+import com.milk.notice.model.vo.Attachment;
+import com.milk.notice.model.vo.Notice;
 
 /**
  * Servlet implementation class NoticeDetailViewController
@@ -26,7 +31,16 @@ public class NoticeDetailViewController extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		request.getRequestDispatcher("views/notice/notice")
+		int noticeNo= Integer.parseInt(request.getParameter("no"));
+		
+		int result= new NoticeService().increaseCount(noticeNo);
+		if(result>0) {
+			Notice b= new NoticeService().selectNotice(noticeNo);
+			Attachment at= new NoticeService().selectAttachment(noticeNo);
+		}else {
+			
+		}
+		request.getRequestDispatcher("views/notice/noticeDetailView.jsp").forward(request, response);
 	}
 
 	/**

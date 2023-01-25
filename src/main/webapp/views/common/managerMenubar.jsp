@@ -53,9 +53,9 @@
                 </div><br>
                 <div>
                     <div class="text-primary menu">고객센터</div>
-                    <a href="">1:1문의관리</a><br>
-                    <a href="">공지사항관리</a><br>
-                    <a href="">FAQ관리</a>
+                    <a href="<%=request.getContextPath%>">1:1문의관리</a><br>
+                    <a href="<%=request.getContextPath%>/listM.no">공지사항관리</a><br>
+                    <a href="<%=request.getContextPath%>">FAQ관리</a>
                 </div><br><br>
             </div>
         </div>
