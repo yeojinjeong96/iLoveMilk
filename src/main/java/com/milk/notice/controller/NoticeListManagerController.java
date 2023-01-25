@@ -58,7 +58,7 @@ public class NoticeListManagerController extends HttpServlet {
 		request.setAttribute("pi", pi);
 		
 		
-		request.getRequestDispatcher("views/notice/noticeListManagerView.jsp").forward(request, response);
+		request.getRequestDispatcher("views/notice/notice/noticeListManagerView.jsp").forward(request, response);
 		
 	}
 

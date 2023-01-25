@@ -18,6 +18,7 @@
         width: 1000px;
         margin:auto;
         margin-top: 50px;
+      
     }
     
     tbody>tr:hover{cursor: pointer;}
@@ -35,7 +36,8 @@
 <body>
 	<%@include file="/views/common/managerHeader.jsp" %>
 	<%@include file="/views/common/managerMenubar.jsp" %>
-    <div class="outer" align="center">
+	
+    <div class="outer" align="center" >
         <br>
         <div style="width:700px">
             <h2 align="left">공지사항 관리</h2>
@@ -50,9 +52,9 @@
                 <table class="list-area" border="1" >
                     <thead>
                         <tr>
-                            <th><input type="checkbox"></th>
+                            <th>선택</th>
                             <th width="70">글번호</th>
-                            <th width="400">제목</th>
+                            <th width="300">제목</th>
                             <th width="100">작성자</th>
                             <th width="100">작성일</th>
                         </tr>
@@ -87,13 +89,13 @@
             <br>
             <div class="paging-area" >
             <%if(pi.getCurrentPage()!=1){ %>
-                <button onclick="location.href='<%=contextPath%>/list.no?cpage=<%=pi.getCurrentPage()-1%>';">&lt;</button>
+                <button onclick="location.href='<%=contextPath%>/listM.no?cpage=<%=pi.getCurrentPage()-1%>';">&lt;</button>
             <%} %>   
             <%for(int p= pi.getStartPage(); p<pi.getEndPage(); p++){ %>
-                <button onclick="location.href='<%=contextPath%>/list.no?cpage=<%=p%>';"><%=p %></button>
+                <button onclick="location.href='<%=contextPath%>/listM.no?cpage=<%=p%>';"><%=p %></button>
             <%} %>
             <%if(pi.getCurrentPage()!=pi.getEndPage()){ %>
-                <button onclick="location.href='<%=contextPath%>/list.no?cpage=<%=pi.getCurrentPage()+1%>';">&gt;</button>
+                <button onclick="location.href='<%=contextPath%>/listM.no?cpage=<%=pi.getCurrentPage()+1%>';">&gt;</button>
             <%} %>
             </div>
             <br>
