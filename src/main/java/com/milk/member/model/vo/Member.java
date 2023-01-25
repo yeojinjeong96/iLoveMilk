@@ -42,6 +42,14 @@ public class Member {
 		this.status = status;
 		this.memberGrade = memberGrade;
 	}
+	
+	
+
+	public Member(int membeNo, String memberId) {
+		super();
+		this.membeNo = membeNo;
+		this.memberId = memberId;
+	}
 
 	public int getMembeNo() {
 		return membeNo;

@@ -1,7 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" import="com.milk.member.model.vo.Member" %>
-<% String contextPath = request.getContextPath(); 
-Member loginMember = (Member)session.getAttribute("loginMember");
+<% 
+	String contextPath = request.getContextPath();
+	Member loginMember = (Member)session.getAttribute("loginMember");
+	String alertMsg = (String)session.getAttribute("alertMsg");
 %>
 <!DOCTYPE html>
 <html>
@@ -64,6 +66,14 @@ Member loginMember = (Member)session.getAttribute("loginMember");
 </style>
 </head>
 <body>
+	<% if(alertMsg != null) { %>
+		<script>
+			alert("<%=alertMsg%>");
+		</script>
+		<% session.removeAttribute("alertMsg"); %>
+	<% } %>
+
+
     <div class="wrap" align="center">
         <div class="header">
             <div class="header-1">
@@ -75,14 +85,14 @@ Member loginMember = (Member)session.getAttribute("loginMember");
             <div class="header-4">
                 <div class="header-4a" align="right">
                 
-					<% if(loginMember ==null) { %>
+					<% if(loginMember == null) { %>
 	                    <!-- 로그인 전 -->
 	                    <a href="<%= contextPath %>/loginpage.me" class="text-secondary">로그인</a>
-	                    <a href="" class="text-secondary">회원가입</a>
+	                    <a href="<%= contextPath %>/enrollForm.me" class="text-secondary">회원가입</a>
 	                    <a href="" class="text-secondary">고객센터</a>
 					<% }else { %>
 	                    <!-- 로그인 후 -->
-	                    <a href="" class="text-secondary">로그아웃</a>
+	                    <a href="<%= contextPath %>/logout.me" class="text-secondary">로그아웃</a>
 	                    <a href="" class="text-secondary">고객센터</a> 
                     <% } %>
                     

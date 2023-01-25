@@ -1,12 +1,15 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    
+<% String loginFail = (String)session.getAttribute("loginFail"); %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>memberLoginView</title>
     <style>
-        .under a{color: black; font-weight: bold;}
+        .under a{color: black; font-weight: bold; }
+        .under {margin:auto; align :center;}
         .outer{
         weight: 700px;
          margin:auto;
@@ -45,13 +48,60 @@
 				       
 		        </form>
 		        
-		        <div class="under" align="center">
+		        <div class="under" >
 				        <a onclick="enrollPage();">회원가입</a> &nbsp;&nbsp;| &nbsp;&nbsp;
-				        <a>ID찾기</a> &nbsp;&nbsp;| &nbsp;&nbsp;
+				        <a onclick="idFindPage();">ID찾기</a> &nbsp;&nbsp;| &nbsp;&nbsp;
 				        <a>PW찾기</a>
 				</div>  
+				<script>
+	            	function enrollPage(){
+	            		location.href = "<%=contextPath%>/enrollForm.me";
+	            	};
+	            	
+	            	function idFindPage(){
+	            		location.href = "<%= contextPath%>/idFindPage.me";
+	            	};
+            	</script>
 	        </div>
         </div>
+        
+        <% if(loginFail != null){ %>
+		<!-- 로그인 실패 모달 시작 -->
+		<!-- The Modal -->
+		<div class="modal fade" id="myModal">
+		  <div class="modal-dialog">
+		    <div class="modal-content">
+		    
+		      	<!-- Modal Header -->
+				<div class="modal-header">
+				  <h4 class="modal-title">로그인 실패</h4>
+				  <button type="button" class="close" data-dismiss="modal">×</button>
+				</div>
+				
+				<!-- Modal body -->
+				<div class="modal-body">
+				  로그인에 실패하였습니다. 아이디와 비밀번호를 확인해주세요.
+				</div>
+				
+				<!-- Modal footer -->
+		      	<div class="modal-footer">
+		        <button type="button" class="btn btn-danger" data-dismiss="modal">닫기</button>
+		      	</div>
+		      
+		    </div>
+		  </div>
+		</div>
+		<!-- 로그인 실패 모달 종료 -->
+		
+		<script>
+			$(document).ready(function() {
+				$("#myModal").modal("show");
+			});
+		</script>
+		
+		<% session.removeAttribute("loginFail"); %>
+	<% } %>
+        
         
     </div>
 

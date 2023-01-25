@@ -25,5 +25,28 @@
 		   AND STATUS = 'Y'
 	</entry>
 	
+	<entry key="findMemberId">
+		SELECT
+			   MEMBER_NO
+			 , MEMBER_ID
+			 , MEMBER_PWD
+			 , MEMBER_NAME
+			 , PHONE
+			 , EMAIL
+			 , ADDRESS_NUMBER
+			 , ADDRESS
+			 , ADDRESS_DETAIL
+			 , PROFILE
+			 , ENROLL_DATE
+			 , MODIFY_DATE
+			 , BLACK_LIST
+			 , STATUS
+			 , MEMBER_GRADE
+		  FROM TB_MEMBER
+		 WHRER MEMBER_NAME=?
+		   AND EMAIL= ?
+	
+	</entry>
+	
 	
 </properties>
