@@ -27,7 +27,7 @@
         <h1>고객센터</h1>
         <br>
         <div class="menu-area">
-            <a href="/list.no">공지사항</a>
+            <a href="/list.no?cpage=1">공지사항</a>
             <a href="">1:1 문의</a>
             <a href="">FAQ</a>
         </div>

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+	<entry key="selectNoticeListCount"> 
+		SELECT 
+		    COUNT(*) COUNT
+		    FROM TB_NOTICE 
+		  WHERE STATUS= 'Y'
+	</entry>
+</properties>
