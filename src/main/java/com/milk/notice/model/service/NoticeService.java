@@ -1,12 +1,17 @@
 package com.milk.notice.model.service;
 
-import static com.milk.common.JDBCTemplate.*;
+import static com.milk.common.JDBCTemplate.close;
+import static com.milk.common.JDBCTemplate.commit;
+import static com.milk.common.JDBCTemplate.getConnection;
+import static com.milk.common.JDBCTemplate.rollback;
 
 import java.sql.Connection;
 import java.util.ArrayList;
 
+import com.br.board.model.dao.BoardDao;
 import com.milk.common.model.vo.PageInfo;
 import com.milk.notice.model.dao.NoticeDao;
+import com.milk.notice.model.vo.Attachment;
 import com.milk.notice.model.vo.Notice;
 
 public class NoticeService {
@@ -39,5 +44,25 @@ public class NoticeService {
 		}
 		close(conn);
 		return result;
+	}
+	
+	public int insertNotice(Notice n, Attachment at) {
+		
+		Connection conn = getConnection();
+		int result1= new NoticeDao().insertNotice(conn,n);
+		
+		int result2=1;
+		if(at != null) {
+			 result2= new NoticeDao().insertAttachment(conn,at);
+		}
+		
+		if(result1*result2>0) {
+			commit(conn);
+		}else {
+			rollback(conn);
+		}
+		
+		return result1 * result2;
+		
 	}
 }

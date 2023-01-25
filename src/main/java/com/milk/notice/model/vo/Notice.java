@@ -5,23 +5,66 @@ public class Notice {
 	
 	private int noticeNo;
 	private String noticeTitle;
+	private String noticeContent;
 	private int noticeType;
 	private int count;
 	private String enrollDate;
 	private String status;
 	private int writerNo;
+	
 	private String managerName;
 	
 	
 	
-	public Notice(int noticeNo, String noticeTitle, int count, String enrollDate, String managerName) {
+	
+	public Notice() {}
+	
+	
+
+
+	public Notice(int noticeNo, String noticeTitle, int count, String enrollDate,
+			String managerName) {
 		super();
 		this.noticeNo = noticeNo;
 		this.noticeTitle = noticeTitle;
+	
 		this.count = count;
 		this.enrollDate = enrollDate;
 		this.managerName = managerName;
 	}
+
+
+
+
+	public Notice(int noticeNo, String noticeTitle, String noticeContent, int noticeType, int count, String enrollDate,
+			String status, int writerNo, String managerName) {
+		super();
+		this.noticeNo = noticeNo;
+		this.noticeTitle = noticeTitle;
+		this.noticeContent = noticeContent;
+		this.noticeType = noticeType;
+		this.count = count;
+		this.enrollDate = enrollDate;
+		this.status = status;
+		this.writerNo = writerNo;
+		this.managerName = managerName;
+	}
+
+
+
+
+	public String getNoticeContent() {
+		return noticeContent;
+	}
+
+
+
+
+	public void setNoticeContent(String noticeContent) {
+		this.noticeContent = noticeContent;
+	}
+
+
 
 
 	public String getManagerName() {
@@ -34,20 +77,8 @@ public class Notice {
 	}
 
 
-	public Notice() {}
 	
 	
-	public Notice(int noticeNo, String noticeTitle, int noticeType, int count, String enrollDate, String status,
-			int writerNo) {
-		super();
-		this.noticeNo = noticeNo;
-		this.noticeTitle = noticeTitle;
-		this.noticeType = noticeType;
-		this.count = count;
-		this.enrollDate = enrollDate;
-		this.status = status;
-		this.writerNo = writerNo;
-	}
 
 	
 	
@@ -135,13 +166,17 @@ public class Notice {
 
 
 
+
 	@Override
 	public String toString() {
-		return "Notice [noticeNo=" + noticeNo + ", noticeTitle=" + noticeTitle + ", noticeType=" + noticeType
-				+ ", count=" + count + ", enrollDate=" + enrollDate + ", status=" + status + ", writerNo=" + writerNo
-				+ "]";
+		return "Notice [noticeNo=" + noticeNo + ", noticeTitle=" + noticeTitle + ", noticeContent=" + noticeContent
+				+ ", noticeType=" + noticeType + ", count=" + count + ", enrollDate=" + enrollDate + ", status="
+				+ status + ", writerNo=" + writerNo + ", managerName=" + managerName + "]";
 	}
-	
+
+
+
+
 	
 	
 }

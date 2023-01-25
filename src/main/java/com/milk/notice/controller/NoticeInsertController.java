@@ -7,9 +7,15 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.apache.tomcat.util.http.fileupload.servlet.ServletFileUpload;
 
+import com.milk.common.MyFileRenamePolicy;
+import com.milk.manager.model.vo.Manager;
+import com.milk.notice.model.service.NoticeService;
+import com.milk.notice.model.vo.Attachment;
+import com.milk.notice.model.vo.Notice;
 import com.oreilly.servlet.MultipartRequest;
 
 /**
@@ -37,15 +43,28 @@ public class NoticeInsertController extends HttpServlet {
 			int maxSize= 10*10*1024;
 			String savePath= request.getSession().getServletContext().getRealPath("/resources/notice_upfiles/");
 			
-			MultipartRequest multiRequest = new MultipartRequest(request,savePath,maxSize,"UTF-8",);
+			MultipartRequest multiRequest = new MultipartRequest(request,savePath,maxSize,"UTF-8",new MyFileRenamePolicy());
 			
 			String noticeTitle=multiRequest.getParameter("title");
 			String noticeContent= multiRequest.getParameter("content");
+			HttpSession session = request.getSession();
+			int ManagerNo= ((Manager)session.getAttribute("loginManager")).getManagerNo();
+			
+			Notice n = new Notice();
+			n.setNoticeTitle(noticeTitle);
+			n.setNoticeContent(noticeContent);
+			n.setWriterNo(ManagerNo);
+			
+			Attachment at= null;
 			
 			if(multiRequest.getOriginalFileName("upfile")!=null) {
-				
+				at= new Attachment();
+				at.setChangeName(multiRequest.getFilesystemName("upfile"));
+				at.setFilePath("resources/notice_upfiles/");
 				
 			}
+			
+			int result= new NoticeService().insertNotice(n,at);
 		}
 		
 		

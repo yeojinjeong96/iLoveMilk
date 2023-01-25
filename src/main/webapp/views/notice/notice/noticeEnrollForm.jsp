@@ -21,6 +21,9 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
 </head>
 <body>
+	<%@include file="/views/common/managerHeader.jsp" %>
+	<%@include file="/views/common/managerMenubar.jsp" %>
+	
     <div class="outer" align="center">
         <br>
         <div style="width: 700px;">
@@ -28,6 +31,7 @@
             <h2 align="left">공지사항 작성</h2>
             <hr>
             <form action="insert.no" method="post" enctype="multipart/form-data">
+            	
                 <table id="notice-enroll">
                     <tr>
                         <th width="100px">* 제목</th>

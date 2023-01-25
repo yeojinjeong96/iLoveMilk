@@ -45,7 +45,7 @@
             <br>
             <form action="" method="post">
                 <div class="btn-area" align="right">
-                    <button type="button">공지작성</button>
+                    <a href="<%=request.getContextPath()%>/enroll.no">공지작성</a>
                     <button type="submit">선택삭제</button>
                 </div>
                 <br>
