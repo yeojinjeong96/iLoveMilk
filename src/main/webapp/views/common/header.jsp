@@ -76,7 +76,7 @@
                     <!-- 로그인 전 -->
                     <a href="" class="text-secondary">로그인</a>
                     <a href="" class="text-secondary">회원가입</a>
-                    <a href="" class="text-secondary">고객센터</a>
+                    <a href="<%=contextPath%>/list.sv" class="text-secondary">고객센터</a>
 
                     <!-- 로그인 후 -->
                     <!-- <a href="" class="text-secondary">로그아웃</a>

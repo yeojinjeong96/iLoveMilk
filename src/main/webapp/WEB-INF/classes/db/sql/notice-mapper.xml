@@ -22,4 +22,6 @@
 	               ORDER BY ENROLL_DATE DESC) E)
 	               WHERE RNUM BETWEEN ? AND ?
 	</entry>
+	<entry key="selectNoticeDetail">
+	</entry>
 </properties>

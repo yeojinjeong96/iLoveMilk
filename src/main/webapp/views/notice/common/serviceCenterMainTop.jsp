@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%String contextPath= request.getContextPath(); %>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -22,7 +22,7 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
 </head>
 <body>
-
+	<%@include file="/views/common/header.jsp" %>
     <div class="outer" align="center" >
         <br>
         <h1>고객센터</h1>

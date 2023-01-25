@@ -34,7 +34,7 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
 </head>
 <body>
-
+		
          <%@include file= "serviceCenterMainTop.jsp"%>
          
         <div class="outer" align="center" >
@@ -102,7 +102,8 @@
             </div>
 
         </div>
-
+		
+        <%@include file="/views/common/footer.jsp" %>
         
 
 </body>
