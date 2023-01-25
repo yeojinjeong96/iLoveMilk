@@ -1,11 +1,18 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    
+<% String contextPath = request.getContextPath(); %>    
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
     <style>
+            /* 안가져감 */
+    div{
+        box-sizing:border-box;
+        /* border:1px solid red; */
+    }
 
 
      /* 메뉴 네비게이터탭 */
@@ -118,6 +125,9 @@
        }
 
 
+
+
+
     #main-content{
         width:700px;
         height:1200px;
@@ -200,7 +210,7 @@
 </head>
 <body>
 
-    
+   
     <div class="menu-wrap">
         <!-- 해당 카테고리값들은 반복문을 통해 만들어짐 -->
             <ul class="menu-navi">
@@ -211,7 +221,7 @@
                             <div class="allmenu-wrap">
                                 <!-- 해당 카테고리값들은 반복문을 통해 만들어짐 -->
                                     <ul class="all-menu">
-                                        <li><a href="">우유</a> <!-- 카테고리 -->
+                                        <li><a href="<%=contextPath%>/proList.pro?fCategory='<%=%>'">우유</a> <!-- 카테고리 -->
                                             <br>
                                             <div style="border:1px solid gray; width:110px"></div>
                                             <br>
@@ -222,7 +232,7 @@
                         
                                             </ul>
                                         </li>
-                                        <li><a href="">발효유</a>
+                                        <li><a href="<%=contextPath%>/proList.pro?category=">발효유</a>
                                             <br>
                                             <div style="border:1px solid gray; width:110px"></div>
                                             <br>
@@ -230,7 +240,7 @@
                                                 <li><a href="">발효유</a></li>
                                             </ul>
                                         </li>
-                                        <li><a href="">치즈</a>
+                                        <li><a href="<%=contextPath%>/proList.pro?category=">치즈</a>
                                             <br>
                                             <div style="border:1px solid gray; width:110px"></div>
                                             <br>
@@ -239,7 +249,7 @@
                         
                                             </ul>
                                         </li>
-                                        <li><a href="">락토프리</a>
+                                        <li><a href="<%=contextPath%>/proList.pro?category=">락토프리</a>
                                             <br>
                                             <div style="border:1px solid gray; width:110px"></div>
                                             <br>
@@ -271,6 +281,7 @@
                 <li><a href="">레시피</a></li>
             </ul>
     </div>
+
     <div id="main-content">
         <div id="demo" class="carousel slide" data-ride="carousel">
 
@@ -284,13 +295,13 @@
             <!-- The slideshow -->
             <div class="carousel-inner">
               <div class="carousel-item active">
-                <img src="img/딸기과즙우유.jpg" alt="">
+                <img src="resources/product_upfiles/나 100_ 그린라벨.png" alt="">
               </div>
               <div class="carousel-item">
-                <img src="img/매일우유 저지방 1%_멸균시리즈.png" alt="">
+                <img src="resources/product_upfiles/나 100_ 그린라벨.png" alt="">
               </div>
               <div class="carousel-item">
-                <img src="img/발효유6.png" alt="">
+                <img src="resources/product_upfiles/나 100_ 그린라벨.png" alt="">
               </div>
             </div>
           
@@ -316,7 +327,7 @@
 
                 <div class="thumbnail" align="left">
                     <a href="" style="color:rgb(113, 113, 113); text-decoration:none;">
-                    <img src="img/milk.jpg" alt="" width="200" height="200">
+                    <img src="resources/product_upfiles/나 100_ 그린라벨.png" alt="" width="200" height="200">
                     
                     <p>
                         제주도우유 500ml<br>
@@ -326,7 +337,7 @@
                 </div>
                 <div class="thumbnail" align="left">
                     <a href="" style="color:rgb(113, 113, 113); text-decoration:none;">
-                    <img src="img/milk.jpg" alt="" width="200" height="200">
+                    <img src="resources/product_upfiles/나 100_ 그린라벨.png" alt="" width="200" height="200">
                     
                     <p>
                         제주도우유 500ml<br>
@@ -336,7 +347,7 @@
                 </div>
                 <div class="thumbnail" align="left">
                     <a href="" style="color:rgb(113, 113, 113); text-decoration:none;">
-                    <img src="img/milk.jpg" alt="" width="200" height="200">
+                    <img src="resources/product_upfiles/나 100_ 그린라벨.png" alt="" width="200" height="200">
                     
                     <p>
                         제주도우유 500ml<br>
@@ -359,7 +370,7 @@
                 
                 <div class="thumbnail" align="left">
                     <a href="" style="color:rgb(113, 113, 113); text-decoration:none;">
-                    <img src="img/milk.jpg" alt="" width="200" height="200">
+                    <img src="resources/product_upfiles/나 100_ 그린라벨.png" alt="" width="200" height="200">
                     
                     <p>
                         레시피제목<br>
@@ -370,7 +381,7 @@
 
                 <div class="thumbnail" align="left">
                     <a href="" style="color:rgb(113, 113, 113); text-decoration:none;">
-                    <img src="img/milk.jpg" alt="" width="200" height="200">
+                    <img src="resources/product_upfiles/나 100_ 그린라벨.png" alt="" width="200" height="200">
                     
                     <p>
                         레시피제목<br>
@@ -381,7 +392,7 @@
 
                 <div class="thumbnail" align="left">
                     <a href="" style="color:rgb(113, 113, 113); text-decoration:none;">
-                    <img src="img/milk.jpg" alt="" width="200" height="200">
+                    <img src="resources/product_upfiles/나 100_ 그린라벨.png" alt="" width="200" height="200">
                     
                     <p>
                         레시피제목<br>
@@ -394,5 +405,6 @@
             </div>
         </div>
     </div>
+
 </body>
 </html>
