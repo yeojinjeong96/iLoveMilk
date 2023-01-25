@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.milk.common.model.vo.PageInfo;
 import com.milk.product.model.service.ProductService;
 
 /**
@@ -47,7 +48,25 @@ public class ProductCategoryListController extends HttpServlet {
 		
 		listCount = new ProductService().selectListCount(category);
 		
+		currentPage = 1;
 		
+		pageLimit = 3;
+		
+		boardLimit = 12;
+		
+		maxPage = (int)Math.ceil((double)listCount/ boardLimit);
+		
+		startPage = (currentPage -1 )/ pageLimit * pageLimit * 1; 
+		
+		endPage = startPage + pageLimit -1;
+		
+		if(endPage > maxPage) {
+			endPage = maxPage;
+		}
+		
+		PageInfo pi = new PageInfo(listCount, currentPage, pageLimit, boardLimit, maxPage, startPage,endPage);
+		
+		ArrayList <Product> list = new ProductService().selectProductList(pi, category);
 
 		
 		

@@ -1,9 +1,17 @@
 package com.milk.product.model.dao;
 
+import static com.milk.common.JDBCTemplate.close;
+
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Properties;
 
+import com.milk.common.model.vo.PageInfo;
 import com.milk.product.model.vo.Product;
 
 public class ProductDao {
@@ -18,7 +26,69 @@ public class ProductDao {
 		}
 	}
 	
-	public int selectListCount() {
+	public int selectListCount(Connection conn, String category) {
+		
+		int listCount = 0;
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		String sql = prop.getProperty("selectListCount");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, category);
+			
+			rset = pstmt.executeQuery();
+
+			if(rset.next()) {
+				listCount = rset.getInt("count");
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return listCount;
+		
+	}
+	
+	public ArrayList<Product> selectProductList(Connection conn, PageInfo pi, String category){
+		
+		ArrayList<Product> list = new ArrayList<>();
+		ResultSet rset = null;
+		PreparedStatement pstmt = null;
+		
+		String sql = prop.getProperty("selectProductList");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			int startRow = (pi.getCurrentPage() -1) * pi.getBoardLimit() + 1;
+			int endRow = startRow + pi.getBoardLimit() -1;
+			
+			pstmt.setString(1, category);
+			pstmt.setInt(2, startRow);
+			pstmt.setInt(3, endRow);	
+			
+			rset= pstmt.executeQuery();
+			
+			while(rset.next()) {
+				list.add(new Product(
+						rset.getString("product_name"),
+						rset.getInt("price")
+						));
+			}
+				
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+
+		
+		return list;
 		
 	}
 

@@ -1,18 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-    
-<% String contextPath = request.getContextPath(); %>    
+ 
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
     <style>
-            /* 안가져감 */
-    div{
-        box-sizing:border-box;
-        /* border:1px solid red; */
-    }
+
 
 
      /* 메뉴 네비게이터탭 */
@@ -221,7 +216,7 @@
                             <div class="allmenu-wrap">
                                 <!-- 해당 카테고리값들은 반복문을 통해 만들어짐 -->
                                     <ul class="all-menu">
-                                        <li><a href="<%=contextPath%>/proList.pro?fCategory='<%=%>'">우유</a> <!-- 카테고리 -->
+                                      <li><a href="">우유</a> <!-- 카테고리 -->
                                             <br>
                                             <div style="border:1px solid gray; width:110px"></div>
                                             <br>
@@ -232,7 +227,7 @@
                         
                                             </ul>
                                         </li>
-                                        <li><a href="<%=contextPath%>/proList.pro?category=">발효유</a>
+                                        <li><a href="">발효유</a>
                                             <br>
                                             <div style="border:1px solid gray; width:110px"></div>
                                             <br>
@@ -240,7 +235,7 @@
                                                 <li><a href="">발효유</a></li>
                                             </ul>
                                         </li>
-                                        <li><a href="<%=contextPath%>/proList.pro?category=">치즈</a>
+                                        <li><a href="">치즈</a>
                                             <br>
                                             <div style="border:1px solid gray; width:110px"></div>
                                             <br>
@@ -249,7 +244,7 @@
                         
                                             </ul>
                                         </li>
-                                        <li><a href="<%=contextPath%>/proList.pro?category=">락토프리</a>
+                                        <li><a href="">락토프리</a>
                                             <br>
                                             <div style="border:1px solid gray; width:110px"></div>
                                             <br>
