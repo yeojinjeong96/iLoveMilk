@@ -1,5 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    
+<%@page import ="com.milk.common.model.vo.PageInfo, java.util.ArrayList, com.milk.product.model.vo.Product" %>    
+    
+<% 
+	PageInfo pi = (PageInfo)request.getAttribute("pi");
+	ArrayList<Product> list = (ArrayList<Product>)request.getAttribute("list");
+	String category = String.valueOf(request.getAttribute("category"));
+ %>    
 <!DOCTYPE html>
 <html>
 <head>
@@ -130,12 +138,12 @@
 
             <div id="pro-category-top" align="left">
                 <a href="">HOME &gt;</a>
-                <a href="">우유</a> <!-- 1차 카테고리명 -->
+                <a href=""><%=category %></a> <!-- 1차 카테고리명 -->
             </div>
 
             <div id="pro-category-center" align="center">
                 <br><br>
-                 <p id="pro-category-center-1">우유</p><!-- 1차 카테고리명 -->
+                 <p id="pro-category-center-1"><%=category %></p><!-- 1차 카테고리명 -->
                  <div>
                     <a href="">프리미엄 우유</a> <!-- 2차 카테고리명 -->
                     <a href="">백색시유</a>
@@ -169,47 +177,22 @@
         <div id="pro-content" >
             <!-- for문사용하여 제품 정보랑 이미지 뽑아서 화면에 출력 (갯수는 정렬 수대로 출력예정) -->
 
+			<%for(Product p : list) {%>
             <div class="thumbnail" align="left">
                 
                 <a href="" style="color:rgb(113, 113, 113); text-decoration:none;">
-                <img src="img/milk.jpg" alt="" width="200" height="200">
+                <img src="<%=p.getProductImg() %>" alt="" width="200" height="200">
                 
                 <p>
-                    제주도우유 500ml<br>
-                    7,000원
+                    <%=p.getProductName() %><br>
+                    <%=p.getPrice() %> 원
                 </p>
                 </a>
                 <i class="bi-heart like-btn" style="font-size:2rem; color: red; cursor: pointer;" data-target="#like-product"  data-toggle="modal" ></i>
                 <!-- 로그인 안하고 찜 눌렀을 때 알림창 실행시키고 로그인페이지로 넘어가기 -->
 
             </div>
-
-            <div class="thumbnail" align="left">
-                
-                <a href="" style="color:rgb(113, 113, 113); text-decoration:none;">
-                <img src="img/milk.jpg" alt="" width="200" height="200">
-               
-        <p>
-                    제주도우유 500ml<br>
-                    7,000원
-                </p>
-                </a> 
-                <i class="bi-heart like-btn" style="font-size:2rem; color: red; cursor: pointer;" data-target="#like-product"  data-toggle="modal"></i>
-            </div>
-            <div class="thumbnail" align="left">
-                
-                <a href="" style="color:rgb(113, 113, 113); text-decoration:none;">
-                <img src="img/milk.jpg" alt="" width="200" height="200">
-                
-                <p>
-                    제주도우유 500ml<br>
-                    7,000원
-                </p>
-                </a>
-                <i class="bi-heart like-btn" style="font-size:2rem; color: red; cursor: pointer;" data-target="#like-product"  data-toggle="modal"></i>
-            </div>
-            
-                   
+		<%} %>
         </div>
 
         <!-- 로그인 안했을때의 모달 -->

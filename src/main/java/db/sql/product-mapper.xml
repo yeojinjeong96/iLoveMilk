@@ -18,6 +18,7 @@
 		                SELECT
 		                       PRODUCT_NAME
 		                     , PRICE
+		                     , PRODUCT_IMG
 		                  FROM TB_PRODUCT B
 		                 WHERE STOCK > 0
                            AND FCATEGORY_NAME = ?
@@ -27,6 +28,8 @@
 		        )
 		 WHERE RNUM BETWEEN ? AND ?
 </entry>
+
+
 
 
 </properties>

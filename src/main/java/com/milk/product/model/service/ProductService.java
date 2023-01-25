@@ -26,8 +26,11 @@ public class ProductService {
 		Connection conn = getConnection();
 		ArrayList<Product> list = new ProductDao().selectProductList(conn, pi, category);
  		
+		close(conn);
 		return list;
 		
 	}
+	
+
 
 }
