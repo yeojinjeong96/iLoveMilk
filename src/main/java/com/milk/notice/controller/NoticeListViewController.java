@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.milk.common.model.vo.PageInfo;
 import com.milk.notice.model.service.NoticeService;
 import com.milk.notice.model.vo.Notice;
 
@@ -43,10 +44,21 @@ public class NoticeListViewController extends HttpServlet {
 		
 		listCount = new NoticeService().selectNoticeListCount();
 		currentPage= Integer.parseInt(request.getParameter("cpage"));
+		pageLimit= 5;
+		boardLimit=5;
+		
+		maxPage = (int)Math.ceil((double)(listCount) / boardLimit);
+		startPage =  (currentPage-1)/pageLimit * pageLimit +1 ;
+		endPage = startPage + pageLimit -1;
+		if(endPage>maxPage) {
+			endPage = maxPage;
+		}
+		PageInfo pi = new PageInfo(listCount,currentPage, pageLimit, boardLimit,maxPage,startPage,endPage);
 		
 		
-		ArrayList<Notice>list= new NoticeService().selectNoticeList();
+		ArrayList<Notice>list= new NoticeService().selectNoticeList(pi);
 		request.setAttribute("list", list);
+		request.setAttribute("pi", pi);
 		request.getRequestDispatcher("views/notice/notice/noticeListView.jsp").forward(request, response);
 	}
 

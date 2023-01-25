@@ -10,8 +10,33 @@ public class Notice {
 	private String enrollDate;
 	private String status;
 	private int writerNo;
+	private String managerName;
 	
+	
+	
+	public Notice(int noticeNo, String noticeTitle, int count, String enrollDate, String managerName) {
+		super();
+		this.noticeNo = noticeNo;
+		this.noticeTitle = noticeTitle;
+		this.count = count;
+		this.enrollDate = enrollDate;
+		this.managerName = managerName;
+	}
+
+
+	public String getManagerName() {
+		return managerName;
+	}
+
+
+	public void setManagerName(String managerName) {
+		this.managerName = managerName;
+	}
+
+
 	public Notice() {}
+	
+	
 	public Notice(int noticeNo, String noticeTitle, int noticeType, int count, String enrollDate, String status,
 			int writerNo) {
 		super();

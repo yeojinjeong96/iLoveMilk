@@ -9,6 +9,7 @@
 <body>
 	<%@ include file="views/common/header.jsp" %>
 	
+	<%@ include file ="views/common/mainContent.jsp" %>
 	
 	<%@ include file="views/common/footer.jsp" %>
 </body>

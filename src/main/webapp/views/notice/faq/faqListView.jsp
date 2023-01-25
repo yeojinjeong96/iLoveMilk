@@ -59,6 +59,7 @@
            
             <div align="left" class="list-area" style="width:700px" >
                 <h2 align="left">FAQ</h2>
+                <br>
                 <a href="">전체</a> |
                 <a href="">회원가입/정보</a> |
                 <a href="">결제/배송</a> |
