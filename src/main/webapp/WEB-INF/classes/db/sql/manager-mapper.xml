@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+	<entry key="managerLogin">
+		SELECT
+			   MANAGER_NO,
+			   MANAGER_ID,
+			   MANAGER_PWD,
+			   MANAGER_NAME,
+			   MANAGER_PHONE,
+			   MANAGER_EMAIL,
+			   STATUS
+		  FROM TB_MANAGER
+		 WHERE MANAGER_ID = ?
+		   AND MANAGER_PWD = ?
+		   AND STATUS = 'Y'
+	</entry>
+</properties>
