@@ -15,6 +15,16 @@
         color: black;
         text-decoration: none;
     }
+    .search, .qa{
+        display: inline-block;
+    }
+    .search input{ width: 300px; height: 30px;}
+    .search button{ height: 30px;}
+    .qa{ 
+        background-color: rgb(156, 208, 229);
+        padding: 10px;
+
+    }
 </style>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
@@ -25,15 +35,29 @@
 </head>
 <body>
 
-   
-
-       
+         <%@include file= "serviceCenterMainTop.jsp"%>
+         
         <div class="outer" align="center" >
+          
             <br>
             <div style="width: 700px;">
-                <form action="">
-                    <input type="text" name="search"><button type="submit">검색</button>
-                </form>
+                <div class="search">
+                    <form action="" method="get" >  
+                            <input type="text" name="search" placeholder="검색어를 입력하세요."><button type="submit" >검색</button>              
+                    </form>     
+                </div>
+                &nbsp;
+                <div class="qa" >
+                    <p>
+                    <strong>
+                    찾으시는 질문이 없으시면 <br>
+                    1:1문의를 해주세요.
+                    </strong>
+                    <br>
+                    <br>
+                    <a href="">1:1 문의</a>
+                    </p>
+                </div>
                 <br>
                 <h2 align="left">BEST FAQ</h2>
                 <br>
@@ -45,7 +69,7 @@
                     <a href="">제품정보</a>&nbsp;
                     <a href="">기타</a>&nbsp;
                 </p>
-    
+                
                 <table  border="1" style="text-align:center" class="content-area">
                     <tr>
                         <th width="100">No.</th>

@@ -4,7 +4,7 @@
 <% 
 	ArrayList<Notice>list= (ArrayList<Notice>)request.getAttribute("list");
 	PageInfo pi = (PageInfo)request.getAttribute("pi");
-	String contextPath= request.getContextPath();
+	
 %>
 <!DOCTYPE html>
 <html>
@@ -29,6 +29,8 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
 </head>
 <body>
+	<%@include file="../common/serviceCenterMainTop.jsp" %>
+	
     <div id="outer" align="center">
         <br>
         <div style="width: 700px;">
@@ -70,7 +72,13 @@
         </div>
 
     </div>
-
+	<script>
+		$(function(){
+			%("#notice-list>tr").click(function(){
+				location.href=<%=contextPath%>"/detail.no?no="+ $(this).children().eq(0).text();
+			})
+		})
+	</script>
 
 </body>
 </html>

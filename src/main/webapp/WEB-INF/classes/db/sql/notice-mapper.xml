@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+	<entry key="selectNoticeListCount"> 
+		SELECT 
+		    COUNT(*) COUNT
+		    FROM TB_NOTICE 
+		  WHERE STATUS= 'Y'
+	</entry>
+	<entry key="selectNoticeList">
+	    SELECT * 
+	      FROM(SELECT ROWNUM RNUM,E.* 
+	            FROM (SELECT 
+	                        NOTICE_NO
+	                       ,NOTICE_TITLE
+	                       ,COUNT
+	                       ,ENROLL_DATE
+	                       ,MANAGER_NAME
+	                   FROM TB_NOTICE N
+	                JOIN TB_MANAGER ON (WRITER_NO = MANAGER_NO)
+	               WHERE N.STATUS='Y'
+	               ORDER BY ENROLL_DATE DESC) E)
+	               WHERE RNUM BETWEEN ? AND ?
+	</entry>
+</properties>
