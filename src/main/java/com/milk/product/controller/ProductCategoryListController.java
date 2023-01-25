@@ -1,11 +1,14 @@
 package com.milk.product.controller;
 
 import java.io.IOException;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import com.milk.product.model.service.ProductService;
 
 /**
  * Servlet implementation class ProductCategoryListController
@@ -29,6 +32,8 @@ public class ProductCategoryListController extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
+		request.setCharacterEncoding("UTF-8");
+		String category = request.getParameter("category");	
 		
 		// 페이징처리
 		int listCount; // 현재 게시글 총 갯수 : db로부터 조회해서담을 것이다. count 함수사용해서 담음
@@ -40,9 +45,10 @@ public class ProductCategoryListController extends HttpServlet {
 		int startPage; // 사용자가 요청한 페이지 하단의 페이징바의 시작 수
 		int endPage; // 사용자가 요청한 페이지 하단의 페이징바의 끝 수  
 		
+		listCount = new ProductService().selectListCount(category);
 		
-		request.setCharacterEncoding("UTF-8");
-		String category = request.getParameter("category");
+		
+
 		
 		
 		
