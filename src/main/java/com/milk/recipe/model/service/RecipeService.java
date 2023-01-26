@@ -12,8 +12,12 @@ import com.milk.recipe.model.vo.Recipe;
 
 public class RecipeService {
 
-	// list.re
-	// 게시글 개수
+
+	/**
+	 * list.re / listR.re
+	 * @author 최주원
+	 * @return 게시글 개수
+	 */
 	public int selectListCount() {
 		Connection conn = getConnection();
 		
@@ -23,8 +27,14 @@ public class RecipeService {
 		return listCount;
 	}
 	
-	// list.re
-	// 요청한 페이지에 보여질 게시글 리스트 조회
+
+	/**
+	 * list.re
+	 * 요청한 페이지에 보여질 게시글 리스트 조회
+	 * @author 최주원
+	 * @param pi 페이징처리할 데이터들이 담겨있는 PageInfo객체
+	 * @return select 후 list 반환
+	 */
 	public ArrayList<Recipe> selectRecipeList(PageInfo pi){
 		Connection conn = getConnection();
 		
@@ -35,8 +45,14 @@ public class RecipeService {
 		
 	}
 	
-	// listR.re
-	// 요청한 페이지에 보여질 게시글 리스트 조회
+	
+	/**
+	 * listR.re
+	 * 요청한 페이지에 보여질 게시글 리스트 조회
+	 * @author 최주원
+	 * @param pi 페이징처리할 데이터들이 담겨있는 PageInfo객체
+	 * @return select 후 list 반환
+	 */
 	public ArrayList<Recipe> selectRecipeListR(PageInfo pi){
 		Connection conn = getConnection();
 		

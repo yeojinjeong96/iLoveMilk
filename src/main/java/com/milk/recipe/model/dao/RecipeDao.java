@@ -33,8 +33,14 @@ public class RecipeDao {
 		
 	}
 	
-	// list.re
-	// 총 게시글 개수
+	/**
+	 * list.re / listR.re
+	 * 총 게시글 수 조회 요청
+	 * @author 최주원
+	 * @param conn
+	 * @param pi
+	 * @return db에서 조회 후 int에 담아주고 반환
+	 */
 	public int selectListCount(Connection conn) {
 		int listCount = 0;
 		PreparedStatement pstmt = null;
@@ -61,8 +67,14 @@ public class RecipeDao {
 		
 	}
 	
-	// list.re
-	// 요청한 페이지에 보여질 게시글 리스트 조회
+	/**
+	 * list.re
+	 * 게시글 리스트 조회 요청
+	 * @author 최주원
+	 * @param conn
+	 * @param pi
+	 * @return db에서 조회 후 list에 담아주고 반환
+	 */
 	public ArrayList<Recipe> selectRecipeList(Connection conn, PageInfo pi){
 		ArrayList<Recipe> list = new ArrayList<>();
 		PreparedStatement pstmt = null;
@@ -106,8 +118,15 @@ public class RecipeDao {
 		
 	}
 	
-	// listR.re
-	// 요청한 페이지에 보여질 게시글 리스트 조회
+	
+	/**
+	 * listR.re
+	 * 게시글 리스트 조회 요청
+	 * @author 최주원
+	 * @param conn
+	 * @param pi
+	 * @return db에서 조회 후 list에 담아주고 반환
+	 */
 	public ArrayList<Recipe> selectRecipeListR(Connection conn, PageInfo pi){
 		ArrayList<Recipe> list = new ArrayList<>();
 		PreparedStatement pstmt = null;
