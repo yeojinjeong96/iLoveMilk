@@ -44,6 +44,7 @@
                           )
                    WHERE ROWNUM <![CDATA[<=]]> 3 
 	</entry>
+	
 	<entry key="insertProduct">
 	INSERT
 	  INTO TB_PRODUCT
@@ -73,13 +74,14 @@
 	  , ?
 	  )
 	</entry>
+	
 	<entry key ="selectAllListCount">
 		SELECT
 		       COUNT(*) COUNT
 		  FROM TB_PRODUCT
-		 WHERE STOCK > 0
-            AND FCATEGORY_NAME = ? OR SCATEGORY_NAME =?
+		 WHERE STATUS = 'Y'
 	</entry>
+	
 	<entry key ="selectAllList">
 		SELECT *
 		  FROM (

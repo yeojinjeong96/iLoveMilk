@@ -159,5 +159,56 @@ public class ProductDao {
 		return result;
 	}
 
-
+	public int selectAllListCount(Connection conn) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String sql = prop.getProperty("insertProduct");
+		try {
+			pstmt = conn.prepareStatement(sql);
+			rset = pstmt.executeQuery();
+			if(rset.next()) {
+				result = rset.getInt("count");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		return result;
+	}
+	
+	public ArrayList<Product> selectAllList(Connection conn, PageInfo pi){
+		ArrayList<Product> list = new ArrayList<>();
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String sql = prop.getProperty("selectAllList");
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			int startRow = (pi.getCurrentPage() - 1) * pi.getBoardLimit() + 1;
+			int endRow = startRow + pi.getBoardLimit() - 1;
+			
+			pstmt.setInt(1,startRow);
+			pstmt.setInt(2, endRow);
+			
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				Product p = new Product();
+				p.setProductNo(rset.getInt("product_no"));
+				p.setProductName(rset.getString("pname"));
+				p.setStock(rset.getInt("stock"));
+				p.setBrand(rset.getString("brand"));
+				list.add(p);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		return list;	
+	}
 }

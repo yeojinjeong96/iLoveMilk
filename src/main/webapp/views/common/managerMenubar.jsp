@@ -34,8 +34,8 @@
                 <div>
                     <div class="text-primary menu">상품관리</div>
                     <a href="<%= request.getContextPath() %>/insertForm.pr">상품등록</a><br>
-                    <a href="<%= request.getContextPath() %>/listUpDeRe.pr">조회/수정/삭제/입고</a><br>
-                    <a href="<%= request.getContextPath() %>/stock.pr">상품입출고현황</a>
+                    <a href="<%= request.getContextPath() %>/listUpDeRe.pr?cup=1">조회/수정/삭제/입고</a><br>
+                    <a href="<%= request.getContextPath() %>/stock.pr?curp=1">상품입출고현황</a>
                 </div><br>
                 <div>
                     <div class="text-primary menu">주문관리</div>
