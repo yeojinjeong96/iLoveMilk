@@ -2,15 +2,15 @@
 <!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
 <properties>
 
-<entry key="selectListCount">
+	<entry key="selectListCount">
 		SELECT
 		       COUNT(*) COUNT
 		  FROM TB_PRODUCT
 		 WHERE STOCK > 0
             AND FCATEGORY_NAME = ? OR SCATEGORY_NAME =?
-</entry>
+	</entry>
 
-<entry key ="selectProductList">
+	<entry key ="selectProductList">
 		SELECT *
 		  FROM (
 		        SELECT ROWNUM RNUM, A.*
@@ -27,9 +27,9 @@
 		                ) A
 		        )
 		  WHERE RNUM BETWEEN ? AND ? 
-</entry>
+	</entry>
 
-<entry key="selectRecentProductList">
+	<entry key="selectRecentProductList">
                   SELECT 		    
                            PRODUCT_NAME
 	                     , PRICE
@@ -43,8 +43,8 @@
                               BY ENROLL_DATE DESC    
                           )
                    WHERE ROWNUM <![CDATA[<=]]> 3 
-</entry>
-<entry key="insertProduct">
+	</entry>
+	<entry key="insertProduct">
 	INSERT
 	  INTO TB_PRODUCT
 	  (
@@ -72,5 +72,30 @@
 	  , ?
 	  , ?
 	  )
-</entry>
+	</entry>
+	<entry key ="selectAllListCount">
+		SELECT
+		       COUNT(*) COUNT
+		  FROM TB_PRODUCT
+		 WHERE STOCK > 0
+            AND FCATEGORY_NAME = ? OR SCATEGORY_NAME =?
+	</entry>
+	<entry key ="selectAllList">
+		SELECT *
+		  FROM (
+		        SELECT ROWNUM RNUM, A.*
+		          FROM (
+		                SELECT
+		                	   PRODUCT_NO
+		                     , PRODUCT_NAME || ' ' || CAPACITY || '(mL/g)' PNAME
+		                     , STOCK
+		                     , BRAND
+		                  FROM TB_PRODUCT B
+		                 WHERE STATUS = 'Y'
+		                 ORDER
+		                    BY ENROLL_DATE DESC
+		                ) A
+		        )
+		  WHERE RNUM BETWEEN ? AND ? 
+	</entry>
 </properties>
