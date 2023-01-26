@@ -6,22 +6,18 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-
-import com.milk.member.model.service.MemberService;
-import com.milk.member.model.vo.Member;
 
 /**
- * Servlet implementation class MemberIdFindController
+ * Servlet implementation class MEmberIdFindSuccesspageController
  */
-@WebServlet("/idFind.me")
-public class MemberIdFindController extends HttpServlet {
+@WebServlet("/idFindSuccess.me")
+public class MEmberIdFindSuccesspageController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public MemberIdFindController() {
+    public MEmberIdFindSuccesspageController() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -30,32 +26,7 @@ public class MemberIdFindController extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
-		
-		request.setCharacterEncoding("UTF-8");
-		
-		String memberName = request.getParameter("memberName");
-		String email = request.getParameter("email");
-		
-		Member findId = new MemberService().findMemberId(memberName, email);
-		
-		System.out.println(findId);
-		
-		
-		if(findId==null) { //조회결과 없음 
-			
-			
-			  
-			response.sendRedirect(request.getContextPath() + "/idFindPage.me"); 
-		
-		}else { //조회결과 있음 
-			
-			HttpSession session = request.getSession();
-			session.setAttribute("findId", findId);
-			response.sendRedirect(request.getContextPath() + "/idFindSuccess.me" );
-			
-		}
-		
+		request.getRequestDispatcher("views/member/memberIdFindSuccess.jsp").forward(request, response);
 	}
 
 	/**

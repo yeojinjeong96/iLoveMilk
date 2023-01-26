@@ -94,9 +94,9 @@ private Properties prop = new Properties();
 			rset = pstmt.executeQuery();
 			
 			if(rset.next()) {
-				m = new Member(rset.getInt("member_no"),
-						   rset.getString("member_id")
-						  );
+				m = new Member(rset.getString("member_id"),
+							   rset.getString("member_name")
+							  );
 			}
 			
 		} catch (SQLException e) {

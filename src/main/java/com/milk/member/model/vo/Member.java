@@ -45,10 +45,10 @@ public class Member {
 	
 	
 
-	public Member(int membeNo, String memberId) {
+	public Member(String memberId, String memberName) {
 		super();
-		this.membeNo = membeNo;
 		this.memberId = memberId;
+		this.memberName = memberName;
 	}
 
 	public int getMembeNo() {
