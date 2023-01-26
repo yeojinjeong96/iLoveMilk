@@ -37,7 +37,7 @@ public class ProductCategoryListController extends HttpServlet {
 		
 		request.setCharacterEncoding("UTF-8");
 		String category = request.getParameter("category");	
-		
+		System.out.println(category); // '' 따옴표 나옴
 		
 		// 페이징처리
 		int listCount; // 현재 게시글 총 갯수 : db로부터 조회해서담을 것이다. count 함수사용해서 담음
@@ -50,6 +50,7 @@ public class ProductCategoryListController extends HttpServlet {
 		int endPage; // 사용자가 요청한 페이지 하단의 페이징바의 끝 수  
 		
 		listCount = new ProductService().selectListCount(category);
+		System.out.println(listCount);
 		
 		currentPage = 1;
 		

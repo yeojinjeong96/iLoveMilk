@@ -18,7 +18,6 @@ public class ProductService {
 		
 		close(conn);
 		return listCount;
-		
 	}
 	
 	public ArrayList<Product> selectProductList(PageInfo pi, String category){

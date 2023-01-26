@@ -37,6 +37,7 @@ public class ProductDao {
 		try {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, category);
+			pstmt.setString(2, category);
 			
 			rset = pstmt.executeQuery();
 
@@ -70,8 +71,9 @@ public class ProductDao {
 			int endRow = startRow + pi.getBoardLimit() -1;
 			
 			pstmt.setString(1, category);
-			pstmt.setInt(2, startRow);
-			pstmt.setInt(3, endRow);	
+			pstmt.setString(2, category);
+			pstmt.setInt(3, startRow);
+			pstmt.setInt(4, endRow);	
 			
 			rset= pstmt.executeQuery();
 			
