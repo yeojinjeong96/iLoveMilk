@@ -78,12 +78,16 @@ public class ProductDao {
 			while(rset.next()) {
 				list.add(new Product(
 						rset.getString("product_name"),
-						rset.getInt("price")
+						rset.getInt("price"),
+						rset.getString("product_img")
 						));
 			}
 				
 		} catch (SQLException e) {
 			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
 		}
 		
 
@@ -91,5 +95,7 @@ public class ProductDao {
 		return list;
 		
 	}
+	
+
 
 }

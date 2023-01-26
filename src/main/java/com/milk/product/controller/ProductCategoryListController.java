@@ -1,6 +1,7 @@
 package com.milk.product.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -10,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.milk.common.model.vo.PageInfo;
 import com.milk.product.model.service.ProductService;
+import com.milk.product.model.vo.Product;
 
 /**
  * Servlet implementation class ProductCategoryListController
@@ -35,6 +37,7 @@ public class ProductCategoryListController extends HttpServlet {
 		
 		request.setCharacterEncoding("UTF-8");
 		String category = request.getParameter("category");	
+		
 		
 		// 페이징처리
 		int listCount; // 현재 게시글 총 갯수 : db로부터 조회해서담을 것이다. count 함수사용해서 담음
@@ -67,8 +70,13 @@ public class ProductCategoryListController extends HttpServlet {
 		PageInfo pi = new PageInfo(listCount, currentPage, pageLimit, boardLimit, maxPage, startPage,endPage);
 		
 		ArrayList <Product> list = new ProductService().selectProductList(pi, category);
-
 		
+		
+		request.setAttribute("pi", pi);
+		request.setAttribute("list", list);
+		request.setAttribute("category", category);
+		
+		request.getRequestDispatcher("views/product/productList.jsp").forward(request, response);
 		
 		
 	}

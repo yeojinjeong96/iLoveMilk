@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
- 
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -55,20 +55,15 @@
        }
 
 
-       .allmenu-wrap{
-           
-            /*나중에 빼기*/
-            width: 700px;
-            height:170px;
-        }
+
 
         .all-menu{
             list-style-type:none;
             padding-left:8px;
             margin:0;
-            width:100%;
             height:10%;
-            
+            width: 700px;
+        
         }
 
         /* 상위 메뉴 */
@@ -194,6 +189,7 @@
     }
 
     </style>
+      <meta name="viewport" content="width=device-width, initial-scale=1">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
     <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
@@ -210,61 +206,61 @@
         <!-- 해당 카테고리값들은 반복문을 통해 만들어짐 -->
             <ul class="menu-navi">
                 <li>
-                    <div class="=dropdown">
-                        <button type="button" class="btn  dropdown-toggle" data-toggle="dropdown">전체상품</button>
+                    <div class="dropdown">
+                        <button type="button" class="btn dropdown-toggle" data-toggle="dropdown">전체상품</button>
                         <div class="dropdown-menu" style="height:200px;">
-                            <div class="allmenu-wrap">
+                           
                                 <!-- 해당 카테고리값들은 반복문을 통해 만들어짐 -->
                                     <ul class="all-menu">
-                                      <li><a href="">우유</a> <!-- 카테고리 -->
+                                      <li><a class="dropdown-header" href="<%=contextPath%>/proList.pro?category='우유'">우유</a> <!-- 카테고리 -->
                                             <br>
                                             <div style="border:1px solid gray; width:110px"></div>
                                             <br>
                                             <ul>
-                                                <li><a href="">백색시유</a></li> <!--참조 카테고리-->
-                                                <li><a href="">가공우유</a></li>
-                                                <li><a href="">멸균우유</a></li>
+                                                <li><a class="dropdown-item" href="<%=contextPath%>/proList.pro?category='백색시유'">백색시유</a></li> <!--참조 카테고리-->
+                                                <li><a class="dropdown-item" href="<%=contextPath%>/proList.pro?category='가공우유'">가공우유</a></li>
+                                                <li><a class="dropdown-item" href="<%=contextPath%>/proList.pro?category='멸균우유'">멸균우유</a></li>
                         
                                             </ul>
                                         </li>
-                                        <li><a href="">발효유</a>
+                                        <li><a class="dropdown-header" href="<%=contextPath%>/proList.pro?category='발효유'">발효유</a>
                                             <br>
                                             <div style="border:1px solid gray; width:110px"></div>
                                             <br>
                                             <ul>
-                                                <li><a href="">발효유</a></li>
+                                                <li><a class="dropdown-item" href="<%=contextPath%>/proList.pro?category='발효유'">발효유</a></li>
                                             </ul>
                                         </li>
-                                        <li><a href="">치즈</a>
+                                        <li><a class="dropdown-header" href="<%=contextPath%>/proList.pro?category='치즈'">치즈</a>
                                             <br>
                                             <div style="border:1px solid gray; width:110px"></div>
                                             <br>
                                             <ul>
-                                                <li><a href="">치즈</a></li>
+                                                <li><a class="dropdown-item" href="<%=contextPath%>/proList.pro?category='치즈'">치즈</a></li>
                         
                                             </ul>
                                         </li>
-                                        <li><a href="">락토프리</a>
+                                        <li><a class="dropdown-header" href="<%=contextPath%>/proList.pro?category='락토프리'">락토프리</a>
                                             <br>
                                             <div style="border:1px solid gray; width:110px"></div>
                                             <br>
                                             <ul>
-                                                <li><a href="">락토프리우유</a></li>
+                                                <li><a class="dropdown-item" href="<%=contextPath%>/proList.pro?category='락토프리'">락토프리우유</a></li>
                                             </ul>
                                         </li>
-                                        <li><a href="">레시피</a>
+                                        <li><a class="dropdown-header" href="">레시피</a>
                                             <br>
                                             <div style="border:1px solid gray; width:110px"></div>
                                             <br>
                                             <ul>
-                                                <li><a href="">추천레시피</a></li>
-                                                <li><a href="">자유게시판</a></li>
+                                                <li><a class="dropdown-item" href="">추천레시피</a></li>
+                                                <li><a class="dropdown-item" href="">자유게시판</a></li>
                                             </ul>
                                         </li>
                                     </ul>
                                
                                
-                            </div>
+                            
                         </div>
                     </div>
                 </li>
@@ -276,6 +272,10 @@
                 <li><a href="">레시피</a></li>
             </ul>
     </div>
+    
+    <script>
+    $('.dropdown-toggle').dropdown();
+    </script>
 
     <div id="main-content">
         <div id="demo" class="carousel slide" data-ride="carousel">
@@ -400,6 +400,6 @@
             </div>
         </div>
     </div>
-
+    
 </body>
 </html>
