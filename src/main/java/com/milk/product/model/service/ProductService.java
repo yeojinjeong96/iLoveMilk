@@ -41,6 +41,11 @@ public class ProductService {
 		
 	}
 	
+	/**
+	 * 상품 등록
+	 * @author 승하
+	 * @return 상품 등록 성공시 1, 실패시 2
+	 */
 	public int insertProduct(Product p) {
 		Connection conn = getConnection();
 		int result = new ProductDao().insertProduct(conn, p);
