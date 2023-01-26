@@ -32,9 +32,10 @@ public class MainProductController extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-		ArrayList<Product> list = new ProductService().selectRecentProduct();
+		ArrayList<Product> list = new ProductService().selectRecentProductList();
 		
-		
+		request.setAttribute("list", list);
+		request.getRequestDispatcher("views/common/mainContent.jsp").forward(request, response);
 		
 	}
 
