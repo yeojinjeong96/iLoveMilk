@@ -31,21 +31,21 @@
                             <tr>
                                 <th width="30%"><span>*</span> 카테고리&nbsp;</th>
                                 <td width="70%">
-                                    <select name="fCate" id="fCate">
+                                    <select onchange="sCateShow();" name="fCate" id="fCate">
                                     	<option>- 1차 카테고리 -</option>
-                                        <option id="op1" onclick="sCateShow();">우유</option>
-                                        <option id="op2" onclick="sCateShow();">발효유</option>
-                                        <option id="op3" onclick="sCateShow();">치즈</option>
-                                        <option id="op4" onclick="sCateShow();">락토프리</option>
+                                        <option>우유</option>
+                                        <option>발효유</option>
+                                        <option>치즈</option>
+                                        <option>락토프리</option>
                                     </select>
                                     <select name="sCate" id="sCate">
                                         <option>- 2차 카테고리 -</option>
-                                        <option id="ti1" style="display:none">백색시유</option>
-                                        <option id="ti2" style="display:none">가공우유</option>
-                                        <option id="ti3" style="display:none">멸균우유</option>
-                                        <option id="ti4" style="display:none">발효유</option>
-                                        <option id="ti5" style="display:none">치즈</option>
-                                        <option id="ti6" style="display:none">락토프리</option>
+                                        <option class="ti1" style="display:none">백색시유</option>
+                                        <option class="ti1" style="display:none">가공우유</option>
+                                        <option class="ti1" style="display:none">멸균우유</option>
+                                        <option class="ti2" style="display:none">발효유</option>
+                                        <option class="ti3" style="display:none">치즈</option>
+                                        <option class="ti4" style="display:none">락토프리</option>
                                     </select>
                                 </td>
                             </tr>
@@ -95,44 +95,44 @@
     </div>
     
     <script>
-    	$(function(){
-    		if($("#op1").is(":selected")){
-    			$("#ti1").attr("style", "display:block");
-    			$("#ti2").attr("style", "display:block");
-    			$("#ti3").attr("style", "display:block");
-    			$("#ti4").attr("style", "display:none");
-    			$("#ti5").attr("style", "display:none");
-    			$("#ti6").attr("style", "display:none");
-    		}else if($("#op2").is(":selected")){
-    			$("#ti1").attr("style", "display:none");
-    			$("#ti2").attr("style", "display:none");
-    			$("#ti3").attr("style", "display:none");
-    			$("#ti4").attr("style", "display:block");
-    			$("#ti5").attr("style", "display:none");
-    			$("#ti6").attr("style", "display:none");
-    		}else if($("#op3").is(":selected")){
-    			$("#ti1").attr("style", "display:none");
-    			$("#ti2").attr("style", "display:none");
-    			$("#ti3").attr("style", "display:none");
-    			$("#ti4").attr("style", "display:none");
-    			$("#ti5").attr("style", "display:block");
-    			$("#ti6").attr("style", "display:none");
-    		}else if($("#op4").is(":selected")){
-    			$("#ti1").attr("style", "display:none");
-    			$("#ti2").attr("style", "display:none");
-    			$("#ti3").attr("style", "display:none");
-    			$("#ti4").attr("style", "display:none");
-    			$("#ti5").attr("style", "display:none");
-    			$("#ti6").attr("style", "display:block");
+    	function sCateShow(){
+    		if($("select[name=fCate] option:selected").text() == "우유"){
+    			$(".ti1").each(function(){
+    				$(this).attr("style", "display:block");
+    			});
+    			$(".ti2").attr("style", "display:none");
+    			$(".ti3").attr("style", "display:none");
+    			$(".ti4").attr("style", "display:none");
+    		}else if($("select[name=fCate] option:selected").text() == "발효유"){
+    			$(".ti1").each(function(){
+    				$(this).attr("style", "display:none");
+    			});
+    			$(".ti2").attr("style", "display:block");
+    			$(".ti3").attr("style", "display:none");
+    			$(".ti4").attr("style", "display:none");
+    		}else if($("select[name=fCate] option:selected").text() == "치즈"){
+    			$(".ti1").each(function(){
+    				$(this).attr("style", "display:none");
+    			});
+    			$(".ti2").attr("style", "display:none");
+    			$(".ti3").attr("style", "display:block");
+    			$(".ti4").attr("style", "display:none");
+    		}else if($("select[name=fCate] option:selected").text() == "락토프리"){
+    			$(".ti1").each(function(){
+    				$(this).attr("style", "display:none");
+    			});
+    			$(".ti2").attr("style", "display:none");
+    			$(".ti3").attr("style", "display:none");
+    			$(".ti4").attr("style", "display:block");
     		}else{
-    			$("#ti1").attr("style", "display:none");
-    			$("#ti2").attr("style", "display:none");
-    			$("#ti3").attr("style", "display:none");
-    			$("#ti4").attr("style", "display:none");
-    			$("#ti5").attr("style", "display:none");
-    			$("#ti6").attr("style", "display:none");
+    			$(".ti1").each(function(){
+    				$(this).attr("style", "display:none");
+    			});
+    			$(".ti2").attr("style", "display:none");
+    			$(".ti3").attr("style", "display:none");
+    			$(".ti4").attr("style", "display:none");
     		}
-    	})
+    	}
     </script>
     
 </body>
