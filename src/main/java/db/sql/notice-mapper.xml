@@ -29,6 +29,29 @@
 	  WHERE NOTICE_NO = ?
 	  AND STATUS = 'Y'
 	</entry>
+	<entry key="selectNotice">
+		SELECT 
+		   ,NOTICE_NO
+		    NOTICE_TITLE
+		   ,NOTICE_CONTENT
+		   ,COUNT
+		   ,ENROLL_DATE
+		   ,MANAGER_NAME
+		 FROM TB_NOTICE
+		JOIN TB_MANAGER ON (WRITER_NO = MANAGER_NO)
+		JOIN TB_ATTACHMENT ON (REF_NO = NOTICE_NO) 
+		WHERE FILE_TYPE = 3
+		AND NOTICE_NO =?
+	</entry>
+	<entry key="selectAttachment">
+		SELECT 
+		    FILE_NO
+		   ,CHANGE_NAME
+		   ,FILE_PATH
+		FROM TB_ATTACHMENT
+		WHERE REF_NO =?
+		AND FILE_TYPE = 3
+	</entry>
 	<entry key="insertNotice">
 		INSERT 
 	    INTO TB_NOTICE
@@ -48,7 +71,7 @@
 	</entry>
 	<entry key="insertAttachment">
 	INSERT 
-	    INTO ATTACHMENT
+	    INTO TB_ATTACHMENT
 	    (
 	    FILE_NO
 	   ,REF_NO
@@ -62,8 +85,24 @@
 	   ,SEQ_NNO.CURRVAL
 	   ,?
 	   ,?
-	   ,?
-	   ,?
+	   ,3
 	    )
+	</entry>
+	<entry key="selectSearchList">
+		SELECT * 
+	       FROM (SELECT  ROWNUM RNUM, E.*
+	               FROM (SELECT 
+	                        NOTICE_NO
+	                       ,NOTICE_TITLE
+	                       ,NOTICE_CONTENT
+	                       ,COUNT
+	                       ,ENROLL_DATE
+	                       ,MANAGER_NAME
+	                   FROM TB_NOTICE N
+	                JOIN TB_MANAGER ON (WRITER_NO = MANAGER_NO)
+	               WHERE N.STATUS='Y'
+	               AND NOTICE_TITLE || NOTICE_CONTENT LIKE '%'||?||'%'
+	               ORDER BY ENROLL_DATE DESC) E)
+	               WHERE RNUM BETWEEN ? AND ?
 	</entry>
 </properties>

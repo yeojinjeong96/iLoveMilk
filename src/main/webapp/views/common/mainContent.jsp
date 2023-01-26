@@ -1,5 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ page import="java.util.ArrayList, com.milk.product.model.vo.Product" %>    
+
+<% 
+	ArrayList<Product> list = (ArrayList<Product>)request.getAttribute("list"); 
+%>
 
 <!DOCTYPE html>
 <html>
@@ -201,16 +206,17 @@
 </head>
 <body>
 
-   
+<%@ include file= "header.jsp" %>
+  
     <div class="menu-wrap">
-        <!-- 해당 카테고리값들은 반복문을 통해 만들어짐 -->
+
             <ul class="menu-navi">
                 <li>
                     <div class="dropdown">
                         <button type="button" class="btn dropdown-toggle" data-toggle="dropdown">전체상품</button>
                         <div class="dropdown-menu" style="height:200px;">
                            
-                                <!-- 해당 카테고리값들은 반복문을 통해 만들어짐 -->
+                           
                                     <ul class="all-menu">
                                       <li><a class="dropdown-header" href="<%=contextPath%>/proList.pro?우유">우유</a> <!-- 카테고리 -->
                                             <br>
@@ -253,7 +259,7 @@
                                             <div style="border:1px solid gray; width:110px"></div>
                                             <br>
                                             <ul>
-                                                <li><a class="dropdown-item" href="">추천레시피</a></li>
+                                                <li><a class="dropdown-item" href="<%= contextPath %>/list.re?cpage=1">추천레시피</a></li>
                                                 <li><a class="dropdown-item" href="">자유게시판</a></li>
                                             </ul>
                                         </li>
@@ -319,38 +325,27 @@
             </div>
             
             <div id="con1-2">
-
-                <div class="thumbnail" align="left">
-                    <a href="" style="color:rgb(113, 113, 113); text-decoration:none;">
-                    <img src="resources/product_upfiles/나 100_ 그린라벨.png" alt="" width="200" height="200">
-                    
-                    <p>
-                        제주도우유 500ml<br>
-                        7,000원
-                    </p>
-                    </a>
-                </div>
-                <div class="thumbnail" align="left">
-                    <a href="" style="color:rgb(113, 113, 113); text-decoration:none;">
-                    <img src="resources/product_upfiles/나 100_ 그린라벨.png" alt="" width="200" height="200">
-                    
-                    <p>
-                        제주도우유 500ml<br>
-                        7,000원
-                    </p>
-                    </a>
-                </div>
-                <div class="thumbnail" align="left">
-                    <a href="" style="color:rgb(113, 113, 113); text-decoration:none;">
-                    <img src="resources/product_upfiles/나 100_ 그린라벨.png" alt="" width="200" height="200">
-                    
-                    <p>
-                        제주도우유 500ml<br>
-                        7,000원
-                    </p>
-                    </a>
-                </div>
-
+				
+				<%if(list.isEmpty()){ %>
+				
+					<p>제품이 존재하지 않습니다.</p>
+					
+				<%} else{ %>
+				
+					<%for(Product p : list){ %>
+					
+		                <div class="thumbnail" align="left">
+		                    <a href="" style="color:rgb(113, 113, 113); text-decoration:none;">
+		                    <img src="<%=p.getProductImg() %>" alt="" width="200" height="200">
+		                    
+		                    <p>
+		                        <%=p.getProductName() %><br>
+		                        <%=p.getPrice() %>
+		                    </p>
+		                    </a>
+		                </div>
+	                <%} %>
+				<%} %>
             </div>
         </div>
 
@@ -365,7 +360,7 @@
                 
                 <div class="thumbnail" align="left">
                     <a href="" style="color:rgb(113, 113, 113); text-decoration:none;">
-                    <img src="resources/product_upfiles/나 100_ 그린라벨.png" alt="" width="200" height="200">
+                    <img src="" alt="" width="200" height="200">
                     
                     <p>
                         레시피제목<br>
@@ -376,7 +371,7 @@
 
                 <div class="thumbnail" align="left">
                     <a href="" style="color:rgb(113, 113, 113); text-decoration:none;">
-                    <img src="resources/product_upfiles/나 100_ 그린라벨.png" alt="" width="200" height="200">
+                    <img src="" alt="" width="200" height="200">
                     
                     <p>
                         레시피제목<br>
@@ -387,7 +382,7 @@
 
                 <div class="thumbnail" align="left">
                     <a href="" style="color:rgb(113, 113, 113); text-decoration:none;">
-                    <img src="resources/product_upfiles/나 100_ 그린라벨.png" alt="" width="200" height="200">
+                    <img src="" alt="" width="200" height="200">
                     
                     <p>
                         레시피제목<br>
@@ -401,5 +396,6 @@
         </div>
     </div>
     
+    <%@ include file="footer.jsp" %> 
 </body>
 </html>

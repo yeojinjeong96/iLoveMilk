@@ -20,7 +20,7 @@ public class ProductDao {
 	
 	public ProductDao() {
 		try {
-			prop.loadFromXML(new FileInputStream(Product.class.getResource("db/sql/product-mapper.xml").getPath()));
+			prop.loadFromXML(new FileInputStream(ProductDao.class.getResource("/db/sql/product-mapper.xml").getPath()));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -55,6 +55,7 @@ public class ProductDao {
 		return listCount;
 		
 	}
+	
 	
 	public ArrayList<Product> selectProductList(Connection conn, PageInfo pi, String category){
 		
@@ -98,6 +99,62 @@ public class ProductDao {
 		
 	}
 	
+	public ArrayList<Product> selectRecentProductList(Connection conn){
+		
+		ArrayList<Product> list = new ArrayList<>();
+		ResultSet rset = null;
+		PreparedStatement pstmt = null;
+		
+		String sql = prop.getProperty("selectRecentProductList");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				list.add(new Product(
+						rset.getString("product_name"),
+						rset.getInt("price"),
+						rset.getString("product_img")
+						));
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		System.out.println(list);
+		
+		return list;
+		
+	}
+	
+	public int insertProduct(Connection conn, Product p) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String sql = prop.getProperty("insertProduct");
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, p.getProductName());
+			pstmt.setInt(2, p.getPrice());
+			pstmt.setInt(3, p.getCapacity());
+			pstmt.setString(4, p.getBrand());
+			pstmt.setInt(5, p.getStock());
+			pstmt.setString(6, p.getProductInfo());
+			pstmt.setString(7, p.getfCategory());
+			pstmt.setString(8, p.getsCategory());
+			pstmt.setString(9, p.getProductImg());
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		return result;
+	}
 
 
 }

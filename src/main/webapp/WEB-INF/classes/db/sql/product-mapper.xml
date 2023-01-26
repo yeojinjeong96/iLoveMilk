@@ -4,10 +4,10 @@
 
 <entry key="selectListCount">
 		SELECT
-		       count(*) count
+		       COUNT(*) COUNT
 		  FROM TB_PRODUCT
 		 WHERE STOCK > 0
-            AND FCATEGORY_name =? 
+            AND FCATEGORY_NAME = ? OR SCATEGORY_NAME =?
 </entry>
 
 <entry key ="selectProductList">
@@ -21,15 +21,56 @@
 		                     , PRODUCT_IMG
 		                  FROM TB_PRODUCT B
 		                 WHERE STOCK > 0
-                           AND FCATEGORY_NAME = ?
+                           AND FCATEGORY_NAME = ? OR SCATEGORY_NAME = ?
 		                 ORDER
 		                    BY ENROLL_DATE DESC
 		                ) A
 		        )
-		 WHERE RNUM BETWEEN ? AND ?
+		  WHERE RNUM BETWEEN ? AND ? 
 </entry>
 
-
-
-
+<entry key="selectRecentProductList">
+                  SELECT 		    
+                           PRODUCT_NAME
+	                     , PRICE
+	                     , PRODUCT_IMG
+                    FROM (
+                          SELECT PRODUCT_NAME
+                               , PRICE
+                               , PRODUCT_IMG
+                            FROM TB_PRODUCT   
+                           ORDER 
+                              BY ENROLL_DATE DESC    
+                          )
+                   WHERE ROWNUM <![CDATA[<=]]> 3 
+</entry>
+<entry key="insertProduct">
+	INSERT
+	  INTO TB_PRODUCT
+	  (
+	    PRODUCT_NO
+	  , PRODUCT_NAME
+	  , PRICE
+	  , CAPACITY
+	  , BRAND
+	  , STOCK
+	  , PRODUCT_INFO
+	  , FCATEGORY_NAME
+	  , SCATEGORY_NAME
+	  , PRODUCT_IMG
+	  )
+	  VALUES
+	  (
+	    SEQ_PRONO.NEXTVAL
+	  , ?
+	  , ?
+	  , ?
+	  , ?
+	  , ?
+	  , ?
+	  , ?
+	  , ?
+	  , ?
+	  )
+</entry>
 </properties>

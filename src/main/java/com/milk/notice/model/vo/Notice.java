@@ -13,6 +13,7 @@ public class Notice {
 	private int writerNo;
 	
 	private String managerName;
+	private String titleImg;
 	
 	
 	
@@ -48,6 +49,41 @@ public class Notice {
 		this.status = status;
 		this.writerNo = writerNo;
 		this.managerName = managerName;
+	}
+
+
+
+	
+
+
+
+	
+
+
+
+	public Notice(int noticeNo, String noticeTitle, String noticeContent, int count, String enrollDate,
+			String managerName) {
+		super();
+		this.noticeNo = noticeNo;
+		this.noticeTitle = noticeTitle;
+		this.noticeContent = noticeContent;
+		this.count = count;
+		this.enrollDate = enrollDate;
+		this.managerName = managerName;
+	}
+
+
+
+
+	public String getTitleImg() {
+		return titleImg;
+	}
+
+
+
+
+	public void setTitleImg(String titleImg) {
+		this.titleImg = titleImg;
 	}
 
 

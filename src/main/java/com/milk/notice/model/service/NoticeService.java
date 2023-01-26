@@ -20,7 +20,7 @@ public class NoticeService {
 		
 		Connection conn = getConnection();
 		int listCount= new NoticeDao().selectNoticeListCount(conn);
-		
+		close(conn);
 		return listCount;
 		
 	}
@@ -29,6 +29,7 @@ public class NoticeService {
 		
 		Connection conn= getConnection();
 		ArrayList<Notice>list= new NoticeDao().selectNoticeList(conn,pi);
+		close(conn);
 		return list;
 	}
 	
@@ -43,6 +44,20 @@ public class NoticeService {
 		}
 		close(conn);
 		return result;
+	}
+	
+	public Notice selectNotice(int noticeNo) {
+		Connection conn = getConnection();
+		Notice n = new NoticeDao().selectNotice(conn, noticeNo);
+		close(conn);
+		return n;
+	}
+	
+	public Attachment selectAttachment(int noticeNo) {
+		Connection conn = getConnection();
+		Attachment at = new NoticeDao().selectAttachment(conn, noticeNo);
+		close(conn);
+		return at;
 	}
 	
 	public int insertNotice(Notice n, Attachment at) {
@@ -62,6 +77,15 @@ public class NoticeService {
 		}
 		
 		return result1 * result2;
+		
+	}
+	
+	public ArrayList<Notice> selectSearchList(PageInfo pi,String searchNo){
+		
+		Connection conn= getConnection();
+		ArrayList<Notice>list= new NoticeDao().selectSearchList(conn,pi,searchNo);
+		close(conn);
+		return list;
 		
 	}
 }

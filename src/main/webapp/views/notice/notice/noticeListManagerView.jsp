@@ -4,7 +4,7 @@
 <% 
 	ArrayList<Notice>list= (ArrayList<Notice>)request.getAttribute("list");
 	PageInfo pi = (PageInfo)request.getAttribute("pi");
-	
+
 %>
 <!DOCTYPE html>
 <html>
@@ -36,7 +36,7 @@
 <body>
 	<%@include file="/views/common/managerHeader.jsp" %>
 	<%@include file="/views/common/managerMenubar.jsp" %>
-	
+
     <div class="outer" align="center" >
         <br>
         <div style="width:700px">
@@ -45,8 +45,8 @@
             <br>
             <form action="" method="post">
                 <div class="btn-area" align="right">
-                    <a href="<%=request.getContextPath()%>/enroll.no">공지작성</a>
-                    <button type="submit">선택삭제</button>
+                    <a href="<%=contextPath%>/enroll.no">공지작성</a>
+                    <button type="button" id="dlt-btn">선택삭제</button>
                 </div>
                 <br>
                 <table class="list-area" border="1" >
@@ -72,7 +72,7 @@
                         <!--공지사항이 있을 경우-->
            				<%for(Notice n : list){%>
                             <tr >
-                                <td><input type="checkbox" name="delete" value=""></td>
+                                <td><input type="checkbox" name="delete" ></td>
                                 <td><%=n.getNoticeNo() %></td>
                                 <td><%=n.getNoticeTitle() %></td>
                                 <td><%=n.getManagerName() %></td>
@@ -99,8 +99,10 @@
             <%} %>
             </div>
             <br>
-            <form action="" method="get">
-                <input type="text">
+            
+            <form action="<%=contextPath%>/search.no?cpage=1" method="post">
+                <input type="text" name="searchNo">
+              	
                 <button type="submit">검색</button>
             </form>
         </div>
@@ -108,7 +110,13 @@
     
 
     </div>
-    
+    <script>
+    	$(function(){
+    		$("#dlt-btn").click(function(){
+    			if($(input[name='delete']:checked).length==1)
+    		})
+    	})
+    </script>
 
 </body>
 </html>

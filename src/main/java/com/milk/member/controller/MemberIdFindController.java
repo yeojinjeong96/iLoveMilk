@@ -31,25 +31,29 @@ public class MemberIdFindController extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
+		
+		request.setCharacterEncoding("UTF-8");
+		
 		String memberName = request.getParameter("memberName");
 		String email = request.getParameter("email");
 		
 		Member findId = new MemberService().findMemberId(memberName, email);
 		
-		
+		System.out.println(findId);
 		
 		
 		if(findId==null) { //조회결과 없음 
 			
-			request.setAttribute("alertMsg", "아이디가 존재하지 않습니다");
-			  
-			response.sendRedirect(request.getContextPath()+"/idFindPage.me"); 
 			
+			  
+			response.sendRedirect(request.getContextPath() + "/idFindPage.me"); 
+		
 		}else { //조회결과 있음 
 			
-			request.setAttribute("alertMsg", findId.getMemberId());
-			  
-			response.sendRedirect(request.getContextPath()+"/idFindPage.me");      
+			HttpSession session = request.getSession();
+			session.setAttribute("findId", findId);
+			response.sendRedirect(request.getContextPath() + "/idFindSuccess.me" );
+			
 		}
 		
 	}

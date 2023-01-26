@@ -26,10 +26,51 @@
 		                    BY ENROLL_DATE DESC
 		                ) A
 		        )
-		 WHERE RNUM BETWEEN ? AND ?
+		  WHERE RNUM BETWEEN ? AND ? 
 </entry>
 
-
-
-
+<entry key="selectRecentProductList">
+                  SELECT 		    
+                           PRODUCT_NAME
+	                     , PRICE
+	                     , PRODUCT_IMG
+                    FROM (
+                          SELECT PRODUCT_NAME
+                               , PRICE
+                               , PRODUCT_IMG
+                            FROM TB_PRODUCT   
+                           ORDER 
+                              BY ENROLL_DATE DESC    
+                          )
+                   WHERE ROWNUM <![CDATA[<=]]> 3 
+</entry>
+<entry key="insertProduct">
+	INSERT
+	  INTO TB_PRODUCT
+	  (
+	    PRODUCT_NO
+	  , PRODUCT_NAME
+	  , PRICE
+	  , CAPACITY
+	  , BRAND
+	  , STOCK
+	  , PRODUCT_INFO
+	  , FCATEGORY_NAME
+	  , SCATEGORY_NAME
+	  , PRODUCT_IMG
+	  )
+	  VALUES
+	  (
+	    SEQ_PRONO.NEXTVAL
+	  , ?
+	  , ?
+	  , ?
+	  , ?
+	  , ?
+	  , ?
+	  , ?
+	  , ?
+	  , ?
+	  )
+</entry>
 </properties>
