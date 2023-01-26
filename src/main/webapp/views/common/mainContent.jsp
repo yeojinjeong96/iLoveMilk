@@ -259,7 +259,7 @@
                                             <div style="border:1px solid gray; width:110px"></div>
                                             <br>
                                             <ul>
-                                                <li><a class="dropdown-item" href="">추천레시피</a></li>
+                                                <li><a class="dropdown-item" href="<%= contextPath %>/list.re?cpage=1">추천레시피</a></li>
                                                 <li><a class="dropdown-item" href="">자유게시판</a></li>
                                             </ul>
                                         </li>
