@@ -34,6 +34,7 @@ public class MainProductController extends HttpServlet {
 
 		ArrayList<Product> list = new ProductService().selectRecentProductList();
 		
+		
 		request.setAttribute("list", list);
 		request.getRequestDispatcher("views/common/mainContent.jsp").forward(request, response);
 		
