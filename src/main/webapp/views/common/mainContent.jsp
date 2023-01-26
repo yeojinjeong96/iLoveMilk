@@ -326,7 +326,7 @@
             
             <div id="con1-2">
 				
-				<%if(list.isEmpty()){ %>
+				<%if(list==null){ %>
 				
 					<p>제품이 존재하지 않습니다.</p>
 					
