@@ -31,16 +31,14 @@
 	</entry>
 	<entry key="selectNotice">
 		SELECT 
-		   ,NOTICE_NO
-		    NOTICE_TITLE
+		    NOTICE_NO
+		   ,NOTICE_TITLE
 		   ,NOTICE_CONTENT
 		   ,COUNT
 		   ,ENROLL_DATE
 		   ,MANAGER_NAME
-		 FROM TB_NOTICE
-		JOIN TB_MANAGER ON (WRITER_NO = MANAGER_NO)
-		JOIN TB_ATTACHMENT ON (REF_NO = NOTICE_NO) 
-		WHERE FILE_TYPE = 3
+		 FROM TB_NOTICE 
+        JOIN TB_MANAGER ON (WRITER_NO = MANAGER_NO)
 		AND NOTICE_NO =?
 	</entry>
 	<entry key="selectAttachment">

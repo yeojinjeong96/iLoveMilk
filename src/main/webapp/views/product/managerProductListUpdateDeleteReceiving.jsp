@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ page import="java.util.ArrayList, com.milk.product.model.vo.Product" %>
+<% ArrayList<Product> list = (ArrayList<Product>)request.getAttribute("list"); %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -25,18 +27,10 @@
                     <table class="outer-2">
                         <tr>
                             <td>
-                                <select name="" id="">
-                                    <option value="">전체 조회?</option>
-                                    <option value="">카테고리별 조회?</option>
-                                </select>
-
-                                <!-- 전체 조회인 경우 -->
-                                <!-- 카테고리별 조회인 경우 -->
-
-                                <select name="" id="">
-                                    <option value="">상품명?</option>
-                                    <option value="">상품코드?</option>
-                                    <option value="">브랜드?</option>
+                                <select name="searchOp">
+                                    <option value="">상품명</option>
+                                    <option value="">상품코드</option>
+                                    <option value="">브랜드</option>
                                 </select>
                                 <input type="text">
                                 <button class="btn btn-primary btn-sm">검색</button>

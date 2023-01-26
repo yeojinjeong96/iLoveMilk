@@ -1,7 +1,6 @@
-package com.milk.product.controller;
+package com.milk.notice.controller;
 
 import java.io.IOException;
-import java.util.ArrayList;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -9,21 +8,21 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.google.gson.Gson;
-import com.milk.product.model.service.ProductService;
-import com.milk.product.model.vo.Product;
+import com.milk.notice.model.service.NoticeService;
+import com.milk.notice.model.vo.Attachment;
+import com.milk.notice.model.vo.Notice;
 
 /**
- * Servlet implementation class MainProductController
+ * Servlet implementation class NoticeUpdateController
  */
-@WebServlet("/milk")
-public class MainProductController extends HttpServlet {
+@WebServlet("/updateForm.no")
+public class NoticeUpdateFormController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public MainProductController() {
+    public NoticeUpdateFormController() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -32,8 +31,13 @@ public class MainProductController extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
+		int noticeNo=  Integer.parseInt(request.getParameter("no"));
 		
+		Notice n = new NoticeService().selectNotice(noticeNo);
+		Attachment at= new NoticeService().selectAttachment(noticeNo);
+		request.setAttribute("n", n);
+		request.setAttribute("at", at);
+		request.getRequestDispatcher("views/notice/notice/noticeUpdateForm.jsp").forward(request, response);
 	}
 
 	/**

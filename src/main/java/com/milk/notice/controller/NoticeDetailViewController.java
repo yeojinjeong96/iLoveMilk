@@ -45,7 +45,7 @@ public class NoticeDetailViewController extends HttpServlet {
 		}else {
 			
 		}
-		request.getRequestDispatcher("views/notice/noticeDetailView.jsp").forward(request, response);
+		
 	}
 
 	/**

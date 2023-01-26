@@ -1,29 +1,25 @@
-package com.milk.product.controller;
+package com.milk.member.controller;
 
 import java.io.IOException;
-import java.util.ArrayList;
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.google.gson.Gson;
-import com.milk.product.model.service.ProductService;
-import com.milk.product.model.vo.Product;
+import com.milk.member.model.service.MemberService;
 
 /**
- * Servlet implementation class MainProductController
+ * Servlet implementation class AjaxIdCheckController
  */
-@WebServlet("/milk")
-public class MainProductController extends HttpServlet {
+@WebServlet("/idCheck.me")
+public class AjaxIdCheckController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public MainProductController() {
+    public AjaxIdCheckController() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -32,7 +28,16 @@ public class MainProductController extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
+		
+		String checkId = request.getParameter("checkId");
+		
+		int count = new MemberService().idCheck(checkId);
+		
+		if(count> 0 ) {
+			response.getWriter().print("NNNNN");
+		}else {
+			response.getWriter().print("NNNNY");
+		}
 		
 	}
 
