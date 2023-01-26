@@ -1,6 +1,7 @@
-package com.milk.manager.controller;
+package com.milk.product.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -8,20 +9,20 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.milk.manager.model.service.ManagerService;
-import com.milk.manager.model.vo.Manager;
+import com.milk.product.model.service.ProductService;
+import com.milk.product.model.vo.Product;
 
 /**
- * Servlet implementation class ManagerLoginController
+ * Servlet implementation class MainProductController
  */
-@WebServlet("/login.ma")
-public class ManagerLoginController extends HttpServlet {
+@WebServlet("/iLoveMilk")
+public class MainProductController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public ManagerLoginController() {
+    public MainProductController() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -30,18 +31,12 @@ public class ManagerLoginController extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String managerId = request.getParameter("managerId");
-		String managerPwd = request.getParameter("managerPwd");
+
+		ArrayList<Product> list = new ProductService().selectRecentProductList();
 		
-		Manager loginManager = new ManagerService().managerLogin(managerId, managerPwd);
+		request.setAttribute("list", list);
+		request.getRequestDispatcher("views/common/mainContent.jsp").forward(request, response);
 		
-		if(loginManager == null) { // 실패시
-			request.getSession().setAttribute("error", "로그인 실패");
-			response.sendRedirect(request.getContextPath() + "/loginForm.ma");
-		} else { // 성공시
-			request.getSession().setAttribute("loginManager", loginManager);
-			response.sendRedirect(request.getContextPath() + "/main.ma");
-		}
 	}
 
 	/**

@@ -34,6 +34,20 @@ public class Product {
 		this.status = status;
 	}
 	
+	public Product(String productName, int price, int capacity, String brand, String productInfo, int stock,
+			String fCategory, String sCategory, String productImg) {
+		super();
+		this.productName = productName;
+		this.price = price;
+		this.capacity = capacity;
+		this.brand = brand;
+		this.productInfo = productInfo;
+		this.stock = stock;
+		this.fCategory = fCategory;
+		this.sCategory = sCategory;
+		this.productImg = productImg;
+	}
+
 	public Product(String productName, int price, String productImg) {
 		super();
 		this.productName = productName;

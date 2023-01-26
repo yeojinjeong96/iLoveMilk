@@ -1,7 +1,6 @@
 package com.milk.product.model.service;
 
-import static com.milk.common.JDBCTemplate.close;
-import static com.milk.common.JDBCTemplate.getConnection;
+import static com.milk.common.JDBCTemplate.*;
 
 import java.sql.Connection;
 import java.util.ArrayList;
@@ -21,6 +20,7 @@ public class ProductService {
 		return listCount;
 	}
 	
+
 	public ArrayList<Product> selectProductList(PageInfo pi, String category){
 		
 		Connection conn = getConnection();
@@ -30,6 +30,31 @@ public class ProductService {
 		return list;
 		
 	}
+	
+	public ArrayList<Product> selectRecentProductList(){
+		
+		Connection conn = getConnection();
+		ArrayList<Product>list = new ProductDao().selectRecentProductList(conn);
+		
+		close(conn);
+		return list;
+		
+	}
+	
+	public int insertProduct(Product p) {
+		Connection conn = getConnection();
+		int result = new ProductDao().insertProduct(conn, p);
+		if(result > 0) {
+			commit(conn);
+		} else {
+			rollback(conn);
+		}
+		close(conn);
+		return result;
+	}
+
+	
+	
 	
 
 
