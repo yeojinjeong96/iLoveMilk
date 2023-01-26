@@ -56,6 +56,7 @@ public class ProductDao {
 		
 	}
 	
+	
 	public ArrayList<Product> selectProductList(Connection conn, PageInfo pi, String category){
 		
 		ArrayList<Product> list = new ArrayList<>();
@@ -97,7 +98,6 @@ public class ProductDao {
 		return list;
 		
 	}
-	
 
 
 }

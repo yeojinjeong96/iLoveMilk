@@ -21,6 +21,7 @@ public class ProductService {
 		return listCount;
 	}
 	
+
 	public ArrayList<Product> selectProductList(PageInfo pi, String category){
 		
 		Connection conn = getConnection();
@@ -30,6 +31,9 @@ public class ProductService {
 		return list;
 		
 	}
+
+	
+	
 	
 
 
