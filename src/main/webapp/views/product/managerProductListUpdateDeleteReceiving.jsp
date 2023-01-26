@@ -27,10 +27,10 @@
                     <table class="outer-2">
                         <tr>
                             <td>
-                                <select name="" id="">
-                                    <option value="">상품명?</option>
-                                    <option value="">상품코드?</option>
-                                    <option value="">브랜드?</option>
+                                <select name="searchOp">
+                                    <option value="">상품명</option>
+                                    <option value="">상품코드</option>
+                                    <option value="">브랜드</option>
                                 </select>
                                 <input type="text">
                                 <button class="btn btn-primary btn-sm">검색</button>
