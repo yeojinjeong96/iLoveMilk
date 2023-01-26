@@ -1,6 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
- 
+<%@ page import="java.util.ArrayList, com.milk.product.model.vo.Product" %>    
+
+
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -55,20 +58,15 @@
        }
 
 
-       .allmenu-wrap{
-           
-            /*나중에 빼기*/
-            width: 700px;
-            height:170px;
-        }
+
 
         .all-menu{
             list-style-type:none;
             padding-left:8px;
             margin:0;
-            width:100%;
             height:10%;
-            
+            width: 700px;
+        
         }
 
         /* 상위 메뉴 */
@@ -194,6 +192,7 @@
     }
 
     </style>
+      <meta name="viewport" content="width=device-width, initial-scale=1">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
     <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
@@ -205,77 +204,82 @@
 </head>
 <body>
 
-   
+<%@ include file= "header.jsp" %>
+  
     <div class="menu-wrap">
-        <!-- 해당 카테고리값들은 반복문을 통해 만들어짐 -->
+
             <ul class="menu-navi">
                 <li>
-                    <div class="=dropdown">
-                        <button type="button" class="btn  dropdown-toggle" data-toggle="dropdown">전체상품</button>
+                    <div class="dropdown">
+                        <button type="button" class="btn dropdown-toggle" data-toggle="dropdown">전체상품</button>
                         <div class="dropdown-menu" style="height:200px;">
-                            <div class="allmenu-wrap">
-                                <!-- 해당 카테고리값들은 반복문을 통해 만들어짐 -->
+                           
+                           
                                     <ul class="all-menu">
-                                      <li><a href="">우유</a> <!-- 카테고리 -->
+                                      <li><a class="dropdown-header" href="<%=contextPath%>/proList.pro?우유&cpage=1">우유</a> <!-- 카테고리 -->
                                             <br>
                                             <div style="border:1px solid gray; width:110px"></div>
                                             <br>
                                             <ul>
-                                                <li><a href="">백색시유</a></li> <!--참조 카테고리-->
-                                                <li><a href="">가공우유</a></li>
-                                                <li><a href="">멸균우유</a></li>
+                                                <li><a class="dropdown-item" href="<%=contextPath%>/proList.pro?category=백색시유&cpage=1">백색시유</a></li> <!--참조 카테고리-->
+                                                <li><a class="dropdown-item" href="<%=contextPath%>/proList.pro?category=가공우유&cpage=1">가공우유</a></li>
+                                                <li><a class="dropdown-item" href="<%=contextPath%>/proList.pro?category=멸균우유&cpage=1">멸균우유</a></li>
                         
                                             </ul>
                                         </li>
-                                        <li><a href="">발효유</a>
+                                        <li><a class="dropdown-header" href="<%=contextPath%>/proList.pro?category=발효유&cpage=1">발효유</a>
                                             <br>
                                             <div style="border:1px solid gray; width:110px"></div>
                                             <br>
                                             <ul>
-                                                <li><a href="">발효유</a></li>
+                                                <li><a class="dropdown-item" href="<%=contextPath%>/proList.pro?category=발효유&cpage=1">발효유</a></li>
                                             </ul>
                                         </li>
-                                        <li><a href="">치즈</a>
+                                        <li><a class="dropdown-header" href="<%=contextPath%>/proList.pro?category=치즈&cpage=1">치즈</a>
                                             <br>
                                             <div style="border:1px solid gray; width:110px"></div>
                                             <br>
                                             <ul>
-                                                <li><a href="">치즈</a></li>
+                                                <li><a class="dropdown-item" href="<%=contextPath%>/proList.pro?category=치즈&cpage=1">치즈</a></li>
                         
                                             </ul>
                                         </li>
-                                        <li><a href="">락토프리</a>
+                                        <li><a class="dropdown-header" href="<%=contextPath%>/proList.pro?category=락토프리&cpage=1">락토프리</a>
                                             <br>
                                             <div style="border:1px solid gray; width:110px"></div>
                                             <br>
                                             <ul>
-                                                <li><a href="">락토프리우유</a></li>
+                                                <li><a class="dropdown-item" href="<%=contextPath%>/proList.pro?category=락토프리&cpage=1">락토프리우유</a></li>
                                             </ul>
                                         </li>
-                                        <li><a href="">레시피</a>
+                                        <li><a class="dropdown-header" href="">레시피</a>
                                             <br>
                                             <div style="border:1px solid gray; width:110px"></div>
                                             <br>
                                             <ul>
-                                                <li><a href="">추천레시피</a></li>
-                                                <li><a href="">자유게시판</a></li>
+                                                <li><a class="dropdown-item" href="<%= contextPath %>/listR.re?cpage=1&cpage=1">추천레시피</a></li>
+                                                <li><a class="dropdown-item" href="<%= contextPath %>/list.re?cpage=1&cpage=1">자유게시판</a></li>
                                             </ul>
                                         </li>
                                     </ul>
                                
                                
-                            </div>
+                            
                         </div>
                     </div>
                 </li>
                 
-                <li><a href="">우유</a></li>
-                <li><a href="">발효유</a></li>
-                <li><a href="">치즈</a></li>
-                <li><a href="">락토프리</a></li>
+                <li><a href="<%=contextPath%>/proList.pro?category=우유&cpage=1">우유</a></li>
+                <li><a href="<%=contextPath%>/proList.pro?category=발효유&cpage=1">발효유</a></li>
+                <li><a href="<%=contextPath%>/proList.pro?category=치즈&cpage=1">치즈</a></li>
+                <li><a href="<%=contextPath%>/proList.pro?category=락토프리&cpage=1">락토프리</a></li>
                 <li><a href="">레시피</a></li>
             </ul>
     </div>
+    
+    <script>
+    $('.dropdown-toggle').dropdown();
+    </script>
 
     <div id="main-content">
         <div id="demo" class="carousel slide" data-ride="carousel">
@@ -319,39 +323,31 @@
             </div>
             
             <div id="con1-2">
-
-                <div class="thumbnail" align="left">
-                    <a href="" style="color:rgb(113, 113, 113); text-decoration:none;">
-                    <img src="resources/product_upfiles/나 100_ 그린라벨.png" alt="" width="200" height="200">
-                    
-                    <p>
-                        제주도우유 500ml<br>
-                        7,000원
-                    </p>
-                    </a>
-                </div>
-                <div class="thumbnail" align="left">
-                    <a href="" style="color:rgb(113, 113, 113); text-decoration:none;">
-                    <img src="resources/product_upfiles/나 100_ 그린라벨.png" alt="" width="200" height="200">
-                    
-                    <p>
-                        제주도우유 500ml<br>
-                        7,000원
-                    </p>
-                    </a>
-                </div>
-                <div class="thumbnail" align="left">
-                    <a href="" style="color:rgb(113, 113, 113); text-decoration:none;">
-                    <img src="resources/product_upfiles/나 100_ 그린라벨.png" alt="" width="200" height="200">
-                    
-                    <p>
-                        제주도우유 500ml<br>
-                        7,000원
-                    </p>
-                    </a>
-                </div>
-
+				
             </div>
+            
+            <script>
+            
+            	function selectRecentProduct(){
+           	        $.ajax({ // url : 상품목록페이지 완료후 수정예정
+	           			url : "<%=contextPath%>", 
+	           			success :function(result){
+	           			
+	
+	           				
+	           			},error:function(){
+	           				console.log("에러발생");
+	           			}
+            		})	
+            	}
+            	
+            	$(function(){
+            		
+            		selectRecentProduct();
+
+            	})
+            </script>
+            
         </div>
 
         <div id="con2">
@@ -365,7 +361,7 @@
                 
                 <div class="thumbnail" align="left">
                     <a href="" style="color:rgb(113, 113, 113); text-decoration:none;">
-                    <img src="resources/product_upfiles/나 100_ 그린라벨.png" alt="" width="200" height="200">
+                    <img src="" alt="" width="200" height="200">
                     
                     <p>
                         레시피제목<br>
@@ -376,7 +372,7 @@
 
                 <div class="thumbnail" align="left">
                     <a href="" style="color:rgb(113, 113, 113); text-decoration:none;">
-                    <img src="resources/product_upfiles/나 100_ 그린라벨.png" alt="" width="200" height="200">
+                    <img src="" alt="" width="200" height="200">
                     
                     <p>
                         레시피제목<br>
@@ -387,7 +383,7 @@
 
                 <div class="thumbnail" align="left">
                     <a href="" style="color:rgb(113, 113, 113); text-decoration:none;">
-                    <img src="resources/product_upfiles/나 100_ 그린라벨.png" alt="" width="200" height="200">
+                    <img src="" alt="" width="200" height="200">
                     
                     <p>
                         레시피제목<br>
@@ -400,6 +396,7 @@
             </div>
         </div>
     </div>
-
+    
+    <%@ include file="footer.jsp" %> 
 </body>
 </html>

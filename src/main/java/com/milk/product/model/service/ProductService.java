@@ -11,6 +11,11 @@ import com.milk.product.model.vo.Product;
 
 public class ProductService {
 	
+	/**
+	 * 상품리스트 갯수 조회(페이징)
+	 * @author 이다혜
+	 * @return 상품리스트갯수
+	 */
 	public int selectListCount(String category) {
 		
 		Connection conn = getConnection();
@@ -18,9 +23,14 @@ public class ProductService {
 		
 		close(conn);
 		return listCount;
-		
 	}
 	
+
+	/**
+	 * 카테고리별 상품리스트조회
+	 * @author 이다혜
+	 * @return 상품 ArrayList
+	 */
 	public ArrayList<Product> selectProductList(PageInfo pi, String category){
 		
 		Connection conn = getConnection();
@@ -29,6 +39,62 @@ public class ProductService {
 		close(conn);
 		return list;
 		
+	}
+	
+	/**
+	 * 최신상품(등록일순)3가지 리스트조회
+	 * @author 이다혜
+	 * @return 최신 상품 ArrayList
+	 */
+	public ArrayList<Product> selectRecentProductList(){
+		
+		Connection conn = getConnection();
+		ArrayList<Product>list = new ProductDao().selectRecentProductList(conn);
+		
+		close(conn);
+		return list;
+		
+	}
+	
+	/**
+	 * 상품 등록
+	 * @author 승하
+	 * @return 상품 등록 성공시 1, 실패시 2
+	 */
+	public int insertProduct(Product p) {
+		Connection conn = getConnection();
+		int result = new ProductDao().insertProduct(conn, p);
+		if(result > 0) {
+			commit(conn);
+		} else {
+			rollback(conn);
+		}
+		close(conn);
+		return result;
+	}
+
+	/**
+	 * 상품 전체 갯수 조회
+	 * @author 승하
+	 * @return 상품 전체 갯수
+	 */
+	public int selectAllListCount() {
+		Connection conn = getConnection();
+		int result = new ProductDao().selectAllListCount(conn);
+		close(conn);
+		return result;
+	}
+	
+	/**
+	 * 상품 전체 조회
+	 * @author 승하
+	 * @return 전체 상품이 들어있는 list
+	 */
+	public ArrayList<Product> selectAllList(PageInfo pi){
+		Connection conn = getConnection();
+		ArrayList<Product> list = new ProductDao().selectAllList(conn, pi);
+		close(conn);
+		return list;
 	}
 	
 

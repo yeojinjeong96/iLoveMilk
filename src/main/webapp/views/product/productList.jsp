@@ -131,7 +131,9 @@
 
 </head>
 <body>
-
+	
+	 <%@ include file="../common/header.jsp" %>
+	
     <div class="pro-area">
 
         <div id="pro-category">
@@ -176,22 +178,27 @@
         
         <div id="pro-content" >
             <!-- for문사용하여 제품 정보랑 이미지 뽑아서 화면에 출력 (갯수는 정렬 수대로 출력예정) -->
-
-			<%for(Product p : list) {%>
-            <div class="thumbnail" align="left">
-                
-                <a href="" style="color:rgb(113, 113, 113); text-decoration:none;">
-                <img src="<%=p.getProductImg() %>" alt="" width="200" height="200">
-                
-                <p>
-                    <%=p.getProductName() %><br>
-                    <%=p.getPrice() %> 원
-                </p>
-                </a>
-                <i class="bi-heart like-btn" style="font-size:2rem; color: red; cursor: pointer;" data-target="#like-product"  data-toggle="modal" ></i>
-                <!-- 로그인 안하고 찜 눌렀을 때 알림창 실행시키고 로그인페이지로 넘어가기 -->
-
-            </div>
+			<% if(list.isEmpty()){ %>
+				<div class="thumbnail" align="left">
+					조회된 상품이 없습니다.
+				</div>
+			<%}else{ %>
+				<%for(Product p : list) {%>
+	            <div class="thumbnail" align="left">
+	                
+	                <a href="" style="color:rgb(113, 113, 113); text-decoration:none;">
+	                <img src="<%=p.getProductImg() %>" alt="" width="200" height="200">
+	                
+	                <p>
+	                    <%=p.getProductName() %><br>
+	                    <%=p.getPrice() %> 원
+	                </p>
+	                </a>
+	                <i class="bi-heart like-btn" style="font-size:2rem; color: red; cursor: pointer;" data-target="#like-product"  data-toggle="modal" ></i>
+	                <!-- 로그인 안하고 찜 눌렀을 때 알림창 실행시키고 로그인페이지로 넘어가기 -->
+	
+	            </div>
+			<%} %>
 		<%} %>
         </div>
 
@@ -220,22 +227,22 @@
 
         <div id="pro-paging">
             <div class="paging-area" align="center">
-                <!-- 내가 보고있는 페이지가 1번 페이지가 아닐때에만 나타내기 
-                <% if(pi.getCurrentPage() != 1){ %>-->
-                <button onclick="location.href='<%=contextPath%>/list.bo?cpage=<%= pi.getCurrentPage()-1%>';">&lt;</button>
-                <!-- <%} %> -->
+                <!-- 내가 보고있는 페이지가 1번 페이지가 아닐때에만 나타내기 -->
+                <% if(pi.getCurrentPage() != 1){ %>
+                <button onclick="location.href='<%=contextPath%>/proList.pro?cpage=<%= pi.getCurrentPage()-1%>';">&lt;</button>
+                <%} %> 
                 
 
-                <!--
-                <%for(int p = pi.getStartPage() ; p <= pi.getEndPage() ; p++) { %>-->
-                <button onclick="location.href='<%=contextPath%>/list.bo?cpage=<%=p%>';"><%= p %></button>
+                
+                <%for(int p = pi.getStartPage() ; p <= pi.getEndPage() ; p++) { %>
+                <button onclick="location.href='<%=contextPath%>/proList.pro?cpage=<%=p%>';"><%= p %></button>
                 <!-- <% } %> -->
                 
 
-                <!--  내가 보고있는 페이지가 마지막 페이지가 아닐 때에만 나타내기 
-                <%if(pi.getCurrentPage() != pi.getMaxPage()){ %> -->
-                <button onclick="location.href='<%=contextPath %>/list.bo?cpage=<%=pi.getCurrentPage()+1%>';">&gt;</button>
-                <!-- <%} %> -->
+                <!--  내가 보고있는 페이지가 마지막 페이지가 아닐 때에만 나타내기 -->
+                <%if(pi.getCurrentPage() != pi.getMaxPage()){ %> 
+                <button onclick="location.href='<%=contextPath %>/proList.pro?cpage=<%=pi.getCurrentPage()+1%>';">&gt;</button>
+                 <%} %> 
                 
             </div>
         </div>
@@ -282,6 +289,6 @@
             </div>
         </div>        
         
-
+		<%@ include file="../common/footer.jsp" %>
 </body>
 </html>

@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.google.gson.Gson;
 import com.milk.common.model.vo.PageInfo;
 import com.milk.product.model.service.ProductService;
 import com.milk.product.model.vo.Product;
@@ -51,6 +52,7 @@ public class ProductCategoryListController extends HttpServlet {
 		
 		listCount = new ProductService().selectListCount(category);
 		
+		
 		currentPage = 1;
 		
 		pageLimit = 3;
@@ -69,6 +71,7 @@ public class ProductCategoryListController extends HttpServlet {
 		
 		PageInfo pi = new PageInfo(listCount, currentPage, pageLimit, boardLimit, maxPage, startPage,endPage);
 		
+		
 		ArrayList <Product> list = new ProductService().selectProductList(pi, category);
 		
 		
@@ -76,8 +79,12 @@ public class ProductCategoryListController extends HttpServlet {
 		request.setAttribute("list", list);
 		request.setAttribute("category", category);
 		
+
+		
 		request.getRequestDispatcher("views/product/productList.jsp").forward(request, response);
 		
+
+
 		
 	}
 

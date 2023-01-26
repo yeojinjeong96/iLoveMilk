@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+	
+	<entry key="selectListCount">
+		SELECT
+		       COUNT(*) COUNT
+		  FROM TB_RECIPE
+		 WHERE RECIPE_TYPE = 1
+		   AND DELETE_STATUS = 'N'
+	</entry>
+	
+	<entry key="selectRecipeList">
+		SELECT *
+		  FROM (
+		        SELECT ROWNUM RNUM, A.*
+		          FROM (
+		                SELECT
+		                       RECIPE_NO
+		                     , RECIPE_TITLE
+		                     , MEMBER_ID
+		                     , COUNT
+		                     , TO_CHAR(R.ENROLL_DATE, 'YYYY-MM-DD') "ENROLL_DATE"
+		                     , MAIN_IMG
+		                  FROM TB_RECIPE R
+		                  JOIN TB_MEMBER ON (RECIPE_WRITER = MEMBER_NO)
+		                 WHERE RECIPE_TYPE = 2
+		                   AND DELETE_STATUS = 'N'
+		                 ORDER
+		                    BY ENROLL_DATE DESC
+		                ) "A"
+	        	)
+ 		 WHERE RNUM BETWEEN ? AND ?
+	</entry>
+	
+	<entry key="selectRecipeListR">
+		SELECT *
+		  FROM (
+		        SELECT ROWNUM RNUM, A.*
+		          FROM (
+		                SELECT
+		                       RECIPE_NO
+		                     , RECIPE_TITLE
+		                     , MANAGER_ID
+		                     , COUNT
+		                     , TO_CHAR(R.ENROLL_DATE, 'YYYY-MM-DD') "ENROLL_DATE"
+		                     , MAIN_IMG
+		                  FROM TB_RECIPE R
+		                  JOIN TB_MANAGER ON (RECIPE_WRITER = MANAGER_NO)
+		                 WHERE RECIPE_TYPE = 1
+		                   AND DELETE_STATUS = 'N'
+		                 ORDER
+		                    BY ENROLL_DATE DESC
+		                ) "A"
+	        	)
+ 		 WHERE RNUM BETWEEN ? AND ?
+	</entry>
+
+</properties>

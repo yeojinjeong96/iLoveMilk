@@ -9,6 +9,7 @@
 <title>memberLoginView</title>
     <style>
         .under a{color: black; font-weight: bold; }
+        
         .under {margin:auto; align :center;}
         .outer{
         weight: 700px;

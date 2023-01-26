@@ -18,6 +18,10 @@
         margin-top: 50px;
         
     }
+    #notice-list> tbody tr:hover{
+        
+        cursor: pointer;
+    }
 
 
 </style>
@@ -35,30 +39,36 @@
         <br>
         <div style="width: 700px;">
             <table id="notice-list" border="1" class="text-center">
-                <tr>
-                    <th width="50">번호</th>
-                    <th width="350">제목</th>
-                    <th width="100">작성일</th>
-                    <th width="100">작성자</th>
-                    <th width="100">조회</th>
-                </tr>
-                <!--공지사항 없을경우-->
-              	<%if(list.isEmpty()){ %>
-                <tr>
-                    <td colspan="5">공지사항이 없습니다.</td>
-                </tr>
-                <%}else{ %>
-                <!--공지사항 있을경우-->
-                <%for(Notice n:list){ %>
-                <tr>
-                    <td><%=n.getNoticeNo()%></td>
-                    <td><%=n.getNoticeTitle() %></td>
-                    <td><%=n.getEnrollDate() %></td>
-                    <td><%=n.getManagerName() %></td>
-                    <td><%=n.getCount() %></td>
-                </tr>
-                <%} %>
-                <%} %>
+                <thead>
+                    <tr>
+                        <th width="50">번호</th>
+                        <th width="350">제목</th>
+                        <th width="100">작성일</th>
+                        <th width="100">작성자</th>
+                        <th width="100">조회</th>
+                    </tr>
+                
+               
+                    <!--공지사항 없을경우-->
+                      <%if(list.isEmpty()){ %>
+                    <tr>
+                        <td colspan="5">공지사항이 없습니다.</td>
+                    </tr>
+                    <%}else{ %>
+                </thead>
+                <tbody>
+                    <!--공지사항 있을경우-->
+                    <%for(Notice n:list){ %>
+                    <tr>
+                        <td><%=n.getNoticeNo()%></td>
+                        <td><%=n.getNoticeTitle() %></td>
+                        <td><%=n.getEnrollDate() %></td>
+                        <td><%=n.getManagerName() %></td>
+                        <td><%=n.getCount() %></td>
+                    </tr>
+                    <%} %>
+                    <%} %>
+                </tbody>
             </table>
             <br>
             <div class="paging-area" >
@@ -79,8 +89,8 @@
     </div>
 	<script>
 		$(function(){
-			$("#notice-list>tr").click(function(){
-				location.href='<%=contextPath%>/detailM.no?no='+ $(this).children().eq(0).text();
+			$("#notice-list tr").click(function(){
+				location.href='<%=contextPath%>/detail.no?no='+ $(this).children().eq(0).text();
 			})
 		})
 	</script>

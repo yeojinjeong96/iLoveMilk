@@ -10,7 +10,7 @@ public class Member {
 	private String memberName;
 	private String phone;
 	private String email;
-	private int addressNumber;
+	private String addressNumber;
 	private String address;
 	private String addressDetail;
 	private String profile;
@@ -23,7 +23,7 @@ public class Member {
 	public Member() {}
 
 	public Member(int membeNo, String memberId, String memberPwd, String memberName, String phone, String email,
-			int addressNumber, String address, String addressDetail, String profile, Date enrollDate, Date modifyDate,
+			String addressNumber, String address, String addressDetail, String profile, Date enrollDate, Date modifyDate,
 			String blackList, String status, String memberGrade) {
 		super();
 		this.membeNo = membeNo;
@@ -44,11 +44,25 @@ public class Member {
 	}
 	
 	
+	
 
-	public Member(int membeNo, String memberId) {
+	public Member(String memberId, String memberPwd, String memberName, String phone, String email, String addressNumber,
+			String address, String addressDetail) {
 		super();
-		this.membeNo = membeNo;
 		this.memberId = memberId;
+		this.memberPwd = memberPwd;
+		this.memberName = memberName;
+		this.phone = phone;
+		this.email = email;
+		this.addressNumber = addressNumber;
+		this.address = address;
+		this.addressDetail = addressDetail;
+	}
+
+	public Member(String memberId, String memberName) {
+		super();
+		this.memberId = memberId;
+		this.memberName = memberName;
 	}
 
 	public int getMembeNo() {
@@ -99,11 +113,11 @@ public class Member {
 		this.email = email;
 	}
 
-	public int getAddressNumber() {
+	public String getAddressNumber() {
 		return addressNumber;
 	}
 
-	public void setAddressNumber(int addressNumber) {
+	public void setAddressNumber(String addressNumber) {
 		this.addressNumber = addressNumber;
 	}
 

@@ -1,9 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%
-	Member findId = (Member)session.getAttribute("findId");
 
-	
 %>
 <!DOCTYPE html>
 <html>
@@ -12,7 +10,13 @@
 <title>Insert title here</title>
 <style>
         input::placeholder{font-size: 8px;} 
-    </style>
+        .under a{color: black; font-weight: bold; }
+        .outer{
+        weight: 700px;
+         margin:auto;
+        margin-top:50px;
+        }
+</style>
 </head>
 <body>
     
@@ -26,10 +30,11 @@
         <p align="center" style="font-size: 10px; color: darkgray;">회원가입시 등록한 정보로 찾을 수 있습니다</p>
         <br>
         <br>
-        <form action=""<%= contextPath %>/idFind.me" method="post">
-            <input type="text" placeholder="이름을 입력해주세요" required> <br><br>
+        
+        <form action="<%= contextPath %>/idFind.me"  method="post" align="center" name= "findId">
+            <input type="text" name="memberName" placeholder="이름을 입력해주세요" required> <br><br>
 
-            <input type="password" placeholder="가입시 작성한 이메일을 입력해주세요" required><br><br>
+            <input type="text" name="email" placeholder="가입시 작성한 이메일을 입력해주세요" required><br><br>
             
 
             <button type="submit">아이디 찾기</button>
@@ -38,11 +43,14 @@
     </div>
 
     <br><br>
-    <div align="center">
+    <div class="under" align="center">
         <a href="">PW찾기</a> &nbsp;&nbsp;| &nbsp;&nbsp;
         <a href="<%= contextPath %>/loginpage.me">로그인</a>
     </div>
     
+    
+    
+  
     
     <%@ include file="../common/footer.jsp" %> 	 
     

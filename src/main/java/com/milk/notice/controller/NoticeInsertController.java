@@ -1,5 +1,6 @@
 package com.milk.notice.controller;
 
+import java.io.File;
 import java.io.IOException;
 
 import javax.servlet.ServletException;
@@ -40,7 +41,7 @@ public class NoticeInsertController extends HttpServlet {
 		
 		if(ServletFileUpload.isMultipartContent(request)) {
 			
-			int maxSize= 10*10*1024;
+			int maxSize= 10*30*1024;
 			String savePath= request.getSession().getServletContext().getRealPath("/resources/notice_upfiles/");
 			
 			MultipartRequest multiRequest = new MultipartRequest(request,savePath,maxSize,"UTF-8",new MyFileRenamePolicy());
@@ -48,12 +49,12 @@ public class NoticeInsertController extends HttpServlet {
 			String noticeTitle=multiRequest.getParameter("title");
 			String noticeContent= multiRequest.getParameter("content");
 			HttpSession session = request.getSession();
-			int ManagerNo= ((Manager)session.getAttribute("loginManager")).getManagerNo();
+			int managerNo=((Manager)session.getAttribute("loginManager")).getManagerNo();
 			
 			Notice n = new Notice();
 			n.setNoticeTitle(noticeTitle);
 			n.setNoticeContent(noticeContent);
-			n.setWriterNo(ManagerNo);
+			n.setWriterNo(managerNo);
 			
 			Attachment at= null;
 			
@@ -65,6 +66,19 @@ public class NoticeInsertController extends HttpServlet {
 			}
 			
 			int result= new NoticeService().insertNotice(n,at);
+			
+			if(result>0) {
+				session.setAttribute("alertMsg", "공지사항 입력 성공.");
+				response.sendRedirect(request.getContextPath()+"/listM.no?cpage=1");
+				
+			}else {
+				
+				 if(at!=null) {
+					 new File(savePath + at.getChangeName()).delete(); 
+				 }
+				session.setAttribute("alertMsg", "공지사항 입력에 실패하셨습니다.");	
+				response.sendRedirect(request.getContextPath()+"/listM.no?cpage=1");
+			}
 		}
 		
 		
