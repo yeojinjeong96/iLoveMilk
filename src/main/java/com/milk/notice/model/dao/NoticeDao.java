@@ -110,6 +110,66 @@ public class NoticeDao {
 		
 	}
 	
+	public Notice selectNotice(Connection conn, int noticeNo) {
+		Notice n = null;
+		PreparedStatement pstmt= null;
+		ResultSet rset = null;
+		String sql= prop.getProperty("selectNotice");
+		
+		try {
+			pstmt= conn.prepareStatement(sql);
+			pstmt.setInt(1, noticeNo);
+			
+			rset= pstmt.executeQuery();
+			if(rset.next()) {
+				n = new Notice(
+						rset.getInt("notice_no")
+					   ,rset.getString("notice_title")
+					   ,rset.getString("notice_content")
+					   ,rset.getInt("count")
+					   ,rset.getString("enroll_date")
+					   ,rset.getString("manager_name")
+						);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rset);
+			close(pstmt);
+		}
+		return n;
+		
+	}
+	
+	public Attachment selectAttachment(Connection conn, int noticeNo) {
+		Attachment at= null;
+		PreparedStatement pstmt= null;
+		ResultSet rset = null;
+		String sql= prop.getProperty("selectAttachment");
+		
+		try {
+			pstmt= conn.prepareStatement(sql);
+			pstmt.setInt(1, noticeNo);
+			rset= pstmt.executeQuery();
+			
+			if(rset.next()) {
+				at = new Attachment(
+						rset.getInt("file_no")
+					   ,rset.getString("change_name")
+					   ,rset.getString("file_path")
+						);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return at;
+		
+	}
+	
 	public int insertNotice(Connection conn,Notice n) {
 		int result = 0;
 		PreparedStatement pstmt = null;

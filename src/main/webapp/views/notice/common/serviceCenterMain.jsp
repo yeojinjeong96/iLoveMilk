@@ -35,7 +35,8 @@
 </head>
 <body>
 		
-         <%@include file= "serviceCenterMainTop.jsp"%>
+     
+         <%@include file="/views/notice/common/serviceCenterMainTop.jsp" %>
          
         <div class="outer" align="center" >
           
