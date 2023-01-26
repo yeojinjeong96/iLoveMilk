@@ -329,15 +329,14 @@
             <script>
             
             	function selectRecentProduct(){
-           	        $.ajax({
-	           			url : "<%=contextPath%>",
+           	        $.ajax({ // url : 상품목록페이지 완료후 수정예정
+	           			url : "<%=contextPath%>", 
 	           			success :function(result){
-	           				
-	           				console.log(result);
+	           			
 	
 	           				
 	           			},error:function(){
-	           				
+	           				console.log("에러발생");
 	           			}
             		})	
             	}

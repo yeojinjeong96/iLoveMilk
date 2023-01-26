@@ -33,6 +33,7 @@ public class MainProductController extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
+		
 		ArrayList<Product> list = new ProductService().selectRecentProductList();
 		
 
