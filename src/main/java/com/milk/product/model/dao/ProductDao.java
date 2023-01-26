@@ -98,6 +98,36 @@ public class ProductDao {
 		return list;
 		
 	}
+	
+	public ArrayList<Product> selectRecentProductList(Connection conn){
+		
+		ArrayList<Product> list = new ArrayList<>();
+		ResultSet rset = null;
+		PreparedStatement pstmt = null;
+		
+		String sql = prop.getProperty("selectRecentProductList");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				list.add(new Product(
+						rset.getString("product_name"),
+						rset.getInt("price"),
+						rset.getString("product_img")
+						));
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		
+		return list;
+		
+	}
 
 
 }

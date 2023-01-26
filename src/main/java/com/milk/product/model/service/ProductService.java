@@ -31,6 +31,16 @@ public class ProductService {
 		return list;
 		
 	}
+	
+	public ArrayList<Product> selectRecentProductList(){
+		
+		Connection conn = getConnection();
+		ArrayList<Product>list = new ProductDao().selectRecentProductList(conn);
+		
+		close(conn);
+		return list;
+		
+	}
 
 	
 	
