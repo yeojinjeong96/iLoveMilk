@@ -138,9 +138,56 @@ public class NoticeDao {
 		
 		try {
 			pstmt=conn.prepareStatement(sql);
+			pstmt.setString(1, at.getChangeName());
+			pstmt.setString(2, at.getFilePath());
+			
+			result= pstmt.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
+		}finally {
+			close(pstmt);
 		}
+		
+		return result;
+		
+	}
+	
+	public ArrayList<Notice> selectSearchList(Connection conn,PageInfo pi, String searchNo){
+		
+		ArrayList<Notice>list = new ArrayList<>();
+		PreparedStatement pstmt= null;
+		ResultSet rset = null;
+		String sql= prop.getProperty("selectSearchList");
+		
+		try {
+			
+			pstmt= conn.prepareStatement(sql);
+			int startRow= (pi.getCurrentPage()-1)*pi.getBoardLimit()+1;
+			int endRow= startRow + pi.getBoardLimit() -1;
+			
+			pstmt.setString(1, searchNo);
+			pstmt.setInt(2, startRow);
+			pstmt.setInt(3, endRow);
+			
+			rset = pstmt.executeQuery();
+			while(rset.next()) {
+				list.add(new Notice(
+						rset.getInt("notice_no")
+					   ,rset.getString("notice_title")
+					   ,rset.getInt("count")
+					   ,rset.getString("enroll_date")
+					   ,rset.getString("manager_name")
+						
+						));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return list;
 		
 		
 	}

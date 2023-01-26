@@ -12,6 +12,9 @@
 	String loginFail = (String)session.getAttribute("loginFail");
 	// 로그인 실패하지않고 managerHeader.jsp 로딩시 : null
 	// 로그인 실패한 후 managerHeader.jsp 로딩시 : 모달을 실행하기 위한 변수
+	
+	String alertMsg = (String)session.getAttribute("alertMsg");
+	//알럿
 %>
 <!DOCTYPE html>
 <html>
@@ -42,6 +45,13 @@
 </style>
 </head>
 <body>
+	<%if(alertMsg != null){ %>
+	<script>
+		alert('<%=alertMsg%>');
+	</script>
+	<%session.removeAttribute("alertMsg"); %>
+	<%} %>
+	<!--  -->
 	<% if(loginFail != null){ %>
 		<!-- 로그인 실패 모달 시작 -->
 		<!-- The Modal -->

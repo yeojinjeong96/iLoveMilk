@@ -45,6 +45,7 @@ public class NoticeListManagerController extends HttpServlet {
 		currentPage= Integer.parseInt(request.getParameter("cpage"));
 		pageLimit= 5;
 		boardLimit=10;
+		
 		maxPage = (int)Math.ceil((double)(listCount) / boardLimit);
 		startPage =  (currentPage-1)/pageLimit * pageLimit +1 ;
 		endPage = startPage + pageLimit -1;
@@ -59,6 +60,10 @@ public class NoticeListManagerController extends HttpServlet {
 		
 		
 		request.getRequestDispatcher("views/notice/notice/noticeListManagerView.jsp").forward(request, response);
+		
+		
+		
+		
 		
 	}
 

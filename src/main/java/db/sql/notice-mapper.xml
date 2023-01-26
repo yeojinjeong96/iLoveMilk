@@ -62,8 +62,24 @@
 	   ,SEQ_NNO.CURRVAL
 	   ,?
 	   ,?
-	   ,?
-	   ,?
+	   ,3
 	    )
+	</entry>
+	<entry key="selectSearchList">
+		SELECT * 
+	       FROM (SELECT  ROWNUM RNUM, E.*
+	               FROM (SELECT 
+	                        NOTICE_NO
+	                       ,NOTICE_TITLE
+	                       ,NOTICE_CONTENT
+	                       ,COUNT
+	                       ,ENROLL_DATE
+	                       ,MANAGER_NAME
+	                   FROM TB_NOTICE N
+	                JOIN TB_MANAGER ON (WRITER_NO = MANAGER_NO)
+	               WHERE N.STATUS='Y'
+	               AND NOTICE_TITLE || NOTICE_CONTENT LIKE '%'||?||'%'
+	               ORDER BY ENROLL_DATE DESC) E)
+	               WHERE RNUM BETWEEN ? AND ?
 	</entry>
 </properties>

@@ -1,5 +1,6 @@
 package com.milk.notice.controller;
 
+import java.io.File;
 import java.io.IOException;
 
 import javax.servlet.ServletException;
@@ -65,6 +66,19 @@ public class NoticeInsertController extends HttpServlet {
 			}
 			
 			int result= new NoticeService().insertNotice(n,at);
+			
+			if(result>0) {
+				session.setAttribute("alertMsg", "공지사항 입력 성공.");
+				response.sendRedirect(request.getContextPath()+"/listM.no?cpage=1");
+				
+			}else {
+				
+				 if(at!=null) {
+					 new File(savePath + at.getChangeName()).delete(); 
+				 }
+				session.setAttribute("alertMsg", "공지사항 입력에 실패하셨습니다.");	
+				request.getRequestDispatcher("views/notice/notice/noticeListManagerView.jsp").forward(request, response);
+			}
 		}
 		
 		
