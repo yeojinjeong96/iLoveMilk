@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.google.gson.Gson;
 import com.milk.common.model.vo.PageInfo;
 import com.milk.product.model.service.ProductService;
 import com.milk.product.model.vo.Product;
@@ -37,7 +38,6 @@ public class ProductCategoryListController extends HttpServlet {
 		
 		request.setCharacterEncoding("UTF-8");
 		String category = request.getParameter("category");	
-		System.out.println(category); // '' 따옴표 나옴
 		
 		
 		// 페이징처리
@@ -79,11 +79,12 @@ public class ProductCategoryListController extends HttpServlet {
 		request.setAttribute("list", list);
 		request.setAttribute("category", category);
 		
-		for(Product p : list) {
-			System.out.println(p);
-		}
+
 		
 		request.getRequestDispatcher("views/product/productList.jsp").forward(request, response);
+		
+
+
 		
 	}
 

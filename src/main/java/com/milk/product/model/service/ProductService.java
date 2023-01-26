@@ -11,6 +11,11 @@ import com.milk.product.model.vo.Product;
 
 public class ProductService {
 	
+	/**
+	 * 상품리스트 갯수 조회(페이징)
+	 * @author 이다혜
+	 * @return 상품리스트갯수
+	 */
 	public int selectListCount(String category) {
 		
 		Connection conn = getConnection();
@@ -21,6 +26,11 @@ public class ProductService {
 	}
 	
 
+	/**
+	 * 카테고리별 상품리스트조회
+	 * @author 이다혜
+	 * @return 상품 ArrayList
+	 */
 	public ArrayList<Product> selectProductList(PageInfo pi, String category){
 		
 		Connection conn = getConnection();
@@ -31,6 +41,11 @@ public class ProductService {
 		
 	}
 	
+	/**
+	 * 최신상품(등록일순)3가지 리스트조회
+	 * @author 이다혜
+	 * @return 최신 상품 ArrayList
+	 */
 	public ArrayList<Product> selectRecentProductList(){
 		
 		Connection conn = getConnection();
