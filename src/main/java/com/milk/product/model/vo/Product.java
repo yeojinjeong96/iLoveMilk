@@ -33,6 +33,14 @@ public class Product {
 		this.productImg = productImg;
 		this.status = status;
 	}
+	
+	public Product(String productName, int price, String productImg) {
+		super();
+		this.productName = productName;
+		this.price = price;
+		this.productImg = productImg;
+	}
+
 
 	public int getProductNo() {
 		return productNo;

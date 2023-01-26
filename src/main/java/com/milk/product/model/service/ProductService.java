@@ -1,10 +1,14 @@
 package com.milk.product.model.service;
 
-import static com.milk.common.JDBCTemplate.*;
+import static com.milk.common.JDBCTemplate.close;
+import static com.milk.common.JDBCTemplate.getConnection;
 
 import java.sql.Connection;
+import java.util.ArrayList;
 
+import com.milk.common.model.vo.PageInfo;
 import com.milk.product.model.dao.ProductDao;
+import com.milk.product.model.vo.Product;
 
 public class ProductService {
 	
