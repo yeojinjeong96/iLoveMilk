@@ -53,15 +53,15 @@ public class ProductCategoryListController extends HttpServlet {
 		listCount = new ProductService().selectListCount(category);
 		
 		
-		currentPage = 1;
+		currentPage = Integer.parseInt(request.getParameter("cpage"));
 		
-		pageLimit = 3;
+		pageLimit = 5;
 		
 		boardLimit = 12;
 		
 		maxPage = (int)Math.ceil((double)listCount/ boardLimit);
 		
-		startPage = (currentPage -1 )/ pageLimit * pageLimit * 1; 
+		startPage = (currentPage -1 )/ pageLimit * pageLimit + 1; 
 		
 		endPage = startPage + pageLimit -1;
 		

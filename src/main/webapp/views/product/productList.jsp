@@ -20,6 +20,7 @@
             width:700px;
             /*추후 조정예정*/
             height:1500px;
+            margin:auto;
         }
 
         /* 첫번째 div */
@@ -96,6 +97,8 @@
         margin:14px;
         position: relative;
         }
+
+        
 
         .thumbnail .like-btn, .bi-heart, .bi-heart-fill{
             position: absolute;
@@ -187,7 +190,7 @@
 	            <div class="thumbnail" align="left">
 	                
 	                <a href="" style="color:rgb(113, 113, 113); text-decoration:none;">
-	                <img src="<%=p.getProductImg() %>" alt="" width="200" height="200">
+	                <img src="<%= contextPath%>/<%=p.getProductImg() %>" alt="" width="200" height="200">
 	                
 	                <p>
 	                    <%=p.getProductName() %><br>
@@ -236,7 +239,7 @@
                 
                 <%for(int p = pi.getStartPage() ; p <= pi.getEndPage() ; p++) { %>
                 <button onclick="location.href='<%=contextPath%>/proList.pro?cpage=<%=p%>';"><%= p %></button>
-                <!-- <% } %> -->
+                <% } %>
                 
 
                 <!--  내가 보고있는 페이지가 마지막 페이지가 아닐 때에만 나타내기 -->
@@ -268,7 +271,8 @@
             </div>
             </div>
         </div>
-
+		
+		
         <!-- 로그인안했을때의 모달(로그인했을때) -->
         <!-- The Modal -->
         <div class="modal" id="like-product">
