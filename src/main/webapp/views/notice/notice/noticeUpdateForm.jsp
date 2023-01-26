@@ -33,11 +33,13 @@
             <br>
             <h2 align="left">공지사항 수정</h2>
             <hr>
-            <form action="<%=contextPath %>/update.no" method="post">
+            <form action="<%=contextPath %>/update.no" method="post" enctype="multipart/form-data">
+                <input type="hidden" name="noticeNo" value="<%=n.getNoticeNo() %>">
                 <table id="notice-update">
+                    
                     <tr>
                         <th width="100px">* 제목</th>
-                        <td width="500px"><input type="text" placeholder="제목을 작성하세요" value="<%=n.getNoticeTitle() %>" required></td>
+                        <td width="500px"><input type="text" name="title" value="<%=n.getNoticeTitle() %>" required></td>
                     </tr>
                     <tr>
                         <th>* 내용</th>
@@ -51,7 +53,7 @@
 	                        <%if(at !=null){ %>
 	                        <!--기존의 첨부파일이 있었을 경우-->
 	                        <%=at.getChangeName()%>
-	                        <input type="hidden" name="changeName" value="<%=at.getChangeName()%>">
+	                        <input type="hidden" name="originFileNo" value="<%=at.getFileNo()%>">
 	                        <%}%>
 	                        <!--첨부파일이 없었을 경우-->
 	                        <input type="file" name="upfile" >
@@ -60,10 +62,11 @@
                 </table>
                 <br>
                 <button type="submit">수정하기</button>
+                <button type="reset">초기화</button>
                 <button type="button">삭제하기</button>
             </form>
         </div>
     </div>
-
+  
 </body>
 </html>
