@@ -13,16 +13,16 @@ import com.milk.notice.model.vo.Attachment;
 import com.milk.notice.model.vo.Notice;
 
 /**
- * Servlet implementation class NoticeDetailViewController
+ * Servlet implementation class NoticeUpdateController
  */
-@WebServlet("/detail.no")
-public class NoticeDetailViewController extends HttpServlet {
+@WebServlet("/updateForm.no")
+public class NoticeUpdateFormController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public NoticeDetailViewController() {
+    public NoticeUpdateFormController() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -31,21 +31,13 @@ public class NoticeDetailViewController extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		int noticeNo= Integer.parseInt(request.getParameter("no"));
+		int noticeNo=  Integer.parseInt(request.getParameter("no"));
 		
-		int result= new NoticeService().increaseCount(noticeNo);
-		if(result>0) {
-			Notice n= new NoticeService().selectNotice(noticeNo);
-			Attachment at= new NoticeService().selectAttachment(noticeNo);
-			
-			request.setAttribute("n", n);
-			request.setAttribute("at",at);
-			request.getRequestDispatcher("views/notice/notice/noticeDetailView.jsp").forward(request, response);
-			
-		}else {
-			
-		}
-		
+		Notice n = new NoticeService().selectNotice(noticeNo);
+		Attachment at= new NoticeService().selectAttachment(noticeNo);
+		request.setAttribute("n", n);
+		request.setAttribute("at", at);
+		request.getRequestDispatcher("views/notice/notice/noticeUpdateForm.jsp").forward(request, response);
 	}
 
 	/**

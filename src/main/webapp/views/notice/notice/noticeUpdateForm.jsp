@@ -1,15 +1,19 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8" import="com.milk.notice.model.vo.Notice, com.milk.notice.model.vo.Attachment"%>
+<% 
+	Notice n = (Notice)request.getAttribute("n");
+	Attachment at = (Attachment)request.getAttribute("at");
+%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <style>
-     .outer{
-        width: 1000px;
-        margin:auto;
-        margin-top: 50px;
+      .outer-1{ 
+        width: 800px;
+        float: left;
+        box-sizing: border-box;
     }
     #notice-update td *{width:100%; box-sizing: border-box;}
 </style>
@@ -21,31 +25,40 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
 </head>
 <body>
-    <div class="outer" align="center">
+    <%@include file="/views/common/managerHeader.jsp" %>
+	<%@include file="/views/common/managerMenubar.jsp" %>
+    <div class="outer-1" align="center">
         <br>
         <div style="width: 700px;">
             <br>
-            <h2 align="left">공지사항 조회</h2>
+            <h2 align="left">공지사항 수정</h2>
             <hr>
-            <form action="" method="post">
+            <form action="<%=contextPath %>/update.no" method="post">
                 <table id="notice-update">
                     <tr>
                         <th width="100px">* 제목</th>
-                        <td width="500px"><input type="text" placeholder="제목을 작성하세요" value="기존공지사항제목" required></td>
+                        <td width="500px"><input type="text" placeholder="제목을 작성하세요" value="<%=n.getNoticeTitle() %>" required></td>
                     </tr>
                     <tr>
                         <th>* 내용</th>
                         <td>
-                            <textarea name="content" id="" cols="30" rows="20" style="resize:none" placeholder="내용을 작성하세요" required>기존공지사항내용</textarea>
+                            <textarea name="content" id="" cols="30" rows="20" style="resize:none" placeholder="내용을 작성하세요" required><%=n.getNoticeContent() %></textarea>
                         </td>
                     </tr>
                     <tr>
                         <th>이미지 첨부</th>
-                        <td><input type="file"></td>
+                        <td>
+	                        <%if(at !=null){ %>
+	                        <!--기존의 첨부파일이 있었을 경우-->
+	                        <%=at.getChangeName()%>
+	                        <input type="hidden" name="changeName" value="<%=at.getChangeName()%>">
+	                        <%}%>
+	                        <!--첨부파일이 없었을 경우-->
+	                        <input type="file" name="upfile" >
+                        </td>
                     </tr>
                 </table>
                 <br>
-                <button>이전으로</button>
                 <button type="submit">수정하기</button>
                 <button type="button">삭제하기</button>
             </form>

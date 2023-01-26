@@ -6,10 +6,11 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <style>
-     .outer{
-        width: 1000px;
+     .outer-1{
+        width: 800px;
         margin:auto;
-        margin-top: 50px;
+        float:left;
+        box-sizing: border-box;
     }
     #notice-enroll td *{width:100%; box-sizing: border-box;}
 </style>
@@ -24,13 +25,13 @@
 	<%@include file="/views/common/managerHeader.jsp" %>
 	<%@include file="/views/common/managerMenubar.jsp" %>
 	
-    <div class="outer" align="center">
+    <div class="outer-1" align="center">
         <br>
         <div style="width: 700px;">
             <br>
             <h2 align="left">공지사항 작성</h2>
             <hr>
-            <form action="insert.no" method="post" enctype="multipart/form-data">
+            <form action="<%=contextPath %>/insert.no" method="post" enctype="multipart/form-data">
             	
                 <table id="notice-enroll">
                     <tr>
