@@ -9,13 +9,14 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.google.gson.Gson;
 import com.milk.product.model.service.ProductService;
 import com.milk.product.model.vo.Product;
 
 /**
  * Servlet implementation class MainProductController
  */
-@WebServlet("/iLoveMilk")
+@WebServlet("/milk")
 public class MainProductController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -32,12 +33,12 @@ public class MainProductController extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
+		
 		ArrayList<Product> list = new ProductService().selectRecentProductList();
 		
-		
-		request.setAttribute("list", list);
-		request.getRequestDispatcher("views/common/mainContent.jsp").forward(request, response);
-		
+
+		response.setContentType("application/json; charset='UTF-8'");
+		new Gson().toJson(list, response.getWriter());
 	}
 
 	/**

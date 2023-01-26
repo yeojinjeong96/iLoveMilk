@@ -2,9 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ page import="java.util.ArrayList, com.milk.product.model.vo.Product" %>    
 
-<% 
-	ArrayList<Product> list = (ArrayList<Product>)request.getAttribute("list"); 
-%>
+
 
 <!DOCTYPE html>
 <html>
@@ -326,27 +324,30 @@
             
             <div id="con1-2">
 				
-				<%if(list==null){ %>
-				
-					<p>제품이 존재하지 않습니다.</p>
-					
-				<%} else{ %>
-				
-					<%for(Product p : list){ %>
-					
-		                <div class="thumbnail" align="left">
-		                    <a href="" style="color:rgb(113, 113, 113); text-decoration:none;">
-		                    <img src="<%=p.getProductImg() %>" alt="" width="200" height="200">
-		                    
-		                    <p>
-		                        <%=p.getProductName() %><br>
-		                        <%=p.getPrice() %>
-		                    </p>
-		                    </a>
-		                </div>
-	                <%} %>
-				<%} %>
             </div>
+            
+            <script>
+            
+            	function selectRecentProduct(){
+           	        $.ajax({ // url : 상품목록페이지 완료후 수정예정
+	           			url : "<%=contextPath%>", 
+	           			success :function(result){
+	           			
+	
+	           				
+	           			},error:function(){
+	           				console.log("에러발생");
+	           			}
+            		})	
+            	}
+            	
+            	$(function(){
+            		
+            		selectRecentProduct();
+
+            	})
+            </script>
+            
         </div>
 
         <div id="con2">

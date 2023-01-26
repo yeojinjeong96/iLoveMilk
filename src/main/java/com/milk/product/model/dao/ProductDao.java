@@ -126,7 +126,10 @@ public class ProductDao {
 			close(rset);
 			close(pstmt);
 		}
-		System.out.println(list);
+		
+		for(Product p : list) {
+			System.out.println(p);
+		}
 		
 		return list;
 		
