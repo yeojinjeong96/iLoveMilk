@@ -216,40 +216,40 @@
                            
                            
                                     <ul class="all-menu">
-                                      <li><a class="dropdown-header" href="<%=contextPath%>/proList.pro?우유">우유</a> <!-- 카테고리 -->
+                                      <li><a class="dropdown-header" href="<%=contextPath%>/proList.pro?우유&cpage=1">우유</a> <!-- 카테고리 -->
                                             <br>
                                             <div style="border:1px solid gray; width:110px"></div>
                                             <br>
                                             <ul>
-                                                <li><a class="dropdown-item" href="<%=contextPath%>/proList.pro?category=백색시유">백색시유</a></li> <!--참조 카테고리-->
-                                                <li><a class="dropdown-item" href="<%=contextPath%>/proList.pro?category=가공우유">가공우유</a></li>
-                                                <li><a class="dropdown-item" href="<%=contextPath%>/proList.pro?category=멸균우유">멸균우유</a></li>
+                                                <li><a class="dropdown-item" href="<%=contextPath%>/proList.pro?category=백색시유&cpage=1">백색시유</a></li> <!--참조 카테고리-->
+                                                <li><a class="dropdown-item" href="<%=contextPath%>/proList.pro?category=가공우유&cpage=1">가공우유</a></li>
+                                                <li><a class="dropdown-item" href="<%=contextPath%>/proList.pro?category=멸균우유&cpage=1">멸균우유</a></li>
                         
                                             </ul>
                                         </li>
-                                        <li><a class="dropdown-header" href="<%=contextPath%>/proList.pro?category=발효유">발효유</a>
+                                        <li><a class="dropdown-header" href="<%=contextPath%>/proList.pro?category=발효유&cpage=1">발효유</a>
                                             <br>
                                             <div style="border:1px solid gray; width:110px"></div>
                                             <br>
                                             <ul>
-                                                <li><a class="dropdown-item" href="<%=contextPath%>/proList.pro?category=발효유">발효유</a></li>
+                                                <li><a class="dropdown-item" href="<%=contextPath%>/proList.pro?category=발효유&cpage=1">발효유</a></li>
                                             </ul>
                                         </li>
-                                        <li><a class="dropdown-header" href="<%=contextPath%>/proList.pro?category=치즈">치즈</a>
+                                        <li><a class="dropdown-header" href="<%=contextPath%>/proList.pro?category=치즈&cpage=1">치즈</a>
                                             <br>
                                             <div style="border:1px solid gray; width:110px"></div>
                                             <br>
                                             <ul>
-                                                <li><a class="dropdown-item" href="<%=contextPath%>/proList.pro?category=치즈">치즈</a></li>
+                                                <li><a class="dropdown-item" href="<%=contextPath%>/proList.pro?category=치즈&cpage=1">치즈</a></li>
                         
                                             </ul>
                                         </li>
-                                        <li><a class="dropdown-header" href="<%=contextPath%>/proList.pro?category=락토프리">락토프리</a>
+                                        <li><a class="dropdown-header" href="<%=contextPath%>/proList.pro?category=락토프리&cpage=1">락토프리</a>
                                             <br>
                                             <div style="border:1px solid gray; width:110px"></div>
                                             <br>
                                             <ul>
-                                                <li><a class="dropdown-item" href="<%=contextPath%>/proList.pro?category=락토프리">락토프리우유</a></li>
+                                                <li><a class="dropdown-item" href="<%=contextPath%>/proList.pro?category=락토프리&cpage=1">락토프리우유</a></li>
                                             </ul>
                                         </li>
                                         <li><a class="dropdown-header" href="">레시피</a>
@@ -257,8 +257,8 @@
                                             <div style="border:1px solid gray; width:110px"></div>
                                             <br>
                                             <ul>
-                                                <li><a class="dropdown-item" href="<%= contextPath %>/listR.re?cpage=1">추천레시피</a></li>
-                                                <li><a class="dropdown-item" href="<%= contextPath %>/list.re?cpage=1">자유게시판</a></li>
+                                                <li><a class="dropdown-item" href="<%= contextPath %>/listR.re?cpage=1&cpage=1">추천레시피</a></li>
+                                                <li><a class="dropdown-item" href="<%= contextPath %>/list.re?cpage=1&cpage=1">자유게시판</a></li>
                                             </ul>
                                         </li>
                                     </ul>
@@ -269,10 +269,10 @@
                     </div>
                 </li>
                 
-                <li><a href="<%=contextPath%>/proList.pro?category=우유">우유</a></li>
-                <li><a href="<%=contextPath%>/proList.pro?category=발효유">발효유</a></li>
-                <li><a href="<%=contextPath%>/proList.pro?category=치즈">치즈</a></li>
-                <li><a href="<%=contextPath%>/proList.pro?category=락토프리">락토프리</a></li>
+                <li><a href="<%=contextPath%>/proList.pro?category=우유&cpage=1">우유</a></li>
+                <li><a href="<%=contextPath%>/proList.pro?category=발효유&cpage=1">발효유</a></li>
+                <li><a href="<%=contextPath%>/proList.pro?category=치즈&cpage=1">치즈</a></li>
+                <li><a href="<%=contextPath%>/proList.pro?category=락토프리&cpage=1">락토프리</a></li>
                 <li><a href="">레시피</a></li>
             </ul>
     </div>
