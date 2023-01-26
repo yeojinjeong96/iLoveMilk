@@ -44,8 +44,33 @@
                           )
                    WHERE ROWNUM <![CDATA[<=]]> 3 
 </entry>
-
-
-
-
+<entry key="insertProduct">
+	INSERT
+	  INTO TB_PRODUCT
+	  (
+	    PRODUCT_NO
+	  , PRODUCT_NAME
+	  , PRICE
+	  , CAPACITY
+	  , BRAND
+	  , STOCK
+	  , PRODUCT_INFO
+	  , FCATEGORY_NAME
+	  , SCATEGORY_NAME
+	  , PRODUCT_IMG
+	  )
+	  VALUES
+	  (
+	    SEQ_PRONO.NEXTVAL
+	  , ?
+	  , ?
+	  , ?
+	  , ?
+	  , ?
+	  , ?
+	  , ?
+	  , ?
+	  , ?
+	  )
+</entry>
 </properties>

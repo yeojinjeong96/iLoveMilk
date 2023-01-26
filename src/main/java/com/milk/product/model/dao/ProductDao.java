@@ -128,6 +128,30 @@ public class ProductDao {
 		return list;
 		
 	}
+	
+	public int insertProduct(Connection conn, Product p) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String sql = prop.getProperty("insertProduct");
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, p.getProductName());
+			pstmt.setInt(2, p.getPrice());
+			pstmt.setInt(3, p.getCapacity());
+			pstmt.setString(4, p.getBrand());
+			pstmt.setInt(5, p.getStock());
+			pstmt.setString(6, p.getProductInfo());
+			pstmt.setString(7, p.getfCategory());
+			pstmt.setString(8, p.getsCategory());
+			pstmt.setString(9, p.getProductImg());
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		return result;
+	}
 
 
 }
