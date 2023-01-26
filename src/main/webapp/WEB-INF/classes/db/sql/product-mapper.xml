@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+
+<entry key="selectListCount">
+		SELECT
+		       count(*) count
+		  FROM TB_PRODUCT
+		 WHERE STOCK > 0
+            AND FCATEGORY_name =? 
+</entry>
+
+<entry key ="selectProductList">
+		SELECT *
+		  FROM (
+		        SELECT ROWNUM RNUM, A.*
+		          FROM (
+		                SELECT
+		                       PRODUCT_NAME
+		                     , PRICE
+		                     , PRODUCT_IMG
+		                  FROM TB_PRODUCT B
+		                 WHERE STOCK > 0
+                           AND FCATEGORY_NAME = ?
+		                 ORDER
+		                    BY ENROLL_DATE DESC
+		                ) A
+		        )
+		 WHERE RNUM BETWEEN ? AND ?
+</entry>
+
+
+
+
+</properties>

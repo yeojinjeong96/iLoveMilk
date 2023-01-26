@@ -26,16 +26,26 @@
                     <br><br>
                     <span class="star">*</span> 은 필수 입력사항입니다.
 
-                    <form action="" method="post">
+                    <form action="<%= contextPath %>/insert.pr" method="post">
                         <table class="table table-hover">
                             <tr>
                                 <th width="30%"><span>*</span> 카테고리&nbsp;</th>
                                 <td width="70%">
-                                    <select name="" id="">
-                                        <option value="">1차카테고리?</option>
+                                    <select name="fCate" id="fCate">
+                                    	<option>- 1차 카테고리 -</option>
+                                        <option id="op1" onclick="sCateShow();">우유</option>
+                                        <option id="op2" onclick="sCateShow();">발효유</option>
+                                        <option id="op3" onclick="sCateShow();">치즈</option>
+                                        <option id="op4" onclick="sCateShow();">락토프리</option>
                                     </select>
-                                    <select name="" id="">
-                                        <option value="">2차카테고리?</option>
+                                    <select name="sCate" id="sCate">
+                                        <option>- 2차 카테고리 -</option>
+                                        <option id="ti1" style="display:none">백색시유</option>
+                                        <option id="ti2" style="display:none">가공우유</option>
+                                        <option id="ti3" style="display:none">멸균우유</option>
+                                        <option id="ti4" style="display:none">발효유</option>
+                                        <option id="ti5" style="display:none">치즈</option>
+                                        <option id="ti6" style="display:none">락토프리</option>
                                     </select>
                                 </td>
                             </tr>
@@ -83,5 +93,47 @@
             </div>
         </div>
     </div>
+    
+    <script>
+    	$(function(){
+    		if($("#op1").is(":selected")){
+    			$("#ti1").attr("style", "display:block");
+    			$("#ti2").attr("style", "display:block");
+    			$("#ti3").attr("style", "display:block");
+    			$("#ti4").attr("style", "display:none");
+    			$("#ti5").attr("style", "display:none");
+    			$("#ti6").attr("style", "display:none");
+    		}else if($("#op2").is(":selected")){
+    			$("#ti1").attr("style", "display:none");
+    			$("#ti2").attr("style", "display:none");
+    			$("#ti3").attr("style", "display:none");
+    			$("#ti4").attr("style", "display:block");
+    			$("#ti5").attr("style", "display:none");
+    			$("#ti6").attr("style", "display:none");
+    		}else if($("#op3").is(":selected")){
+    			$("#ti1").attr("style", "display:none");
+    			$("#ti2").attr("style", "display:none");
+    			$("#ti3").attr("style", "display:none");
+    			$("#ti4").attr("style", "display:none");
+    			$("#ti5").attr("style", "display:block");
+    			$("#ti6").attr("style", "display:none");
+    		}else if($("#op4").is(":selected")){
+    			$("#ti1").attr("style", "display:none");
+    			$("#ti2").attr("style", "display:none");
+    			$("#ti3").attr("style", "display:none");
+    			$("#ti4").attr("style", "display:none");
+    			$("#ti5").attr("style", "display:none");
+    			$("#ti6").attr("style", "display:block");
+    		}else{
+    			$("#ti1").attr("style", "display:none");
+    			$("#ti2").attr("style", "display:none");
+    			$("#ti3").attr("style", "display:none");
+    			$("#ti4").attr("style", "display:none");
+    			$("#ti5").attr("style", "display:none");
+    			$("#ti6").attr("style", "display:none");
+    		}
+    	})
+    </script>
+    
 </body>
 </html>
