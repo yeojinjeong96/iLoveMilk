@@ -9,9 +9,9 @@
 	// 로그인 시도 전 managerHeader.jsp 로딩시 : null
 	// 로그인 성공 후 managerHeader.jsp 로딩시 : 로그인한 회원의 정보가 담겨있는 Manager객체
 	
-	String loginFail = (String)session.getAttribute("loginFail");
-	// 로그인 실패하지않고 managerHeader.jsp 로딩시 : null
-	// 로그인 실패한 후 managerHeader.jsp 로딩시 : 모달을 실행하기 위한 변수
+	String error = (String)session.getAttribute("error");
+	// 에러나기 전 managerHeader.jsp 로딩시 : null
+	// 에러난 후 managerHeader.jsp 로딩시 : 모달을 실행하기 위한 변수
 	
 	String alertMsg = (String)session.getAttribute("alertMsg");
 	//알럿
@@ -52,8 +52,8 @@
 	<%session.removeAttribute("alertMsg"); %>
 	<%} %>
 	<!--  -->
-	<% if(loginFail != null){ %>
-		<!-- 로그인 실패 모달 시작 -->
+	<% if(error != null){ %>
+		<!-- 에러시 모달 시작 -->
 		<!-- The Modal -->
 		<div class="modal fade" id="myModal">
 		  <div class="modal-dialog">
@@ -61,13 +61,13 @@
 		    
 		      	<!-- Modal Header -->
 				<div class="modal-header">
-				  <h4 class="modal-title">로그인 실패</h4>
+				  <h4 class="modal-title">error</h4>
 				  <button type="button" class="close" data-dismiss="modal">×</button>
 				</div>
 				
 				<!-- Modal body -->
 				<div class="modal-body">
-				  로그인에 실패하였습니다. 아이디와 비밀번호를 확인해주세요.
+				  <%= error %>
 				</div>
 				
 				<!-- Modal footer -->
@@ -78,7 +78,7 @@
 		    </div>
 		  </div>
 		</div>
-		<!-- 로그인 실패 모달 종료 -->
+		<!-- 에러시 모달 종료 -->
 		
 		<script>
 			$(document).ready(function() {
@@ -86,7 +86,7 @@
 			});
 		</script>
 		
-		<% session.removeAttribute("loginFail"); %>
+		<% session.removeAttribute("error"); %>
 	<% } %>
 
     <div class="wrap" align="center">

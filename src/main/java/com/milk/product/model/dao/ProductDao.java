@@ -20,7 +20,7 @@ public class ProductDao {
 	
 	public ProductDao() {
 		try {
-			prop.loadFromXML(new FileInputStream(Product.class.getResource("db/sql/product-mapper.xml").getPath()));
+			prop.loadFromXML(new FileInputStream(ProductDao.class.getResource("/db/sql/product-mapper.xml").getPath()));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
