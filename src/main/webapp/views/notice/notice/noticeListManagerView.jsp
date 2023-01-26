@@ -72,7 +72,7 @@
                         <!--공지사항이 있을 경우-->
            				<%for(Notice n : list){%>
                             <tr >
-                                <td><input type="checkbox" name="delete" value=""></td>
+                                <td><input type="checkbox" name="delete" ></td>
                                 <td><%=n.getNoticeNo() %></td>
                                 <td><%=n.getNoticeTitle() %></td>
                                 <td><%=n.getManagerName() %></td>
@@ -99,8 +99,10 @@
             <%} %>
             </div>
             <br>
-            <form action="<%=contextPath%>/search.no" method="get">
+            
+            <form action="<%=contextPath%>/search.no?cpage=1" method="post">
                 <input type="text" name="searchNo">
+              	
                 <button type="submit">검색</button>
             </form>
         </div>

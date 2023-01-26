@@ -41,7 +41,7 @@ public class NoticeInsertController extends HttpServlet {
 		
 		if(ServletFileUpload.isMultipartContent(request)) {
 			
-			int maxSize= 10*10*1024;
+			int maxSize= 10*30*1024;
 			String savePath= request.getSession().getServletContext().getRealPath("/resources/notice_upfiles/");
 			
 			MultipartRequest multiRequest = new MultipartRequest(request,savePath,maxSize,"UTF-8",new MyFileRenamePolicy());
@@ -49,12 +49,12 @@ public class NoticeInsertController extends HttpServlet {
 			String noticeTitle=multiRequest.getParameter("title");
 			String noticeContent= multiRequest.getParameter("content");
 			HttpSession session = request.getSession();
-			int ManagerNo= ((Manager)session.getAttribute("loginManager")).getManagerNo();
+			int managerNo=((Manager)session.getAttribute("loginManager")).getManagerNo();
 			
 			Notice n = new Notice();
 			n.setNoticeTitle(noticeTitle);
 			n.setNoticeContent(noticeContent);
-			n.setWriterNo(ManagerNo);
+			n.setWriterNo(managerNo);
 			
 			Attachment at= null;
 			
@@ -77,7 +77,7 @@ public class NoticeInsertController extends HttpServlet {
 					 new File(savePath + at.getChangeName()).delete(); 
 				 }
 				session.setAttribute("alertMsg", "공지사항 입력에 실패하셨습니다.");	
-				request.getRequestDispatcher("views/notice/notice/noticeListManagerView.jsp").forward(request, response);
+				response.sendRedirect(request.getContextPath()+"/listM.no?cpage=1");
 			}
 		}
 		

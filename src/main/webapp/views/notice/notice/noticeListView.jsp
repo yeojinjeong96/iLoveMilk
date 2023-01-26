@@ -80,7 +80,7 @@
 	<script>
 		$(function(){
 			$("#notice-list>tr").click(function(){
-				location.href='<%=contextPath%>/detailM.no?no='+ $(this).children().eq(0).text();
+				location.href='<%=contextPath%>/detail.no?no='+ $(this).children().eq(0).text();
 			})
 		})
 	</script>

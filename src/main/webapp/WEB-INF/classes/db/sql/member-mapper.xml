@@ -43,9 +43,8 @@
 			 , STATUS
 			 , MEMBER_GRADE
 		  FROM TB_MEMBER
-		 WHRER MEMBER_NAME=?
+		 WHERE MEMBER_NAME= ?
 		   AND EMAIL= ?
-	
 	</entry>
 	
 	

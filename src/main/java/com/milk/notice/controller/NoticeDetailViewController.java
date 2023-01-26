@@ -35,8 +35,13 @@ public class NoticeDetailViewController extends HttpServlet {
 		
 		int result= new NoticeService().increaseCount(noticeNo);
 		if(result>0) {
-			Notice b= new NoticeService().selectNotice(noticeNo);
+			Notice n= new NoticeService().selectNotice(noticeNo);
 			Attachment at= new NoticeService().selectAttachment(noticeNo);
+			
+			request.setAttribute("n", n);
+			request.setAttribute("at",at);
+			request.getRequestDispatcher("views/notice/notice/noticeDetailView.jsp").forward(request, response);
+			
 		}else {
 			
 		}

@@ -4,10 +4,10 @@
 
 <entry key="selectListCount">
 		SELECT
-		       count(*) count
+		       COUNT(*) COUNT
 		  FROM TB_PRODUCT
 		 WHERE STOCK > 0
-            AND FCATEGORY_name =? 
+            AND FCATEGORY_NAME = ? OR SCATEGORY_NAME =?
 </entry>
 
 <entry key ="selectProductList">
@@ -21,7 +21,7 @@
 		                     , PRODUCT_IMG
 		                  FROM TB_PRODUCT B
 		                 WHERE STOCK > 0
-                           AND FCATEGORY_NAME = ?
+                           AND FCATEGORY_NAME = ? OR SCATEGORY_NAME = ?
 		                 ORDER
 		                    BY ENROLL_DATE DESC
 		                ) A

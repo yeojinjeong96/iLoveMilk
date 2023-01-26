@@ -58,8 +58,10 @@ public class NoticeSearchController extends HttpServlet {
 			PageInfo pi = new PageInfo(listCount,currentPage, pageLimit, boardLimit,maxPage,startPage,endPage);
 
 			String searchNo=request.getParameter("searchNo");	
+			
 			ArrayList<Notice>list= new NoticeService().selectSearchList(pi,searchNo);
 			
+			request.setAttribute("pi", pi);
 			request.setAttribute("list", list);
 			request.getRequestDispatcher("views/notice/notice/noticeListManagerView.jsp").forward(request, response);
 			
