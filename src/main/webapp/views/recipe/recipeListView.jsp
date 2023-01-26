@@ -90,14 +90,13 @@
 
 			<% for(Recipe r : list) { %>
             <div class="thumbnail" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
-                <img src="" width="200" height="150">
+                <img src="<%= contextPath %>/<%= r.getMainImg() %>" width="200" height="150">
                 <p>
                     <%= r.getRecipeTitle() %><br>
                     <%= r.getRecipeWriter() %><br>
                     <%= r.getEnrollDate() %> &nbsp;&nbsp;&nbsp; <%= r.getCount() %>
                 </p>
             </div>
-            
             <% } %>
 
             <div style="border-bottom: 3px solid gray; width: 700px;"></div>

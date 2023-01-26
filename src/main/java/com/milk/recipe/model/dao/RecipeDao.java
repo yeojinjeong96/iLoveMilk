@@ -85,7 +85,7 @@ public class RecipeDao {
 				Recipe r = new Recipe();
 				r.setRecipeNo(rset.getInt("RECIPE_NO"));
 				r.setRecipeTitle(rset.getString("RECIPE_TITLE"));
-				r.setRecipeWriter(rset.getString("MEMBER_ID"));
+				r.setRecipeWriter(rset.getString("MANAGER_ID"));
 				r.setEnrollDate(rset.getString("ENROLL_DATE"));
 				r.setCount(rset.getInt("COUNT"));
 				r.setMainImg(rset.getString("MAIN_IMG"));

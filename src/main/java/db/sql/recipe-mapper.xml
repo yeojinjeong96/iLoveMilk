@@ -27,7 +27,7 @@
 		                 WHERE RECIPE_TYPE = 1
 		                   AND DELETE_STATUS = 'N'
 		                 ORDER
-		                    BY RECIPE_NO DESC
+		                    BY RECIPE_NO
 		                ) "A"
 	        	)
  		 WHERE RNUM BETWEEN ? AND ?
