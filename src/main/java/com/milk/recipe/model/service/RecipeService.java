@@ -34,4 +34,16 @@ public class RecipeService {
 		return list;
 		
 	}
+	
+	// listR.re
+	// 요청한 페이지에 보여질 게시글 리스트 조회
+	public ArrayList<Recipe> selectRecipeListR(PageInfo pi){
+		Connection conn = getConnection();
+		
+		ArrayList<Recipe> list = new RecipeDao().selectRecipeListR(conn, pi);
+		
+		close(conn);
+		return list;
+		
+	}
 }

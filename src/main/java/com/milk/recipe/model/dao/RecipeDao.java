@@ -85,6 +85,51 @@ public class RecipeDao {
 				Recipe r = new Recipe();
 				r.setRecipeNo(rset.getInt("RECIPE_NO"));
 				r.setRecipeTitle(rset.getString("RECIPE_TITLE"));
+				r.setRecipeWriter(rset.getString("MEMBER_ID"));
+				r.setEnrollDate(rset.getString("ENROLL_DATE"));
+				r.setCount(rset.getInt("COUNT"));
+				r.setMainImg(rset.getString("MAIN_IMG"));
+				
+				list.add(r);
+				
+			}
+			
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return list;
+		
+	}
+	
+	// listR.re
+	// 요청한 페이지에 보여질 게시글 리스트 조회
+	public ArrayList<Recipe> selectRecipeListR(Connection conn, PageInfo pi){
+		ArrayList<Recipe> list = new ArrayList<>();
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		String sql = prop.getProperty("selectRecipeListR");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			int startRow = (pi.getCurrentPage() - 1) * pi.getBoardLimit() + 1;
+			int endRow = startRow + pi.getBoardLimit() - 1;
+			
+			pstmt.setInt(1, startRow);
+			pstmt.setInt(2, endRow);
+			
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				Recipe r = new Recipe();
+				r.setRecipeNo(rset.getInt("RECIPE_NO"));
+				r.setRecipeTitle(rset.getString("RECIPE_TITLE"));
 				r.setRecipeWriter(rset.getString("MANAGER_ID"));
 				r.setEnrollDate(rset.getString("ENROLL_DATE"));
 				r.setCount(rset.getInt("COUNT"));
