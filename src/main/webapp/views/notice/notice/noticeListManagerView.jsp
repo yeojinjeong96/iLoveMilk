@@ -23,6 +23,8 @@
     
     tbody>tr:hover{cursor: pointer;}
     
+    
+    
 </style>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
@@ -43,10 +45,10 @@
                     <h2 align="left">공지사항 관리</h2>
                     <hr>
                     <br>
-                    <form action="" method="post">
+                    <form action="<%=contextPath %>/delete.no" method="post">
                         <div class="btn-area" align="right">
-                            <a href="<%=contextPath%>/enroll.no">공지작성</a>
-                            <button type="button" id="dlt-btn">선택삭제</button>
+                            <a href="<%=contextPath%>/enroll.no" class="btn btn-secondary btn-sm">공지작성</a>
+                            <button type="submit" class="btn btn-secondary btn-sm">선택삭제</button>
                         </div>
                         <br>
                         <table id="notice-list" border="1" class="text-center" >
@@ -72,11 +74,11 @@
                                 <!--공지사항이 있을 경우-->
                                 <%for(Notice n : list){%>
                                     <tr>
-                                        <td><input type="checkbox" name="delete" ></td>
-                                        <td><%=n.getNoticeNo() %></td>
-                                        <td><%=n.getNoticeTitle() %></td>
-                                        <td><%=n.getManagerName() %></td>
-                                        <td><%=n.getEnrollDate()%></td>
+                                        <td><input type="checkbox" name="delete" value="<%=n.getNoticeNo()%>"></td>
+                                        <td class="detail-area"><%=n.getNoticeNo() %></td>
+                                        <td class="detail-area"><%=n.getNoticeTitle() %></td>
+                                        <td class="detail-area"><%=n.getManagerName() %></td>
+                                        <td class="detail-area"><%=n.getEnrollDate()%></td>
                                     </tr>
                                 <%}} %>
                             
@@ -92,10 +94,10 @@
                     <%if(pi.getCurrentPage()!=1){ %>
                         <button onclick="location.href='<%=contextPath%>/listM.no?cpage=<%=pi.getCurrentPage()-1%>';">&lt;</button>
                     <%} %>   
-                    <%for(int p= pi.getStartPage(); p<pi.getEndPage(); p++){ %>
+                    <%for(int p= pi.getStartPage(); p<=pi.getEndPage(); p++){ %>
                         <button onclick="location.href='<%=contextPath%>/listM.no?cpage=<%=p%>';"><%=p %></button>
                     <%} %>
-                    <%if(pi.getCurrentPage()!=pi.getEndPage()){ %>
+                    <%if(pi.getCurrentPage()!=pi.getMaxPage()){ %>
                         <button onclick="location.href='<%=contextPath%>/listM.no?cpage=<%=pi.getCurrentPage()+1%>';">&gt;</button>
                     <%} %>
                     </div>
@@ -105,10 +107,10 @@
                     <%if(pi.getCurrentPage()!=1){ %>
                         <button onclick="location.href='<%=contextPath%>/search.no?cpage=<%=pi.getCurrentPage()-1%>';">&lt;</button>
                     <%} %>   
-                    <%for(int p= pi.getStartPage(); p<pi.getEndPage(); p++){ %>
+                    <%for(int p= pi.getStartPage(); p<=pi.getEndPage(); p++){ %>
                         <button onclick="location.href='<%=contextPath%>/search.no?cpage=<%=p%>';"><%=p %></button>
                     <%} %>
-                    <%if(pi.getCurrentPage()!=pi.getEndPage()){ %>
+                    <%if(pi.getCurrentPage()!=pi.getMaxPage()){ %>
                         <button onclick="location.href='<%=contextPath%>/search.no?cpage=<%=pi.getCurrentPage()+1%>';">&gt;</button>
                     <%} %>
                     </div>
@@ -139,8 +141,12 @@
             
     <script>
     	$(function(){
-    		$("#notice-list tbody tr").click(function(){
+    		$("#notice-list tr").click(function(){
                 location.href="<%=contextPath%>/updateForm.no?no="+$(this).children().eq(1).text();
+            })
+           
+            $(".paging-area button").click(function(){
+                $(this).css('background-color','black');
             })
     	})
     </script>

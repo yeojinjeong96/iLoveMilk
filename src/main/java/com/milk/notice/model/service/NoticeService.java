@@ -122,5 +122,17 @@ public class NoticeService {
 		return result;
 	}
 	
+	public int deleteNotice(String delNo) {
+		Connection conn = getConnection();
+		int result= new NoticeDao().deleteNotice(conn, delNo);
+		
+		if(result>0) {
+			commit(conn);
+		}else {
+			rollback(conn);
+		}
+		
+		return result;
+	}
 
 }

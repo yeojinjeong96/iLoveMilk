@@ -136,4 +136,17 @@
 		       ,3
 		        )
 	</entry>
+	<entry key="selectSearchListCount">
+		SELECT
+		    COUNT(*) COUNT
+		 FROM TB_NOTICE
+		JOIN TB_MANAGER ON (MANAGER_NO = WRITER_NO)
+		WHERE NOTICE_TITLE||NOTICE_CONTENT LIKE '%'||?||'%'
+	</entry>
+	<entry key="deleteNotice">
+		UPDATE
+		    TB_NOTICE
+		    SET STATUS ='N'
+		 WHERE NOTICE_NO IN (
+	</entry>
 </properties>
