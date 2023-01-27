@@ -222,10 +222,10 @@
 				<%for(Product p : list) {%>
 	            <div class="thumbnail" align="left">
 	                
-	                <a href="<%=contextPath %>/" style="color:rgb(113, 113, 113); text-decoration:none;">
+	                <a href="<%=contextPath %>/proDetail.pro?pno=<%=p.getProductNo() %>" style="color:rgb(113, 113, 113); text-decoration:none;">
 	                <img src="<%= contextPath%>/<%=p.getProductImg() %>" alt="" width="200" height="200">
 	                
-	                <div >
+	                <div>
                             <%=p.getProductName() %>
                         <br>
 	                    <%=p.getPrice() %> 원

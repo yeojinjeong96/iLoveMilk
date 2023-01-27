@@ -1,6 +1,9 @@
 package com.milk.product.model.service;
 
-import static com.milk.common.JDBCTemplate.*;
+import static com.milk.common.JDBCTemplate.close;
+import static com.milk.common.JDBCTemplate.commit;
+import static com.milk.common.JDBCTemplate.getConnection;
+import static com.milk.common.JDBCTemplate.rollback;
 
 import java.sql.Connection;
 import java.util.ArrayList;
@@ -8,6 +11,7 @@ import java.util.ArrayList;
 import com.milk.common.model.vo.PageInfo;
 import com.milk.product.model.dao.ProductDao;
 import com.milk.product.model.vo.Product;
+import com.milk.product.model.vo.Review;
 
 public class ProductService {
 	
@@ -36,6 +40,8 @@ public class ProductService {
 		Connection conn = getConnection();
 		ArrayList<Product> list = new ProductDao().selectProductList(conn, pi, category);
  		
+		
+		
 		close(conn);
 		return list;
 		
@@ -70,6 +76,24 @@ public class ProductService {
 		return list;
 		
 	}
+	
+	/**
+	 * 상품상세페이지 리뷰조회
+	 * @author 이다혜
+	 * @return ArrayList<Review>
+	 */
+	public ArrayList<Review> selectProductReview(int no) {
+		
+		Connection conn = getConnection();
+		ArrayList<Review> list = new ProductDao().selectProductReview(conn, no);
+		
+		close(conn);
+		
+		return list;
+		
+	}
+	
+	
 	
 	/**
 	 * 상품 등록
