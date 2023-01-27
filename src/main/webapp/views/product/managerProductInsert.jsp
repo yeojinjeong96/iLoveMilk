@@ -85,7 +85,7 @@
                         <br><br>
                         
                         <div>
-                            <button type="submit" class="btn btn-primary">상품 등록</button>
+                            <button onclick="return cateNeed();" type="submit" class="btn btn-primary">상품 등록</button>
                         </div>
                     </form>
                 </div>
@@ -95,6 +95,13 @@
     </div>
     
     <script>
+    	function cateNeed(){
+    		if($("#fCate").val() == "- 1차 카테고리 -" || $("#sCate").val() == "- 2차 카테고리 -"){
+    			alert("카테고리를 입력하세요.");
+    			return false;
+    		}
+    	}
+    
     	function sCateShow(){
     		if($("select[name=fCate] option:selected").text() == "우유"){
     			$(".ti1").each(function(){

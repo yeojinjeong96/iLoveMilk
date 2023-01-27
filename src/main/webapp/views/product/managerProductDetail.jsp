@@ -73,6 +73,7 @@
                     <br><br>
 
                     <div>
+                        <button type="button" class="btn btn-primary updateBtn">수정</button>
                         <a href="<%= contextPath %>/listUpDeRe.pr?cup=1" type="submit" class="btn btn-secondary">이전으로</a>
                     </div>
                 </div>
@@ -80,5 +81,15 @@
             </div>
         </div>
     </div>
+
+    <script>
+        $(function(){
+            // 수정 클릭시 상품수정페이지로 이동
+            $(".updateBtn").click(function(){
+                location.href = '<%= contextPath %>/updateForm.pr?no=' + <%= p.getProductNo() %>
+            })
+        });
+    </script>
+			        		
 </body>
 </html>
