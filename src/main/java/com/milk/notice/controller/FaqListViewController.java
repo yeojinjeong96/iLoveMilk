@@ -54,10 +54,11 @@ public class FaqListViewController extends HttpServlet {
 			endPage = maxPage;
 		}
 		
-		
 		PageInfo pi = new PageInfo(listCount,currentPage, pageLimit, boardLimit,maxPage,startPage,endPage);
-		
 		ArrayList<Faq>list= new FaqService().selectFaqList(pi);
+		String category = request.getParameter("category");
+		
+		
 		request.setAttribute("list", list);
 		request.setAttribute("pi", pi);
 		request.getRequestDispatcher("views/notice/faq/faqListView.jsp").forward(request, response);
