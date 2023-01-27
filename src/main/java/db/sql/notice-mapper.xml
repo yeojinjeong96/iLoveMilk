@@ -103,4 +103,37 @@
 	               ORDER BY ENROLL_DATE DESC) E)
 	               WHERE RNUM BETWEEN ? AND ?
 	</entry>
+	<entry key="updateNotice">
+		UPDATE 
+		    TB_NOTICE
+		    SET NOTICE_TITLE = ?
+		       ,NOTICE_CONTENT = ?
+		WHERE NOTICE_NO = ? 
+	</entry>
+	<entry key="updateAttachement">
+	 	UPDATE 
+		    TB_ATTACHMENT
+		    SET CHANGE_NAME= ?
+		       ,FILE_PATH =?
+		 WHERE FILE_NO = ? 
+	</entry>
+	<entry key="insertNewAttachment">
+		 INSERT 
+		    INTO TB_ATTACHMENT 
+		        (
+		        FILE_NO
+		       ,REF_NO
+		       ,CHANGE_NAME
+		       ,FILE_PATH
+		       ,FILE_TYPE
+		        )
+		        VALUES
+		        (
+		        SEQ_ATNO.NEXTVAL
+		       ,?
+		       ,?
+		       ,?
+		       ,3
+		        )
+	</entry>
 </properties>

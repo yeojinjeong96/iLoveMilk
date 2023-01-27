@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.tomcat.util.http.fileupload.servlet.ServletFileUpload;
 
 import com.milk.common.MyFileRenamePolicy;
+import com.milk.notice.model.service.NoticeService;
 import com.milk.notice.model.vo.Attachment;
 import com.milk.notice.model.vo.Notice;
 import com.oreilly.servlet.MultipartRequest;
@@ -53,19 +54,32 @@ public class NoticeUpdateController extends HttpServlet {
 			n.setNoticeTitle(title);
 			n.setNoticeContent(content);
 			
+			
 			Attachment at =null;
 			
-			if(multiRequest.getOriginalFileName("upfile")!=null) {
+			if(multiRequest.getOriginalFileName("upfile")!=null) {//넘어온파일있음
+				at= new Attachment();
 				at.setChangeName(multiRequest.getFilesystemName("upfile"));
-				at.setFilePath(savePath);
+				at.setFilePath("resources/notice_upfiles/");
+				
+				if(multiRequest.getParameter("changeName")!=null) {//기존파일있음
+					at.setFileNo(Integer.parseInt(multiRequest.getParameter("originFileNo")));
+				}else {//기존파일없음
+					at.setRefNo(noticeNo);
+				}
+			
 			}
 		
-			if(multiRequest.getParameter("changeName")!=null) {
-				at.setFileNo(Integer.parseInt(multiRequest.getParameter("originFileNo")));
-			}else {
-				at.setRefNo(noticeNo);
-			}
 			
+			
+			int result= new NoticeService().updateNotice(n,at);
+			
+			if(result>0) {
+				request.getSession().setAttribute("alertMsg", "공지사항 수정 성공");
+				response.sendRedirect(request.getContextPath()+"/listM.no?cpage=1");
+			}else {
+				
+			}
 		}
 	}
 

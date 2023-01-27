@@ -68,7 +68,7 @@ public class NoticeInsertController extends HttpServlet {
 			int result= new NoticeService().insertNotice(n,at);
 			
 			if(result>0) {
-				session.setAttribute("alertMsg", "공지사항 입력 성공.");
+				session.setAttribute("alertMsg", "공지사항 입력 성공");
 				response.sendRedirect(request.getContextPath()+"/listM.no?cpage=1");
 				
 			}else {

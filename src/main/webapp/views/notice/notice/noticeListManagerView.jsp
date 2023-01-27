@@ -4,6 +4,7 @@
 <% 
 	ArrayList<Notice>list= (ArrayList<Notice>)request.getAttribute("list");
 	PageInfo pi = (PageInfo)request.getAttribute("pi");
+	String searchNo= (String)request.getAttribute("searchNo");
 
 %>
 <!DOCTYPE html>
@@ -86,6 +87,7 @@
                         </table>
                     </form>
                     <br>
+                  	<%if(searchNo == null){ %>
                     <div class="paging-area" >
                     <%if(pi.getCurrentPage()!=1){ %>
                         <button onclick="location.href='<%=contextPath%>/listM.no?cpage=<%=pi.getCurrentPage()-1%>';">&lt;</button>
@@ -98,10 +100,32 @@
                     <%} %>
                     </div>
                     <br>
+                    <%}else{ %>
+                    <div class="paging-area" >
+                    <%if(pi.getCurrentPage()!=1){ %>
+                        <button onclick="location.href='<%=contextPath%>/search.no?cpage=<%=pi.getCurrentPage()-1%>';">&lt;</button>
+                    <%} %>   
+                    <%for(int p= pi.getStartPage(); p<pi.getEndPage(); p++){ %>
+                        <button onclick="location.href='<%=contextPath%>/search.no?cpage=<%=p%>';"><%=p %></button>
+                    <%} %>
+                    <%if(pi.getCurrentPage()!=pi.getEndPage()){ %>
+                        <button onclick="location.href='<%=contextPath%>/search.no?cpage=<%=pi.getCurrentPage()+1%>';">&gt;</button>
+                    <%} %>
+                    </div>
+              		<%} %>
+                    <br>
+                  
+                    
                     
                     <form action="<%=contextPath%>/search.no?cpage=1" method="post">
-                        <input type="text" name="searchNo">
-                        
+                       	
+                  
+       					  <%if(searchNo != null){ %>
+       					  <input type="text" name="searchNo" value="<%=searchNo%>">
+       					  <%}else{%>
+       					   <input type="text" name="searchNo">
+       					   <%} %>
+       					   
                         <button type="submit">검색</button>
                     </form>
                 </div>
@@ -117,10 +141,10 @@
     	$(function(){
     		$("#notice-list tbody tr").click(function(){
                 location.href="<%=contextPath%>/updateForm.no?no="+$(this).children().eq(1).text();
-          
             })
     	})
     </script>
+    
 
 </body>
 </html>

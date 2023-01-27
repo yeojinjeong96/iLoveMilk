@@ -89,5 +89,38 @@ public class NoticeService {
 		
 	}
 	
+	public int updateNotice(Notice n, Attachment at) {
+		Connection conn = getConnection();
+		int result1 = new NoticeDao().updateNotice(conn, n);
+		
+		int result2= 1;
+		if(at !=null) {
+			
+			if(at.getFileNo()!=0) {
+				result2= new NoticeDao().updateAttachment(conn,at);
+			}else {
+				result2=new NoticeDao().insertNewAttachment(conn, at);
+			}
+		}
+		
+		
+		if(result1*result2 >0) {
+			commit(conn);
+		}else {
+			rollback(conn);
+		}
+		close(conn);
+		return result1*result2;
+	}
+	
+	public int selectSearchListCount(String searchNo) {
+		
+		Connection conn = getConnection();
+		int result= new NoticeDao().selectSearchListCount(conn, searchNo);
+		
+		close(conn);
+		return result;
+	}
+	
 
 }
