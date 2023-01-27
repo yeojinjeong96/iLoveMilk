@@ -5,12 +5,17 @@ public class Review {
 	private int reviewNo;
 	private int memberNo;
 	private int productNo;
+	private String productName;
 	private String content;
 	private int star;
 	private String rEnrollDate;
 	private String rModifyDate;
 	private String rReport;
 	private String rStatus;
+	
+	
+	public Review() {}
+	
 	
 	
 	public Review(int reviewNo, int memberNo, int productNo, String content, int star, String rEnrollDate,
@@ -27,10 +32,24 @@ public class Review {
 		this.rStatus = rStatus;
 	}
 
+	public Review(int reviewNo, int memberNo, String productName, String content, int star, String rEnrollDate,
+			String rModifyDate) {
+		super();
+		this.reviewNo = reviewNo;
+		this.memberNo = memberNo;
+		this.productName = productName;
+		this.content = content;
+		this.star = star;
+		this.rEnrollDate = rEnrollDate;
+		this.rModifyDate = rModifyDate;
+	}
+
+
 
 	public int getReviewNo() {
 		return reviewNo;
 	}
+
 
 
 	public void setReviewNo(int reviewNo) {
@@ -38,9 +57,11 @@ public class Review {
 	}
 
 
+
 	public int getMemberNo() {
 		return memberNo;
 	}
+
 
 
 	public void setMemberNo(int memberNo) {
@@ -48,9 +69,11 @@ public class Review {
 	}
 
 
+
 	public int getProductNo() {
 		return productNo;
 	}
+
 
 
 	public void setProductNo(int productNo) {
@@ -58,9 +81,23 @@ public class Review {
 	}
 
 
+
+	public String getProductName() {
+		return productName;
+	}
+
+
+
+	public void setProductName(String productName) {
+		this.productName = productName;
+	}
+
+
+
 	public String getContent() {
 		return content;
 	}
+
 
 
 	public void setContent(String content) {
@@ -68,9 +105,11 @@ public class Review {
 	}
 
 
+
 	public int getStar() {
 		return star;
 	}
+
 
 
 	public void setStar(int star) {
@@ -78,9 +117,11 @@ public class Review {
 	}
 
 
+
 	public String getrEnrollDate() {
 		return rEnrollDate;
 	}
+
 
 
 	public void setrEnrollDate(String rEnrollDate) {
@@ -88,9 +129,11 @@ public class Review {
 	}
 
 
+
 	public String getrModifyDate() {
 		return rModifyDate;
 	}
+
 
 
 	public void setrModifyDate(String rModifyDate) {
@@ -98,9 +141,11 @@ public class Review {
 	}
 
 
+
 	public String getrReport() {
 		return rReport;
 	}
+
 
 
 	public void setrReport(String rReport) {
@@ -108,9 +153,11 @@ public class Review {
 	}
 
 
+
 	public String getrStatus() {
 		return rStatus;
 	}
+
 
 
 	public void setrStatus(String rStatus) {
@@ -118,12 +165,16 @@ public class Review {
 	}
 
 
+
 	@Override
 	public String toString() {
-		return "Review [reviewNo=" + reviewNo + ", memberNo=" + memberNo + ", productNo=" + productNo + ", content="
-				+ content + ", star=" + star + ", rEnrollDate=" + rEnrollDate + ", rModifyDate=" + rModifyDate
-				+ ", rReport=" + rReport + ", rStatus=" + rStatus + "]";
+		return "Review [reviewNo=" + reviewNo + ", memberNo=" + memberNo + ", productNo=" + productNo + ", productName="
+				+ productName + ", content=" + content + ", star=" + star + ", rEnrollDate=" + rEnrollDate
+				+ ", rModifyDate=" + rModifyDate + ", rReport=" + rReport + ", rStatus=" + rStatus + "]";
 	}
+	
+	
+
 	
 	
 	

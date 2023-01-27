@@ -306,9 +306,9 @@
         </ul>
 </div>
 
-<script>
-$('.dropdown-toggle').dropdown();
-</script>
+	<script>
+		$('.dropdown-toggle').dropdown();
+	</script>
 
 </body>
 </html>

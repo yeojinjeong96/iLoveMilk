@@ -83,7 +83,6 @@ public class ProductCategoryListController extends HttpServlet {
 		request.setAttribute("categoryList", categoryList);
 		
 		
-		
 		request.getRequestDispatcher("views/product/productList.jsp").forward(request, response);
 		
 

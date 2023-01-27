@@ -156,8 +156,10 @@
 	           			url : "<%=contextPath%>/recentList.pro", 
 	           			success :function(recentList){
 	           			
+	           			
 	           				let value = "";
 	           				if(recentList.length == 0){
+	           					
 	           					value +=
 	           				        "<div class='thumbnail' align='left'>"
 	           		       		   + "조회된 상품이 없습니다.</div>"
@@ -166,7 +168,7 @@
 	           				    for(let i = 0; i< recentList.length; i++){ 
 	           				    
 	           			        value += "<div class='thumbnail' align='left'>"
-	           			              + "<a href='' style='color:rgb(113, 113, 113); text-decoration:none;'>"
+	           			              + "<a href='"+ '<%=contextPath %>/proDetail.pro?pno='+ recentList[i].productNo +"' style='color:rgb(113, 113, 113); text-decoration:none;'>"
 	           			              + "<img src='" + recentList[i].productImg + "' alt='' width='200' height='200'>"
 	           			            + "<p>"
 	           			            + recentList[i].productName + "<br>"

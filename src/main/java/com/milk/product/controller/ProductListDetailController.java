@@ -41,7 +41,12 @@ public class ProductListDetailController extends HttpServlet {
 
 		request.setAttribute("p", p);
 		request.setAttribute("list", list);
-		request.getRequestDispatcher("views/product/productDetail.jsp");
+		
+		for(Review r : list) {
+			System.out.println(r);
+		} 
+		
+		request.getRequestDispatcher("views/product/productDetail.jsp").forward(request, response);
 	}
 
 	/**

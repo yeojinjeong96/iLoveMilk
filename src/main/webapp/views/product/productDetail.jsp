@@ -2,7 +2,7 @@
     pageEncoding="UTF-8"%>
 
 <%@ page import="com.milk.product.model.vo.Product, com.milk.product.model.vo.Review, java.util.ArrayList" %>
-    
+<%@ page buffer="100kb" %>    
 <%  
    Product p = (Product)request.getAttribute("p");
    ArrayList<Review> list = (ArrayList<Review>)request.getAttribute("list");	
@@ -18,7 +18,7 @@
     .pro-outer{
         margin:auto;
         width:700px;
-        height:3000px;
+        height:2500px;
     }
 
     /* 제품 구매 */
@@ -196,18 +196,25 @@
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
 <!-- Latest compiled JavaScript -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
-
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.6.1/dist/jquery.slim.min.js"></script>
 </head>
 <body>
+	
+
 
 	<%@ include file="/views/common/header.jsp" %>
+	
+		<script>
+		console.log("aa");
+	</script>
+	
     <div class="pro-outer">
 
         <div id="pro-wrap1">
 
         <div id="pro-wrap1-1" align="left">
-            <a href="<%=contextPath %>">HOME &gt;</a>
-            <a href="">전체상품</a> <!-- 경로이름 -->
+            <a href="<%=contextPath %>">HOME &gt; </a>
+            <a href=""> 전체상품 </a> <!-- 경로이름 -->
         </div>
 
         <div id="pro-wrap1-2">
@@ -223,7 +230,7 @@
                 <div id="pro-1-3-2-1">
                    <p><%= p.getProductName() %></p>  <!-- 제품명 -->
                    
-                  <b><%= p.getPrice() %></b> 
+                  <b><%= p.getPrice() %>원</b> 
                 </div>
 
                 <!-- 선 집어넣을 div -->
@@ -276,8 +283,8 @@
             <div id="pro-info1">
                 <ul class="nav nav-tabs nav-justified" role="tablist">
                     <!-- 클릭하면 class속성에 active붙게함 -->
-                    <li class="nav-item"><a href="#pro-info2" class="nav-link tab-pane"  data-toggle='tab' >제품상세정보</a> </li>
-                    <li class="nav-item"><a href="#pro-wrap3-1" class="nav-link tab-pane" data-toggle='tab'>리뷰</a> </li>
+                    <li class="nav-item"><a href="javascript:;" data-anchor="pro-info2" class="nav-link tab-pane"  data-toggle='tab' >제품상세정보</a> </li>
+                    <li class="nav-item"><a href="javascript:;" data-anchor="pro-wrap3-1" class="nav-link tab-pane" data-toggle='tab'>리뷰</a> </li>
                 </ul>
                 
             </div>
@@ -303,52 +310,45 @@
             </div>
             <div style="border-bottom:1px solid gray;"></div> 
 
-            <div id="pro-wrap3-2"> 
-                 <!--리뷰내용 -->
-                <div>
-                    <img src="img/milk.jpg" alt="" style="display:block; width:100px; height:100px; margin:auto;">
-                </div>
+            <div id="pro-wrap3-2" style="position:relative;">
 
-                <div style="width:590px; height:100px;">
-                    <p style="width:100%">제품명
-                            <!--조건문 써서 작성자 아니면 신고  -->
-                            <a href="" style="float:right;" data-toggle="modal" data-target="#mem-report" >신고</a>
-                            <!-- 조건문 써서 작성자일때에는 수정 | 삭제 -->
-                            <a href="" style="float:right;">수정</a>   <a href="" style="float:right;">삭제</a>
-                    </p> 
-                   
-                    <div style="height:5%; border-bottom:1px solid gray;"></div>
-             
-                    <p>별점 <br> 리뷰내용</p>
-                </div>
 
+				<%if(!(list.isEmpty())){ %>
+	                 <!--리뷰내용 -->
+	                 <%for(Review r : list){ %>
+		                <div>
+		                    <img src="" alt="" style="display:block; width:100px; height:150px; margin:auto;">
+		                </div>
+		
+		                <div style="width:590px; height:100px;">
+		                    <p style="width:100%">상품번호 : <%=r.getReviewNo()%> <br>상품명 : <%= r.getProductName() %>
+		                            <!--조건문 써서 작성자 아니면 신고  -->
+		                            <a href="" style="float:right;" data-toggle="modal" data-target="#mem-report" >신고</a>
+		                            <!-- 조건문 써서 작성자일때에는 수정 | 삭제 -->
+		                            <a href="" style="float:right;">수정</a>   <a href="" style="float:right;">삭제</a>
+		                    </p> 
+		                   
+		                    <div style="height:5%; border-bottom:1px solid gray;"></div>
+		             
+		                    <p><%=r.getStar() %> <br> <%=r.getContent() %></p>
+		                </div>
+	                <%} %>
+				<%}else{ %>
+					<div id="rev-none" align='center' style=""><img src="resources/images/smile.png" alt="" width="40px" style="position:absolute;left:46%; top:30%;">
+                    <p style="position:absolute;left:36%; top:52%;">작성된 리뷰가 없습니다.</p>
+                    </div>
+				<%} %>
             </div>
 
-        <!-- 페이지 -->
-        <div style="border-bottom:1px solid gray;"></div> 
-
-        <div id="pro-wrap3-3" align="center">
-            <br>
-                <!-- 내가 보고있는 페이지가 1번 페이지가 아닐때에만 나타내기 
-                <% if(pi.getCurrentPage() != 1){ %>-->
-                <button onclick="location.href='<%=contextPath%>/list.bo?cpage=<%= pi.getCurrentPage()-1%>';">&lt;</button>
-                <!-- <%} %> -->
-                
-
-                <!--
-                <%for(int p = pi.getStartPage() ; p <= pi.getEndPage() ; p++) { %>-->
-                <button onclick="location.href='<%=contextPath%>/list.bo?cpage=<%=p%>';"><%= p %></button>
-                <!-- <% } %> -->
-                
-
-                <!--  내가 보고있는 페이지가 마지막 페이지가 아닐 때에만 나타내기 
-                <%if(pi.getCurrentPage() != pi.getMaxPage()){ %> -->
-                <button onclick="location.href='<%=contextPath %>/list.bo?cpage=<%=pi.getCurrentPage()+1%>';">&gt;</button>
-                <!-- <%} %> -->
+		
                 
          
         </div>
+        
         </div>
+		
+
+			
 
 
 
