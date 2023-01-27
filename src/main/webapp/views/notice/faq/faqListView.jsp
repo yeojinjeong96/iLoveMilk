@@ -1,5 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ page import="com.milk.notice.model.vo.Faq, com.milk.common.model.vo.PageInfo, java.util.ArrayList" %>
+<% 
+	ArrayList<Faq>list= (ArrayList<Faq>)request.getAttribute("list");
+	PageInfo pi = (PageInfo)request.getAttribute("pi");
+%>	
 <!DOCTYPE html>
 <html>
 <head>
@@ -35,9 +40,10 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
 </head>
 <body>
+    <%@include file="../common/serviceCenterMainTop.jsp" %>
     <div class="outer" align="center">
         <br>
-        <div width="700px">
+        <div style="width:700;">
             <div class="search">
                 <form action="" method="get" >  
                         <input type="text" name="search" placeholder="검색어를 입력하세요."><button type="submit" >검색</button>              
@@ -52,7 +58,7 @@
                 </strong>
                 <br>
                 <br>
-                <a href="">1:1 문의</a>
+                <a href="<%=contextPath%>/enroll.q">1:1 문의</a>
                 </p>
             </div>
             <br>
@@ -63,6 +69,7 @@
                 <a href="">전체</a> |
                 <a href="">회원가입/정보</a> |
                 <a href="">결제/배송</a> |
+                <a href="">적립금</a> |
                 <a href="">제품정보</a> |
                 <a href="">기타</a>
             </div>
@@ -74,25 +81,41 @@
                         <th width="150">분류</th>
                         <th width="400">내용</th>
                     </tr>
+                    <%if (list.isEmpty()){ %>
                     <tr>
-                        <td>1</td>
-                        <td>회원가입 정보</td>
-                        <td>가정구독으로 음용 중에 이사를 가는 경우</td>
+                 		<td colspan="3">
+                 		 등록된 FAQ가 없습니다.
+                 		</td>
+             
                     </tr>
+                    <%}else{ %>
+                    <%for(Faq f: list){ %>
+                    <tr>
+                        <td><%=f.getFaqNo() %></td>
+                        <td><%=f.getCategoryName() %></td>
+                        <td><%=f.getQuestion() %></td>
+                    </tr>
+                    <%} }%>
                 </table>
             </div>
             <br>
             <div class="paging-area">
                 
-                <button>&lt;</button>
-                   <button>1</button>
-                <button>&gt;</button>
+               <%if(pi.getCurrentPage()!=1){ %>
+                <button onclick="location.href='<%=contextPath%>/list.faq?cpage=<%=pi.getCurrentPage()-1%>';">&lt;</button>
+	            <%} %>   
+	            <%for(int p= pi.getStartPage(); p<=pi.getEndPage(); p++){ %>
+	                <button onclick="location.href='<%=contextPath%>/list.faq?cpage=<%=p%>';"><%=p %></button>
+	            <%} %>
+	            <%if(pi.getCurrentPage()!=pi.getMaxPage()){ %>
+	                <button onclick="location.href='<%=contextPath%>/list.faq?cpage=<%=pi.getCurrentPage()+1%>';">&gt;</button>
+	            <%} %>
               
             </div>
          
         </div>
 
     </div>
-
+    <%@include file="/views/common/footer.jsp" %>
 </body>
 </html>

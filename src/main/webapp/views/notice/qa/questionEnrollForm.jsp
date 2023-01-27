@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<% Member m = (Member)session.getAttribute("loginMember"); %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -25,6 +26,7 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
 </head>
 <body>
+	<%@include file="../common/serviceCenterMainTop.jsp" %>
     <div class="outer" align="center">
         <br>
         <div style="width: 700px;">
@@ -32,6 +34,7 @@
             <hr>
             <br>
             <form action="<%=contextPath%>/insert.qa" method="post">
+            	<input type="hidden" name="userNo" value="<%=m.getMemberNo()%>">
                 <table border="1" class="qa-form">
                     <tr>
                         <th width="150" class="text-center">* 말머리</th>
@@ -59,15 +62,15 @@
                     </tr>
                     <tr>
                         <th class="text-center">* 제목</th>
-                        <td>제목자리~~</td>
+                        <td><input type="text" name="title" style="width: 300px;"></td>
                     </tr>
                     <tr>
                         <th class="text-center">작성자</th>
-                        <td>작성자명~~</td>
+                        <td><%=m.getMemberName() %></td>
                     </tr>
                     <tr>
                         <th class="text-center">첨부파일</th>
-                        <td><input type="file"></td>
+                        <td><input type="file" name="upfile"></td>
                     </tr>
                     <tr>
                         <th class="text-center">* 내용</th>
@@ -81,5 +84,7 @@
             </form>
         </div>
     </div>
+    
+    <%@include file="/views/common/footer.jsp" %>
 </body>
 </html>

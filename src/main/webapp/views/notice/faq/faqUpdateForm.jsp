@@ -26,6 +26,9 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
 </head>
 <body>
+    <%@include file="/views/common/managerHeader.jsp" %>
+	<%@include file="/views/common/managerMenubar.jsp" %>
+
     <div class="outer" align="center">
         <br>
         <div style="width: 700px;">
@@ -35,8 +38,8 @@
             <form action="" method="post">
                 <table id="faq-update" >
                     <tr>
-                        <th width="100" height="50">* 제목</th>
-                        <td width="500"><input type="text" value="기존제목" required></td>
+                        <th width="120" height="50">* 제목</th>
+                        <td width="480"><input type="text" value="기존제목" required></td>
                     </tr>       
                     <tr >
                         <th height="50">* 카테고리 선택</th>

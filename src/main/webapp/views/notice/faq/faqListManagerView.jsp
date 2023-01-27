@@ -21,6 +21,9 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
 </head>
 <body>
+    <%@include file="/views/common/managerHeader.jsp" %>
+	<%@include file="/views/common/managerMenubar.jsp" %>
+
     <div class="outer" align="center">
         <br>
         <div style="width: 700px;">

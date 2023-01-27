@@ -75,10 +75,10 @@
             <%if(pi.getCurrentPage()!=1){ %>
                 <button onclick="location.href='<%=contextPath%>/list.no?cpage=<%=pi.getCurrentPage()-1%>';">&lt;</button>
             <%} %>   
-            <%for(int p= pi.getStartPage(); p<pi.getEndPage(); p++){ %>
+            <%for(int p= pi.getStartPage(); p<=pi.getEndPage(); p++){ %>
                 <button onclick="location.href='<%=contextPath%>/list.no?cpage=<%=p%>';"><%=p %></button>
             <%} %>
-            <%if(pi.getCurrentPage()!=pi.getEndPage()){ %>
+            <%if(pi.getCurrentPage()!=pi.getMaxPage()){ %>
                 <button onclick="location.href='<%=contextPath%>/list.no?cpage=<%=pi.getCurrentPage()+1%>';">&gt;</button>
             <%} %>
             </div>

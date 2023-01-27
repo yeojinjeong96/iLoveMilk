@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+	<entry key="selectFaqListCount">
+		SELECT 
+		    COUNT(*) COUNT
+		    FROM TB_FAQ
+	</entry>
+	<entry key="selectFaqList">
+		SELECT RNUM, E.*
+		    FROM(SELECT ROWNUM RNUM, E.*
+		            FROM (SELECT 
+		                FAQ_NO
+		               ,QUESTION
+		               ,ANSWER
+		               ,FAQ_WRITER
+		               ,CATEGORY_NAME
+		                FROM TB_FAQ
+		              ORDER BY CATEGORY_NAME)E)E
+		              WHERE RNUM BETWEEN ? AND ?
+	</entry>
+</properties>
