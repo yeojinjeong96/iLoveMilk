@@ -51,10 +51,9 @@
                             <tr style="text-align: center;">
                                 <th width="4%"></th>
                                 <th width="9%">코드</th>
-                                <th width="36%">상품명</th>
+                                <th width="47%">상품명</th>
                                 <th width="9%">재고</th>
                                 <th width="20%">브랜드</th>
-                                <th width="11%">수정</th>
                                 <th width="11%">입고</th>
                             </tr>
                         </thead>
@@ -73,7 +72,6 @@
                                 		·
                                 	<% } %>
                                 </td>
-                                <td align="center"><button class="btn btn-primary btn-sm">수정</button></td>
                                 <td align="center"><button class="btn btn-primary btn-sm">입고</button></td>
                             </tr>
 							<% } %>
@@ -83,11 +81,15 @@
                     
                     <script>
 			        	$(function(){
+			        		
+			        		// 상품명 클릭시 상품상세조회페이지로 이동
 			        		$(".prod").each(function(){
 			        			$(this).children().eq(2).click(function(){
-				        			location.href = '<%= contextPath %>/detail.pro?no=' + $(this).prev().text();
+				        			location.href = '<%= contextPath %>/detail.pr?no=' + $(this).prev().text();
 				        		});
 			        		})
+			        		
+			        		// 선택상품삭제 클릭시 선택된 상품 삭제
 			        	});
 			        </script>
                     

@@ -14,7 +14,7 @@ import com.milk.product.model.vo.Product;
 /**
  * Servlet implementation class ProductmDetailController
  */
-@WebServlet("/detail.pro")
+@WebServlet("/detail.pr")
 public class ProductmDetailController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -33,8 +33,13 @@ public class ProductmDetailController extends HttpServlet {
 		int proNo = Integer.parseInt(request.getParameter("no"));
 		Product p = new ProductService().productDetail(proNo);
 		
-		request.setAttribute("p", p);
-		request.getRequestDispatcher("views/product/managerProductDetail.jsp").forward(request, response);
+		if(p != null) {
+			request.setAttribute("p", p);
+			request.getRequestDispatcher("views/product/managerProductDetail.jsp").forward(request, response);
+		} else {
+			request.setAttribute("error", "상품 상세조회 실패");
+			response.sendRedirect(request.getContextPath() + "/listUpDeRe.pr?cup=1");
+		}
 	}
 
 	/**

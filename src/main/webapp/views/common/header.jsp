@@ -214,9 +214,19 @@
                     
                 </div>
                 <div class="header-4btn" align="right">
-                    <a href=""><img src="resources/images/order.png" style="width:50px"></a>&nbsp;&nbsp;
-                    <a href="<%= contextPath %>/cart.pr"><img src="resources/images/cart.png" style="width:50px"></a>&nbsp;
-                    <a href=""><img src="resources/images/myPage.png" style="width:50px"></a>
+                	<% if(loginMember == null) { %>
+	                    <!-- 로그인 전 -->
+	                    <a href="<%= contextPath%>/loginpage.me"><img src="resources/images/order.png" style="width:50px"></a>&nbsp;&nbsp;
+	                    <a href="<%= contextPath %>/loginpage.me"><img src="resources/images/cart.png" style="width:50px"></a>&nbsp;
+	                    <a href="<%= contextPath%>/loginpage.me"><img src="resources/images/myPage.png" style="width:50px"></a>
+					<% }else { %>
+						<!-- 로그인 후 -->
+	                    <a href=""><img src="resources/images/order.png" style="width:50px"></a>&nbsp;&nbsp;
+	                    <a href="<%= contextPath %>/cart.pr"><img src="resources/images/cart.png" style="width:50px"></a>&nbsp;
+	                    <a href="<%= contextPath%>/mypage.me"><img src="resources/images/myPage.png" style="width:50px"></a>
+                    <% } %>
+                
+                   
                 </div>
             </div>
         </div>

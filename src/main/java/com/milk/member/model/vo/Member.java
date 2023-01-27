@@ -4,7 +4,7 @@ import java.sql.Date;
 
 public class Member {
 	
-	private int membeNo;
+	private int memberNo;
 	private String memberId;
 	private String memberPwd;
 	private String memberName;
@@ -22,11 +22,11 @@ public class Member {
 	
 	public Member() {}
 
-	public Member(int membeNo, String memberId, String memberPwd, String memberName, String phone, String email,
+	public Member(int memberNo, String memberId, String memberPwd, String memberName, String phone, String email,
 			String addressNumber, String address, String addressDetail, String profile, Date enrollDate, Date modifyDate,
 			String blackList, String status, String memberGrade) {
 		super();
-		this.membeNo = membeNo;
+		this.memberNo = memberNo;
 		this.memberId = memberId;
 		this.memberPwd = memberPwd;
 		this.memberName = memberName;
@@ -66,11 +66,11 @@ public class Member {
 	}
 
 	public int getMembeNo() {
-		return membeNo;
+		return memberNo;
 	}
 
 	public void setMembeNo(int membeNo) {
-		this.membeNo = membeNo;
+		this.memberNo = membeNo;
 	}
 
 	public String getMemberId() {
@@ -187,7 +187,7 @@ public class Member {
 
 	@Override
 	public String toString() {
-		return "Member [membeNo=" + membeNo + ", memberId=" + memberId + ", memberPwd=" + memberPwd + ", memberName="
+		return "Member [memberNo=" + memberNo + ", memberId=" + memberId + ", memberPwd=" + memberPwd + ", memberName="
 				+ memberName + ", phone=" + phone + ", email=" + email + ", addressNumber=" + addressNumber
 				+ ", address=" + address + ", addressDetail=" + addressDetail + ", profile=" + profile + ", enrollDate="
 				+ enrollDate + ", modifyDate=" + modifyDate + ", blackList=" + blackList + ", status=" + status

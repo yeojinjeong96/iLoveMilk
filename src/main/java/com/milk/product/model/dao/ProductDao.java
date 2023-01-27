@@ -232,7 +232,7 @@ public class ProductDao {
 				Product p = new Product();
 				p.setProductNo(rset.getInt("product_no"));
 				p.setProductName(rset.getString("product_name"));
-				p.setCapacity(endRow);
+				p.setCapacity(rset.getInt("capacity"));
 				p.setStock(rset.getInt("stock"));
 				p.setBrand(rset.getString("brand"));
 				list.add(p);
