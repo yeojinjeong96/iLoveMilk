@@ -106,6 +106,62 @@
     </div>
     
     <script>
+    	$(function(){
+    		console.log(1);
+    		$("select[name=fCate] option").text().each(function(){
+    			console.log($("select[name=fCate] option").text());
+    			if($("select[name=fCate] option").text() == <%= p.getfCategory() %>){
+    				console.log(3);
+    				$("select[name=fCate] option").attr("selected", true);
+    			}
+    		});
+    	});
+    
+	    function cateNeed(){
+			if($("#fCate").val() == "- 1차 카테고리 -" || $("#sCate").val() == "- 2차 카테고리 -"){
+				alert("카테고리를 입력하세요.");
+				return false;
+			}
+		}
+    
+    	function sCateShow(){
+    		if($("select[name=fCate] option:selected").text() == "우유"){
+    			$(".ti1").each(function(){
+    				$(this).attr("style", "display:block");
+    			});
+    			$(".ti2").attr("style", "display:none");
+    			$(".ti3").attr("style", "display:none");
+    			$(".ti4").attr("style", "display:none");
+    		}else if($("select[name=fCate] option:selected").text() == "발효유"){
+    			$(".ti1").each(function(){
+    				$(this).attr("style", "display:none");
+    			});
+    			$(".ti2").attr("style", "display:block");
+    			$(".ti3").attr("style", "display:none");
+    			$(".ti4").attr("style", "display:none");
+    		}else if($("select[name=fCate] option:selected").text() == "치즈"){
+    			$(".ti1").each(function(){
+    				$(this).attr("style", "display:none");
+    			});
+    			$(".ti2").attr("style", "display:none");
+    			$(".ti3").attr("style", "display:block");
+    			$(".ti4").attr("style", "display:none");
+    		}else if($("select[name=fCate] option:selected").text() == "락토프리"){
+    			$(".ti1").each(function(){
+    				$(this).attr("style", "display:none");
+    			});
+    			$(".ti2").attr("style", "display:none");
+    			$(".ti3").attr("style", "display:none");
+    			$(".ti4").attr("style", "display:block");
+    		}else{
+    			$(".ti1").each(function(){
+    				$(this).attr("style", "display:none");
+    			});
+    			$(".ti2").attr("style", "display:none");
+    			$(".ti3").attr("style", "display:none");
+    			$(".ti4").attr("style", "display:none");
+    		}
+    	}
     </script>
     
 </body>

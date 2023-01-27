@@ -34,10 +34,10 @@ public class ProductUpdateFormController extends HttpServlet {
 		
 		if(p != null) {
 			request.setAttribute("p", p);
-			request.getRequestDispatcher("views/product/managerProductUpdate.jsp").forward(request, response);
+			request.getRequestDispatcher("views/product/managerProductUpdateForm.jsp").forward(request, response);
 		} else {
 			request.setAttribute("alertMsg", "상품 정보 없음");
-			response.sendRedirect(request.getContextPath() + "/listUpDeRe.pr?cup=1");
+			response.sendRedirect(request.getContextPath() + "/listUpDeRe.pr?cp=1");
 		}
 	}
 

@@ -33,7 +33,7 @@ public class ProductListController extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		int listCount = new ProductService().selectAllListCount();
-		int currentPage = Integer.parseInt(request.getParameter("cup"));
+		int currentPage = Integer.parseInt(request.getParameter("cp"));
 		int pageLimit = 10;
 		int productLimit = 10;
 		int maxPage = (int)Math.ceil((double)listCount / productLimit);

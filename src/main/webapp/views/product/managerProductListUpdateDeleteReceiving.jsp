@@ -96,15 +96,15 @@
 					<br>
 					<div class="paging-area">
 			            <% if(pi.getCurrentPage() != 1){ %>
-			            <button class="btn btn-primary btn-sm" onclick="location.href='<%= contextPath %>/listUpDeRe.pr?cup=<%= pi.getCurrentPage() - 1 %>';">&lt;</button>
+			            <button class="btn btn-primary btn-sm" onclick="location.href='<%= contextPath %>/listUpDeRe.pr?cp=<%= pi.getCurrentPage() - 1 %>';">&lt;</button>
 			            <% } %>
 			
 						<% for(int p=pi.getStartPage(); p<=pi.getEndPage(); p++){ %>
-			            <button class="btn btn-primary btn-sm" onclick="location.href='<%= contextPath %>/listUpDeRe.pr?cup=<%= p %>';"><%= p %></button>
+			            <button class="btn btn-primary btn-sm" onclick="location.href='<%= contextPath %>/listUpDeRe.pr?cp=<%= p %>';"><%= p %></button>
 						<% } %>
 						
 						<% if(pi.getCurrentPage() != pi.getMaxPage()){ %>
-			            <button class="btn btn-primary btn-sm" onclick="location.href='<%= contextPath %>/listUpDeRe.pr?cup=<%= pi.getCurrentPage() + 1%>';">&gt;</button>
+			            <button class="btn btn-primary btn-sm" onclick="location.href='<%= contextPath %>/listUpDeRe.pr?cp=<%= pi.getCurrentPage() + 1%>';">&gt;</button>
 			            <% } %>
 			        </div>
 			        

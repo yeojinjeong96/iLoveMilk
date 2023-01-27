@@ -38,7 +38,7 @@ public class ProductmDetailController extends HttpServlet {
 			request.getRequestDispatcher("views/product/managerProductDetail.jsp").forward(request, response);
 		} else {
 			request.setAttribute("error", "상품 상세조회 실패");
-			response.sendRedirect(request.getContextPath() + "/listUpDeRe.pr?cup=1");
+			response.sendRedirect(request.getContextPath() + "/listUpDeRe.pr?cp=1");
 		}
 	}
 
