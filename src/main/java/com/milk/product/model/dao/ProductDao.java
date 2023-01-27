@@ -13,6 +13,7 @@ import java.util.Properties;
 
 import com.milk.common.model.vo.PageInfo;
 import com.milk.product.model.vo.Product;
+import com.milk.product.model.vo.Review;
 
 public class ProductDao {
 	
@@ -80,6 +81,7 @@ public class ProductDao {
 			
 			while(rset.next()) {
 				list.add(new Product(
+						rset.getInt("product_no"),
 						rset.getString("product_name"),
 						rset.getInt("price"),
 						rset.getString("product_img")
@@ -92,8 +94,6 @@ public class ProductDao {
 			close(rset);
 			close(pstmt);
 		}
-		
-
 		
 		return list;
 		
@@ -147,6 +147,7 @@ public class ProductDao {
 			
 			while(rset.next()) {
 				list.add(new Product(
+						rset.getInt("product_no"),
 						rset.getString("product_name"),
 						rset.getInt("price"),
 						rset.getString("product_img")
@@ -159,14 +160,51 @@ public class ProductDao {
 			close(rset);
 			close(pstmt);
 		}
-		
-		for(Product p : list) {
-			System.out.println(p);
-		}
+
 		
 		return list;
 		
 	}
+	
+	
+	public ArrayList<Review> selectProductReview(Connection conn, int no) {
+		
+		ArrayList<Review> list = new ArrayList<>();
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		String sql = prop.getProperty("selectProductReview");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, no);
+			
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				list.add(new Review(
+						rset.getInt("REVIEW_NO"),
+						rset.getInt("MEMBER_NO"),
+						rset.getInt("PRODUCT_NO"),
+						rset.getString("REVIEW_CONTENT"),
+						rset.getInt("star"),
+						rset.getString("R_ENROLL_DATE"),
+						rset.getString("R_MODIFY_DATE"),
+						rset.getString("R_REPORT"),
+						rset.getString("R_STATUS")
+						));
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return list;
+	}
+	
 	
 	public int insertProduct(Connection conn, Product p) {
 		int result = 0;
