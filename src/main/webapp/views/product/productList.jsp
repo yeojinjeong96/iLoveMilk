@@ -23,7 +23,7 @@
         .pro-area{
             width:700px;
             /*추후 조정예정*/
-            height:1500px;
+            height:1800px;
             margin:auto;
         }
 
@@ -43,7 +43,7 @@
         }
 
         #pro-category-center>div{
-            width:400px;
+            width:250px;
             height:35px;
             text-align:center;
             background:rgb(235, 234, 234);
@@ -94,19 +94,21 @@
             height:80%;
             
         }
+        #pro-content>.thumbnail{float:left;}
 
         .thumbnail{
         width:200px;
         display:inline-block;
         margin:14px;
         position: relative;
+        height:280px;
         }
 
         
 
         .thumbnail .like-btn, .bi-heart, .bi-heart-fill{
             position: absolute;
-            top: 67%;
+            top: 63%;
             left: 85%;
             transform: translate(-50%, -50%);
             -ms-transform: translate(-50%, -50%);
@@ -223,10 +225,11 @@
 	                <a href="" style="color:rgb(113, 113, 113); text-decoration:none;">
 	                <img src="<%= contextPath%>/<%=p.getProductImg() %>" alt="" width="200" height="200">
 	                
-	                <p>
-	                    <%=p.getProductName() %><br>
+	                <div >
+                            <%=p.getProductName() %>
+                        <br>
 	                    <%=p.getPrice() %> 원
-	                </p>
+	                </div>
 	                </a>
 	                <i class="bi-heart like-btn" style="font-size:2rem; color: red; cursor: pointer;" data-target="#like-product"  data-toggle="modal" ></i>
 	                <!-- 로그인 안하고 찜 눌렀을 때 알림창 실행시키고 로그인페이지로 넘어가기 -->
@@ -304,7 +307,7 @@
         </div>
 		
 		
-        <!-- 로그인안했을때의 모달(로그인했을때) -->
+        <!-- 찜하기 눌렀을때의 모달(로그인안했을때) -->
         <!-- The Modal -->
         <div class="modal" id="like-product">
             <div class="modal-dialog">
@@ -317,7 +320,7 @@
                     로그인해주세요
                 </div>
                 <div align="center">
-                    <button type="button" class="btn btn-outline-secondary btn-sm" data-dismiss="modal" style=" width:100px;">확인</button>
+                    <button type="button" onclick="location.href='<%=contextPath%>/loginpage.me'" class="btn btn-outline-secondary btn-sm" data-dismiss="modal" style=" width:100px;">확인</button>
                     </div>
                     <br>
             </div>
