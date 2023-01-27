@@ -185,13 +185,11 @@ public class ProductDao {
 				list.add(new Review(
 						rset.getInt("REVIEW_NO"),
 						rset.getInt("MEMBER_NO"),
-						rset.getInt("PRODUCT_NO"),
+						rset.getString("product_name"),
 						rset.getString("REVIEW_CONTENT"),
 						rset.getInt("star"),
 						rset.getString("R_ENROLL_DATE"),
-						rset.getString("R_MODIFY_DATE"),
-						rset.getString("R_REPORT"),
-						rset.getString("R_STATUS")
+						rset.getString("R_MODIFY_DATE")
 						));
 			}
 			

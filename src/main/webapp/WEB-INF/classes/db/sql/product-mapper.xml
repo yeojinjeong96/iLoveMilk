@@ -6,7 +6,7 @@
 		SELECT
 		       COUNT(*) COUNT
 		  FROM TB_PRODUCT
-		 WHERE STOCK > 0
+		 WHERE STATUS = 'Y'
             AND FCATEGORY_NAME = ? OR SCATEGORY_NAME =?
 	</entry>
 
@@ -21,7 +21,7 @@
 		                     , PRICE
 		                     , PRODUCT_IMG
 		                  FROM TB_PRODUCT B
-		                 WHERE B.STOCK > 0
+		                 WHERE B.STATUS = 'Y'
                            AND FCATEGORY_NAME = ? OR SCATEGORY_NAME = ?
 		                 ORDER
 		                    BY ENROLL_DATE DESC
@@ -64,15 +64,14 @@
 	<entry key="selectProductReview">
 	   SELECT
 		     	REVIEW_NO
-              , MEMBER_NO
-              , PRODUCT_NO
+		      , MEMBER_NO
+		      , PRODUCT_NAME	
               , REVIEW_CONTENT
               , STAR
               , R_ENROLL_DATE
               , R_MODIFY_DATE
-              , R_REPORT
-              , R_STATUS
          FROM TB_REVIEW
+         JOIN TB_PRODUCT USING (PRODUCT_NO)
         WHERE PRODUCT_NO = ?
           AND R_STATUS = 'Y'	
 	</entry>
