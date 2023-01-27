@@ -53,31 +53,38 @@
 		
 		
 		<div class="enroll=body" style="width:600px">
-			<form name="enroll-form" action="<%= contextPath %>/insert.me" method="post" id="enroll-form">
+			<form name="enroll-form" action="<%= contextPath %>/insert.me"  method="post" id="enroll-form">
 	
 				<table class="table" style="width:400px">
 					<tr style="width:500px">
 						<td style="width:150px">* 아이디</td>
 						<td style="width:350px">
-							<input type="text" name="memberId" placeholder="아이디를 입력해주세요" required>
-							<button type="button" class="btn btn-outline-secondary btn-sm" onclick="idCheck();">중복확인</button>
+							<input type="text" id="memberId" name="memberId" placeholder="아이디를 입력해주세요" required>
+							<button id ="id" type="button" class="btn btn-outline-secondary btn-sm" onclick="idCheck();">중복확인</button>
+							<div class = "pop2" id= "pop2">영소문/숫자를 조합하세요(4~12자)</div>
 						</td>
 					</tr>
 					<tr>
 						<td>* 비밀번호</td>
-						<td><input type="password" id="pwd1" name="memberPwd" pattern=".{8,20}" title="8자 이상 20이하로 작성하세요" placeholder="영소문/숫자를 조합하세요(8~20자)" required></td>
+						<td>
+							<input class ="pwd" type="password" id="pwd1" name="memberPwd" pattern=".{8,20}" title="8자 이상 20이하로 작성하세요" placeholder="영소문/숫자를 조합하세요(8~20자)" required>
+							<div class = "pop1" id= "pop1">영소문/숫자를 조합하세요(8~20자)</div>
+							
+						</td>
+						
 					</tr>
 					<tr>
 						<td>* 비밀번호<br>&nbsp;&nbsp;확인</td>
 						<td>
-							<input type="password" id="pwd2" name="memberPwd2" pattern=".{8,20}" title="8자 이상 20이하로 작성하세요" placeholder="영소문/숫자를 조합하세요(8~20자)" required >
+							<input class="pwd_chk" type="password" id="pwd2" name="memberPwd2" pattern=".{8,20}" title="8자 이상 20이하로 작성하세요" placeholder="영소문/숫자를 조합하세요(8~20자)" required >
 							<div class = "pop_su" id= "pop_su_su">비밀번호가 일치합니다</div>
 							<div class = "pop_fa" id= "pop_fa_fa">비밀번호가 일치하지 않습니다</div>
 						</td>
 					</tr>
 					<tr>
 						<td>* 이름</td>
-						<td><input type="text" name="memberName" maxlength="5" required placeholder="이름을 입력해주세요"></td>
+						<td><input type="text" id="memberName" name="memberName" required placeholder="이름을 입력해주세요"></td>
+						<div class = "pop3" id= "pop3">올바른 이름을 작성해주세요</div>
 					</tr>
 					<tr>
 						<td>&nbsp;&nbsp;전화번호</td>
@@ -86,15 +93,17 @@
 					<tr>
 						<td>* 이메일</td>
 						<td>
-							<input type="email" name="email" required placeholder="aaa@ilovemilk.com">
-							<button type="button" class="btn btn-outline-secondary btn-sm" onclick="emailCodeSend()" id="emailsend" >인증번호발송</button>
+							<input type="email" name="email"  id ="inputEmailForm" required placeholder="aaa@ilovemilk.com">
+							<button type="button" class="btn btn-outline-secondary btn-sm"  id="emailAuthBtn" >인증번호발송</button>
+							<div class = "pop4" id= "pop4">올바르지 않은 이메일 양식입니다.</div>
 						</td>
 					</tr>
 	                <tr>
 						<td></td>
 						<td>
-							<input type="email" name="emailcode" id="inputemailCode" disabled="disabled" required>
-							<button class="btn btn-outline-secondary btn-sm">인증확인</button>
+							<input type="text" name="authCode" id="inputAuthCode" maxlength="10" disabled="disabled" required>
+							<button  id="authCodeCheckBtn" type="button" disabled="disabled" class="btn btn-outline-secondary btn-sm" >인증확인</button>
+							
 						</td>
 					</tr>
 					<tr>
@@ -123,13 +132,75 @@
 					
 				</table>
 				
+				<!-- 유효성 검사 -->
 				<script>
+				
+					$("#pop1").hide();	
+					$("#pop2").hide();	
+					$("#pop3").hide();
+					$("#pop4").hide();
+				
+					var id =/^[a-z0-9]{4,12}$/;
+					
+					var pw = /^[a-z0-9]{8,20}$/; 
+					
+					var name = /^[가-힣]{2,6}$/;
+					
+					var mail = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
+					
+					$('#pwd1').keyup(function(){
+						if(pw.test($('#pwd1').val())){
+							$("#pop1").hide();	
+						}else {
+							$("#pop1").show();	
+							$("#pop1").css("color", "red");	
+							$("#pop1").css("font-size", "10px");	
+						}
+					});
+					
+					$('#memberId').keyup(function(){
+						if(id.test($('#memberId').val())){
+							$("#pop2").hide();	
+						}else {
+							$("#pop2").show();	
+							$("#pop2").css("color", "red");	
+							$("#pop2").css("font-size", "10px");
+						}
+					});
+					
+					$('#memberName').keyup(function(){
+						if(name.test($('#memberName').val())){
+							$("#pop3").hide();	
+						}else {
+							$("#pop3").show();	
+							$("#pop3").css("color", "red");	
+							$("#pop3").css("font-size", "10px");
+						}
+					});
+					
+					$('#inputEmailForm').keyup(function(){
+						if(mail.test($('#inputEmailForm').val())){
+							$("#pop4").hide();	
+						}else {
+							$("#pop4").show();
+							$("#pop4").css("color", "red");	
+							$("#pop4").css("font-size", "10px");
+						}
+					});
+					
+				
+				</script>
+				
+				
+				<!-- 비밀번호 확인 -->
+				<script>
+					
 					$(function(){
 						
 						$("#pop_su_su").hide();
 						$("#pop_fa_fa").hide();
 						
-						 $("input").keyup(function(){
+						 $(".pwd_chk").keyup(function(){
 							var pwd1 = $("#pwd1").val();
 							var pwd2 = $("#pwd2").val();
 							 if(pwd1 == pwd2){
@@ -143,8 +214,12 @@
 							 }
 						 })
 					})
+					
 				</script>
 				
+				
+				
+				<!-- 주소 api  -->
 				<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 					<script>
 					    function sample6_execDaumPostcode() {

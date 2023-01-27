@@ -139,7 +139,7 @@ private Properties prop = new Properties();
 	
 	public int insertMember(Connection conn, Member m) {
 		
-		System.out.println(m);
+		//System.out.println(m);
 		int result = 0;
 		PreparedStatement pstmt = null;
 		String sql = prop.getProperty("insertMember");
