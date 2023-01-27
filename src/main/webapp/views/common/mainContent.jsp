@@ -3,7 +3,6 @@
 <%@ page import="java.util.ArrayList, com.milk.product.model.vo.Product" %>    
 
 
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -200,6 +199,7 @@
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
     <!-- Latest compiled JavaScript -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
 </head>
 <body>
@@ -328,12 +328,40 @@
             
             <script>
             
+            	$(function(){
+            		
+            		selectRecentProduct();
+					
+            	}) 
+            	
             	function selectRecentProduct(){
-           	        $.ajax({ // url : 상품목록페이지 완료후 수정예정
-	           			url : "<%=contextPath%>", 
-	           			success :function(result){
+           	        $.ajax({ 
+	           			url : "<%=contextPath%>/recentList.pro", 
+	           			success :function(recentList){
 	           			
-	
+	           				let value = "";
+	           				if(recentList.length == 0){
+	           					value +=
+	           				        "<div class='thumbnail' align='left'>"
+	           		       		   + "조회된 상품이 없습니다.</div>"
+	           				}else{
+	           					
+	           				    for(let i = 0; i< recentList.length; i++){ 
+	           				    
+	           			        value += "<div class='thumbnail' align='left'>"
+	           			              + "<a href='' style='color:rgb(113, 113, 113); text-decoration:none;'>"
+	           			              + "<img src='" + recentList[i].productImg + "' alt='' width='200' height='200'>"
+	           			            + "<p>"
+	           			            + recentList[i].productName + "<br>"
+	           			            + recentList[i].price
+	           			            + "</p>"
+	           			            + "</a>"
+	           			       	    + "</div>"
+	           			        
+	           			        }
+	           				    $("#con1-2").html(value);
+	           				}
+							
 	           				
 	           			},error:function(){
 	           				console.log("에러발생");
@@ -341,11 +369,7 @@
             		})	
             	}
             	
-            	$(function(){
-            		
-            		selectRecentProduct();
 
-            	})
             </script>
             
         </div>

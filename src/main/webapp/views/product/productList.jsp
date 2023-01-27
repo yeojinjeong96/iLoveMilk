@@ -8,6 +8,7 @@
 	ArrayList<Product> list = (ArrayList<Product>)request.getAttribute("list");
 	String category = String.valueOf(request.getAttribute("category"));
 	ArrayList<Product> categoryList = (ArrayList<Product>)request.getAttribute("categoryList");
+	// 카태고리 객체배열의 카테고리값 변수정의
 	String fCategory = categoryList.get(0).getfCategory().toString();
 	String sCategory = categoryList.get(0).getsCategory().toString();
  %>    

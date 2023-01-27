@@ -41,6 +41,7 @@
 	</entry>
 
 	<entry key="selectRecentProductList">
+	
                   SELECT 		    
                            PRODUCT_NAME
 	                     , PRICE
