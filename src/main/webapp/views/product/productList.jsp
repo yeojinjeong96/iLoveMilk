@@ -7,6 +7,9 @@
 	PageInfo pi = (PageInfo)request.getAttribute("pi");
 	ArrayList<Product> list = (ArrayList<Product>)request.getAttribute("list");
 	String category = String.valueOf(request.getAttribute("category"));
+	ArrayList<Product> categoryList = (ArrayList<Product>)request.getAttribute("categoryList");
+	String fCategory = categoryList.get(0).getfCategory().toString();
+	String sCategory = categoryList.get(0).getsCategory().toString();
  %>    
 <!DOCTYPE html>
 <html>
@@ -143,17 +146,43 @@
 
             <div id="pro-category-top" align="left">
                 <a href="">HOME &gt;</a>
-                <a href=""><%=category %></a> <!-- 1차 카테고리명 -->
+                
+                <!-- indexOutofBounds예외처리 -->
+                <%if(categoryList.size() != 0){ %>
+                
+                	<!-- 상위카테고리이름와 하위카테고리 이름이 같으면 상위카테고리만 출력 -->
+	                <%if((fCategory).equals(sCategory)){ %>
+	                
+	                	<a href="<%=contextPath%>/proList.pro?category=<%=fCategory %>&cpage=1">
+	                		<%=fCategory%> 
+	                	</a>
+	                <!-- 하위 카테고리 이름과 일치하지 않으면 하위카테고리까지 출력 -->	
+	                 <%}else{ %>
+	                 
+	                 	<a href="<%=contextPath%>/proList.pro?category=<%=fCategory%>&cpage=1">
+	                 	<%= fCategory %> &gt; 
+	                 	</a>
+	                 	<a href="<%=contextPath%>/proList.pro?category=<%= sCategory %>&cpage=1">
+	                 	<%= sCategory %> 
+	                 	</a>
+	                 	
+	                 <%} %>
+	                 
+                 <%}else{ %>
+                 	<a href="<%=contextPath%>/proList.pro?category=<%=category %>&cpage=1"><%=category %></a>
+                 <%} %>
+                 
             </div>
 
             <div id="pro-category-center" align="center">
                 <br><br>
-                 <p id="pro-category-center-1"><%=category %></p><!-- 1차 카테고리명 -->
+                 <p id="pro-category-center-1"><%=fCategory %> </p>
                  <div>
-                    <a href="">프리미엄 우유</a> <!-- 2차 카테고리명 -->
-                    <a href="">백색시유</a>
-                    <a href="">가공우유</a>
-                    <a href="">멸균우유</a>
+                 
+                 	<%for(Product p : categoryList){ %>
+                    	<a href="<%=contextPath%>/proList.pro?category=<%=p.getsCategory().toString() %>&cpage=1"><%= p.getsCategory().toString() %></a> 
+                    <%} %>
+                    
                  </div>
 
             </div>
