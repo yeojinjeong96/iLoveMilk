@@ -100,15 +100,31 @@
 		          FROM (
 		                SELECT
 		                	   PRODUCT_NO
-		                     , PRODUCT_NAME || ' ' || CAPACITY || '(mL/g)' PNAME
+		                     , PRODUCT_NAME
+		                     , CAPACITY
 		                     , STOCK
 		                     , BRAND
 		                  FROM TB_PRODUCT B
 		                 WHERE STATUS = 'Y'
 		                 ORDER
-		                    BY ENROLL_DATE DESC
+		                    BY PRODUCT_NO DESC
 		                ) A
 		        )
 		  WHERE RNUM BETWEEN ? AND ? 
+	</entry>
+	
+	<entry key="productDetail">
+		SELECT
+		       PRODUCT_IMG
+		     , PRODUCT_NO
+		     , PRODUCT_NAME
+		     , CAPACITY
+		     , BRAND
+		     , PRICE
+		     , STOCK
+		     , PRODUCT_INFO
+		  FROM TB_PRODUCT
+		 WHERE STATUS = 'Y'
+		   AND PRODUCT_NO = ?
 	</entry>
 </properties>

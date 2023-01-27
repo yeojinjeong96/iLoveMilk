@@ -103,7 +103,7 @@ public class ProductService {
 	/**
 	 * 상품 전체 조회
 	 * @author 승하
-	 * @return 전체 상품이 들어있는 list
+	 * @return 전체 상품이 들어있는 ArrayList
 	 */
 	public ArrayList<Product> selectAllList(PageInfo pi){
 		Connection conn = getConnection();
@@ -112,6 +112,17 @@ public class ProductService {
 		return list;
 	}
 	
+	/**
+	 * 상품 1개의 정보 조회
+	 * @author 승하
+	 * @return 상품 정보가 들어있는 Product 객체
+	 */
+	public Product productDetail(int proNo) {
+		Connection conn = getConnection();
+		Product p = new ProductDao().productDetail(conn, proNo);
+		close(conn);
+		return p;
+	}
 
 
 }

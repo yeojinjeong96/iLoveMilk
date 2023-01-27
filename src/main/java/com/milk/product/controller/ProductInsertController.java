@@ -56,13 +56,13 @@ public class ProductInsertController extends HttpServlet {
 			
 			int result = new ProductService().insertProduct(p);
 			
-			if(result > 0) { // 성공 => 목록페이지 /list.bo?cp=1
-				request.getSession().setAttribute("alertMsg", "상품 등록 성공");
-				response.sendRedirect(request.getContextPath() + "/listUpDeRe.pr");
+			if(result > 0) {
+				request.getSession().setAttribute("success", "상품 등록 성공");
+				response.sendRedirect(request.getContextPath() + "/listUpDeRe.pr?cup=1");
 			} else {
 				new File(savePath + multiRequest.getFilesystemName("productImg")).delete();
 				request.getSession().setAttribute("error", "상품 등록 실패");
-				response.sendRedirect(request.getContextPath() + "/listUpDeRe.pr");
+				response.sendRedirect(request.getContextPath() + "/listUpDeRe.pr?cup=1");
 			}
 		}
 		

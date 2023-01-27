@@ -196,7 +196,7 @@ public class ProductDao {
 		int result = 0;
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
-		String sql = prop.getProperty("insertProduct");
+		String sql = prop.getProperty("selectAllListCount");
 		try {
 			pstmt = conn.prepareStatement(sql);
 			rset = pstmt.executeQuery();
@@ -231,7 +231,8 @@ public class ProductDao {
 			while(rset.next()) {
 				Product p = new Product();
 				p.setProductNo(rset.getInt("product_no"));
-				p.setProductName(rset.getString("pname"));
+				p.setProductName(rset.getString("product_name"));
+				p.setCapacity(endRow);
 				p.setStock(rset.getInt("stock"));
 				p.setBrand(rset.getString("brand"));
 				list.add(p);
@@ -243,5 +244,9 @@ public class ProductDao {
 			close(pstmt);
 		}
 		return list;	
+	}
+	
+	public Product productDetail(Connection conn, int proNo) {
+		
 	}
 }
