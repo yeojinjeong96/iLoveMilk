@@ -145,7 +145,7 @@
         <div id="pro-category">
 
             <div id="pro-category-top" align="left">
-                <a href="">HOME &gt;</a>
+                <a href="<%=contextPath%>">HOME &gt;</a>
                 
                 <!-- indexOutofBounds예외처리 -->
                 <%if(categoryList.size() != 0){ %>
@@ -176,6 +176,7 @@
 
             <div id="pro-category-center" align="center">
                 <br><br>
+                <a href="<%=contextPath%>/proList.pro?category=<%=fCategory%>&cpage=1">
                  <p id="pro-category-center-1"><%=fCategory %> </p>
                  <div>
                  
@@ -261,19 +262,19 @@
             <div class="paging-area" align="center">
                 <!-- 내가 보고있는 페이지가 1번 페이지가 아닐때에만 나타내기 -->
                 <% if(pi.getCurrentPage() != 1){ %>
-                <button onclick="location.href='<%=contextPath%>/proList.pro?cpage=<%= pi.getCurrentPage()-1%>';">&lt;</button>
+                <button onclick="location.href='<%=contextPath%>/proList.pro?category=<%=category %>&cpage=<%= pi.getCurrentPage()-1%>';">&lt;</button>
                 <%} %> 
                 
 
                 
                 <%for(int p = pi.getStartPage() ; p <= pi.getEndPage() ; p++) { %>
-                <button onclick="location.href='<%=contextPath%>/proList.pro?cpage=<%=p%>';"><%= p %></button>
+                <button onclick="location.href='<%=contextPath%>/proList.pro?category=<%=category %>&cpage=<%=p%>';"><%= p %></button>
                 <% } %>
                 
 
                 <!--  내가 보고있는 페이지가 마지막 페이지가 아닐 때에만 나타내기 -->
                 <%if(pi.getCurrentPage() != pi.getMaxPage()){ %> 
-                <button onclick="location.href='<%=contextPath %>/proList.pro?cpage=<%=pi.getCurrentPage()+1%>';">&gt;</button>
+                <button onclick="location.href='<%=contextPath %>/proList.pro?category=<%=category %>&cpage=<%=pi.getCurrentPage()+1%>';">&gt;</button>
                  <%} %> 
                 
             </div>

@@ -20,7 +20,7 @@
 		                     , PRICE
 		                     , PRODUCT_IMG
 		                  FROM TB_PRODUCT B
-		                 WHERE STOCK > 0
+		                 WHERE B.STOCK > 0
                            AND FCATEGORY_NAME = ? OR SCATEGORY_NAME = ?
 		                 ORDER
 		                    BY ENROLL_DATE DESC
