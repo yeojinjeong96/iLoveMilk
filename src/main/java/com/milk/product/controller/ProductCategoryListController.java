@@ -74,10 +74,13 @@ public class ProductCategoryListController extends HttpServlet {
 		
 		ArrayList <Product> list = new ProductService().selectProductList(pi, category);
 		
+		ArrayList <Product> categoryList = new ProductService().selectCategoryList(category);
+		
 		
 		request.setAttribute("pi", pi);
 		request.setAttribute("list", list);
 		request.setAttribute("category", category);
+		request.setAttribute("categoryList", categoryList);
 		
 
 		

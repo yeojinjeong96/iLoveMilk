@@ -99,6 +99,39 @@ public class ProductDao {
 		
 	}
 	
+	
+	public ArrayList<Product> selectCategoryList(Connection conn, String category){
+		
+		ArrayList<Product> categoryList = new ArrayList<>();
+		
+		ResultSet rset = null;
+		PreparedStatement pstmt = null;
+		String sql = prop.getProperty("selectCategoryList");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1,  category);
+			pstmt.setString(2, category);
+			
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				categoryList.add(new Product(
+						rset.getString("fcategory_name"),
+						rset.getString("scategory_name")
+						));
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return categoryList;
+	}
+	
 	public ArrayList<Product> selectRecentProductList(Connection conn){
 		
 		ArrayList<Product> list = new ArrayList<>();

@@ -47,6 +47,14 @@ public class Product {
 		this.sCategory = sCategory;
 		this.productImg = productImg;
 	}
+	
+	
+
+	public Product(String fCategory, String sCategory) {
+		super();
+		this.fCategory = fCategory;
+		this.sCategory = sCategory;
+	}
 
 	public Product(String productName, int price, String productImg) {
 		super();

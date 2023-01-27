@@ -28,6 +28,17 @@
 		        )
 		  WHERE RNUM BETWEEN ? AND ? 
 	</entry>
+	
+	<entry key="selectCategoryList">
+		SELECT
+       DISTINCT FCATEGORY_NAME, SCATEGORY_NAME
+		  FROM TB_PRODUCT
+		 WHERE FCATEGORY_NAME = (SELECT 
+		                               DISTINCT FCATEGORY_NAME
+		                          FROM TB_PRODUCT
+		                         WHERE SCATEGORY_NAME = ?)
+		    OR FCATEGORY_NAME = ?
+	</entry>
 
 	<entry key="selectRecentProductList">
                   SELECT 		    
