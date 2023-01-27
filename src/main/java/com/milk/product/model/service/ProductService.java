@@ -42,6 +42,21 @@ public class ProductService {
 	}
 	
 	/**
+	 * 상품목록페이지 카테고리리스트 조회
+	 * @author 이다혜
+	 * @return 상품객체의 카테고리컬럼들
+	 */
+	public ArrayList<Product> selectCategoryList(String category){
+		
+		Connection conn = getConnection();
+		ArrayList<Product> categoryList = new ProductDao().selectCategoryList(conn, category);
+		
+		close(conn);
+		return categoryList;
+	}
+	
+	
+	/**
 	 * 최신상품(등록일순)3가지 리스트조회
 	 * @author 이다혜
 	 * @return 최신 상품 ArrayList
