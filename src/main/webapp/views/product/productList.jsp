@@ -222,7 +222,7 @@
 				<%for(Product p : list) {%>
 	            <div class="thumbnail" align="left">
 	                
-	                <a href="" style="color:rgb(113, 113, 113); text-decoration:none;">
+	                <a href="<%=contextPath %>/" style="color:rgb(113, 113, 113); text-decoration:none;">
 	                <img src="<%= contextPath%>/<%=p.getProductImg() %>" alt="" width="200" height="200">
 	                
 	                <div >

@@ -12,114 +12,6 @@
 
 
 
-     /* 메뉴 네비게이터탭 */
-        .menu-wrap{
-            margin:auto;
-            margin-top:50px;
-            width: 700px;
-            height:50px;
-        }
-
-        .menu-navi{
-            list-style-type:none;
-            padding-left:8px;
-            margin:0;
-            width:100%;
-            height:10%;
-            
-        }
-
-        /* 상위 메뉴 */
-        .menu-navi>li{
-            float:left;
-            width:15%;
-            height:100%;
-            list-style:none;
-            margin:5px;
-        }
-
-
-        .menu-navi a{ 
-            /* border:1px solid orange; */
-            text-decoration:none;
-            color:rgb(49, 153, 251);
-            width:100%;
-            height:100%;
-            display:block;
-        }
- 
-
-       /* 상위메뉴 폰트사이즈 정하기 */
-       .menu-navi>li>a{
-        font-size:18px;
-        font-weight:400;
-        text-align: center;
-       }
-
-
-
-
-        .all-menu{
-            list-style-type:none;
-            padding-left:8px;
-            margin:0;
-            height:10%;
-            width: 700px;
-        
-        }
-
-        /* 상위 메뉴 */
-        .all-menu>li{
-            float:left;
-            width:18%;
-            height:100%;
-            list-style:none;
-            margin:5px;
-        }
-        /* 하위 메뉴 */
-        .all-menu>li>ul>li{
-            list-style:none;
-            padding:0;
-            margin-left:2px;
-            width:90%;
-            height:100%;
-        } 
-
-        .all-menu a{ 
-            /* border:1px solid orange; */
-            text-decoration:none;
-            color:rgb(99, 96, 96);
-            width:100%;
-            height:100%;
-            display:block;
-            text-align:left;
-            
-            
-        }
-       .all-menu>li>ul{
-             width:100%;
-             height:100%;
-             padding-left:0;
-             
-       }
-
-       /* 상위메뉴 폰트사이즈 정하기 */
-       .all-menu>li>a{
-        font-size:20px;
-        font-weight:900;
-        margin-top:10px;
-       }
-        /* 하위메뉴 폰트사이즈 정하기 */
-        .all-menu>li>ul>li>a{
-        font-size:11px;
-        margin-top:3px;
-        padding-left:5px;
-       }
-
-
-
-
-
     #main-content{
         width:700px;
         height:1200px;
@@ -205,82 +97,7 @@
 <body>
 
 <%@ include file= "header.jsp" %>
-  
-    <div class="menu-wrap">
-
-            <ul class="menu-navi">
-                <li>
-                    <div class="dropdown">
-                        <button type="button" class="btn dropdown-toggle" data-toggle="dropdown">전체상품</button>
-                        <div class="dropdown-menu" style="height:200px;">
-                           
-                           
-                                    <ul class="all-menu">
-                                      <li><a class="dropdown-header" href="<%=contextPath%>/proList.pro?우유&cpage=1">우유</a> <!-- 카테고리 -->
-                                            <br>
-                                            <div style="border:1px solid gray; width:110px"></div>
-                                            <br>
-                                            <ul>
-                                                <li><a class="dropdown-item" href="<%=contextPath%>/proList.pro?category=백색시유&cpage=1">백색시유</a></li> <!--참조 카테고리-->
-                                                <li><a class="dropdown-item" href="<%=contextPath%>/proList.pro?category=가공우유&cpage=1">가공우유</a></li>
-                                                <li><a class="dropdown-item" href="<%=contextPath%>/proList.pro?category=멸균우유&cpage=1">멸균우유</a></li>
-                        
-                                            </ul>
-                                        </li>
-                                        <li><a class="dropdown-header" href="<%=contextPath%>/proList.pro?category=발효유&cpage=1">발효유</a>
-                                            <br>
-                                            <div style="border:1px solid gray; width:110px"></div>
-                                            <br>
-                                            <ul>
-                                                <li><a class="dropdown-item" href="<%=contextPath%>/proList.pro?category=발효유&cpage=1">발효유</a></li>
-                                            </ul>
-                                        </li>
-                                        <li><a class="dropdown-header" href="<%=contextPath%>/proList.pro?category=치즈&cpage=1">치즈</a>
-                                            <br>
-                                            <div style="border:1px solid gray; width:110px"></div>
-                                            <br>
-                                            <ul>
-                                                <li><a class="dropdown-item" href="<%=contextPath%>/proList.pro?category=치즈&cpage=1">치즈</a></li>
-                        
-                                            </ul>
-                                        </li>
-                                        <li><a class="dropdown-header" href="<%=contextPath%>/proList.pro?category=락토프리&cpage=1">락토프리</a>
-                                            <br>
-                                            <div style="border:1px solid gray; width:110px"></div>
-                                            <br>
-                                            <ul>
-                                                <li><a class="dropdown-item" href="<%=contextPath%>/proList.pro?category=락토프리&cpage=1">락토프리우유</a></li>
-                                            </ul>
-                                        </li>
-                                        <li><a class="dropdown-header" href="">레시피</a>
-                                            <br>
-                                            <div style="border:1px solid gray; width:110px"></div>
-                                            <br>
-                                            <ul>
-                                                <li><a class="dropdown-item" href="<%= contextPath %>/listR.re?cpage=1&cpage=1">추천레시피</a></li>
-                                                <li><a class="dropdown-item" href="<%= contextPath %>/list.re?cpage=1&cpage=1">자유게시판</a></li>
-                                            </ul>
-                                        </li>
-                                    </ul>
-                               
-                               
-                            
-                        </div>
-                    </div>
-                </li>
-                
-                <li><a href="<%=contextPath%>/proList.pro?category=우유&cpage=1">우유</a></li>
-                <li><a href="<%=contextPath%>/proList.pro?category=발효유&cpage=1">발효유</a></li>
-                <li><a href="<%=contextPath%>/proList.pro?category=치즈&cpage=1">치즈</a></li>
-                <li><a href="<%=contextPath%>/proList.pro?category=락토프리&cpage=1">락토프리</a></li>
-                <li><a href="">레시피</a></li>
-            </ul>
-    </div>
-    
-    <script>
-    $('.dropdown-toggle').dropdown();
-    </script>
-
+ 
     <div id="main-content">
         <div id="demo" class="carousel slide" data-ride="carousel">
 
@@ -297,10 +114,10 @@
                 <img src="resources/product_upfiles/나 100_ 그린라벨.png" alt="">
               </div>
               <div class="carousel-item">
-                <img src="resources/product_upfiles/나 100_ 그린라벨.png" alt="">
+                <img src="resources/product_upfiles/다크초코렛우유.jpg" alt="">
               </div>
               <div class="carousel-item">
-                <img src="resources/product_upfiles/나 100_ 그린라벨.png" alt="">
+                <img src="resources/product_upfiles/빙그레 미니 딸기.jpg" alt="">
               </div>
             </div>
           
