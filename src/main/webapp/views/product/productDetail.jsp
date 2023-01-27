@@ -1,5 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+
+<%@ page import="com.milk.product.model.vo.Product, com.milk.product.model.vo.Review, java.util.ArrayList" %>
+    
+<%  
+   Product p = (Product)request.getAttribute("p");
+   ArrayList<Review> list = (ArrayList<Review>)request.getAttribute("list");	
+%>    
 <!DOCTYPE html>
 <html>
 <head>
@@ -149,7 +156,7 @@
     /* 리뷰 */
     #pro-wrap3{
         width:100%;
-        height:15%;
+        height:30%;
     }
 
     #pro-wrap3-1{
@@ -175,46 +182,6 @@
         }
 
 
-    /* 문의 */
-    #pro-wrap4{
-        width:100%;
-        height:15%;
-    }
-
-    
-        /* 문의 제목 */
-        #pro-wrap4-1{
-            height:20%;
-            width:100%;
-        }
-
-        /* 문의 테이블(내용) */
-        #pro-wrap4-2{
-            height:50%;
-            width:100%;
-        }
-        .pro-qna{
-            width:100%;
-            text-align: center;
-
-        }
-
-        /* 페이지 */
-        #pro-wrap4-3{
-            height:20%;
-            width:100%;
-        }
-        /* 전체보기, 문의하기 */
-        #pro-wrap4-4{
-            height:5%;
-            width:100%;
-        }
-        #pro-wrap4-4>a{
-            float:right;
-            text-decoration: none;
-            height:100%;
-        }
-
 
 </style>   
     <!-- 좋아요버튼 -->
@@ -232,12 +199,14 @@
 
 </head>
 <body>
+
+	<%@ include file="/views/common/header.jsp" %>
     <div class="pro-outer">
 
         <div id="pro-wrap1">
 
         <div id="pro-wrap1-1" align="left">
-            <a href="">HOME &gt;</a>
+            <a href="<%=contextPath %>">HOME &gt;</a>
             <a href="">전체상품</a> <!-- 경로이름 -->
         </div>
 
@@ -247,14 +216,14 @@
 
         <div id="pro-wrap1-3">
             <div id="pro-1-3-1">
-                <img src="img/milk.jpg" alt="" style=" ">
+                <img src="<%= p.getProductImg() %>" alt="" style=" ">
             </div>
             <div id="pro-wrap1-3-2">
 
                 <div id="pro-1-3-2-1">
-                   <p>닥터문 150ml</p>  <!-- 제품명 -->
+                   <p><%= p.getProductName() %></p>  <!-- 제품명 -->
                    
-                  <b>31,800</b> 
+                  <b><%= p.getPrice() %></b> 
                 </div>
 
                 <!-- 선 집어넣을 div -->
@@ -265,19 +234,15 @@
                     <table class="pro-qna">
                         <tr>
                             <td>상품코드</td>
-                            <td>코드자리입니다</td>
-                        </tr>
-                        <tr>
-                            <td>제조사</td>
-                            <td>제조사자리입니다</td>
+                            <td><%= p.getProductNo() %></td>
                         </tr>
                         <tr>
                             <td>브랜드</td>
-                            <td>브랜드자리입니다</td>
+                            <td><%= p.getBrand() %></td>
                         </tr>
                         <tr>
                             <td>용량</td>
-                            <td>용량자리입니다</td>
+                            <td><%= p.getCapacity() %></td>
                         </tr>
                         <tr>
                             <td>수량</td>
@@ -313,19 +278,18 @@
                     <!-- 클릭하면 class속성에 active붙게함 -->
                     <li class="nav-item"><a href="#pro-info2" class="nav-link tab-pane"  data-toggle='tab' >제품상세정보</a> </li>
                     <li class="nav-item"><a href="#pro-wrap3-1" class="nav-link tab-pane" data-toggle='tab'>리뷰</a> </li>
-                    <li class="nav-item"><a href="#pro-wrap4-1" class="nav-link tab-pane"  data-toggle='tab'>상품문의</a> </li>
                 </ul>
                 
             </div>
 
     
             <div id="pro-info2">
-                <img src="img/milk.jpg" alt="">
+                <img src="<%= p.getProductImg() %>" alt="">
                 <!-- 상품이미지자리 -->
             </div>
                 
             <div id="pro-info3">
-                <p>제품설명</p>
+                <p><%= p.getProductInfo() %></p>
             </div>
         </div>
 
@@ -386,58 +350,6 @@
         </div>
         </div>
 
-        <div id="pro-wrap4">
-
-            <div id="pro-wrap4-1">
-                <div style="font-size:20px; line-height: 70px;"><p><b>상품문의</b></p></div>
-            </div>    
-             
-             <div id="pro-wrap4-2">
-                 <table class="table pro-qna" >
-                     <tr>
-                         <td>번호</td>
-                         <td>작성자아이디</td>
-                         <td>작성일자</td>
-                         <td>문의제목</td>
-                         <td>문의내용</td>
-                     </tr>
-                     <tr>
-                         <td>1</td>
-                         <td>아이디입니다</td>
-                         <td>작성일자입니다</td>
-                         <td>제목입니다</td>
-                         <td>내용입니다.</td>
-                     </tr>
-                 </table>
-             </div>
-     
-             <div id="pro-wrap4-3" align="center">
-              
-                     <!-- 내가 보고있는 페이지가 1번 페이지가 아닐때에만 나타내기 
-                     <% if(pi.getCurrentPage() != 1){ %>-->
-                     <button onclick="location.href='<%=contextPath%>/list.bo?cpage=<%= pi.getCurrentPage()-1%>';">&lt;</button>
-                     <!-- <%} %> -->
-                     
-     
-                     <!--
-                     <%for(int p = pi.getStartPage() ; p <= pi.getEndPage() ; p++) { %>-->
-                     <button onclick="location.href='<%=contextPath%>/list.bo?cpage=<%=p%>';"><%= p %></button>
-                     <!-- <% } %> -->
-                     
-     
-                     <!--  내가 보고있는 페이지가 마지막 페이지가 아닐 때에만 나타내기 
-                     <%if(pi.getCurrentPage() != pi.getMaxPage()){ %> -->
-                     <button onclick="location.href='<%=contextPath %>/list.bo?cpage=<%=pi.getCurrentPage()+1%>';">&gt;</button>
-                     <!-- <%} %> -->
-                     
-              
-             </div>
-             <div id="pro-wrap4-4" >
-                 <a href="">전체보기</a>
-                
-                 <a href="">문의하기 &nbsp;</a>
-              </div>
-        </div>
 
 
                 <!-- 구매버튼 눌렀을때의 모달 -->
@@ -587,5 +499,7 @@
                 </div>
 
     </div>
+    
+    <%@ include file="/views/common/footer.jsp" %>
 </body>
 </html>

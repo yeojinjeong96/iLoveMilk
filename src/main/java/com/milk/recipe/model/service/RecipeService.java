@@ -1,7 +1,6 @@
 package com.milk.recipe.model.service;
 
-import static com.milk.common.JDBCTemplate.close;
-import static com.milk.common.JDBCTemplate.getConnection;
+import static com.milk.common.JDBCTemplate.*;
 
 import java.sql.Connection;
 import java.util.ArrayList;
@@ -9,6 +8,8 @@ import java.util.ArrayList;
 import com.milk.common.model.vo.PageInfo;
 import com.milk.recipe.model.dao.RecipeDao;
 import com.milk.recipe.model.vo.Recipe;
+import com.milk.recipe.model.vo.RecipeIngre;
+import com.milk.recipe.model.vo.RecipeOrder;
 
 public class RecipeService {
 
@@ -61,5 +62,28 @@ public class RecipeService {
 		close(conn);
 		return list;
 		
+	}
+	
+	
+	public int insertRecipe(Recipe r, ArrayList<RecipeIngre> listIngre, ArrayList<RecipeOrder> listOrder) {
+		Connection conn = getConnection();
+		
+		int result1 = new RecipeDao().insertRecipe(conn, r);
+		
+		int result2 = new RecipeDao().insertRecipeIngreList(conn, listIngre);
+		
+		int result3 = new RecipeDao().insertRecipeOrderList(conn, listOrder);
+		
+		
+		if(result1 > 0 && result2 > 0 && result3 > 0) {
+			commit(conn);
+		}else {
+			rollback(conn);
+		}
+		
+		close(conn);
+		
+		
+		return result1 * result2 * result3;
 	}
 }

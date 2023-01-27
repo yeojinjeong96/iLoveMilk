@@ -16,7 +16,8 @@
 		        SELECT ROWNUM RNUM, A.*
 		          FROM (
 		                SELECT
-		                       PRODUCT_NAME
+		                	   PRODUCT_NO
+		                     , PRODUCT_NAME
 		                     , PRICE
 		                     , PRODUCT_IMG
 		                  FROM TB_PRODUCT B
@@ -42,12 +43,15 @@
 
 	<entry key="selectRecentProductList">
 	
-                  SELECT 		    
-                           PRODUCT_NAME
+                  SELECT 	
+                  		   PRODUCT_NO	    
+                         , PRODUCT_NAME
 	                     , PRICE
 	                     , PRODUCT_IMG
                     FROM (
-                          SELECT PRODUCT_NAME
+                          SELECT 
+                          		PRODUCT_NO	
+                       	   	   , PRODUCT_NAME
                                , PRICE
                                , PRODUCT_IMG
                             FROM TB_PRODUCT   
@@ -56,6 +60,23 @@
                           )
                    WHERE ROWNUM <![CDATA[<=]]> 3 
 	</entry>
+	
+	<entry key="selectProductReview">
+	   SELECT
+		     	REVIEW_NO
+              , MEMBER_NO
+              , PRODUCT_NO
+              , REVIEW_CONTENT
+              , STAR
+              , R_ENROLL_DATE
+              , R_MODIFY_DATE
+              , R_REPORT
+              , R_STATUS
+         FROM TB_REVIEW
+        WHERE PRODUCT_NO = ?
+          AND R_STATUS = 'Y'	
+	</entry>
+	
 	
 	<entry key="insertProduct">
 	INSERT
