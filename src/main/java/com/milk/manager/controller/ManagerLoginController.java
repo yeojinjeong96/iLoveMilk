@@ -36,7 +36,7 @@ public class ManagerLoginController extends HttpServlet {
 		Manager loginManager = new ManagerService().managerLogin(managerId, managerPwd);
 		
 		if(loginManager == null) { // 실패시
-			request.getSession().setAttribute("error", "로그인 실패");
+			request.getSession().setAttribute("alertMsg", "로그인 실패. 아이디와 비밀번호를 확인하세요.");
 			response.sendRedirect(request.getContextPath() + "/loginForm.ma");
 		} else { // 성공시
 			request.getSession().setAttribute("loginManager", loginManager);

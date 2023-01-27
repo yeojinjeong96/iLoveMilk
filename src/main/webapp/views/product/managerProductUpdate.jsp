@@ -84,8 +84,8 @@
                                 <td><input type="number" name="price" required value="<%= p.getPrice() %>">&nbsp;원</td>
                             </tr>
                             <tr>
-                                <th><span>*</span> 입고수량&nbsp;</th>
-                                <td><input type="number" name="stock" required value="<%= p.getStock() %>">&nbsp;개</td>
+                                <th><span>*</span> 재고&nbsp;</th>
+                                <td><%= p.getStock() %>&nbsp;개</td>
                             </tr>
                             <tr>
                                 <th><span>*</span> 상품 상세정보&nbsp;</th>
@@ -95,7 +95,7 @@
                         <br><br>
                         
                         <div>
-                            <a href="<%= contextPath %>/listUpDeRe.pr?cup=1" class="btn btn-secondary">취소</a>
+                            <a href="<%= contextPath %>/detail.pr?no=<%= p.getProductNo() %>" class="btn btn-secondary">취소</a>
                             <button type="submit" class="btn btn-primary">저장</button>
                         </div>
                     </form>

@@ -36,7 +36,7 @@ public class ProductUpdateFormController extends HttpServlet {
 			request.setAttribute("p", p);
 			request.getRequestDispatcher("views/product/managerProductUpdate.jsp").forward(request, response);
 		} else {
-			request.setAttribute("error", "상품 정보 없음");
+			request.setAttribute("alertMsg", "상품 정보 없음");
 			response.sendRedirect(request.getContextPath() + "/listUpDeRe.pr?cup=1");
 		}
 	}

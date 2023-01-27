@@ -59,7 +59,7 @@
                         </tr>
                         <tr height="50px">
                             <th>재고</th>
-                            <td><%= p.getStock() %></td>
+                            <td><%= p.getStock() %> 개</td>
                         </tr>
                         <tr height="200px">
                             <th height="100px">상품 상세정보</th>

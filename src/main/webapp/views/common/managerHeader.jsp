@@ -9,14 +9,6 @@
 	// 로그인 시도 전 managerHeader.jsp 로딩시 : null
 	// 로그인 성공 후 managerHeader.jsp 로딩시 : 로그인한 회원의 정보가 담겨있는 Manager객체
 	
-	String error = (String)session.getAttribute("error");
-	// 요청 실패 전 managerHeader.jsp 로딩시 : null
-	// 요청 실패 후 managerHeader.jsp 로딩시 : 모달을 실행하기 위한 변수
-	
-	String success = (String)session.getAttribute("success");
-	// 요청 성공 전 managerHeader.jsp 로딩시 : null
-	// 요청 성공 후 managerHeader.jsp 로딩시 : 모달을 실행하기 위한 변수
-	
 	String alertMsg = (String)session.getAttribute("alertMsg");
 	//알럿
 %>
@@ -55,79 +47,6 @@
 	</script>
 	<%session.removeAttribute("alertMsg"); %>
 	<%} %>
-	<!--  -->
-	<% if(error != null){ %>
-		<!-- 요청 실패 모달 시작 -->
-		<!-- The Modal -->
-		<div class="modal fade" id="myModal1">
-		  <div class="modal-dialog">
-		    <div class="modal-content">
-		    
-		      	<!-- Modal Header -->
-				<div class="modal-header">
-				  <h4 class="modal-title">error</h4>
-				  <button type="button" class="close" data-dismiss="modal">×</button>
-				</div>
-				
-				<!-- Modal body -->
-				<div class="modal-body">
-				  <%= error %>
-				</div>
-				
-				<!-- Modal footer -->
-		      	<div class="modal-footer">
-		        <button type="button" class="btn btn-danger" data-dismiss="modal">닫기</button>
-		      	</div>
-		      
-		    </div>
-		  </div>
-		</div>
-		<!-- 요청 실패 모달 종료 -->
-		
-		<script>
-			$(document).ready(function() {
-				$("#myModal1").modal("show");
-			});
-		</script>
-		
-		<% session.removeAttribute("error"); %>
-	<% } %>
-	<% if(success != null){ %>
-		<!-- 요청 성공 모달 시작 -->
-		<!-- The Modal -->
-		<div class="modal fade" id="myModal2">
-		  <div class="modal-dialog">
-		    <div class="modal-content">
-		    
-		      	<!-- Modal Header -->
-				<div class="modal-header">
-				  <h4 class="modal-title">success</h4>
-				  <button type="button" class="close" data-dismiss="modal">×</button>
-				</div>
-				
-				<!-- Modal body -->
-				<div class="modal-body">
-				  <%= success %>
-				</div>
-				
-				<!-- Modal footer -->
-		      	<div class="modal-footer">
-		        <button type="button" class="btn btn-primary" data-dismiss="modal">닫기</button>
-		      	</div>
-		      
-		    </div>
-		  </div>
-		</div>
-		<!-- 요청 성공 모달 종료 -->
-		
-		<script>
-			$(document).ready(function() {
-				$("#myModal2").modal("show");
-			});
-		</script>
-		
-		<% session.removeAttribute("success"); %>
-	<% } %>
 
     <div class="wrap" align="center">
         <div class="header">
