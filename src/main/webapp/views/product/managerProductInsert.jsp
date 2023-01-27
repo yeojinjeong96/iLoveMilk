@@ -51,11 +51,11 @@
                             </tr>
                             <tr>
                                 <th><span>*</span> 상품명&nbsp;</th>
-                                <td><input type="text" name="productName"></td>
+                                <td><input type="text" name="productName" required></td>
                             </tr>
                             <tr>
                                 <th><span>*</span> 용량&nbsp;</th>
-                                <td><input type="text" name="capacity">&nbsp;(mL/g)</td>
+                                <td><input type="number" name="capacity" required>&nbsp;(mL/g)</td>
                             </tr>
                             <tr>
                                 <th>상품코드&nbsp;</th>
@@ -67,19 +67,19 @@
                             </tr>
                             <tr>
                                 <th><span>*</span> 상품 이미지&nbsp;</th>
-                                <td><input type="file" name="productImg"></td>
+                                <td><input type="file" name="productImg" required></td>
                             </tr>
                             <tr>
                                 <th><span>*</span> 판매가격&nbsp;</th>
-                                <td><input type="number" name="price">&nbsp;원</td>
+                                <td><input type="number" name="price" required>&nbsp;원</td>
                             </tr>
                             <tr>
                                 <th><span>*</span> 입고수량&nbsp;</th>
-                                <td><input type="number" name="stock">&nbsp;개</td>
+                                <td><input type="number" name="stock" required>&nbsp;개</td>
                             </tr>
                             <tr>
                                 <th><span>*</span> 상품 상세정보&nbsp;</th>
-                                <td><textarea name="productInfo" cols="30" rows="5" style="resize: none;"></textarea></td>
+                                <td><textarea name="productInfo" cols="30" rows="5" style="resize: none;" required></textarea></td>
                             </tr>
                         </table>
                         <br><br>

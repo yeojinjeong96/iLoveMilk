@@ -45,6 +45,7 @@ public class ProductListController extends HttpServlet {
 		ArrayList<Product> list = new ProductService().selectAllList(pi);
 		
 		request.setAttribute("list", list);
+		request.setAttribute("pi", pi);
 		
 		request.getRequestDispatcher("views/product/managerProductListUpdateDeleteReceiving.jsp").forward(request, response);
 	}

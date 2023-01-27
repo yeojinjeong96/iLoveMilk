@@ -89,13 +89,14 @@
 		          FROM (
 		                SELECT
 		                	   PRODUCT_NO
-		                     , PRODUCT_NAME || ' ' || CAPACITY || '(mL/g)' PNAME
+		                     , PRODUCT_NAME
+		                     , CAPACITY
 		                     , STOCK
 		                     , BRAND
 		                  FROM TB_PRODUCT B
 		                 WHERE STATUS = 'Y'
 		                 ORDER
-		                    BY ENROLL_DATE DESC
+		                    BY PRODUCT_NO DESC
 		                ) A
 		        )
 		  WHERE RNUM BETWEEN ? AND ? 
