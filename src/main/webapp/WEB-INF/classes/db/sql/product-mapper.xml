@@ -106,12 +106,15 @@
 		SELECT
 		       PRODUCT_IMG
 		     , PRODUCT_NO
+		     , FCATEGORY_NAME
+		     , SCATEGORY_NAME
 		     , PRODUCT_NAME
 		     , CAPACITY
 		     , BRAND
 		     , PRICE
 		     , STOCK
 		     , PRODUCT_INFO
+		     , ENROLL_DATE
 		  FROM TB_PRODUCT
 		 WHERE STATUS = 'Y'
 		   AND PRODUCT_NO = ?

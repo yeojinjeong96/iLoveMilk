@@ -30,7 +30,7 @@ public class ProductmDetailController extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		int proNo = Integer.parseInt(request.getParameter("pro"));
+		int proNo = Integer.parseInt(request.getParameter("no"));
 		Product p = new ProductService().productDetail(proNo);
 		
 		request.setAttribute("p", p);

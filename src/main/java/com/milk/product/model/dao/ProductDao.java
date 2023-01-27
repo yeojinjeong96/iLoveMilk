@@ -214,6 +214,34 @@ public class ProductDao {
 	}
 	
 	public Product productDetail(Connection conn, int proNo) {
-		
+		Product p = null;
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String sql = prop.getProperty("productDetail");
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, proNo);
+			rset = pstmt.executeQuery();
+			if(rset.next()) {
+				p = new Product();
+				p.setProductImg(rset.getString("product_img"));
+				p.setProductNo(rset.getInt("product_no"));
+				p.setfCategory(rset.getString("fcategory_name"));
+				p.setsCategory(rset.getString("scategory_name"));
+				p.setProductName(rset.getString("product_name"));
+				p.setCapacity(rset.getInt("capacity"));
+				p.setBrand(rset.getString("brand"));
+				p.setPrice(rset.getInt("price"));
+				p.setStock(rset.getInt("stock"));
+				p.setProductInfo(rset.getString("product_info"));
+				p.setEnrollDate(rset.getString("enroll_date"));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		return p;
 	}
 }
