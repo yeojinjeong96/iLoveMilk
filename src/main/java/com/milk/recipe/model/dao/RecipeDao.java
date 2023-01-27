@@ -238,10 +238,10 @@ public class RecipeDao {
 			for(RecipeOrder listO : listOrder) {
 				
 				pstmt = conn.prepareStatement(sql);
-				pstmt.setString(1, listO.getRecipeExplain());
-				pstmt.setString(2, listO.getRecipeImg());
-				
-				
+				pstmt.setInt(1, listO.getRecipeOrder());
+				pstmt.setString(2, listO.getRecipeExplain());
+				pstmt.setString(3, listO.getRecipeImg());
+			
 				result = pstmt.executeUpdate();
 				
 			}

@@ -102,6 +102,7 @@
 		  (
 		    RECIPE_ORDER_NO
 		  , RECIPE_NO
+		  , RECIPE_ORDER
 		  , RECIPE_EXPLN
 		  , RECIPE_IMG
 		  )
@@ -109,6 +110,7 @@
 		  (
 		    SEQ_RONO.NEXTVAL
 		  , SEQ_RNO.CURRVAL
+		  , ?
 		  , ?
 		  , ?
 		  )

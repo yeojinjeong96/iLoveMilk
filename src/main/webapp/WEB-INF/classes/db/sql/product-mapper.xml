@@ -43,22 +43,22 @@
 
 	<entry key="selectRecentProductList">
 	
-                  SELECT 	
-                  		   PRODUCT_NO	    
-                         , PRODUCT_NAME
-	                     , PRICE
-	                     , PRODUCT_IMG
-                    FROM (
-                          SELECT 
-                          		PRODUCT_NO	
-                       	   	   , PRODUCT_NAME
-                               , PRICE
-                               , PRODUCT_IMG
-                            FROM TB_PRODUCT   
-                           ORDER 
-                              BY ENROLL_DATE DESC    
-                          )
-                   WHERE ROWNUM <![CDATA[<=]]> 3 
+        SELECT 	
+        		   PRODUCT_NO	    
+               , PRODUCT_NAME
+	            , PRICE
+	            , PRODUCT_IMG
+          FROM (
+                SELECT 
+                		PRODUCT_NO	
+             	   	   , PRODUCT_NAME
+                     , PRICE
+                     , PRODUCT_IMG
+                  FROM TB_PRODUCT   
+                 ORDER 
+                    BY ENROLL_DATE DESC    
+                )
+         WHERE ROWNUM <![CDATA[<=]]> 3 
 	</entry>
 	
 	<entry key="selectProductReview">

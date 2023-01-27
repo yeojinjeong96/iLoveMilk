@@ -82,12 +82,15 @@ public class RecipeInsertController extends HttpServlet {
 			
 			 
 			ArrayList<RecipeOrder> listOrder = new ArrayList<>();
+			
 			for(int lo=2 ; lo<=11 ; lo++) {
 				String orderExp = multiRequest.getParameter("order" + (lo-1));
+				
 				
 				if(orderExp != null) {
 					RecipeOrder listO = new RecipeOrder();
 					listO.setRecipeExplain(orderExp);
+					listO.setRecipeOrder(lo-1);
 					
 					String orderFile = "resources/recipe_upfiles/" + multiRequest.getFilesystemName("file" + lo);
 					listO.setRecipeImg(orderFile);
