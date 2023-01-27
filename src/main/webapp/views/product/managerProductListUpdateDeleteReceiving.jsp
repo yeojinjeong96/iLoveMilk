@@ -102,7 +102,7 @@
 						<% } %>
 						
 						<% if(pi.getCurrentPage() != pi.getMaxPage()){ %>
-			            <button class="btn btn-primary btn-sm" onclick="location.href='<%= contextPath %>/listUpDeRe.prcup=<%= pi.getCurrentPage() + 1%>';">&gt;</button>
+			            <button class="btn btn-primary btn-sm" onclick="location.href='<%= contextPath %>/listUpDeRe.pr?cup=<%= pi.getCurrentPage() + 1%>';">&gt;</button>
 			            <% } %>
 			        </div>
 			        

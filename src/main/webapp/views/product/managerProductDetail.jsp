@@ -12,6 +12,7 @@
     .outer-1{float:left; width: 800px; box-sizing: border-box;}
     .outer-2{width: 700px;}
     .productDetailList th{text-align: center;}
+    #imgArea{display: flex; align-items: center;}
 </style>
 </head>
 <body>
@@ -27,44 +28,44 @@
                     <br><br>
 
                     <table class="productDetailList table-striped">
-                        <tr>
-                            <td rowspan="10" width="40%"><img src="../../resources/images/logo.jpg"></td>
+                        <tr height="50px">
+                            <td rowspan="10" width="40%"><div id="imgArea"><img src="<%= contextPath %>/<%= p.getProductImg() %>" width="280px"></div></td>
                             <th width="25%">상품코드&nbsp;</th>
                             <td width="35%"><%= p.getProductNo() %></td>
                         </tr>
-                        <tr>
+                        <tr height="50px">
                             <th>1차 카테고리</th>
                             <td><%= p.getfCategory() %></td>
                         </tr>
-                        <tr>
+                        <tr height="50px">
                             <th>2차 카테고리</th>
                             <td><%= p.getsCategory() %></td>
                         </tr>
-                        <tr>
+                        <tr height="50px">
                             <th>상품명</th>
                             <td><%= p.getProductName() %></td>
                         </tr>
-                        <tr>
+                        <tr height="50px">
                             <th>용량</th>
                             <td><%= p.getCapacity() %> (mL/g)</td>
                         </tr>
-                        <tr>
+                        <tr height="50px">
                             <th>브랜드</th>
                             <td><%= p.getBrand() %></td>
                         </tr>
-                        <tr>
+                        <tr height="50px">
                             <th>판매 가격</th>
                             <td><%= p.getPrice() %></td>
                         </tr>
-                        <tr>
+                        <tr height="50px">
                             <th>재고</th>
                             <td><%= p.getStock() %></td>
                         </tr>
-                        <tr>
+                        <tr height="200px">
                             <th height="100px">상품 상세정보</th>
-                            <td><%= p.getProductInfo() %></td>
+                            <td><div style="margin-right:5px"><%= p.getProductInfo() %></div></td>
                         </tr>
-                        <tr>
+                        <tr height="50px">
                             <th>상품 등록일</th>
                             <td><%= p.getEnrollDate() %></td>
                         </tr>
