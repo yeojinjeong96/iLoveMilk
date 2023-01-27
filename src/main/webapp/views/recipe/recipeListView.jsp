@@ -111,7 +111,7 @@
             <% if(loginMember != null) { %>
 	            <!-- 로그인한 회원에게만 보여지도록 -->
 	            <div class="writer" align="right">
-	                <a href="" class="btn btn-secondary btn-sm">글쓰기</a>
+	                <a href="<%= contextPath %>/enrollForm.re" class="btn btn-secondary btn-sm">글쓰기</a>
 	            </div>
 	        <% } %>
 	            <br>

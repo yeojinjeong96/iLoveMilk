@@ -107,17 +107,8 @@
 
         <div align="center">
 
-            <br>
-            <% if(loginMember != null) { %>
-	            <!-- 로그인한 회원에게만 보여지도록 -->
-	            <div class="writer" align="right">
-	                <a href="" class="btn btn-secondary btn-sm">글쓰기</a>
-	            </div>
-	        <% } %>
-	            <br>
-			
-			
-			
+           
+			<br><br>
             <div class="paging-area">
             <% if(pi.getCurrentPage() != 1) { %>
                 <button onclick="location.href='<%= contextPath %>/listR.re?cpage=<%= pi.getCurrentPage()-1 %>';">&lt;</button>

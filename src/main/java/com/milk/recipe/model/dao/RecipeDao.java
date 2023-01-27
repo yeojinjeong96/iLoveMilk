@@ -15,6 +15,8 @@ import java.util.Properties;
 
 import com.milk.common.model.vo.PageInfo;
 import com.milk.recipe.model.vo.Recipe;
+import com.milk.recipe.model.vo.RecipeIngre;
+import com.milk.recipe.model.vo.RecipeOrder;
 
 public class RecipeDao {
 	
@@ -169,4 +171,91 @@ public class RecipeDao {
 		return list;
 		
 	}
+	
+	
+	public int insertRecipe(Connection conn, Recipe r) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		
+		String sql = prop.getProperty("insertRecipe");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, r.getRecipeWriter());
+			pstmt.setString(2, r.getRecipeTitle());
+			pstmt.setString(3, r.getRecipeIntro());
+			pstmt.setString(4, r.getMainImg());
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		return result;
+		
+	}
+	
+	
+	public int insertRecipeIngreList(Connection conn, ArrayList<RecipeIngre> listIngre) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		
+		String sql = prop.getProperty("insertRecipeIngreList");
+		
+		try {
+			
+			for(RecipeIngre listI : listIngre) {
+				
+				pstmt = conn.prepareStatement(sql);
+				pstmt.setString(1, listI.getIngreName());
+				pstmt.setString(2, listI.getIngreAmount());
+				
+				result = pstmt.executeUpdate();
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		return result;
+		
+	}
+	
+	
+	public int insertRecipeOrderList(Connection conn, ArrayList<RecipeOrder> listOrder) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		
+		String sql = prop.getProperty("insertRecipeOrderList");
+		
+		try {
+			
+			for(RecipeOrder listO : listOrder) {
+				
+				pstmt = conn.prepareStatement(sql);
+				pstmt.setString(1, listO.getRecipeExplain());
+				pstmt.setString(2, listO.getRecipeImg());
+				
+				
+				result = pstmt.executeUpdate();
+				
+			}
+			
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		
+		return result;
+		
+	}
+
 }

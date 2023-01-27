@@ -55,5 +55,63 @@
 	        	)
  		 WHERE RNUM BETWEEN ? AND ?
 	</entry>
+	
+	<entry key="insertRecipe">
+		INSERT
+		  INTO TB_RECIPE
+		  (
+		    RECIPE_NO
+		  , RECIPE_TYPE
+		  , RECIPE_WRITER
+		  , RECIPE_TITLE
+		  , RECIPE_INTRO
+		  , MAIN_IMG
+		  )
+		  VALUES
+		  (
+		    SEQ_RNO.NEXTVAL
+		  , 2
+		  , ?
+		  , ?
+		  , ?
+		  , ?
+		  )
+	</entry>
+	
+	<entry key="insertRecipeIngreList">
+		INSERT
+		  INTO TB_RECIPE_INGRE
+		  (
+		    INGRE_NO
+		  , RECIPE_NO
+		  , INGRE_NAME
+		  , INGRE_AMOUNT
+		  )
+		  VALUES
+		  (
+		    SEQ_INO.NEXTVAL
+		  , SEQ_RNO.CURRVAL
+		  , ?
+		  , ?
+		  )
+	</entry>
+	
+	<entry key="insertRecipeOrderList">
+		INSERT
+		  INTO TB_RECIPE_ORDER
+		  (
+		    RECIPE_ORDER_NO
+		  , RECIPE_NO
+		  , RECIPE_EXPLN
+		  , RECIPE_IMG
+		  )
+		  VALUES
+		  (
+		    SEQ_RONO.NEXTVAL
+		  , SEQ_RNO.CURRVAL
+		  , ?
+		  , ?
+		  )
+	</entry>
 
 </properties>
