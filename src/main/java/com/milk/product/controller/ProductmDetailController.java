@@ -1,11 +1,15 @@
 package com.milk.product.controller;
 
 import java.io.IOException;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import com.milk.product.model.service.ProductService;
+import com.milk.product.model.vo.Product;
 
 /**
  * Servlet implementation class ProductmDetailController
@@ -26,8 +30,11 @@ public class ProductmDetailController extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String proNo = request.getParameter("pro");
-		Product p = new ProductService
+		int proNo = Integer.parseInt(request.getParameter("pro"));
+		Product p = new ProductService().productDetail(proNo);
+		
+		request.setAttribute("p", p);
+		request.getRequestDispatcher("views/product/managerProductDetail.jsp");
 	}
 
 	/**

@@ -212,4 +212,8 @@ public class ProductDao {
 		}
 		return list;	
 	}
+	
+	public Product productDetail(Connection conn, int proNo) {
+		
+	}
 }
