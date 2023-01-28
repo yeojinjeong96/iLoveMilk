@@ -226,6 +226,29 @@ public class ProductDao {
 	}
 	
 	
+	public int deleteProductLike(Connection conn, ProductLike pl) {
+		
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String sql = prop.getProperty("deleteProductLike");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, pl.getProductNo());
+			pstmt.setInt(2, pl.getMemberNo());
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		return result;
+	}
+
+	
+	
 	public int insertProduct(Connection conn, Product p) {
 		int result = 0;
 		PreparedStatement pstmt = null;

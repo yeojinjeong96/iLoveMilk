@@ -12,16 +12,16 @@ import com.milk.product.model.service.ProductService;
 import com.milk.product.model.vo.ProductLike;
 
 /**
- * Servlet implementation class ProductLikeController
+ * Servlet implementation class ProductLikeDelController
  */
-@WebServlet("/likeProduct.pro")
-public class ProductLikeController extends HttpServlet {
+@WebServlet("/likeProductDel.pro")
+public class ProductLikeDelController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public ProductLikeController() {
+    public ProductLikeDelController() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -34,12 +34,11 @@ public class ProductLikeController extends HttpServlet {
 		int pno = Integer.parseInt(request.getParameter("pno"));
 		int memberNo = Integer.parseInt(request.getParameter("memberNo"));
 		
-
 		ProductLike pl = new ProductLike();
 		pl.setProductNo(pno);
 		pl.setMemberNo(memberNo);
 		
-		int result = new ProductService().insertProductLike(pl);
+		int result = new ProductService().deleteProductLike(pl);
 		
 		response.setContentType("text/html; charset=UTF-8");
 		response.getWriter().print(result);

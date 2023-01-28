@@ -92,6 +92,14 @@
 		    ) 	
 	</entry>
 	
+		<entry key="deleteProductLike">
+	    DELETE 
+	      FROM TB_PRODUCT_LIKE
+	     WHERE 
+	     PRODUCT_NO = ?
+	     AND MEMBER_NO = ?
+	</entry>
+	
 	
 	<entry key="insertProduct">
 	INSERT

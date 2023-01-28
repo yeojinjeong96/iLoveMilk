@@ -240,37 +240,37 @@
     	
     	 
          <script>
-			       // 로그인이 되어있을 경우     			
+			    
+         function likeProduct(pno){
+         		// 로그인이 되어있을 경우     			
 			    <% if(loginMember != null ){ %>			   
 				   
 		           		var i = 0;
-		           		
-			           	function likeProduct(pno){
+		           	  $('i').on('click',function(){
+
+			           	
 			        	   // 찜하기 하트
 			               if(i==0){
 			                   $(this).attr('class','bi-heart-fill');
 			                   i++;
-			                   
 			                  memberLike(pno);
-			                   
-			                   
-			           			
+			                  
 			               //찜해제    
 				           }else if(i==1){
 				                   $(this).attr('class','bi-heart');
 				                   $(this).removeAttr('data-target','#like-product');
 				                    i--;
-				                    
+				              memberLikeDel(pno);     
 				           }
-			           	}
-		             				   
+			           	
+		           	  })			   
 			    	
 				       // 로그인 안했을 경우
 					<%} else{ %>//
 						alert("로그인이 필요한 기능입니다. 로그인 후 사용해주세요");
 						location = "<%=contextPath%>/loginpage.me";
 					<%}%>
-					
+				}	
 					
 					// 찜하기 AJAX
 					function memberLike(pno){
@@ -286,9 +286,15 @@
 		                   },
 		                   success:function(result){
 		                      	
-		                	   console.log(result);
+		                	   if(result > 0){
+		                         var con = confirm("찜하기목록에 추가되었습니다. 해당 페이지로 바로 이동하시겠습니까?");
+		                         
+		                         if(con){
+		                           location = "<%=contextPath %>/mypage.me";
+		                         }	
+		                         
+		                	   }
 
-		
 		                    },
 		                    error: function(){
 		                      alert("찜하기 실패");
@@ -296,6 +302,31 @@
 		
 		               });
          			}
+					
+					function memberLikeDel(pno){
+						
+						<% if(loginMember != null){%>
+							let memberNo = <%=loginMember.getMembeNo()%>;
+						<%}%>
+						
+						$.ajax({
+							url:"<%=contextPath%>/likeProductDel.pro",
+							data : {
+								pno : pno,
+								memberNo : memberNo
+							},
+							success : function(result){
+								
+								if(result > 0){
+									alert("찜해제 되었습니다.");
+								}
+								
+							}, error: function(){
+								 alert("찜삭제 실패");
+							}
+						});
+						
+					}
 
         </script>
 
