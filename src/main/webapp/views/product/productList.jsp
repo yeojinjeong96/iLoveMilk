@@ -220,8 +220,9 @@
 				</div>
 			<%}else{ %>
 				<%for(Product p : list) {%>
+					
 	            <div class="thumbnail" align="left">
-	                
+	                <input type="hidden" name ="no" value ="<%= p.getProductNo() %>">
 	                <a href="<%=contextPath %>/proDetail.pro?pno=<%=p.getProductNo() %>" style="color:rgb(113, 113, 113); text-decoration:none;">
 	                <img src="<%= contextPath%>/<%=p.getProductImg() %>" alt="" width="200" height="200">
 	                
@@ -231,35 +232,64 @@
 	                    <%=p.getPrice() %> 원
 	                </div>
 	                </a>
-	                <i class="bi-heart like-btn" style="font-size:2rem; color: red; cursor: pointer;" data-target="#like-product"  data-toggle="modal" ></i>
-	                <!-- 로그인 안하고 찜 눌렀을 때 알림창 실행시키고 로그인페이지로 넘어가기 -->
-	
+	                 <i class="bi-heart like-btn" id="heart" style="font-size:2rem; color: red; cursor: pointer;"></i>
 	            </div>
 			<%} %>
 		<%} %>
         </div>
 
-        <!-- 로그인 안했을때의 모달 -->
-        <script>
+    	
+    	 
+         <script>
+         
 
-            var i = 0;
-            $('i').on('click',function(){
-                if(i==0){
-                    $(this).attr('class','bi-heart-fill');
+         
+         
+         
+     	$(function(){
+     		$("heart").click(function(){
+     			
+     			
+			       // 로그인이 되어있을 경우     			
+			    <% if(loginMember != null ){ %>			   
+				   
+		           		var i = 0;
+			           	$('i').on('click',function(){
+			        	   // 찜하기 하트
+			               if(i==0){
+			                   $(this).attr('class','bi-heart-fill');
+			                   i++;
+			                   
+			                   
+			           			
+			               //찜해제    
+				           }else if(i==1){
+				                   $(this).attr('class','bi-heart');
+				                   $(this).removeAttr('data-target','#like-product');
+				                    i--;
+				                    
+				           }
+			        	   
+		             	}			   
+			    	
+				       // 로그인 안했을 경우
+					<%} else{ %>//
+						alert("로그인이 필요한 기능입니다. 로그인 후 사용해주세요");
+						location = "<%=contextPath%>/loginpage.me";
+					<%}%>
+			   }     			
+     			
+     			
+     			
+     			
+     			
+     			
+     		})
+     	})
+     
+			   
 
 
-                    i++;
-                    
-
-                }else if(i==1){
-                    $(this).attr('class','bi-heart');
-                    $(this).removeAttr('data-target','#like-product');
-                    $(this).removeAttr('data-toggle','#modal');
-                    i--;
-                }
-    
-            });
-    
         </script>
 
         <div id="pro-paging">
@@ -284,48 +314,7 @@
             </div>
         </div>
     </div>
-
-        <!-- 찜하기 눌렀을때의 모달(로그인했을때) -->
-        <!-- The Modal -->
-        <div class="modal" id=""  >
-            <div class="modal-dialog">
-            <div class="modal-content modal-sm">
-        
-                <!-- Modal body -->
-                <br>
-                <div class="modal-body" style="text-align:center; font-size:13px;">
-                    찜하기목록에 추가되었습니다. <br>
-                    해당 페이지로 바로 이동하시겠습니까?
-                </div>
-                <div align="center">
-                    <button type="button" class="btn btn-outline-secondary btn-sm" data-dismiss="modal" style=" width:100px;">확인</button>
-                    <button type="button" class="btn btn-outline-secondary btn-sm" data-dismiss="modal" style=" width:100px;">취소</button>
-                    </div>
-                    <br>
-            </div>
-            </div>
-        </div>
 		
-		
-        <!-- 찜하기 눌렀을때의 모달(로그인안했을때) -->
-        <!-- The Modal -->
-        <div class="modal" id="like-product">
-            <div class="modal-dialog">
-            <div class="modal-content modal-sm">
-        
-                <!-- Modal body -->
-                <br>
-                <div class="modal-body" style="text-align:center; font-size:13px;">
-                    로그인이 필요한 기능입니다. <br>
-                    로그인해주세요
-                </div>
-                <div align="center">
-                    <button type="button" onclick="location.href='<%=contextPath%>/loginpage.me'" class="btn btn-outline-secondary btn-sm" data-dismiss="modal" style=" width:100px;">확인</button>
-                    </div>
-                    <br>
-            </div>
-            </div>
-        </div>        
         
 		<%@ include file="../common/footer.jsp" %>
 </body>

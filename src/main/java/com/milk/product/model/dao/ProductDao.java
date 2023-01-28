@@ -13,6 +13,7 @@ import java.util.Properties;
 
 import com.milk.common.model.vo.PageInfo;
 import com.milk.product.model.vo.Product;
+import com.milk.product.model.vo.ProductLike;
 import com.milk.product.model.vo.Review;
 
 public class ProductDao {
@@ -201,6 +202,27 @@ public class ProductDao {
 		}
 		
 		return list;
+	}
+	
+	public int insertProductLike(Connection conn, ProductLike pl) {
+		
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String sql = prop.getProperty("insertProductLike");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, pl.getProductNo());
+			pstmt.setInt(2, pl.getMemberNo());
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		return result;
 	}
 	
 	

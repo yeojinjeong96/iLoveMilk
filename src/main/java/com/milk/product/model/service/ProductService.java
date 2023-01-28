@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import com.milk.common.model.vo.PageInfo;
 import com.milk.product.model.dao.ProductDao;
 import com.milk.product.model.vo.Product;
+import com.milk.product.model.vo.ProductLike;
 import com.milk.product.model.vo.Review;
 
 public class ProductService {
@@ -91,6 +92,27 @@ public class ProductService {
 		
 		return list;
 		
+	}
+	
+	/**
+	 * TB_PRODUCT_LIKE 에 데이터 INSERT
+	 * @author 이다혜
+	 * @return int result (성공시 1 | 실패시 0)
+	 */
+	public int insertProductLike(ProductLike pl) {
+		
+		Connection conn = getConnection();
+		int result = new ProductDao().insertProductLike(conn, pl);
+		
+		if(result > 0) {
+			commit(conn);
+		}else {
+			rollback(conn);
+		}
+		
+		close(conn);
+		
+		return result;
 	}
 	
 	

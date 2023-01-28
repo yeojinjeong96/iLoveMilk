@@ -76,6 +76,22 @@
           AND R_STATUS = 'Y'	
 	</entry>
 	
+	<entry key="insertProductLike">
+		    INSERT 
+		      INTO TB_PRODUCT_LIKE
+		     (
+		            PRODUCT_NO,
+		            MEMBER_NO,
+		            P_LIKE_DATE
+		     )
+		     VALUES 
+		    (
+		        ?,
+		        ?,
+		        SYSDATE
+		    ) 	
+	</entry>
+	
 	
 	<entry key="insertProduct">
 	INSERT
