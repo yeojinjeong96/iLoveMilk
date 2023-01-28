@@ -44,7 +44,7 @@
                         </tr>
                     </table>
                     <div align="right">
-                        <button type="submit" class="btn btn-primary btn-sm" style="margin: 15px;">선택 상품 삭제</button>
+                        <button type="button" onclick="deleteBtn();" class="btn btn-primary btn-sm" style="margin: 15px;">선택 상품 삭제</button>
                     </div>
                     <table class="table">
                         <thead class="thead-light">
@@ -61,7 +61,7 @@
 
                             <% for(Product p : list){ %>
                             <tr class="prod">
-                                <td><input type="checkbox"></td>
+                                <td><input type="checkbox" class="checkedPro" name="proNo" value="<%= p.getProductNo() %>"></td>
                                 <td align="center"><%= p.getProductNo() %></td>
                                 <td class="pHover"><%= p.getProductName() %> <%= p.getCapacity() %>(mL/g)</td>
                                 <td align="right"><%= p.getStock() %></td>
@@ -79,21 +79,7 @@
                         </tbody>
                     </table>
                     
-                    <script>
-			        	$(function(){
-			        		
-			        		// 상품명 클릭시 상품상세조회페이지로 이동
-			        		$(".prod").each(function(){
-			        			$(this).children().eq(2).click(function(){
-				        			location.href = '<%= contextPath %>/detail.pr?no=' + $(this).prev().text();
-				        		});
-			        		})
-			        		
-			        		// 선택상품삭제 클릭시 선택된 상품 삭제
-			        	});
-			        </script>
-                    
-					<br>
+                    <br>
 					<div class="paging-area">
 			            <% if(pi.getCurrentPage() != 1){ %>
 			            <button class="btn btn-primary btn-sm" onclick="location.href='<%= contextPath %>/listUpDeRe.pr?cp=<%= pi.getCurrentPage() - 1 %>';">&lt;</button>
@@ -140,5 +126,28 @@
             </div>
         </div>
     </div>
+    
+	<script>
+		$(function(){
+			// 상품명 클릭시 상품상세조회페이지로 이동
+			$(".prod").each(function(){
+				$(this).children().eq(2).click(function(){
+	 				location.href = '<%= contextPath %>/detail.pr?no=' + $(this).prev().text();
+	 			});
+			});
+		});
+		
+		// 선택상품삭제 클릭시 선택된 체크박스가 하나도 없을때의 alert
+		function deleteBtn(){
+			if($(".checkedPro:checked").parent().next().text() == ""){
+				alert("선택된 상품이 없습니다.");
+			}else{
+				$.ajax({
+					
+				});
+			}
+		}
+	</script>
+                    
 </body>
 </html>

@@ -41,7 +41,7 @@
                                         <option>락토프리</option>
                                     </select>
                                     <select name="sCate" id="sCate">
-                                        <option>- 2차 카테고리 -</option>
+                                        <option class="ti0">- 2차 카테고리 -</option>
                                         <option class="ti1" style="display:none">백색시유</option>
                                         <option class="ti1" style="display:none">가공우유</option>
                                         <option class="ti1" style="display:none">멸균우유</option>
@@ -106,17 +106,21 @@
     </div>
     
     <script>
+    	// 1차, 2차 카테고리 값 불러오기
     	$(function(){
-    		console.log(1);
-    		$("select[name=fCate] option").text().each(function(){
-    			console.log($("select[name=fCate] option").text());
-    			if($("select[name=fCate] option").text() == <%= p.getfCategory() %>){
-    				console.log(3);
-    				$("select[name=fCate] option").attr("selected", true);
+    		$("select[name=fCate]").children().each(function(){
+    			if($(this).text() == "<%= p.getfCategory() %>"){
+    				$(this).prop("selected", true);
+    			}
+    		});
+    		$("select[name=sCate]").children().each(function(){
+    			if($(this).text() == "<%= p.getsCategory() %>"){
+    				$(this).prop("selected", true);
     			}
     		});
     	});
     
+    	// 1차, 2차 카테고리 미선택시 alert창 띄우기
 	    function cateNeed(){
 			if($("#fCate").val() == "- 1차 카테고리 -" || $("#sCate").val() == "- 2차 카테고리 -"){
 				alert("카테고리를 입력하세요.");
@@ -124,7 +128,10 @@
 			}
 		}
     
+    	// 1차 카테고리 선택에 따른 2차 카테고리 옵션리스트 변경
     	function sCateShow(){
+			$(".ti0").prop("selected", true);
+			
     		if($("select[name=fCate] option:selected").text() == "우유"){
     			$(".ti1").each(function(){
     				$(this).attr("style", "display:block");
