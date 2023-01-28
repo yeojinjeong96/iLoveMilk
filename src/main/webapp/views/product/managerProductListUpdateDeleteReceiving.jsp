@@ -61,7 +61,7 @@
 
                             <% for(Product p : list){ %>
                             <tr class="prod">
-                                <td><input type="checkbox" class="checkedPro" name="proNo" value="<%= p.getProductNo() %>"></td>
+                                <td><input type="checkbox" class="checkedPro"></td>
                                 <td align="center"><%= p.getProductNo() %></td>
                                 <td class="pHover"><%= p.getProductName() %> <%= p.getCapacity() %>(mL/g)</td>
                                 <td align="right"><%= p.getStock() %></td>
@@ -72,7 +72,7 @@
                                 		·
                                 	<% } %>
                                 </td>
-                                <td align="center"><button class="btn btn-primary btn-sm">입고</button></td>
+                                <td align="center"><button type="button" class="btn btn-primary btn-sm" onclick="receivingPro();" data-toggle="modal" data-target="#receiving">입고</button></td>
                             </tr>
 							<% } %>
 							
@@ -94,33 +94,62 @@
 			            <% } %>
 			        </div>
 			        
+			        <!-- 입고 모달 시작 -->
+					<div class="modal fade" id="receiving">
+						<div class="modal-dialog">
+						<div class="modal-content">
+							<!-- Modal Header -->
+							<div class="modal-header">
+								<h4 class="modal-title">입고</h4>
+								<button type="button" class="close" data-dismiss="modal">×</button>
+							</div>
+							<form action="<%= contextPath %>/receiving.pr">
+								<!-- Modal body -->
+								<div class="modal-body">
+									<table class="table">
+				                        <tr>
+				                            <th>선택한 상품코드</td>
+				                            <td id="proNo" name="proNo"></td>
+				                        </tr>
+				                        <tr>
+				                            <th>선택한 상품명</td>
+				                            <td id="proName"></td>
+				                        </tr>
+				                        <tr>
+				                            <th>재고</td>
+				                            <td id="stock"></td>
+				                        </tr>
+				                        <tr>
+				                            <th>입고 수량</td>
+				                            <td><input type="number" name="receNo">&nbsp;개</td>
+				                        </tr>
+				                    </table>
+				                </div>
+				                <!--  
+				                <script>
+					            	function receivingPro(){
+					            		console.log($(this).val());
+					            		$("#proNo").text($(this).parent().prev().prev().prev().prev().text());
+					        			if($(this).parent().prev().text() == "·"){
+					        				$("#proName").text($(this).parent().prev().text() + " " + $(this).parent().prev().prev().prev().text());
+					        	    	}else{
+					        	    		$("#proName").text($(this).parent().prev().prev().prev().text());
+					        	    	}
+					        			$("#stock").text($(this).parent().prev().prev().text());
+					        		}
+					        	</script>
+				                -->
+								<!-- Modal footer -->
+								<div class="modal-footer">
+									<button type="submit" class="btn btn-primary">입력</button>
+									<button type="button" class="btn btn-danger" data-dismiss="modal">닫기</button>
+								</div>
+							</form>
+						</div>
+						</div>
+					</div>
+					<!-- 입고 모달 종료 -->
 			        
-			        
-                    <!-- 입고버튼을 눌렀을 경우에만 등장 (모달 & 부트스트랩 접기)
-                    <br>
-                    <table border="1">
-                        <tr>
-                            <td>선택한 상품코드</td>
-                            <td>코드?</td>
-                        </tr>
-                        <tr>
-                            <td>선택한 상품명</td>
-                            <td>브랜드+상품명+용량?</td>
-                        </tr>
-                        <tr>
-                            <td>재고</td>
-                            <td>재고?</td>
-                        </tr>
-                        <tr>
-                            <td>입고 수량</td>
-                            <td><input type="number">&nbsp;개</td>
-                        </tr>
-                    </table>
-                    <br>
-                    <div>
-                        <button type="submit" class="btn btn-primary btn-sm">입력</button>
-                    </div>
-                    -->
                 </div>
                 <br><br><br><br><br>
             </div>
@@ -141,9 +170,17 @@
 		function deleteBtn(){
 			if($(".checkedPro:checked").parent().next().text() == ""){
 				alert("선택된 상품이 없습니다.");
-			}else{
+			}else if(confirm("선택된 ?개의 상품을 정말로 삭제하시겠습니까?")){
+				
 				$.ajax({
-					
+					url:"<%= contextPath %>/delete.pr",
+					data:{proNo:$(".checkedPro:checked").parent().next().text()},
+					success:function(){
+						
+					},
+					error:function(){
+						console.log("상품 삭제용 ajax통신 실패");
+					}
 				});
 			}
 		}

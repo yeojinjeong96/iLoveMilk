@@ -32,13 +32,12 @@ public class ProductDeleteController extends HttpServlet {
 		int[] arrNo = new int[arrsNo.length];
 		for(int i=0; i<arrsNo.length; i++) {
 			arrNo[i] = Integer.parseInt(arrsNo[i]);
+			System.out.println(arrNo[i]);
 		}
 		
-		int result = new ProductService().deleteProduct(arrNo);
+		//int result = new ProductService().deleteProduct(arrNo);
 		
-		if(result > 0) {
-			
-		}
+		//if(result > 0) {}
 	}
 
 	/**
