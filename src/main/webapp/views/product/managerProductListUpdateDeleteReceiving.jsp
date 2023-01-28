@@ -166,7 +166,7 @@
 			});
 		});
 		
-		// 선택상품삭제 클릭시 선택된 체크박스가 하나도 없을때의 alert
+		// 선택상품삭제 클릭시 alert와 ajax
 		function deleteBtn(){
 			if($(".checkedPro:checked").parent().next().text() == ""){
 				alert("선택된 상품이 없습니다.");

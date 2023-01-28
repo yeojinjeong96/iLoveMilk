@@ -151,4 +151,31 @@
 		 WHERE STATUS = 'Y'
 		   AND PRODUCT_NO = ?
 	</entry>
+	
+	<entry key="updateProduct">
+		UPDATE TB_PRODUCT
+		   SET PRODUCT_NAME = ?
+		     , PRICE = ?
+			 , CAPACITY = ?
+			 , BRAND = ?
+			 , PRODUCT_INFO = ?
+			 , FCATEGORY_NAME = ?
+			 , SCATEGORY_NAME = ?
+			 , PRODUCT_IMG = ?
+		 WHERE STATUS = 'Y'
+		   AND PRODUCT_NO = ?
+	</entry>
+	
+	<entry key="deleteProduct">
+		UPDATE TB_PRODUCT
+		   SET STATUS = 'N'
+		 WHERE STATUS = 'Y'
+		   AND PRODUCT_NO = ?
+	</entry>
+	
+	<entry key="receivingProduct">
+	</entry>
+	
+	<entry key="selectStockList">
+	</entry>
 </properties>
