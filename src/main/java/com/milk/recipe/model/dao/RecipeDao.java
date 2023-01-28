@@ -257,5 +257,129 @@ public class RecipeDao {
 		return result;
 		
 	}
+	
+	
+	public int increaseCount(Connection conn, int recipeNo) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		
+		String sql = prop.getProperty("increaseCount");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, recipeNo);
+			
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		return result;
+		
+	}
+	
+	
+	public Recipe selectRecipe(Connection conn, int recipeNo) {
+		Recipe r = null;
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		String sql = prop.getProperty("selectRecipe");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, recipeNo);
+			
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				r = new Recipe(rset.getInt("RECIPE_NO"),
+							   rset.getString("MEMBER_ID"),
+							   rset.getString("RECIPE_TITLE"),
+							   rset.getString("RECIPE_INTRO"),
+							   rset.getInt("COUNT"),
+							   rset.getString("ENROLL_DATE"),
+							   rset.getString("MAIN_IMG")
+							   );
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return r;
+	}
+	
+	
+	public ArrayList<RecipeIngre> selectRecipeIngreList(Connection conn, int recipeNo){
+		ArrayList<RecipeIngre> listI = new ArrayList<>();
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		String sql = prop.getProperty("selectRecipeIngreList");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, recipeNo);
+			
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				RecipeIngre ri = new RecipeIngre();
+				
+				ri.setIngreName(rset.getString("INGRE_NAME"));
+				ri.setIngreAmount(rset.getString("INGRE_AMOUNT"));
+				
+				listI.add(ri);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return listI;
+		
+	}
+	
+	public ArrayList<RecipeOrder> selectRecipeOrderList(Connection conn, int recipeNo){
+		ArrayList<RecipeOrder> listO = new ArrayList<>();
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		String sql = prop.getProperty("selectRecipeOrderList");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, recipeNo);
+			
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				RecipeOrder ro = new RecipeOrder();
+				
+				ro.setRecipeOrder(rset.getInt("RECIPE_ORDER"));
+				ro.setRecipeExplain(rset.getString("RECIPE_EXPLN"));
+				ro.setRecipeImg(rset.getString("RECIPE_IMG"));
+				
+				listO.add(ro);
+			}
+			
+		} catch (SQLException e1) {
+			e1.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return listO;
+		
+	}
 
 }

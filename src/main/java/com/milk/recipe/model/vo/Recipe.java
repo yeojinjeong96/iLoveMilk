@@ -1,5 +1,9 @@
 package com.milk.recipe.model.vo;
 
+/**
+ * @author jw
+ *
+ */
 public class Recipe {
 
 	private int recipeNo;
@@ -39,6 +43,21 @@ public class Recipe {
 
 	
 	
+	public Recipe(int recipeNo, String recipeWriter, String recipeTitle, String recipeIntro, int count,
+			String enrollDate, String mainImg) {
+		super();
+		this.recipeNo = recipeNo;
+		this.recipeWriter = recipeWriter;
+		this.recipeTitle = recipeTitle;
+		this.recipeIntro = recipeIntro;
+		this.count = count;
+		this.enrollDate = enrollDate;
+		this.mainImg = mainImg;
+	}
+
+
+
+
 	public int getRecipeNo() {
 		return recipeNo;
 	}

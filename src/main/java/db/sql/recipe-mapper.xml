@@ -115,5 +115,50 @@
 		  , ?
 		  )
 	</entry>
+	
+	<entry key="increaseCount">
+		UPDATE
+			   TB_RECIPE
+		   SET COUNT = COUNT + 1
+		 WHERE RECIPE_NO = ?
+		   AND DELETE_STATUS = 'N'
+	</entry>
+	
+	<entry key="selectRecipe">
+		SELECT
+		       RECIPE_NO
+		     , MEMBER_ID
+		     , RECIPE_TITLE
+		     , RECIPE_INTRO
+		     , COUNT
+		     , TO_CHAR(R.ENROLL_DATE, 'YYYY.MM.DD HH:mm') "ENROLL_DATE"
+		     , MAIN_IMG
+		  FROM TB_RECIPE R
+		  JOIN TB_MEMBER ON (RECIPE_WRITER = MEMBER_NO)
+		 WHERE RECIPE_NO = ?
+	</entry>
+	
+	<entry key="selectRecipeIngreList">
+		SELECT
+		       INGRE_NO
+		     , INGRE_NAME
+		     , INGRE_AMOUNT
+		  FROM TB_RECIPE_INGRE
+		 WHERE RECIPE_NO = ?
+		 ORDER
+		    BY INGRE_NO
+	</entry>
+	
+	<entry key="selectRecipeOrderList">
+		SELECT
+		       RECIPE_ORDER_NO
+		     , RECIPE_ORDER
+		     , RECIPE_EXPLN
+		     , RECIPE_IMG
+		  FROM TB_RECIPE_ORDER
+		 WHERE RECIPE_NO = ?
+		 ORDER
+		    BY RECIPE_ORDER
+	</entry>
 
 </properties>

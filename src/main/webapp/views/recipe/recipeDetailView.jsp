@@ -1,5 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ page import="java.util.ArrayList, com.milk.recipe.model.vo.*" %>
+<%
+	Recipe r = (Recipe)request.getAttribute("r");
+	ArrayList<RecipeIngre> listI = (ArrayList<RecipeIngre>)request.getAttribute("listI");
+	ArrayList<RecipeOrder> listO = (ArrayList<RecipeOrder>)request.getAttribute("listO");
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -118,15 +124,17 @@
         <table class="detail-area">
             <tr>
                 <td>
-                    <a href="" class="btn btn-secondary btn-sm">&lt;이전글</a>
-                    <a href="" class="btn btn-secondary btn-sm">다음글&gt;</a>
-                    <a href="" class="btn btn-secondary btn-sm">목록</a>
+                    <a href="<%= contextPath %>/detail.re?no=<%= r.getRecipeNo()-1 %>" class="btn btn-secondary btn-sm">&lt;이전글</a>
+                    <a href="<%= contextPath %>/detail.re?no=<%= r.getRecipeNo()+1 %>" class="btn btn-secondary btn-sm">다음글&gt;</a>
+                    <a href="<%= contextPath %>/list.re?cpage=1" class="btn btn-secondary btn-sm">목록</a>
                 </td>
+                <% if(loginMember != null && loginMember.getMemberId().equals(r.getRecipeWriter())) { %>
                 <td align="right">
                     <!-- 로그인한 회원이고 본인의 게시글일때만 보여지도록 -->
                     <a href="" class="btn btn-primary btn-sm">수정</a>
                     <a href="" class="btn btn-danger btn-sm">삭제</a>
                 </td>
+                <% } %>
             </tr>
         </table>
         
@@ -134,17 +142,17 @@
             <thead>
                 <tr>
                     <th width="100px">제목</th>
-                    <td width="600px" colspan="3">큐브 연유 라떼 만들기</td>
+                    <td width="600px" colspan="3"><%= r.getRecipeTitle() %></td>
                 </tr>
                 <tr>
                     <th>작성자</th>
-                    <td colspan="3">admin</td>
+                    <td colspan="3"><%= r.getRecipeWriter() %></td>
                 </tr>
                 <tr>
                     <th>작성일</th>
-                    <td width="150px">2023-01-03</td>
+                    <td width="150px"><%= r.getEnrollDate() %></td>
                     <th width="100px">조회수</th>
-                    <td>7777</td>
+                    <td><%= r.getCount() %></td>
                 </tr>
             </thead>
             <tbody>
@@ -152,14 +160,14 @@
                     <td colspan="4">
                         <br><br>
                         <div class="main-image">
-                            <img src="resources/image/recipe1.png">
+                            <img src="<%= contextPath %>/<%= r.getMainImg() %>">
                         </div>
                         <br>
                     </td>
                 </tr>
                 <tr>
                     <td colspan="4">
-                        내용 내용 내용 자리 내용 내용 내용 자리
+                        <%= r.getRecipeIntro() %>
                     </td>
                 </tr>
             </tbody>
@@ -173,14 +181,16 @@
                     <h3 style="font-size: 22px;"><b>재료</b></h3>
                 </td>
             </tr>
-            <tr>
-                <td>
-                    콜드브루
-                </td>
-                <td>
-                    300ml
-                </td>
-            </tr>
+            <% for(RecipeIngre ri : listI) { %>
+	            <tr>
+	                <td>
+	                    <%= ri.getIngreName() %>
+	                </td>
+	                <td>
+	                    <%= ri.getIngreAmount() %>
+	                </td>
+	            </tr>
+            <% } %>
         </table>
 
         <table class="order-area">
@@ -190,19 +200,21 @@
                     <h3 style="font-size: 22px;"><b>조리 순서</b></h3>
                 </td>
             </tr>
+            <% for(RecipeOrder ro : listO) { %>
             <tr>
                 <td width="200px">
                     <div class="detail-image">
-                        <img src="resources/image/1.jpg">
+                        <img src="<%= contextPath %>/<%= ro.getRecipeImg() %>">
                     </div>
                 </td>
                 <td width="50px" align="center">
-                    <div id="list">1</div>
+                    <div id="list"><%= ro.getRecipeOrder() %></div>
                 </td>
                 <td width="450px" colspan="2" align="left">
-                    얼음틀(아이스 트레이)에 콜드브루 커피 300ml를 부어 냉동실에 꽁꽁 얼려요
+                    <%= ro.getRecipeExplain() %>
                 </td>
             </tr>
+            <% } %>
         </table>
         <br><br>
         
@@ -216,10 +228,12 @@
                     </div>
                 </td>
                 <td>
+                	<% if(loginMember != null) { %>
                     <!-- 로그인한 회원만 보이도록 -->
                     <div id="report" align="right">
                         신고
                     </div>
+                    <% } %>
                 </td>
             </tr>
         </table>
@@ -273,7 +287,7 @@
         <div style="border-bottom: 3px solid gray; width: 700px;"></div>
         <br>
 
-
+		<% if(loginMember != null) { %>
         <!-- 로그인한 회원만 보여지도록 -->
         <form action="" method="post" enctype="multipart/form-data">
             <table class="reply-enroll" align="center">
@@ -291,7 +305,8 @@
                 </tr>
             </table>
         </form>
-
+		<% } %>
+		
         <!-- The Modal -->
         <div class="modal" id="like-btn">
             <div class="modal-dialog">

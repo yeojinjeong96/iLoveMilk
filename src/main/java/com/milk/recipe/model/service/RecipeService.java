@@ -86,4 +86,48 @@ public class RecipeService {
 		
 		return result1 * result2 * result3;
 	}
+	
+	
+	public int increaseCount(int recipeNo) {
+		Connection conn = getConnection();
+		
+		int result = new RecipeDao().increaseCount(conn, recipeNo);
+		
+		if(result > 0) {
+			commit(conn);
+		}else {
+			rollback(conn);
+		}
+		
+		close(conn);
+		return result;
+	}
+	
+	
+	public Recipe selectRecipe(int recipeNo) {
+		Connection conn = getConnection();
+		
+		Recipe r = new RecipeDao().selectRecipe(conn, recipeNo);
+		
+		close(conn);
+		return r;
+	}
+	
+	public ArrayList<RecipeIngre> selectRecipeIngreList(int recipeNo){
+		Connection conn = getConnection();
+		
+		ArrayList<RecipeIngre> listI = new RecipeDao().selectRecipeIngreList(conn, recipeNo);
+		
+		close(conn);
+		return listI;
+	}
+	
+	public ArrayList<RecipeOrder> selectRecipeOrderList(int recipeNo){
+		Connection conn = getConnection();
+		
+		ArrayList<RecipeOrder> listO = new RecipeDao().selectRecipeOrderList(conn, recipeNo);
+		
+		close(conn);
+		return listO;
+	}
 }
