@@ -222,7 +222,6 @@
 				<%for(Product p : list) {%>
 					
 	            <div class="thumbnail" align="left">
-	                <input type="hidden" name ="no" value ="<%= p.getProductNo() %>">
 	                <a href="<%=contextPath %>/proDetail.pro?pno=<%=p.getProductNo() %>" style="color:rgb(113, 113, 113); text-decoration:none;">
 	                <img src="<%= contextPath%>/<%=p.getProductImg() %>" alt="" width="200" height="200">
 	                
@@ -232,7 +231,7 @@
 	                    <%=p.getPrice() %> 원
 	                </div>
 	                </a>
-	                 <i class="bi-heart like-btn" id="heart" style="font-size:2rem; color: red; cursor: pointer;"></i>
+	                 <i class="bi-heart like-btn" id="heart" style="font-size:2rem; color: red; cursor: pointer;" onclick="likeProduct(<%=p.getProductNo()%>);"></i>
 	            </div>
 			<%} %>
 		<%} %>
@@ -241,24 +240,18 @@
     	
     	 
          <script>
-         
-
-         
-         
-         
-     	$(function(){
-     		$("heart").click(function(){
-     			
-     			
 			       // 로그인이 되어있을 경우     			
 			    <% if(loginMember != null ){ %>			   
 				   
 		           		var i = 0;
-			           	$('i').on('click',function(){
+		           		
+			           	function likeProduct(pno){
 			        	   // 찜하기 하트
 			               if(i==0){
 			                   $(this).attr('class','bi-heart-fill');
 			                   i++;
+			                   
+			                  memberLike(pno);
 			                   
 			                   
 			           			
@@ -269,26 +262,40 @@
 				                    i--;
 				                    
 				           }
-			        	   
-		             	}			   
+			           	}
+		             				   
 			    	
 				       // 로그인 안했을 경우
 					<%} else{ %>//
 						alert("로그인이 필요한 기능입니다. 로그인 후 사용해주세요");
 						location = "<%=contextPath%>/loginpage.me";
 					<%}%>
-			   }     			
-     			
-     			
-     			
-     			
-     			
-     			
-     		})
-     	})
-     
-			   
+					
+					
+					// 찜하기 AJAX
+					function memberLike(pno){
+						
+						<% if(loginMember != null){%>
+							let memberNo = <%=loginMember.getMembeNo()%>;
+						<%}%>
+						
+		               $.ajax({
+		                   url: "<%=contextPath%>/likeProduct.pro",
+		                  data: {pno: pno, 
+		                     memberNo:memberNo
+		                   },
+		                   success:function(result){
+		                      	
+		                	   console.log(result);
 
+		
+		                    },
+		                    error: function(){
+		                      alert("찜하기 실패");
+		                   }
+		
+		               });
+         			}
 
         </script>
 

@@ -35,8 +35,6 @@ public class ProductLikeController extends HttpServlet {
 		int memberNo = Integer.parseInt(request.getParameter("memberNo"));
 		String likeNo = String.valueOf(pno) + String.valueOf(memberNo);		
 		
-		System.out.println(pno);
-		System.out.println(memberNo);
 
 		ProductLike pl = new ProductLike();
 		pl.setProductNo(pno);
@@ -45,8 +43,8 @@ public class ProductLikeController extends HttpServlet {
 		
 		int result1 = new ProductService().insertProductLike(pl);
 		
-		response.setContentType("application/json; charset=UTF-8");
-		response.getWriter().print(pl);
+		response.setContentType("text/html; charset=UTF-8");
+		response.getWriter().print(result1);
 		
 	}
 
