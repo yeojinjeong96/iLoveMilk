@@ -14,9 +14,11 @@ import java.util.InvalidPropertiesFormatException;
 import java.util.Properties;
 
 import com.milk.common.model.vo.PageInfo;
+import com.milk.recipe.model.vo.Attachment;
 import com.milk.recipe.model.vo.Recipe;
 import com.milk.recipe.model.vo.RecipeIngre;
 import com.milk.recipe.model.vo.RecipeOrder;
+import com.milk.recipe.model.vo.Reply;
 
 public class RecipeDao {
 	
@@ -381,5 +383,116 @@ public class RecipeDao {
 		return listO;
 		
 	}
+	
+	/*
+	public ArrayList<Reply> selectReplyList(Connection conn, int recipeNo){
+		
+		ArrayList<Reply> list = new ArrayList<>();
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		String sql = prop.getProperty("selectReplyList");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, recipeNo);
+			
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				list.add(new Reply(rset.getInt("REPLY_NO"),
+								   rset.getString("MEMBER_ID"),
+								   rset.getString("REPLY_CONTENT"),
+								   rset.getString("ENROLL_DATE")
+								   ));
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		System.out.println(list);
+		return list;
+	}
+	
+	public Attachment selectReplyAt(Connection conn, int recipeNo) {
+		Attachment at = null;
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		String sql = prop.getProperty("selectReplyAt");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, recipeNo);
+			
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				at = new Attachment(rset.getInt("FILE_NO"),
+							   		rset.getString("CHANGE_NAME"),
+							   		rset.getString("FILE_PATH"));
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return at;
+	}
+	
+	
+	public int insertReply(Connection conn, Reply r) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		
+		String sql = prop.getProperty("insertReply");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, r.getMemberNo());
+			pstmt.setInt(2, r.getRefNo());
+			pstmt.setString(3, r.getReplyContent());
+			pstmt.setString(4, r.getEnrollDate());
+			
+			result = pstmt.executeUpdate();
+					
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		return result;
+	}
 
+	public int insertReplyAttachment(Connection conn, Attachment at) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		
+		String sql= prop.getProperty("insertReplyAttachment");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, at.getChangeName());
+			pstmt.setString(2, at.getFilePath());
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		return result;
+	}
+	
+	*/
 }

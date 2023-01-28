@@ -94,7 +94,7 @@
         width: 700px;
     }
 
-    .reply-enroll input {
+    .reply-enroll button {
         width: 80px;
         height: 100px;
         vertical-align: auto;
@@ -265,9 +265,12 @@
                 </td>
                 <td width="70px" height="1">user01</td>
                 <td width="130px">2023.01.03 11:35</td>
-                <!-- 본인의 댓글일때는 신고가 아니라 삭제라고 보여지도록 -->
-                <td width="50px">신고</td>
-                <td>삭제</td>
+                <% if(loginMember != null && loginMember.getMemberId().equals(r.getRecipeWriter())) { %>
+	                <!-- 본인의 댓글일때는 신고가 아니라 삭제라고 보여지도록 -->
+	                <td width="50px">삭제</td>
+                <% }else { %>
+                	<td width="50px">신고</td>
+                <% } %>
                 <td width="200px" rowspan="3" colspan="2" align="center">
                     <!-- 첨부파일이 있을 경우만 뜨도록 -->
                     <div class="reply-image">
@@ -287,25 +290,25 @@
         <div style="border-bottom: 3px solid gray; width: 700px;"></div>
         <br>
 
+
 		<% if(loginMember != null) { %>
         <!-- 로그인한 회원만 보여지도록 -->
-        <form action="" method="post" enctype="multipart/form-data">
-            <table class="reply-enroll" align="center">
-                <tr>
-                    <td width="200px" align="center">
-                        <input type="file" name="replyFile" onchange="loadImg(this, 1);" required style="display: none;">
-                        <img id="replyImg" width="200px" height="100px" onclick="clickFile(1);">
-                    </td>
-                    <td width="400px" align="center" style="padding-top: 5px;">
-                        <textarea name="reply" style="resize: none; width: 380px; height: 100px;" required placeholder="댓글을 남겨주세요."></textarea>
-                    </td>
-                    <td width="100px">
-                        <input type="submit" value="등록">
-                    </td>
-                </tr>
-            </table>
-        </form>
+           <table class="reply-enroll" align="center">
+               <tr>
+                   <td width="200px" align="center">
+                       <input type="file" name="replyFile" onchange="loadImg(this, 1);" style="display: none;">
+                       <img id="replyImg" width="200px" height="100px" onclick="clickFile(1);">
+                   </td>
+                   <td width="400px" align="center" style="padding-top: 5px;">
+                       <textarea name="reply" style="resize: none; width: 380px; height: 100px;" required placeholder="댓글을 남겨주세요."></textarea>
+                   </td>
+                   <td width="100px">
+                       <button onclick="insertReply();">등록</button>
+                   </td>
+               </tr>
+           </table>
 		<% } %>
+		
 		
         <!-- The Modal -->
         <div class="modal" id="like-btn">
@@ -326,8 +329,58 @@
             </div>
         </div>
 
+		<!-- 댓글 기능 -->
+		<!--
+		<script>
+			$(function(){
+				selectReplyList();
+			})
+			
+			function insertReply(){
+				$.ajax({
+					url:"<%= contextPath %>/reinsert.re",
+					type:"post",
+					enctype: "multipart/form-data",
+					processData : false,
+		            contentType : false,
+					data:{
+						//img:$(".reply-enroll input").attr("name"),
+						img:$(".reply-enroll img").attr("src"),
+						content:$(".reply-enroll textarea").val(),
+						no:<%= r.getRecipeNo() %>
+					},
+					success:function(result){
+						if(result > 0) {
+							$(".reply-enroll textarea").val("");
+							selectReplyList();
+						}else{
+							alert("댓글 등록을 실패했습니다.")
+						}
+					},error:function(){
+						console.log("댓글 작성 ajax 통신 실패");
+					}
+				})
+			}
+			
+			function selectReplyList(){
+				$.ajax({
+					url:"<%= contextPath %>/relist.re",
+					data:{
+						no:<%= r.getRecipeNo() %>
+					},
+					success:function(list){
+						
+						console.log(list);
+						
+					},error:function(){
+						console.log("댓글 조회 ajax 통신 실패");
+					}
+				})
+			}
+			
+		</script>
+		-->
 
-         <!-- 이미지 미리보기 스크립트 -->
          <!-- 이미지 미리보기 스크립트 -->
          <script>
             function clickFile(num){

@@ -1,15 +1,22 @@
 package com.milk.recipe.model.service;
 
-import static com.milk.common.JDBCTemplate.*;
+import static com.milk.common.JDBCTemplate.close;
+import static com.milk.common.JDBCTemplate.commit;
+import static com.milk.common.JDBCTemplate.getConnection;
+import static com.milk.common.JDBCTemplate.rollback;
 
 import java.sql.Connection;
 import java.util.ArrayList;
 
 import com.milk.common.model.vo.PageInfo;
+import com.milk.notice.model.service.NoticeService;
+import com.milk.notice.model.vo.Notice;
 import com.milk.recipe.model.dao.RecipeDao;
+import com.milk.recipe.model.vo.Attachment;
 import com.milk.recipe.model.vo.Recipe;
 import com.milk.recipe.model.vo.RecipeIngre;
 import com.milk.recipe.model.vo.RecipeOrder;
+import com.milk.recipe.model.vo.Reply;
 
 public class RecipeService {
 
@@ -130,4 +137,48 @@ public class RecipeService {
 		close(conn);
 		return listO;
 	}
+	
+	/*
+	public ArrayList<Reply> selectReplyList(int recipeNo){
+		Connection conn = getConnection();
+		
+		ArrayList<Reply> list = new RecipeDao().selectReplyList(conn, recipeNo);
+		
+		close(conn);
+		return list;
+	}
+	
+	public Attachment selectReplyAt(int recipeNo) {
+		Connection conn = getConnection();
+		
+		Attachment at = new RecipeDao().selectReplyAt(conn, recipeNo);
+		
+		close(conn);
+		return at;
+	}
+	
+	
+	public int insertReply(Reply r, Attachment at) {
+		
+		Connection conn = getConnection();
+		
+		int result1 = new RecipeDao().insertReply(conn, r);
+		
+		int result2 = 1;
+		
+		if(at != null) {
+			 result2 = new RecipeDao().insertReplyAttachment(conn, at);
+		}
+		
+		if(result1 * result2 > 0) {
+			commit(conn);
+		}else {
+			rollback(conn);
+		}
+		
+		close(conn);
+		return result1 * result2;
+	}
+	
+	*/
 }

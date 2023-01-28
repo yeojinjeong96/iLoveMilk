@@ -160,5 +160,72 @@
 		 ORDER
 		    BY RECIPE_ORDER
 	</entry>
+	
+	<!-- 
+	<entry key="insertReply">
+		INSERT
+		  INTO TB_REPLY
+		  (
+		    REPLY_NO
+		  , MEMBER_NO
+		  , REF_NO
+		  , REPLY_CONTENT
+		  , ENROLL_DATE
+		  )
+		  VALUES
+		  (
+		    SEQ_CNO.NEXTVAL
+		  , ?
+		  , ?
+		  , ?
+		  , ?
+		  )
+	</entry>
+	
+	<entry key="insertReplyAttachment">
+		INSERT 
+		  INTO TB_ATTACHMENT
+		  (
+		    FILE_NO
+		  , REF_NO
+		  , CHANGE_NAME
+		  , FILE_PATH
+		  , FILE_TYPE
+		  )
+		  VALUES
+		  (
+		    SEQ_ATNO.NEXTVAL
+		  , SEQ_CNO.CURRVAL
+		  , ?
+		  , ?
+		  , 1
+		  )
+	</entry>
+	
+	<entry key="selectReplyList">
+			SELECT
+		       REPLY_NO
+		     , MEMBER_ID
+		     , REPLY_CONTENT
+		     , TO_CHAR(R.ENROLL_DATE, 'YYYY.MM.DD HH:MI') "ENROLL_DATE"
+		  FROM TB_REPLY R
+		  JOIN TB_MEMBER USING (MEMBER_NO)
+		 WHERE DELETE_STATUS = 'N'
+		   AND REF_NO = ?
+		 ORDER
+		    BY REPLY_NO DESC
+	</entry>
+	
+	<entry key="selectReplyAt">
+		SELECT 
+		       FILE_NO
+		     , CHANGE_NAME
+		     , FILE_PATH
+		  FROM TB_ATTACHMENT
+		 WHERE REF_NO = ?
+		   AND FILE_TYPE = 1
+	</entry>
+	
+	-->
 
 </properties>
