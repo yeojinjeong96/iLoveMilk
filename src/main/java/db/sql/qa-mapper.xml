@@ -39,4 +39,16 @@
 		   ,4
 		    )
 	</entry>
+	<entry key="selectQuestionList">
+		SELECT
+		    Q_NO
+		   ,Q_TITLE
+		   ,ENROLL_DATE
+		   ,ANSWER_STATUS
+		   ,FCATEGORY_NAME
+		   ,SCATEGORY_NAME
+		    FROM TB_QA
+		WHERE Q_WRITER = ?
+		AND STATUS= 'Y'
+	</entry>
 </properties>

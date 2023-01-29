@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@page import= "java.util.ArrayList, com.milk.notice.model.vo.QA" %>
+<% ArrayList<QA>list =(ArrayList<QA>) request.getAttribute("list"); %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -52,20 +54,25 @@
                     <th width="350">제목</th>
                     <th width="100">문의상태</th>
                 </tr>
-
+				<%if(list.isEmpty()){ %>
                 <!--게시글 없을경우-->
                 <tr>
                     <td colspan="4">
                         게시글이 존재하지 않습니다.
                     </td>
                 </tr>
+                <%}else{ %>
+                <%for(QA q:list){ %>
                 <tr>
-                    <td>2022.01.03</td>
-                    <td>[고객불만/품질문의]</td>
-                    <td>테스트입니다.</td>
-                    <td>접수</td>
+                    <td><%=q.getEnrollDate() %></td>
+                    <td>[<%=q.getfCategory() %>/<%=q.getsCategory() %>]</td>
+                    <td><%=q.getqTitle() %></td>
+                    <td>
+                    	<%=q.getStatus() %>
+                    	<%=q.getAnswerStatus() %>
+                    </td>
                 </tr>
-
+				<%}} %>
             </table>
         </div>
         

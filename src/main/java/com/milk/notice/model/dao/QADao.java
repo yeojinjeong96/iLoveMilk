@@ -1,10 +1,13 @@
 package com.milk.notice.model.dao;
-import static com.milk.common.JDBCTemplate.*;
+import static com.milk.common.JDBCTemplate.close;
+
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Properties;
 
 import com.milk.notice.model.vo.Attachment;
@@ -71,6 +74,38 @@ public class QADao {
 		
 		return result;
 		
+	}
+	public ArrayList<QA> selectQuestionList(Connection conn, int memberNo){
+		
+		ArrayList<QA>list = new ArrayList<>();
+		ResultSet rset= null;
+		PreparedStatement pstmt= null;
+		String sql= prop.getProperty("selectQuestionList");
+		
+		try {
+			pstmt= conn.prepareStatement(sql);
+			pstmt.setInt(1, memberNo);
+			
+			rset= pstmt.executeQuery();
+			while(rset.next()) {
+				
+				list.add(new QA(
+						rset.getInt("q_no")
+					   ,rset.getString("q_title")
+					   ,rset.getString("enroll_date")
+					   ,rset.getString("answer_status")
+					   ,rset.getString("fcategory_name")
+					   ,rset.getString("scategory_name")
+						));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return list;
 	}
 
 }
