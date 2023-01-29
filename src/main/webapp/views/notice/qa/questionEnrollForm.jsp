@@ -33,7 +33,7 @@
             <h2 align="left">1:1문의하기 </h2>
             <hr>
             <br>
-            <form action="<%=contextPath%>/insert.qa" method="post">
+            <form action="<%=contextPath%>/insert.qa" method="post" enctype="multipart/form-data">
             	<input type="hidden" name="memberNo" value="<%=m.getMemberNo()%>">
                 <table border="1" class="qa-form">
                     <tr>

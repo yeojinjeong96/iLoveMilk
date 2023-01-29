@@ -48,8 +48,7 @@ public class QuestionInsertController extends HttpServlet {
 			
 			String qTitle=multiRequest.getParameter("title");
 			String qContent= multiRequest.getParameter("content");
-			HttpSession session = request.getSession();
-			int memberNo=((Member)session.getAttribute("memberNo")).getMemberNo();
+			int memberNo= Integer.parseInt(multiRequest.getParameter("memberNo"));
 			String fCate = multiRequest.getParameter("fCate");
 			String sCate = multiRequest.getParameter("sCate");
 			
@@ -70,10 +69,10 @@ public class QuestionInsertController extends HttpServlet {
 			}
 			
 			int result= new QAService().insertQuestion(q,at);
-			
+			HttpSession session = request.getSession();
 			if(result>0) {
 				session.setAttribute("alertMsg", "문의가 성공적으로 등록되었습니다.");
-				response.sendRedirect(request.getContextPath());
+				response.sendRedirect(request.getContextPath()+"/list.qa");
 				
 			}else {
 				
@@ -81,7 +80,7 @@ public class QuestionInsertController extends HttpServlet {
 					 new File(savePath + at.getChangeName()).delete(); 
 				 }
 				session.setAttribute("alertMsg", "문의 등록에 실패하였습니다.");	
-				response.sendRedirect(request.getContextPath());
+				response.sendRedirect(request.getContextPath()+"/list.qa");
 			}
 		}
 	}

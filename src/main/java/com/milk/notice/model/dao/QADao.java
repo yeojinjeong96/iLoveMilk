@@ -17,7 +17,7 @@ public class QADao {
 	public QADao() {
 		
 		try {
-			prop.loadFromXML(new FileInputStream(QADao.class.getResource("/db/driver/qa-mapper.xml").getPath()));
+			prop.loadFromXML(new FileInputStream(QADao.class.getResource("/db/sql/qa-mapper.xml").getPath()));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
