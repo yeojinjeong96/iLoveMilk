@@ -138,7 +138,7 @@ public class RecipeService {
 		return listO;
 	}
 	
-	/*
+	
 	public ArrayList<Reply> selectReplyList(int recipeNo){
 		Connection conn = getConnection();
 		
@@ -148,6 +148,8 @@ public class RecipeService {
 		return list;
 	}
 	
+	
+	/*
 	public Attachment selectReplyAt(int recipeNo) {
 		Connection conn = getConnection();
 		
@@ -156,29 +158,26 @@ public class RecipeService {
 		close(conn);
 		return at;
 	}
+	*/
 	
 	
-	public int insertReply(Reply r, Attachment at) {
+	
+	public int insertReply(Reply r) {
 		
 		Connection conn = getConnection();
 		
-		int result1 = new RecipeDao().insertReply(conn, r);
 		
-		int result2 = 1;
+		int result = new RecipeDao().insertReply(conn, r);
 		
-		if(at != null) {
-			 result2 = new RecipeDao().insertReplyAttachment(conn, at);
-		}
-		
-		if(result1 * result2 > 0) {
+		if(result > 0) {
 			commit(conn);
 		}else {
 			rollback(conn);
 		}
 		
 		close(conn);
-		return result1 * result2;
+		return result;
 	}
 	
-	*/
+	
 }

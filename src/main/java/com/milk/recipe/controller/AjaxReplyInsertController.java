@@ -36,36 +36,23 @@ public class AjaxReplyInsertController extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		/*
-		if(ServletFileUpload.isMultipartContent(request)) {
-			int maxSize= 10 * 1024 * 1024;
-			String savePath = request.getSession().getServletContext().getRealPath("/resources/recipe_upfiles/");
-			MultipartRequest multiRequest = new MultipartRequest(request, savePath, maxSize, "UTF-8", new MyFileRenamePolicy());
-			
-			
-			String replyContent = multiRequest.getParameter("content");
-			int recipeNo = Integer.parseInt(multiRequest.getParameter("no"));
-			int memberNo = ((Member)request.getSession().getAttribute("loginMember")).getMembeNo();
 		
-			Reply r = new Reply();
-			r.setReplyContent(replyContent);
-			r.setRefNo(recipeNo);
-			r.setMemberNo(String.valueOf(memberNo));
-			
-			Attachment at = null;
-			
-			if(multiRequest.getOriginalFileName("img") != null) {
-				at = new Attachment();
-				at.setChangeName(multiRequest.getFilesystemName("img"));
-				at.setFilePath("resources/recipe_upfiles/");
-			}
-			
-			int result = new RecipeService().insertReply(r, at);
-			
-			response.getWriter().print(result);
-		}
-		*/
+		request.setCharacterEncoding("UTF-8");
 		
+		String replyContent = request.getParameter("content");
+		int recipeNo = Integer.parseInt(request.getParameter("no"));
+		int memberNo = ((Member)request.getSession().getAttribute("loginMember")).getMembeNo();
+	
+		Reply r = new Reply();
+		r.setReplyContent(replyContent);
+		r.setRefNo(recipeNo);
+		r.setMemberNo(String.valueOf(memberNo));
+			
+
+		int result = new RecipeService().insertReply(r);
+			
+		response.getWriter().print(result);
+			
 	}
 
 	/**

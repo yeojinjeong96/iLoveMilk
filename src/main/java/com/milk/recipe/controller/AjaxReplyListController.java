@@ -34,15 +34,15 @@ public class AjaxReplyListController extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		/*
+		
 		int recipeNo = Integer.parseInt(request.getParameter("no"));
 		
 		ArrayList<Reply> list = new RecipeService().selectReplyList(recipeNo);
-		// Attachment at = new RecipeService().selectReplyAt(recipeNo);
+		
 	
 		response.setContentType("application/json; charset=UTF-8");
 		new Gson().toJson(list, response.getWriter());
-		*/
+		
 	}
 
 	/**

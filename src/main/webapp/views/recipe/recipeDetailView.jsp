@@ -256,50 +256,22 @@
         <div style="border-bottom: 3px solid gray; width: 700px;"></div>
         <br>
 
-        <table class="reply-area" align="center">
-            <tr>
-                <td width="80px" rowspan="3" align="center" style="vertical-align: top;">
-                    <div class="profile-image">
-                        <img src="resources/image/profile.png">
-                    </div>
-                </td>
-                <td width="70px" height="1">user01</td>
-                <td width="130px">2023.01.03 11:35</td>
-                <% if(loginMember != null && loginMember.getMemberId().equals(r.getRecipeWriter())) { %>
-	                <!-- 본인의 댓글일때는 신고가 아니라 삭제라고 보여지도록 -->
-	                <td width="50px">삭제</td>
-                <% }else { %>
-                	<td width="50px">신고</td>
-                <% } %>
-                <td width="200px" rowspan="3" colspan="2" align="center">
-                    <!-- 첨부파일이 있을 경우만 뜨도록 -->
-                    <div class="reply-image">
-                        <img src="resources/image/1.jpg">
-                    </div>
-                    <br>
-                </td>
-            </tr>
-            <tr>
-                <td rowspan="3" colspan="4" style="vertical-align: top">
-                    감사합니다 너무 맛있네요
-                    감사합니다 너무 맛있네요
-                </td>
-            </tr>
-        </table>
 
-        <div style="border-bottom: 3px solid gray; width: 700px;"></div>
+        <table class="reply-area" align="center">
+            <tbody>
+            
+            </tbody>
+        </table>
+       	<div style="border-bottom: 3px solid gray; width: 700px;"></div>
         <br>
 
+	
 
 		<% if(loginMember != null) { %>
         <!-- 로그인한 회원만 보여지도록 -->
            <table class="reply-enroll" align="center">
                <tr>
-                   <td width="200px" align="center">
-                       <input type="file" name="replyFile" onchange="loadImg(this, 1);" style="display: none;">
-                       <img id="replyImg" width="200px" height="100px" onclick="clickFile(1);">
-                   </td>
-                   <td width="400px" align="center" style="padding-top: 5px;">
+                   <td width="600px" align="center" style="padding-top: 5px;">
                        <textarea name="reply" style="resize: none; width: 380px; height: 100px;" required placeholder="댓글을 남겨주세요."></textarea>
                    </td>
                    <td width="100px">
@@ -308,6 +280,74 @@
                </tr>
            </table>
 		<% } %>
+		
+		
+		<script>
+			$(function(){
+				selectReplyList();
+			})
+			
+			function insertReply(){
+				$.ajax({
+					url:"<%= contextPath %>/reinsert.re",
+					type:"post",
+					data:{
+						content:$(".reply-enroll textarea").val(),
+						no:<%= r.getRecipeNo() %>
+					},
+					success:function(result){
+						if(result > 0) {
+							selectReplyList();
+							$(".reply-enroll textarea").val("");
+						}else{
+							alert("댓글 등록을 실패했습니다.")
+						}
+					}
+					
+				})
+			}
+			
+			
+			function selectReplyList(){
+				$.ajax({
+					url:"<%= contextPath %>/relist.re",
+					data:{
+						no:<%= r.getRecipeNo() %>
+					},
+					success:function(list){
+						
+						let value = "";
+        				if(list.length == 0){ // 댓글이 없을 경우
+        					value += "<tr>"
+        						   + 	"<td colspan='4'>조회된 댓글이 없습니다.</td>"
+        						   + "</tr>"
+        				}else{ // 댓글이 있을 경우
+        					for(let i=0; i<list.length; i++){
+        						value += "<tr>"
+        							   +	"<td width='70px' rowspan='2' align='center' style='vertical-align: top;'>"
+        							   +		"<div class='profile-image'>"
+        							   +			"<img src='" + list[i].profileImg + "'>"
+        							   +		"</div>"
+        							   +	"</td>"
+        							   +	"<td width='70px' height='1'>" + list[i].memberNo + "</td>"
+        							   +	"<td width='160px'>" + list[i].enrollDate + "</td>"
+        							   +	"<td width=''>신고</td>"
+        							   + "</tr>"
+        							   + "<tr>"
+        							   +	"<td colspan='3' style='vertical-align: top'>"
+        							   +		list[i].replyContent
+        							   +	"</td>"
+        							   + "</tr>";				   
+        					}
+        				}
+        				
+        				$(".reply-area tbody").html(value);
+						
+					}
+				})
+			}
+			
+		</script>
 		
 		
         <!-- The Modal -->
@@ -329,57 +369,10 @@
             </div>
         </div>
 
-		<!-- 댓글 기능 -->
-		<!--
-		<script>
-			$(function(){
-				selectReplyList();
-			})
-			
-			function insertReply(){
-				$.ajax({
-					url:"<%= contextPath %>/reinsert.re",
-					type:"post",
-					enctype: "multipart/form-data",
-					processData : false,
-		            contentType : false,
-					data:{
-						//img:$(".reply-enroll input").attr("name"),
-						img:$(".reply-enroll img").attr("src"),
-						content:$(".reply-enroll textarea").val(),
-						no:<%= r.getRecipeNo() %>
-					},
-					success:function(result){
-						if(result > 0) {
-							$(".reply-enroll textarea").val("");
-							selectReplyList();
-						}else{
-							alert("댓글 등록을 실패했습니다.")
-						}
-					},error:function(){
-						console.log("댓글 작성 ajax 통신 실패");
-					}
-				})
-			}
-			
-			function selectReplyList(){
-				$.ajax({
-					url:"<%= contextPath %>/relist.re",
-					data:{
-						no:<%= r.getRecipeNo() %>
-					},
-					success:function(list){
-						
-						console.log(list);
-						
-					},error:function(){
-						console.log("댓글 조회 ajax 통신 실패");
-					}
-				})
-			}
-			
-		</script>
-		-->
+
+
+	
+		
 
          <!-- 이미지 미리보기 스크립트 -->
          <script>

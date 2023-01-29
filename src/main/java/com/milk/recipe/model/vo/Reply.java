@@ -9,7 +9,7 @@ public class Reply {
 	private String enrollDate;
 	private String deleteStatus;
 	private String reportStatus;
-
+	private String profileImg;
 	
 	
 	public Reply() {}
@@ -30,12 +30,13 @@ public class Reply {
 
 
 
-	public Reply(int replyNo, String memberNo, String replyContent, String enrollDate) {
+	public Reply(int replyNo, String memberNo, String replyContent, String enrollDate, String profileImg) {
 		super();
 		this.replyNo = replyNo;
 		this.memberNo = memberNo;
 		this.replyContent = replyContent;
 		this.enrollDate = enrollDate;
+		this.profileImg = profileImg;
 	}
 
 
@@ -120,6 +121,19 @@ public class Reply {
 
 	public void setReportStatus(String reportStatus) {
 		this.reportStatus = reportStatus;
+	}
+
+	
+
+
+	public String getProfileImg() {
+		return profileImg;
+	}
+
+
+
+	public void setProfileImg(String profileImg) {
+		this.profileImg = profileImg;
 	}
 
 

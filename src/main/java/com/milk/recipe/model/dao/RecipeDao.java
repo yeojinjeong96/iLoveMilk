@@ -384,7 +384,7 @@ public class RecipeDao {
 		
 	}
 	
-	/*
+	
 	public ArrayList<Reply> selectReplyList(Connection conn, int recipeNo){
 		
 		ArrayList<Reply> list = new ArrayList<>();
@@ -403,7 +403,8 @@ public class RecipeDao {
 				list.add(new Reply(rset.getInt("REPLY_NO"),
 								   rset.getString("MEMBER_ID"),
 								   rset.getString("REPLY_CONTENT"),
-								   rset.getString("ENROLL_DATE")
+								   rset.getString("ENROLL_DATE"),
+								   rset.getString("PROFILE")
 								   ));
 			}
 			
@@ -414,10 +415,10 @@ public class RecipeDao {
 			close(pstmt);
 		}
 		
-		System.out.println(list);
 		return list;
 	}
 	
+	/*	
 	public Attachment selectReplyAt(Connection conn, int recipeNo) {
 		Attachment at = null;
 		PreparedStatement pstmt = null;
@@ -446,7 +447,7 @@ public class RecipeDao {
 		
 		return at;
 	}
-	
+	*/
 	
 	public int insertReply(Connection conn, Reply r) {
 		int result = 0;
@@ -459,7 +460,6 @@ public class RecipeDao {
 			pstmt.setString(1, r.getMemberNo());
 			pstmt.setInt(2, r.getRefNo());
 			pstmt.setString(3, r.getReplyContent());
-			pstmt.setString(4, r.getEnrollDate());
 			
 			result = pstmt.executeUpdate();
 					
@@ -471,7 +471,9 @@ public class RecipeDao {
 		
 		return result;
 	}
+	
 
+	/*
 	public int insertReplyAttachment(Connection conn, Attachment at) {
 		int result = 0;
 		PreparedStatement pstmt = null;
@@ -493,6 +495,5 @@ public class RecipeDao {
 		
 		return result;
 	}
-	
 	*/
 }
