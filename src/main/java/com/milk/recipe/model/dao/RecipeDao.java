@@ -318,6 +318,41 @@ public class RecipeDao {
 	}
 	
 	
+	public Recipe selectRecipeR(Connection conn, int recipeNo) {
+		Recipe r = null;
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		String sql = prop.getProperty("selectRecipeR");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, recipeNo);
+			
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				r = new Recipe(rset.getInt("RECIPE_NO"),
+							   rset.getString("MANAGER_ID"),
+							   rset.getString("RECIPE_TITLE"),
+							   rset.getString("RECIPE_INTRO"),
+							   rset.getInt("COUNT"),
+							   rset.getString("ENROLL_DATE"),
+							   rset.getString("MAIN_IMG")
+							   );
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return r;
+	}
+	
+	
 	public ArrayList<RecipeIngre> selectRecipeIngreList(Connection conn, int recipeNo){
 		ArrayList<RecipeIngre> listI = new ArrayList<>();
 		PreparedStatement pstmt = null;
@@ -496,4 +531,96 @@ public class RecipeDao {
 		return result;
 	}
 	*/
+	
+	
+	public int updateRecipe(Connection conn, Recipe r) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		
+		String sql = prop.getProperty("updateRecipe");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, r.getRecipeTitle());
+			pstmt.setString(2, r.getRecipeIntro());
+			pstmt.setString(3, r.getMainImg());
+			pstmt.setInt(4, r.getRecipeNo());
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		return result;
+		
+	}
+	
+	
+	public int updateRecipeIngreList(Connection conn, ArrayList<RecipeIngre> listIngre) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		
+		String sql = prop.getProperty("updateRecipeIngreList");
+		
+		try {
+			
+			for(RecipeIngre listI : listIngre) {
+				
+				pstmt = conn.prepareStatement(sql);
+				pstmt.setString(1, listI.getIngreName());
+				pstmt.setString(2, listI.getIngreAmount());
+				pstmt.setInt(3, listI.getIngreNo());
+				pstmt.setInt(4, listI.getRecipeNo());
+				
+				result = pstmt.executeUpdate();
+			}
+			
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		
+		return result;
+		
+	}
+	
+	
+	public int updateRecipeOrderList(Connection conn, ArrayList<RecipeOrder> listOrder) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		
+		String sql = prop.getProperty("updateRecipeOrderList");
+		
+		try {
+			
+			for(RecipeOrder listO : listOrder) {
+				
+				pstmt = conn.prepareStatement(sql);
+				pstmt.setInt(1, listO.getRecipeOrder());
+				pstmt.setString(2, listO.getRecipeExplain());
+				pstmt.setString(3, listO.getRecipeImg());
+				pstmt.setInt(4, listO.getRecipeOrderNo());
+				pstmt.setInt(5, listO.getRecipeNo());
+			
+				result = pstmt.executeUpdate();
+				
+			}
+			
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		
+		return result;
+		
+	}
 }

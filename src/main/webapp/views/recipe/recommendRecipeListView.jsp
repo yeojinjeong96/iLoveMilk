@@ -59,6 +59,11 @@
     .order>button:hover{
         background-color: rgb(51, 135, 253);
     }
+    
+    .thumbnail:hover{
+   		opacity:0.7;
+   		cursor:pointer;
+   	}
 </style>
 </head>
 <body>
@@ -90,6 +95,7 @@
 
 			<% for(Recipe r : list) { %>
             <div class="thumbnail" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+                <input type="hidden" value="<%= r.getRecipeNo() %>">
                 <img src="<%= contextPath %>/<%= r.getMainImg() %>" width="200" height="150">
                 <p>
                     <%= r.getRecipeTitle() %><br>
@@ -148,6 +154,12 @@
             </form>
 
         </div>
+        
+        <script>
+        	$(".thumbnail").click(function(){
+        		location.href = "<%= contextPath %>/detailR.re?no=" + $(this).children('input').val();
+        	})
+        </script>
         
     </div>
     

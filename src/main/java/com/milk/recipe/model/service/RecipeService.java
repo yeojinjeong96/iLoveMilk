@@ -120,6 +120,15 @@ public class RecipeService {
 		return r;
 	}
 	
+	public Recipe selectRecipeR(int recipeNo) {
+		Connection conn = getConnection();
+		
+		Recipe r = new RecipeDao().selectRecipeR(conn, recipeNo);
+		
+		close(conn);
+		return r;
+	}
+	
 	public ArrayList<RecipeIngre> selectRecipeIngreList(int recipeNo){
 		Connection conn = getConnection();
 		
@@ -179,5 +188,27 @@ public class RecipeService {
 		return result;
 	}
 	
+	
+	public int updateRecipe(Recipe r, ArrayList<RecipeIngre> listIngre, ArrayList<RecipeOrder> listOrder) {
+		Connection conn = getConnection();
+		
+		int result1 = new RecipeDao().updateRecipe(conn, r);
+		
+		int result2 = new RecipeDao().updateRecipeIngreList(conn, listIngre);
+		
+		int result3 = new RecipeDao().updateRecipeOrderList(conn, listOrder);
+		
+		
+		if(result1 > 0 && result2 > 0 && result3 > 0) {
+			commit(conn);
+		}else {
+			rollback(conn);
+		}
+		
+		close(conn);
+		
+		
+		return result1 * result2 * result3;
+	}
 	
 }

@@ -50,7 +50,7 @@
 		                 WHERE RECIPE_TYPE = 1
 		                   AND DELETE_STATUS = 'N'
 		                 ORDER
-		                    BY ENROLL_DATE DESC
+		                    BY RECIPE_NO DESC
 		                ) "A"
 	        	)
  		 WHERE RNUM BETWEEN ? AND ?
@@ -135,6 +135,21 @@
 		     , MAIN_IMG
 		  FROM TB_RECIPE R
 		  JOIN TB_MEMBER ON (RECIPE_WRITER = MEMBER_NO)
+		 WHERE RECIPE_NO = ?
+	</entry>
+	
+	
+	<entry key="selectRecipeR">
+		SELECT
+		       RECIPE_NO
+		     , MANAGER_ID
+		     , RECIPE_TITLE
+		     , RECIPE_INTRO
+		     , COUNT
+		     , TO_CHAR(R.ENROLL_DATE, 'YYYY.MM.DD HH:mm') "ENROLL_DATE"
+		     , MAIN_IMG
+		  FROM TB_RECIPE R
+		  JOIN TB_MANAGER ON (RECIPE_WRITER = MANAGER_NO)
 		 WHERE RECIPE_NO = ?
 	</entry>
 	
@@ -231,4 +246,32 @@
 
 	-->
 	
+	<entry key="updateRecipe">
+		UPDATE
+			   TB_RECIPE
+		   SET RECIPE_TITLE = ?
+		  	 , RECIPE_INTRO = ?
+		  	 , MAIN_IMG = ?
+		 WHERE RECIPE_NO = ?
+	</entry>
+	
+	<entry key="updateRecipeIngreList">
+		UPDATE
+			   TB_RECIPE_INGRE
+		   SET INGRE_NAME = ?
+		  	 , INGRE_AMOUNT = ?
+		 WHERE INGRE_NO = ?
+		   AND RECIPE_NO = ?
+	</entry>
+
+	<entry key="updateRecipeOrderList">
+		UPDATE
+			   TB_RECIPE_ORDER
+		   SET RECIPE_ORDER = ?
+		  	 , RECIPE_EXPLN = ?
+		  	 , RECIPE_IMG = ?
+		 WHERE RECIPE_ORDER_NO = ?
+		   AND RECIPE_NO = ?
+	</entry>
+
 </properties>

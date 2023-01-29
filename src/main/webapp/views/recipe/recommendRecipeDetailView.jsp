@@ -124,17 +124,10 @@
         <table class="detail-area">
             <tr>
                 <td>
-                    <a href="<%= contextPath %>/detail.re?no=<%= r.getRecipeNo()+1 %>" class="btn btn-secondary btn-sm">&lt;이전글</a>
-                    <a href="<%= contextPath %>/detail.re?no=<%= r.getRecipeNo()-1 %>" class="btn btn-secondary btn-sm">다음글&gt;</a>
-                    <a href="<%= contextPath %>/list.re?cpage=1" class="btn btn-secondary btn-sm">목록</a>
+                    <a href="<%= contextPath %>/detailR.re?no=<%= r.getRecipeNo()+1 %>" class="btn btn-secondary btn-sm">&lt;이전글</a>
+                    <a href="<%= contextPath %>/detailR.re?no=<%= r.getRecipeNo()-1 %>" class="btn btn-secondary btn-sm">다음글&gt;</a>
+                    <a href="<%= contextPath %>/listR.re?cpage=1" class="btn btn-secondary btn-sm">목록</a>
                 </td>
-                <% if(loginMember != null && loginMember.getMemberId().equals(r.getRecipeWriter())) { %>
-                <td align="right">
-                    <!-- 로그인한 회원이고 본인의 게시글일때만 보여지도록 -->
-                    <a href="<%= contextPath %>/updateForm.re?no=<%= r.getRecipeNo() %>" class="btn btn-primary btn-sm">수정</a>
-                    <a href="" class="btn btn-danger btn-sm">삭제</a>
-                </td>
-                <% } %>
             </tr>
         </table>
         
@@ -226,14 +219,6 @@
                         좋아요
                         0
                     </div>
-                </td>
-                <td>
-                	<% if(loginMember != null) { %>
-                    <!-- 로그인한 회원만 보이도록 -->
-                    <div id="report" align="right">
-                        신고
-                    </div>
-                    <% } %>
                 </td>
             </tr>
         </table>

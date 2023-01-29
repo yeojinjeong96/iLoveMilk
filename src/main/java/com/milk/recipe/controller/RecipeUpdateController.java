@@ -21,16 +21,16 @@ import com.milk.recipe.model.vo.RecipeOrder;
 import com.oreilly.servlet.MultipartRequest;
 
 /**
- * Servlet implementation class RecipeInsertController
+ * Servlet implementation class RecipeUpdateController
  */
-@WebServlet("/insert.re")
-public class RecipeInsertController extends HttpServlet {
+@WebServlet("/update.re")
+public class RecipeUpdateController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public RecipeInsertController() {
+    public RecipeUpdateController() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -39,7 +39,6 @@ public class RecipeInsertController extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
 		request.setCharacterEncoding("UTF-8");
 		
 		if(ServletFileUpload.isMultipartContent(request)) {
@@ -48,46 +47,54 @@ public class RecipeInsertController extends HttpServlet {
 			String savePath = request.getSession().getServletContext().getRealPath("/resources/recipe_upfiles/");
 			MultipartRequest multiRequest = new MultipartRequest(request, savePath, maxSize, "UTF-8", new MyFileRenamePolicy());
 			
+			int recipeNo = Integer.parseInt(multiRequest.getParameter("no"));
 			String title = multiRequest.getParameter("title");
 			String content = multiRequest.getParameter("content");
 			String mainImg = "resources/recipe_upfiles/" + multiRequest.getFilesystemName("file1");
 			
-			HttpSession session = request.getSession();
-			int memberNo = ((Member)session.getAttribute("loginMember")).getMembeNo();
 			
 			Recipe r = new Recipe();
+			r.setRecipeNo(recipeNo);
 			r.setRecipeTitle(title);
 			r.setRecipeIntro(content);
 			r.setMainImg(mainImg);
-			r.setRecipeWriter(String.valueOf(memberNo));
 			
 			
 			ArrayList<RecipeIngre> listIngre = new ArrayList<>();
 			for(int li=1; li<=10 ; li++) {
+				
+				int recipeNoI = Integer.parseInt(multiRequest.getParameter("no"));
+				int ingreNo = Integer.parseInt(multiRequest.getParameter("ingreNo"));
 				String ingreName = multiRequest.getParameter("ingre-name" + li);
 				String ingreAmount = multiRequest.getParameter("ingre-amount" + li);
 				
 				if(ingreName != null) {
 					RecipeIngre listI = new RecipeIngre();
+					listI.setIngreNo(ingreNo);
+					listI.setRecipeNo(recipeNoI);
 					listI.setIngreName(ingreName);
 					listI.setIngreAmount(ingreAmount);
 			
 					listIngre.add(listI);
+					
+					System.out.println(listIngre);
 				}
 			
 			}
-			
-			// System.out.println(listIngre);
+		
 			
 			ArrayList<RecipeOrder> listOrder = new ArrayList<>();
 			
 			for(int lo=2 ; lo<=11 ; lo++) {
 				String orderExp = multiRequest.getParameter("order" + (lo-1));
+				int recipeNoO = Integer.parseInt(multiRequest.getParameter("no"));
 				
 				
 				if(orderExp != null) {
 					RecipeOrder listO = new RecipeOrder();
 					listO.setRecipeExplain(orderExp);
+					//listO.setRecipeOrderNo(orderNo);
+					listO.setRecipeNo(recipeNoO);
 					listO.setRecipeOrder(lo-1);
 					
 					String orderFile = "resources/recipe_upfiles/" + multiRequest.getFilesystemName("file" + lo);
@@ -98,19 +105,16 @@ public class RecipeInsertController extends HttpServlet {
 				
 			}
 			
-			System.out.println(listOrder);
-			
-			int result = new RecipeService().insertRecipe(r, listIngre, listOrder);
+			int result = new RecipeService().updateRecipe(r, listIngre, listOrder);
 			
 			if(result > 0) {
-				session.setAttribute("alertMsg", "레시피 등록이 완료되었습니다.");
+				request.getSession().setAttribute("alertMsg", "레시피 수정에 성공했습니다.");
 				response.sendRedirect(request.getContextPath() + "/list.re?cpage=1");
 			}else {
-				session.setAttribute("errorMsg", "레시피 등록에 실패했습니다.");
-				response.sendRedirect(request.getContextPath() + "/enrollForm.re");
+				request.getSession().setAttribute("errorMsg", "레시피 수정에 실패했습니다.");
+				response.sendRedirect(request.getContextPath() + "/list.re?cpage=1");
 			}
 		}
-		
 	}
 
 	/**
