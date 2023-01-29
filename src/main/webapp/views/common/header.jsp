@@ -193,8 +193,8 @@
     <div class="wrap" align="center">
         <div class="header">
             <div class="header-1">
-                <input type="text">
-                <button class="btn btn-primary btn-sm">검색</button>
+                <input id="searchKeyword" name="keyword" type="text" required maxlength="20">
+                <button class="btn btn-primary btn-sm" location.href="<%=contextPath %>/search.pro?keyword='$("#searchKeyword").val()'">검색</button>
             </div>
             <div class="header-2"><a href="<%= contextPath %>"><img src="resources/images/logo.jpg" width="100px;"></a></div>
             <div class="header-3"><a href="<%= contextPath %>"><b class="text-primary">아이럽우유</b></a></div>
