@@ -268,7 +268,7 @@
                 </div>
 
                 <div id="pro-1-3-2-4"  align=center>
-                    <i class="bi-heart like-btn" style="font-size:2rem;; color: red; cursor: pointer;" data-target="#like-product"  data-toggle="modal" ></i>
+                    <i class="bi-heart like-btn" style="font-size:2rem; color: red; cursor: pointer;" onclick="memberLike(<%=p.getProductNo()%>);" ></i>
                     <button type="submit" id="btn-buy" data-target="#buy-product" data-toggle="modal" style=" width:270px; height:40px;" class="btn btn-outline-primary">바로구매</button>
                    
                 </div>
@@ -372,70 +372,67 @@
             </div>
             </div>
         </div>
-
-        <!-- 찜하기 눌렀을때의 모달(로그인했을때) -->
-        <!-- The Modal -->
-        <div class="modal" id=""  >
-            <div class="modal-dialog">
-            <div class="modal-content modal-sm">
-        
-                <!-- Modal body -->
-                <br>
-                <div class="modal-body" style="text-align:center; font-size:13px;">
-                    찜하기목록에 추가되었습니다. <br>
-                    해당 페이지로 바로 이동하시겠습니까?
-                </div>
-                <div align="center">
-                    <button type="button" class="btn btn-outline-secondary btn-sm" data-dismiss="modal" style=" width:100px;">확인</button>
-                    <button type="button" class="btn btn-outline-secondary btn-sm" data-dismiss="modal" style=" width:100px;">취소</button>
-                    </div>
-                    <br>
-            </div>
-            </div>
-        </div>
-
-        <!-- 로그인안했을때의 모달(로그인했을때) -->
-        <!-- The Modal -->
-        <div class="modal" id="like-product">
-            <div class="modal-dialog">
-            <div class="modal-content modal-sm">
-        
-                <!-- Modal body -->
-                <br>
-                <div class="modal-body" style="text-align:center; font-size:13px;">
-                    로그인이 필요한 기능입니다. <br>
-                    로그인해주세요
-                </div>
-                <div align="center">
-                    <button type="button" class="btn btn-outline-secondary btn-sm" data-dismiss="modal" style=" width:100px;">확인</button>
-                    </div>
-                    <br>
-            </div>
-            </div>
-        </div>
-
-
-
-                <!-- 찜 -->
+              
         <script>
 
-            var i = 0;
-            $('i').on('click',function(){
-                if(i==0){
-                    $(this).attr('class','bi-heart-fill');
+        
+ 		// 로그인이 되어있을 경우     			
+	    <% if(loginMember != null ){ %>			   
+		   
+           		var i = 0;
+           	  $('i').on('click',function(){
 
+	           	
+	        	   // 찜하기 하트
+	               if(i==0){
+	                   $(this).attr('class','bi-heart-fill');
+	                   i++;
+	                   
+	                  
+	               //찜해제    
+		           }else if(i==1){
+	                   $(this).attr('class','bi-heart');
+	                   $(this).removeAttr('data-target','#like-product');
+	                    i--;   
+	                    
+		           }
+	           	
+           	  })			   
+	    	
+		       // 로그인 안했을 경우
+			<%} else{ %>
+				alert("로그인이 필요한 기능입니다. 로그인 후 사용해주세요");
+				location = "<%=contextPath%>/loginpage.me";
+			<%}%>
+			
+			
+			// 찜하기 AJAX
+			function memberLike(pno){
+				
+				<% if(loginMember != null){%>
+					let memberNo = <%=loginMember.getMembeNo()%>;
+				<%}%>
+				
+               $.ajax({
+                   url: "<%=contextPath%>/likeProduct.pro",
+                  data: {pno: pno, 
+                     memberNo:memberNo
+                   },
+                   success:function(result){
+                      	
+                	   if(result > 0){
+							console.log("성공");
+                         }
+                       
+                    },
+                    error: function(){
+                      alert("찜하기 실패");
+                   }
 
-                    i++;
-                    
+               });
+ 			}
+			
 
-                }else if(i==1){
-                    $(this).attr('class','bi-heart');
-                    $(this).removeAttr('data-target','#like-product');
-                    $(this).removeAttr('data-toggle','#modal');
-                    i--;
-                }
-    
-            });
         </script> 
         
                 <!-- 신고사유선택 모달 div -->

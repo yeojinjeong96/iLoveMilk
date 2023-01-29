@@ -39,6 +39,7 @@ public class ProductLikeController extends HttpServlet {
 		pl.setProductNo(pno);
 		pl.setMemberNo(memberNo);
 		
+		
 		int result = new ProductService().insertProductLike(pl);
 		
 		response.setContentType("text/html; charset=UTF-8");

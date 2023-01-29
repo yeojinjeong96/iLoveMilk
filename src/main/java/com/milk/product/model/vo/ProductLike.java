@@ -7,23 +7,23 @@ public class ProductLike {
 	private int productNo;
 	private int memberNo;
 	private Date likeDate;
-	private String likeNo;
+	private int count;
 	
 	public ProductLike() {}
 
-	public ProductLike(int productNo, int memberNo, Date likeDate, String likeNo) {
+	public ProductLike(int productNo, int memberNo, Date likeDate, int count) {
 		super();
 		this.productNo = productNo;
 		this.memberNo = memberNo;
 		this.likeDate = likeDate;
-		this.likeNo = likeNo;
+		this.count = count;
 	}
 
-	public ProductLike(int productNo, int memberNo, String likeNo) {
+	public ProductLike(int productNo, int memberNo, int count) {
 		super();
 		this.productNo = productNo;
 		this.memberNo = memberNo;
-		this.likeNo = likeNo;
+		this.count = count;
 	}
 
 	public int getProductNo() {
@@ -50,18 +50,18 @@ public class ProductLike {
 		this.likeDate = likeDate;
 	}
 
-	public String getLikeNo() {
-		return likeNo;
+	public int getCount() {
+		return count;
 	}
 
-	public void setLikeNo(String likeNo) {
-		this.likeNo = likeNo;
+	public void setCount(int count) {
+		this.count = count;
 	}
 
 	@Override
 	public String toString() {
-		return "ProductLike [productNo=" + productNo + ", memberNo=" + memberNo + ", likeDate=" + likeDate + ", likeNo="
-				+ likeNo + "]";
+		return "ProductLike [productNo=" + productNo + ", memberNo=" + memberNo + ", likeDate=" + likeDate + ", count="
+				+ count + "]";
 	}
 	
 	

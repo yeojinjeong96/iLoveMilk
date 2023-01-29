@@ -95,47 +95,47 @@ public class ProductService {
 	}
 	
 	/**
-	 * TB_PRODUCT_LIKE 에 데이터 INSERT
+	 * TB_PRODUCT_LIKE 에 데이터 INSERT or DELETE
 	 * @author 이다혜
 	 * @return int result (성공시 1 | 실패시 0)
 	 */
 	public int insertProductLike(ProductLike pl) {
 		
 		Connection conn = getConnection();
-		int result = new ProductDao().insertProductLike(conn, pl);
 		
-		if(result > 0) {
-			commit(conn);
-		}else {
-			rollback(conn);
+		int count = 0;
+		int result1 = 0;
+		int result2 = 0;
+		
+		count = new ProductDao().countProductLike(conn, pl);
+		
+		
+		
+		if(count == 0) {
+			result1 = new ProductDao().insertProductLike(conn, pl);
+			
+			if(result1 > 0) {
+				commit(conn);
+			}else {
+				rollback(conn);
+			}
+			
+			
+		}else if(count == 1) {
+			result2 = new ProductDao().deleteProductLike(conn, pl);
+			
+			if(result2 > 0) {
+				commit(conn);
+			}else {
+				rollback(conn);
+			}
+			
 		}
 		
 		close(conn);
 		
-		return result;
+		return result1 + result2;
 	}
-	
-	/**
-	 * TB_PRODUCT_LIKE 에 데이터 DELETE
-	 * @author 이다혜
-	 * @return int result (성공시 1 | 실패시 0)
-	 */
-	public int deleteProductLike(ProductLike pl) {
-		
-		Connection conn = getConnection();
-		int result = new ProductDao().deleteProductLike(conn, pl);
-		
-		if(result > 0) {
-			commit(conn);
-		}else {
-			rollback(conn);
-		}
-		
-		close(conn);
-		
-		return result;
-	}
-	
 	
 	
 	/**

@@ -76,6 +76,14 @@
           AND R_STATUS = 'Y'	
 	</entry>
 	
+	<entry key="countProductLike">
+		SELECT
+		       COUNT(*) COUNT
+		  FROM TB_PRODUCT_LIKE
+		 WHERE PRODUCT_NO = ?
+		   AND MEMBER_NO = ?
+	</entry>
+	
 	<entry key="insertProductLike">
 		    INSERT 
 		      INTO TB_PRODUCT_LIKE
@@ -95,9 +103,9 @@
 		<entry key="deleteProductLike">
 	    DELETE 
 	      FROM TB_PRODUCT_LIKE
-	     WHERE 
-	     PRODUCT_NO = ?
-	     AND MEMBER_NO = ?
+	     WHERE PRODUCT_NO = ?
+	       AND MEMBER_NO = ?  
+	     
 	</entry>
 	
 	
