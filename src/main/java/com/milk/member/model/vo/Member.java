@@ -65,12 +65,12 @@ public class Member {
 		this.memberName = memberName;
 	}
 
-	public int getMembeNo() {
+	public int getMemberNo() {
 		return memberNo;
 	}
 
-	public void setMembeNo(int membeNo) {
-		this.memberNo = membeNo;
+	public void setMemberNo(int memberNo) {
+		this.memberNo = memberNo;
 	}
 
 	public String getMemberId() {

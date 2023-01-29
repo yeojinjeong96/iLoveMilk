@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+<entry key="insertQuestion">
+	INSERT 
+		 INTO TB_QA (
+		            Q_NO
+		           ,Q_WRITER
+		           ,Q_TITLE
+		           ,Q_CONTENT
+		           ,FCATEGORY_NAME
+		           ,SCATEGORY_NAME
+		             )VALUES
+		             (
+		             SEQ_QNO.NEXTVAL
+		             ,?
+		             ,?
+		             ,?
+		             ,?
+		             ,?
+		             )
+</entry>
+<entry key="insertAttachment">
+	INSERT 
+	    INTO TB_ATTACHMENT
+	    (
+	    FILE_NO
+	   ,REF_NO
+	   ,CHANGE_NAME
+	   ,FILE_PATH
+	   ,FILE_TYPE
+	    )
+	    VALUES
+	    (
+	    SEQ_ATNO.NEXTVAL
+	   ,SEQ_QNO.CURRVAL
+	   ,?
+	   ,?
+	   ,4
+	    )
+	</entry>
+</properties>

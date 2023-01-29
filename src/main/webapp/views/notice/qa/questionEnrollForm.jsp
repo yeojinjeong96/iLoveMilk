@@ -34,35 +34,33 @@
             <hr>
             <br>
             <form action="<%=contextPath%>/insert.qa" method="post">
-            	<input type="hidden" name="userNo" value="<%=m.getMemberNo()%>">
+            	<input type="hidden" name="memberNo" value="<%=m.getMemberNo()%>">
                 <table border="1" class="qa-form">
                     <tr>
                         <th width="150" class="text-center">* 말머리</th>
                         <td width="400">
-                            <select name="f-category" id="" required>
-                                <option value="">고객문의</option>
-                                <option value="">고객제안</option>
-                                <option value="">고객불만</option>
+                            <select onchange="scCateShow();"  name="fCate"  id="fCate" required>
+                                <option>- 1차 카테고리 -</option>
+                                <option>고객문의</option>
+                                <option>고객제안</option>
+                                <option>고객불만</option>
                             </select>
-                            <select name="sc-category" id="" >
-                                <option value="">제품/품질문의</option>
-                                <option value="">홈페이지문의</option>
-                                <option value="">회원탈퇴</option>
-                            </select>
-                            <select name="sc-category" id="" >
-                                <option value="">제품제안</option>
-                                <option value="">서비스제안</option>
-                                <option value="">홈페이지제안</option>
-                            </select>
-                            <select name="sc-category" id="" >
-                                <option value="">제품/품질불만</option>
-                                <option value="">홈페이지불만</option>
+                            <select  name="sCate" id="sCate" required>
+                                <option class="ti0">- 2차 카테고리 -</option>
+                                <option class="ti1"  style="display:none">제품/품질문의</option>
+                                <option class="ti1"  style="display:none">홈페이지문의</option>
+                                <option class="ti1"  style="display:none">회원탈퇴</option>
+                                <option class="ti2"  style="display:none">제품제안</option>
+                                <option class="ti2"  style="display:none">서비스제안</option>
+                                <option class="ti2"  style="display:none">홈페이지제안</option>
+                                <option class="ti3"  style="display:none">제품/품질불만</option>
+                                <option class="ti3"  style="display:none">홈페이지불만</option>
                             </select>
                         </td>
                     </tr>
                     <tr>
                         <th class="text-center">* 제목</th>
-                        <td><input type="text" name="title" style="width: 300px;"></td>
+                        <td><input type="text" name="title" style="width: 300px;" required></td>
                     </tr>
                     <tr>
                         <th class="text-center">작성자</th>
@@ -74,17 +72,55 @@
                     </tr>
                     <tr>
                         <th class="text-center">* 내용</th>
-                        <td><textarea name="content" cols="30" rows="12" style="resize: none;" required>내용자리~</textarea></td>
+                        <td><textarea name="content" cols="30" rows="12" style="resize: none;" required></textarea></td>
                     </tr>
                     
                 </table>
                 <br>
                 <a href="">목록으로</a>
-                <button type="submit">작성하기</button>
+                <button type="submit" onclick="return cateNeed();">작성하기</button>
             </form>
         </div>
     </div>
+    <script>
+   		 function cateNeed(){
+			if($("#fCate").val() == "- 1차 카테고리 -" || $("#sCate").val() == "- 2차 카테고리 -"){
+				alert("카테고리를 입력하세요.");
+				return false;
+		}
+   		 }
+    	function scCateShow(){
+    		
+			$(".ti0").prop("selected", true);
+			
+    		if($("select[name=fCate] option:selected").text() == "고객문의"){
+    			$(".ti1").each(function(){
+    				$(this).attr("style", "display:block");
+    			});
+    			$(".ti2").attr("style", "display:none");
+    			$(".ti3").attr("style", "display:none");
+    		
+    		}else if($("select[name=fCate] option:selected").text() == "고객제안"){
+    			$(".ti1").each(function(){
+    				$(this).attr("style", "display:none");
+    			});
+    			$(".ti2").attr("style", "display:block");
+    			$(".ti3").attr("style", "display:none");
+    		
+    		}else if($("select[name=fCate] option:selected").text() == "고객불만"){
+    			$(".ti1").each(function(){
+    				$(this).attr("style", "display:none");
+    			});
+    			$(".ti2").attr("style", "display:none");
+    			$(".ti3").attr("style", "display:block");
+    		
+    		}
+    		
+    	}
+    		
+  
     
+    </script>
     <%@include file="/views/common/footer.jsp" %>
 </body>
 </html>

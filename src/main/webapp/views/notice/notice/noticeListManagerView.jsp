@@ -55,8 +55,8 @@
                             <thead>
                                 <tr>
                                     <th>선택</th>
-                                    <th width="70">글번호</th>
-                                    <th width="300">제목</th>
+                                    <th width="70" >글번호</th>
+                                    <th width="300" >제목</th>
                                     <th width="100">작성자</th>
                                     <th width="100">작성일</th>
                                 </tr>
@@ -141,7 +141,7 @@
             
     <script>
     	$(function(){
-    		$("#notice-list tr").click(function(){
+    		$("#notice-list tbody tr").click(function(){
                 location.href="<%=contextPath%>/updateForm.no?no="+$(this).children().eq(1).text();
             })
            
