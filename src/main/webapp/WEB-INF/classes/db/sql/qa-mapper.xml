@@ -109,4 +109,13 @@
 	                  )E) WHERE RNUM BETWEEN ? AND ?
 		
 	</entry>
+	<entry key="enrollAnswer">
+		UPDATE TB_QA
+		    SET A_WRITER = ?
+		       ,A_TITLE = ?
+		       ,A_CONTENT = ?
+		       ,ANSWER_STATUS ='Y'
+		       ,ANSWER_DATE = SYSDATE
+		  WHERE Q_NO = ?
+	</entry>
 </properties>

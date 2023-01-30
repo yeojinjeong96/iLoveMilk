@@ -15,6 +15,11 @@
         color: black;
         text-decoration: none;
     }
+    .outer-1{
+        width: 800px;
+        float: left;
+        box-sizing: border-box;
+    }
     
 </style>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
@@ -25,7 +30,9 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
 </head>
 <body>
-    <div class="outer" align="center">
+    <%@include file="/views/common/managerHeader.jsp" %>
+	<%@include file="/views/common/managerMenubar.jsp" %>
+    <div class="outer-1" align="center">
         <br>
         <div style="width:700px">
             <h2 align="left">답변 목록 조회 </h2>

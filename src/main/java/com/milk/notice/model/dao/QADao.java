@@ -244,5 +244,27 @@ public class QADao {
 		
 		return list;
 	}
+	
+	public int enrollAnswer(Connection conn, QA q) {
+		int result= 0;
+		PreparedStatement pstmt= null;
+		String sql= prop.getProperty("enrollAnswer");
+		
+		try {
+			pstmt= conn.prepareStatement(sql);
+			pstmt.setInt(1, q.getaWriter());
+			pstmt.setString(2, q.getaTitle());
+			pstmt.setString(3, q.getaContent());
+			pstmt.setInt(4,q.getqNo());
+			
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}
+		return result;
+		
+	}
 
 }
