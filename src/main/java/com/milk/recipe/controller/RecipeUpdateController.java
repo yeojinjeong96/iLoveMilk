@@ -61,6 +61,10 @@ public class RecipeUpdateController extends HttpServlet {
 			
 			
 			ArrayList<RecipeIngre> listIngre = new ArrayList<>();
+			
+			
+			
+			
 			for(int li=1; li<=10 ; li++) {
 				
 				int recipeNoI = Integer.parseInt(multiRequest.getParameter("no"));
@@ -68,16 +72,17 @@ public class RecipeUpdateController extends HttpServlet {
 				String ingreName = multiRequest.getParameter("ingre-name" + li);
 				String ingreAmount = multiRequest.getParameter("ingre-amount" + li);
 				
+
 				if(ingreName != null) {
 					RecipeIngre listI = new RecipeIngre();
-					listI.setIngreNo(ingreNo);
 					listI.setRecipeNo(recipeNoI);
+					listI.setIngreNo(ingreNo);
 					listI.setIngreName(ingreName);
 					listI.setIngreAmount(ingreAmount);
 			
 					listIngre.add(listI);
 					
-					System.out.println(listIngre);
+					
 				}
 			
 			}
@@ -85,16 +90,17 @@ public class RecipeUpdateController extends HttpServlet {
 			
 			ArrayList<RecipeOrder> listOrder = new ArrayList<>();
 			
+			
 			for(int lo=2 ; lo<=11 ; lo++) {
 				String orderExp = multiRequest.getParameter("order" + (lo-1));
 				int recipeNoO = Integer.parseInt(multiRequest.getParameter("no"));
-				
+				int orderNo = Integer.parseInt(multiRequest.getParameter("orderNo"));
 				
 				if(orderExp != null) {
 					RecipeOrder listO = new RecipeOrder();
 					listO.setRecipeExplain(orderExp);
-					//listO.setRecipeOrderNo(orderNo);
 					listO.setRecipeNo(recipeNoO);
+					listO.setRecipeOrderNo(orderNo);
 					listO.setRecipeOrder(lo-1);
 					
 					String orderFile = "resources/recipe_upfiles/" + multiRequest.getFilesystemName("file" + lo);
@@ -111,8 +117,7 @@ public class RecipeUpdateController extends HttpServlet {
 				request.getSession().setAttribute("alertMsg", "레시피 수정에 성공했습니다.");
 				response.sendRedirect(request.getContextPath() + "/list.re?cpage=1");
 			}else {
-				request.getSession().setAttribute("errorMsg", "레시피 수정에 실패했습니다.");
-				response.sendRedirect(request.getContextPath() + "/list.re?cpage=1");
+				
 			}
 		}
 	}

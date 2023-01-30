@@ -173,10 +173,10 @@
                     </thead>
                     <tbody>
                     <% for(RecipeIngre ri : listI) { %>
-                    <input type="hidden" name="ingreNo" value="<%= ri.getIngreNo() %>">
                         <tr>
                             <td width="220px" style="padding-left: 10px;">
                                 <br>
+                                <input type="hidden" name="ingreNo" value="<%= ri.getIngreNo() %>">
                                 <input type="text" name="ingre-name1" size="20" style="margin-bottom: 20px;" placeholder="예) 우유" value="<%= ri.getIngreName() %>" required>
                             </td>
                             <td colspan="2" width="220px">
@@ -215,13 +215,13 @@
                     </thead>
                     <tbody>
                     <% for(RecipeOrder ro : listO) { %>
-                    <input type="hidden" name="orderNo" value="<%= ro.getRecipeOrderNo() %>">
                         <tr>
                             <td width="70px" align="center">
-                                <div id="num1">step <%= ro.getRecipeOrder() %></div>
+                                <div id="num1" >step <%= ro.getRecipeOrder() %></div>
                             </td>
                             <td width="375px">
                                 <br>
+                                <input type="hidden" name="orderNo" value="<%= ro.getRecipeOrderNo() %>">
                                 <textarea name="order1" placeholder="예) 얼음틀에 콜드브루 커피 300ml를 부어 냉동실에 꽁꽁 얼려요" required><%= ro.getRecipeExplain() %></textarea>
                             </td>
                             <td width="200px" style="padding-right: 10px;">

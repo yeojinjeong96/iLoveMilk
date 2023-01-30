@@ -53,7 +53,7 @@ public class RecipeInsertController extends HttpServlet {
 			String mainImg = "resources/recipe_upfiles/" + multiRequest.getFilesystemName("file1");
 			
 			HttpSession session = request.getSession();
-			int memberNo = ((Member)session.getAttribute("loginMember")).getMembeNo();
+			int memberNo = ((Member)session.getAttribute("loginMember")).getMemberNo();
 			
 			Recipe r = new Recipe();
 			r.setRecipeTitle(title);

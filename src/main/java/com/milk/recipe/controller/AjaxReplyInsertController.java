@@ -41,7 +41,7 @@ public class AjaxReplyInsertController extends HttpServlet {
 		
 		String replyContent = request.getParameter("content");
 		int recipeNo = Integer.parseInt(request.getParameter("no"));
-		int memberNo = ((Member)request.getSession().getAttribute("loginMember")).getMembeNo();
+		int memberNo = ((Member)request.getSession().getAttribute("loginMember")).getMemberNo();
 	
 		Reply r = new Reply();
 		r.setReplyContent(replyContent);
