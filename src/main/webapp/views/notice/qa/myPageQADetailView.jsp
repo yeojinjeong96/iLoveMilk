@@ -67,11 +67,11 @@
 			<h4 align="left">나의 1:1 문의 </h4>
             <hr>
             <br>
-            <table border="1" class="question-area text-center" style="width: 700px;">
+            <table border="1" class="question-area text-center table" style="width: 700px;">
                 <tr >
                     <td colspan="3">[<%=q.getfCategory() %>/<%=q.getsCategory() %>]&nbsp;<%=q.getqTitle() %></td>
                              
-                    <td  rowspan="2">
+                    <td  rowspan="2" style="vertical-align: middle;">
                     	  <%if(q.getAnswerStatus().equals("Y")){ %>
 	                   	답변완료
 	                   	<%}else{ %>
@@ -107,9 +107,9 @@
             <!--답변 미완료시-->
               <%if(q.getAnswerStatus().equals("N")){ %>
             <div align="center">
-                <a href="">삭제</a>
-                <a href="">수정</a>
-                <a href="">목록</a>
+                <a href="<%=contextPath %>/delete.q" class="btn btn-sm btn-secondary">삭제</a>
+                <a href="" class="btn btn-sm btn-secondary">수정</a>
+                <a href="<%=contextPath %>/mypage.qa?cpage=1" class="btn btn-sm btn-secondary">목록</a>
             </div>
             <%}else{ %>
             <!--답변완료시-->
