@@ -205,9 +205,7 @@
 
 	<%@ include file="/views/common/header.jsp" %>
 	
-		<script>
-		console.log("aa");
-	</script>
+
 	
     <div class="pro-outer">
 
@@ -270,7 +268,7 @@
 
                 <div id="pro-1-3-2-4"  align=center>
                     <i class="bi-heart like-btn" style="font-size:2rem; color: red; cursor: pointer;" onclick="memberLike(<%=p.getProductNo()%>);" ></i>
-                    <button type="submit" id="btn-buy" data-target="#buy-product" data-toggle="modal" style=" width:270px; height:40px;" class="btn btn-outline-primary">바로구매</button>
+                    <button type="submit" id="btn-buy"  style=" width:270px; height:40px;" class="btn btn-outline-primary">바로구매</button>
                    
                 </div>
 
@@ -284,11 +282,12 @@
             <div id="pro-info1">
                 <ul class="nav nav-tabs nav-justified" role="tablist">
                     <!-- 클릭하면 class속성에 active붙게함 -->
-                    <li class="nav-item"><a href="javascript:;" data-anchor="pro-info2" class="nav-link tab-pane"  data-toggle='tab' >제품상세정보</a> </li>
-                    <li class="nav-item"><a href="javascript:;" data-anchor="pro-wrap3-1" class="nav-link tab-pane" data-toggle='tab'>리뷰</a> </li>
+                    <li class="nav-item"><a href="" id="tab1" class="nav-link tab-pane"  data-toggle='tab' >제품상세정보</a> </li>
+                    <li class="nav-item"><a href="" id="tab2" class="nav-link tab-pane" data-toggle='tab'>리뷰</a> </li>
                 </ul>
                 
             </div>
+            
 
     
             <div id="pro-info2">
@@ -318,7 +317,7 @@
 	                 <!--리뷰내용 -->
 	                 <%for(Review r : list){ %>
 		                <div>
-		                    <img src="" alt="" style="display:block; width:100px; height:150px; margin:auto;">
+		                    <img src="resources/images/photo.png" alt="" style="display:block; width:100px; height:150px; margin:auto;">
 		                </div>
 		
 		                <div style="width:590px; height:100px;">
@@ -335,7 +334,9 @@
 		                    <div style="height:5%; border-bottom:1px solid gray;"></div>
 		             
 		                    <p>
-								<!-- 별모양 -->
+							<%for(int i = 1; i <= r.getStar(); i++){ %>
+                                <img src="resources/images/star.png">
+                             <%} %>
 		                    <br> <%=r.getContent() %></p>
 		                </div>
 	                <%} %>
@@ -354,30 +355,49 @@
         </div>
 		
 
+		<script>
+		
+		
+		$(document).ready(function(){
+		// 스크롤이동 메서드
+			$('#tab1').click(function(){
+		
+				var offset = $('#pro-info2').offset(); //선택한 태그의 위치를 반환
+		
+		               //animate()메서드를 이용해서 선택한 태그의 스크롤 위치를 지정해서 0.4초 동안 부드럽게 해당 위치로 이동함 
+		
+		        $('html').animate({scrollTop : offset.top}, 400);
+		
+			});
 			
-
-
+			
+			$('#tab2').click(function(){
+				
+				var offset = $('#pro-wrap3-2').offset(); 
+		        $('html').animate({scrollTop : offset.top}, 400);
+		
+			});
+			
+			
+		
+		});
+		
+			$('#btn-buy').click(function(){
+				
+				<% if(loginMember != null){%>
+					
+					var con = confirm(" 장바구니에 추가되었습니다. 해당페이지로 이동하시겠습니까?");
+					if(con){
+						location.href="<%=contextPath%>/cart.pr";
+					}
+				<%}else{%>
+					alert("로그인이 필요한 기능입니다. 로그인 후 사용해주세요");
+					location = "<%=contextPath%>/loginpage.me";
+				<%}%>
 	
-                <!-- 구매버튼 눌렀을때의 모달 -->
-        <!-- The Modal -->
-        <div class="modal" id="buy-product">
-            <div class="modal-dialog">
-            <div class="modal-content modal-sm">
-        
-                <!-- Modal body -->
-                <br>
-                <div class="modal-body" style="text-align:center; font-size:13px;">
-                    장바구니에 추가되었습니다. <br>
-                    해당 페이지로 바로 이동하시겠습니까?
-                </div>
-                <div align="center">
-                    <button type="button" class="btn btn-outline-secondary btn-sm" data-dismiss="modal" style=" width:100px;">확인</button>
-                    <button type="button" class="btn btn-outline-secondary btn-sm" data-dismiss="modal" style=" width:100px;">취소</button>
-                    </div>
-                    <br>
-            </div>
-            </div>
-        </div>
+			});
+		
+		</script>
 
 
  
@@ -390,7 +410,7 @@
 		   
            		var i = 0;
            	  $('i').on('click',function(){
-				 <% if(loginMember != null ){ %>		
+				 <% if( loginMember != null ){ %>	
 	           	
 	        	   // 찜하기 하트
 	               if(i==0){
@@ -429,7 +449,11 @@
 	                   success:function(result){
 	                      	
 	                	   if(result > 0){
-								console.log("성공");
+								
+								var con = confirm(" 찜목록추가되었습니다. 해당페이지로 이동하시겠습니까?");
+								if(con){
+									location.href="<%=contextPath%>/mypage.me";
+								}
 	                         }
 	                       
 	                    },
@@ -494,7 +518,7 @@
         
                             <br>
                             <div align="center">
-                            <button type="submit" class="btn btn-outline-secondary"  style=" width:200px;">신고하기</button> 
+                            <button onclick="alert("성공적으로 신고접수 되었습니다.");" type="submit" class="btn btn-outline-secondary"  style=" width:200px;">신고하기</button> 
                             <br> 
                             <button type="reset" class="btn btn-outline-secondary"  style=" width:200px;" data-dismiss="modal" >닫기</button>
                             </div>    
