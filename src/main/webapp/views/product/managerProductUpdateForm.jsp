@@ -76,8 +76,8 @@
                                 </td>
                             </tr>
                             <tr>
-                                <th><span>*</span> 상품 이미지&nbsp;</th>
-                                <td><input type="file" name="productImg" required value="<%= p.getProductImg() %>"></td>
+                                <th>상품 이미지&nbsp;</th>
+                                <td><%= p.getProductImg().substring(26) %><input type="file" name="productImg" value="<%= p.getProductImg() %>"></td>
                             </tr>
                             <tr>
                                 <th><span>*</span> 판매가격&nbsp;</th>

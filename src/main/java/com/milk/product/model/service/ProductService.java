@@ -213,9 +213,9 @@ public class ProductService {
 	 * @author 승하
 	 * @return 상품 전체 갯수
 	 */
-	public int selectAllListCount() {
+	public int selectAllListCount(String op, String searchKey) {
 		Connection conn = getConnection();
-		int result = new ProductDao().selectAllListCount(conn);
+		int result = new ProductDao().selectAllListCount(conn, op, searchKey);
 		close(conn);
 		return result;
 	}
@@ -225,9 +225,9 @@ public class ProductService {
 	 * @author 승하
 	 * @return 전체 상품이 들어있는 ArrayList
 	 */
-	public ArrayList<Product> selectAllList(PageInfo pi){
+	public ArrayList<Product> selectAllList(PageInfo pi, String op, String searchKey){
 		Connection conn = getConnection();
-		ArrayList<Product> list = new ProductDao().selectAllList(conn, pi);
+		ArrayList<Product> list = new ProductDao().selectAllList(conn, pi, op, searchKey);
 		close(conn);
 		return list;
 	}

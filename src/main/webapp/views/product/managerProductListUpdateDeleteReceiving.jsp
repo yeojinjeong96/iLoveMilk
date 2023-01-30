@@ -4,6 +4,7 @@
 <%
 	PageInfo pi = (PageInfo)request.getAttribute("pi");
 	ArrayList<Product> list = (ArrayList<Product>)request.getAttribute("list");
+	ArrayList<Product> searchList = (ArrayList<Product>)request.getAttribute("searchList");
 %>
 <!DOCTYPE html>
 <html>
@@ -31,16 +32,15 @@
                     <table class="outer-2">
                         <tr>
                             <td>
-                                <select name="searchOp">
-                                	<option value="0">- 검색 조건 -</option>
-                                    <option value="1">상품명</option>
-                                    <option value="2">상품코드</option>
-                                    <option value="3">브랜드</option>
+                           	    <select name="searchOp" id="searchOp">
+                                	<option>- 검색 조건 -</option>
+                                    <option>상품명</option>
+                                    <option>상품코드</option>
+                                    <option>브랜드</option>
                                 </select>
-                                <input type="text">
-                                <button class="btn btn-primary btn-sm" id="">검색</button>
-                            
-                            </td>
+                                <input type="text" name="searchKey" required>
+                                <button type="button" onclick="opNeed();" class="btn btn-primary btn-sm">검색</button>
+	                        </td>
                         </tr>
                     </table>
                     <div align="right">
@@ -58,24 +58,42 @@
                             </tr>
                         </thead>
                         <tbody>
-
-                            <% for(Product p : list){ %>
-                            <tr class="prod">
-                                <td><input type="checkbox" class="checkedPro"></td>
-                                <td align="center"><%= p.getProductNo() %></td>
-                                <td class="pHover"><%= p.getProductName() %> <%= p.getCapacity() %>(mL/g)</td>
-                                <td align="right"><%= p.getStock() %></td>
-                                <td align="center">
-                                	<% if(p.getBrand() != null){ %>
-                                		<%= p.getBrand() %>
-                                	<% }else{ %>
-                                		·
-                                	<% } %>
-                                </td>
-                                <td align="center"><button type="button" class="btn btn-primary btn-sm" onclick="receivingPro();" data-toggle="modal" data-target="#receiving">입고</button></td>
-                            </tr>
+                        <!-- 검색시 검색단어 보이기, 상품리스트 null시 상품리스트가 존재하지않습니다. 검색리스트가 null시 검색조건에 해당하는 결과가 없슨디ㅏ.-->
+							<% if(searchList == null){ %>
+	                            <% for(Product p : list){ %>
+	                            <tr class="prod">
+	                                <td><input type="checkbox" class="checkedPro"></td>
+	                                <td align="center"><%= p.getProductNo() %></td>
+	                                <td class="pHover"><%= p.getProductName() %> <%= p.getCapacity() %>(mL/g)</td>
+	                                <td align="right"><%= p.getStock() %></td>
+	                                <td align="center">
+	                                	<% if(p.getBrand() != null){ %>
+	                                		<%= p.getBrand() %>
+	                                	<% }else{ %>
+	                                		·
+	                                	<% } %>
+	                                </td>
+	                                <td align="center"><button type="button" class="btn btn-primary btn-sm" onclick="receivingPro();" data-toggle="modal" data-target="#receiving">입고</button></td>
+	                            </tr>
+								<% } %>
+							<% }else{ %>
+								<% for(Product p : searchList){ %>
+	                            <tr class="prod">
+	                                <td><input type="checkbox" class="checkedPro"></td>
+	                                <td align="center"><%= p.getProductNo() %></td>
+	                                <td class="pHover"><%= p.getProductName() %> <%= p.getCapacity() %>(mL/g)</td>
+	                                <td align="right"><%= p.getStock() %></td>
+	                                <td align="center">
+	                                	<% if(p.getBrand() != null){ %>
+	                                		<%= p.getBrand() %>
+	                                	<% }else{ %>
+	                                		·
+	                                	<% } %>
+	                                </td>
+	                                <td align="center"><button type="button" class="btn btn-primary btn-sm" onclick="receivingPro();" data-toggle="modal" data-target="#receiving">입고</button></td>
+	                            </tr>
+								<% } %>
 							<% } %>
-							
                         </tbody>
                     </table>
                     
@@ -157,6 +175,19 @@
     </div>
     
 	<script>
+		// 검색조건 미선택시 alert
+		function opNeed(){
+			$.ajax({
+				url:"<%= contextPath %>/searchList.pr",
+				data:{
+					op:$("#searchOp").val(),
+					searchKey:$("#searchKey").val)()
+				},
+				success:function(){},
+				error: function(){}
+			});
+		}
+			
 		$(function(){
 			// 상품명 클릭시 상품상세조회페이지로 이동
 			$(".prod").each(function(){
@@ -170,7 +201,7 @@
 		function deleteBtn(){
 			if($(".checkedPro:checked").parent().next().text() == ""){
 				alert("선택된 상품이 없습니다.");
-			}else if(confirm("선택된 ?개의 상품을 정말로 삭제하시겠습니까?")){
+			}else if(confirm("선택된 상품을 정말로 삭제하시겠습니까?")){
 				
 				$.ajax({
 					url:"<%= contextPath %>/delete.pr",

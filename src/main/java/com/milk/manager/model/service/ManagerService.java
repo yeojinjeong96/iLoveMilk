@@ -18,7 +18,6 @@ public class ManagerService {
 		Connection conn = getConnection();
 		Manager m = new ManagerDao().managerLogin(conn, managerId, managerPwd);
 		close(conn);
-		
 		return m;
 	}
 }

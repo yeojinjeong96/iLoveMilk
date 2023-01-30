@@ -1,26 +1,29 @@
 package com.milk.product.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.milk.common.model.vo.PageInfo;
 import com.milk.product.model.service.ProductService;
 import com.milk.product.model.vo.Product;
 
 /**
- * Servlet implementation class ProductUpdateFormController
+ * Servlet implementation class ProductSearchListController
  */
-@WebServlet("/updateForm.pr")
-public class ProductUpdateFormController extends HttpServlet {
+@WebServlet("/searchList.pr")
+public class ProductSearchListController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public ProductUpdateFormController() {
+    public ProductSearchListController() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -29,21 +32,21 @@ public class ProductUpdateFormController extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		int proNo = Integer.parseInt(request.getParameter("no"));
-		Product p = new ProductService().productDetail(proNo);
+		request.setCharacterEncoding("UTF-8");
+		String op = request.getParameter("searchOp");
+		String searchKey = request.getParameter("searchKey");
 		
-		if(request.getSession().getAttribute("loginManager") != null) {
-			if(p != null) {
-				request.setAttribute("p", p);
-				request.getRequestDispatcher("views/product/managerProductUpdateForm.jsp").forward(request, response);
-			} else {
-				request.setAttribute("alertMsg", "상품 정보 없음");
-				response.sendRedirect(request.getContextPath() + "/listUpDeRe.pr?cp=1");
-			}
-		} else {
-			response.setContentType("text/html; charset=utf-8");
-			response.getWriter().print("<script>alert('로그인 후 이용가능한 서비스입니다.');location.href='loginForm.ma'</script>");
-		}
+		//int listCount = new ProductService().selectAllListCount(op, searchKey);
+		//int currentPage = Integer.parseInt(request.getParameter("cp"));
+		//int pageLimit = 10;
+		//int productLimit = 10;
+		//int maxPage = (int)Math.ceil((double)listCount / productLimit);
+		//int startPage = (currentPage - 1) / pageLimit * pageLimit + 1;
+		//int endPage = startPage + pageLimit - 1 > maxPage ? maxPage : startPage + pageLimit - 1;
+		
+		//PageInfo pi = new PageInfo(listCount, currentPage, pageLimit, productLimit, maxPage, startPage, endPage);
+		
+		//ArrayList<Product> list = new ProductService().selectAllList(pi, op, searchKey);
 	}
 
 	/**

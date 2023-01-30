@@ -26,9 +26,6 @@ public class ProductCartController extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// 로그인 전
-		
-		// 로그인 후
 		request.getRequestDispatcher("views/product/productCart.jsp").forward(request, response);
 	}
 

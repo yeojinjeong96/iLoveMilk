@@ -466,11 +466,20 @@ public class ProductDao {
 		return result;
 	}
 
-	public int selectAllListCount(Connection conn) {
+	public int selectAllListCount(Connection conn, String op, String searchKey) {
 		int result = 0;
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		String sql = prop.getProperty("selectAllListCount");
+		
+		if(op.equals("상품명")) {
+			sql += "AND PRODUCT_NAME LIKE '%" + searchKey + "%'";
+		} else if(op.equals("상품코드")) {
+			sql += "AND PRODUCT_NO LIKE '%" + searchKey + "%'";
+		} else if(op.equals("브랜드")) {
+			sql += "AND BRAND LIKE '%" + searchKey + "%'";
+		}
+				
 		try {
 			pstmt = conn.prepareStatement(sql);
 			rset = pstmt.executeQuery();
@@ -486,11 +495,21 @@ public class ProductDao {
 		return result;
 	}
 	
-	public ArrayList<Product> selectAllList(Connection conn, PageInfo pi){
+	public ArrayList<Product> selectAllList(Connection conn, PageInfo pi, String op, String searchKey){
 		ArrayList<Product> list = new ArrayList<>();
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		String sql = prop.getProperty("selectAllList");
+		
+		if(op.equals("상품명")) {
+			sql += "AND PRODUCT_NAME LIKE '%" + searchKey + "%'";
+		} else if(op.equals("상품코드")) {
+			sql += "AND PRODUCT_NO LIKE '%" + searchKey + "%'";
+		} else if(op.equals("브랜드")) {
+			sql += "AND BRAND LIKE '%" + searchKey + "%'";
+		}
+		sql += "ORDER BY PRODUCT_NO DESC) A) WHERE RNUM BETWEEN ? AND ?";
+		
 		try {
 			pstmt = conn.prepareStatement(sql);
 			

@@ -32,7 +32,10 @@ public class ProductListController extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		int listCount = new ProductService().selectAllListCount();
+		String op = "없음";
+		String searchKey = "없음";
+		
+		int listCount = new ProductService().selectAllListCount(op, searchKey);
 		int currentPage = Integer.parseInt(request.getParameter("cp"));
 		int pageLimit = 10;
 		int productLimit = 10;
@@ -42,12 +45,17 @@ public class ProductListController extends HttpServlet {
 		
 		PageInfo pi = new PageInfo(listCount, currentPage, pageLimit, productLimit, maxPage, startPage, endPage);
 		
-		ArrayList<Product> list = new ProductService().selectAllList(pi);
+		ArrayList<Product> list = new ProductService().selectAllList(pi, op, searchKey);
 		
 		request.setAttribute("list", list);
 		request.setAttribute("pi", pi);
 		
-		request.getRequestDispatcher("views/product/managerProductListUpdateDeleteReceiving.jsp").forward(request, response);
+		if(request.getSession().getAttribute("loginManager") != null) {
+			request.getRequestDispatcher("views/product/managerProductListUpdateDeleteReceiving.jsp").forward(request, response);
+		} else {
+			response.setContentType("text/html; charset=utf-8");
+			response.getWriter().print("<script>alert('로그인 후 이용가능한 서비스입니다.');location.href='loginForm.ma'</script>");
+		}
 	}
 
 	/**
