@@ -10,7 +10,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.milk.common.model.vo.PageInfo;
 import com.milk.member.model.vo.Member;
+import com.milk.notice.model.service.NoticeService;
 import com.milk.notice.model.service.QAService;
 import com.milk.notice.model.vo.QA;
 
@@ -35,7 +37,35 @@ public class QAListViewController extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session= request.getSession();
 		int memberNo= ((Member)session.getAttribute("loginMember")).getMemberNo();
-		ArrayList<QA>list = new QAService().selectQuestionList(memberNo);
+		
+		int listCount;  
+		int currentPage; 
+		int pageLimit;   
+		int boardLimit;  
+	
+		int maxPage;     
+		int startPage;	 
+		int endPage;	
+		
+		listCount = new QAService().selectQAListCount(memberNo);
+		currentPage= Integer.parseInt(request.getParameter("cpage"));
+		pageLimit= 5;
+		boardLimit=5;
+		
+		maxPage = (int)Math.ceil((double)(listCount) / boardLimit);
+		startPage =  (currentPage-1)/pageLimit * pageLimit +1 ;
+		endPage = startPage + pageLimit -1;
+		if(endPage>maxPage) {
+			endPage = maxPage;
+		}
+		PageInfo pi = new PageInfo(listCount,currentPage, pageLimit, boardLimit,maxPage,startPage,endPage);
+		
+		
+		request.setAttribute("pi", pi);
+		
+		
+		
+		ArrayList<QA>list = new QAService().selectQuestionList(pi,memberNo);
 		request.setAttribute("list",list);
 		request.getRequestDispatcher("views/notice/qa/qaListView.jsp").forward(request, response);
 	}

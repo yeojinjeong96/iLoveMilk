@@ -1,7 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@page import= "java.util.ArrayList, com.milk.notice.model.vo.QA" %>
-<% ArrayList<QA>list =(ArrayList<QA>) request.getAttribute("list"); %>
+<%@page import= "java.util.ArrayList, com.milk.notice.model.vo.QA, com.milk.common.model.vo.PageInfo" %>
+<% ArrayList<QA>list =(ArrayList<QA>) request.getAttribute("list"); 
+	PageInfo pi = (PageInfo)request.getAttribute("pi");
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -36,7 +38,9 @@
             <h2 align="left">1:1문의하기 </h2>
             <hr>
             <br>
-            <div class="select-area" align="left">        
+            <div class="select-area" align="left">  
+            	      
+                  <form action="">
                     조회기간&nbsp;
                     <a href="">오늘</a>&nbsp;
                     <a href="">7일</a>&nbsp;
@@ -45,6 +49,8 @@
                     <a href="">3개월</a>
                     <input type="date"> -
                     <input type="date">       
+
+                  </form>
             </div>
             <br>
             <table align="center" border="1" >
@@ -58,7 +64,7 @@
                 <!--게시글 없을경우-->
                 <tr>
                     <td colspan="4">
-                        게시글이 존재하지 않습니다.
+                        작성된 문의사항이 없습니다.
                     </td>
                 </tr>
                 <%}else{ %>
@@ -68,14 +74,28 @@
                     <td>[<%=q.getfCategory() %>/<%=q.getsCategory() %>]</td>
                     <td><%=q.getqTitle() %></td>
                     <td>
-                    	<%=q.getStatus() %>
-                    	<%=q.getAnswerStatus() %>
+                		  <%if(q.getAnswerStatus().equals("Y")){ %>
+	                   	답변완료
+	                   	<%}else{ %>
+	                   	답변대기중
+	                   	<%} %>
                     </td>
                 </tr>
 				<%}} %>
             </table>
         </div>
-        
+        <br>
+        <div class="paging-area" >
+            <%if(pi.getCurrentPage()!=1){ %>
+                <button onclick="location.href='<%=contextPath%>/list.qa?cpage=<%=pi.getCurrentPage()-1%>';">&lt;</button>
+            <%} %>   
+            <%for(int p= pi.getStartPage(); p<=pi.getEndPage(); p++){ %>
+                <button onclick="location.href='<%=contextPath%>/list.qa?cpage=<%=p%>';"><%=p %></button>
+            <%} %>
+            <%if(pi.getCurrentPage()!=pi.getMaxPage()){ %>
+                <button onclick="location.href='<%=contextPath%>/list.qa?cpage=<%=pi.getCurrentPage()+1%>';">&gt;</button>
+            <%} %>
+            </div>
     </div>
 	<%@include file="/views/common/footer.jsp" %>
 </body>

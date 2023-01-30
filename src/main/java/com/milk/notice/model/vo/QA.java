@@ -36,12 +36,12 @@ public class QA {
 	}
 	
 	
-	public QA(int qNo, String qTitle, String enrollDate, String status, String fCategory, String sCategory) {
+	public QA(int qNo, String qTitle, String enrollDate, String answerStatus, String fCategory, String sCategory) {
 		super();
 		this.qNo = qNo;
 		this.qTitle = qTitle;
 		this.enrollDate = enrollDate;
-		this.status = status;
+		this.answerStatus = answerStatus;
 		this.fCategory = fCategory;
 		this.sCategory = sCategory;
 	}

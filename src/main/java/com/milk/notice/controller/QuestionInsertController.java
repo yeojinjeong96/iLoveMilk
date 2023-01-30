@@ -72,7 +72,7 @@ public class QuestionInsertController extends HttpServlet {
 			HttpSession session = request.getSession();
 			if(result>0) {
 				session.setAttribute("alertMsg", "문의가 성공적으로 등록되었습니다.");
-				response.sendRedirect(request.getContextPath()+"/list.qa");
+				response.sendRedirect(request.getContextPath()+"/list.qa?cpage=1");
 				
 			}else {
 				
@@ -80,7 +80,7 @@ public class QuestionInsertController extends HttpServlet {
 					 new File(savePath + at.getChangeName()).delete(); 
 				 }
 				session.setAttribute("alertMsg", "문의 등록에 실패하였습니다.");	
-				response.sendRedirect(request.getContextPath()+"/list.qa");
+				response.sendRedirect(request.getContextPath()+"/list.qa?cpage=1");
 			}
 		}
 	}

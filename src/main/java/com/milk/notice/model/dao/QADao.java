@@ -10,6 +10,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Properties;
 
+import com.milk.common.model.vo.PageInfo;
 import com.milk.notice.model.vo.Attachment;
 import com.milk.notice.model.vo.QA;
 
@@ -75,7 +76,7 @@ public class QADao {
 		return result;
 		
 	}
-	public ArrayList<QA> selectQuestionList(Connection conn, int memberNo){
+	public ArrayList<QA> selectQuestionList(Connection conn, PageInfo pi,int memberNo){
 		
 		ArrayList<QA>list = new ArrayList<>();
 		ResultSet rset= null;
@@ -85,6 +86,11 @@ public class QADao {
 		try {
 			pstmt= conn.prepareStatement(sql);
 			pstmt.setInt(1, memberNo);
+			int startRow= (pi.getCurrentPage()-1)*pi.getBoardLimit()+1;
+			int endRow= startRow + pi.getBoardLimit() -1;
+			
+			pstmt.setInt(2, startRow);
+			pstmt.setInt(3, endRow);
 			
 			rset= pstmt.executeQuery();
 			while(rset.next()) {
@@ -106,6 +112,29 @@ public class QADao {
 		}
 		
 		return list;
+	}
+	
+	public int selectQAListCount(Connection conn,int memberNo) {
+		int listCount =0;
+		ResultSet rset= null;
+		PreparedStatement pstmt= null;
+		String sql= prop.getProperty("selectQAListCount");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, memberNo);
+			rset= pstmt.executeQuery();
+			
+			if(rset.next()) {
+				listCount = rset.getInt("count");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(conn);
+		}
+		
+		return listCount;
 	}
 
 }
