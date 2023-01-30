@@ -273,5 +273,11 @@
 		 WHERE RECIPE_ORDER_NO = ?
 		   AND RECIPE_NO = ?
 	</entry>
+	
+	<entry key="deleteRecipe">
+		UPDATE TB_RECIPE
+		   SET DELETE_STATUS = 'Y'
+		 WHERE RECIPE_NO = ?
+	</entry>
 
 </properties>

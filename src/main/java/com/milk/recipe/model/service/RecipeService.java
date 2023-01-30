@@ -211,4 +211,19 @@ public class RecipeService {
 		return result1 * result2 * result3;
 	}
 	
+	
+	public int deleteRecipe(int recipeNo) {
+		Connection conn = getConnection();
+		
+		int result = new RecipeDao().deleteRecipe(conn, recipeNo);
+		
+		if(result > 0) {
+			commit(conn);
+		}else {
+			rollback(conn);
+		}
+		
+		close(conn);
+		return result;
+	}
 }
