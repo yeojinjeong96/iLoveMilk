@@ -61,6 +61,7 @@
                             </tr>
                             <tr>
                                 <th>상품코드&nbsp;</th>
+                                <input type="hidden" name="pNo" value="<%= p.getProductNo() %>">
                                 <td><%= p.getProductNo() %></td>
                             </tr>
                             <tr>
@@ -76,6 +77,7 @@
                                 </td>
                             </tr>
                             <tr>
+                            <!-- 상ㄴ품이미지가 없을경우 점으로 나오게 -->
                                 <th>상품 이미지&nbsp;</th>
                                 <td><%= p.getProductImg().substring(26) %><input type="file" name="productImg" value="<%= p.getProductImg() %>"></td>
                             </tr>

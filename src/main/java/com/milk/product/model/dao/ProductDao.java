@@ -465,6 +465,30 @@ public class ProductDao {
 		}
 		return result;
 	}
+	
+	public int updateProduct(Connection conn, Product p) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String sql = prop.getProperty("updateProduct");
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, p.getProductName());
+			pstmt.setInt(2, p.getPrice());
+			pstmt.setInt(3, p.getCapacity());
+			pstmt.setString(4, p.getBrand());
+			pstmt.setString(5, p.getProductInfo());
+			pstmt.setString(6, p.getfCategory());
+			pstmt.setString(7, p.getsCategory());
+			pstmt.setString(8, p.getProductImg());
+			pstmt.setInt(9, p.getProductNo());
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		return result;
+	}
 
 	public int selectAllListCount(Connection conn, String op, String searchKey) {
 		int result = 0;

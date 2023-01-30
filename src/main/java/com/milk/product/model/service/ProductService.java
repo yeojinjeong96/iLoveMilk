@@ -207,6 +207,23 @@ public class ProductService {
 		close(conn);
 		return result;
 	}
+	
+	/**
+	 * 상품 수정
+	 * @author 승하
+	 * @return 상품 등록 성공시 1, 실패시 2
+	 */
+	public int updateProduct(Product p) {
+		Connection conn = getConnection();
+		int result = new ProductDao().updateProduct(conn, p);
+		if(result > 0) {
+			commit(conn);
+		} else {
+			rollback(conn);
+		}
+		close(conn);
+		return result;
+	}
 
 	/**
 	 * 상품 전체 갯수 조회

@@ -4,7 +4,6 @@
 <%
 	PageInfo pi = (PageInfo)request.getAttribute("pi");
 	ArrayList<Product> list = (ArrayList<Product>)request.getAttribute("list");
-	ArrayList<Product> searchList = (ArrayList<Product>)request.getAttribute("searchList");
 %>
 <!DOCTYPE html>
 <html>
@@ -59,8 +58,7 @@
                         </thead>
                         <tbody>
                         <!-- 검색시 검색단어 보이기, 상품리스트 null시 상품리스트가 존재하지않습니다. 검색리스트가 null시 검색조건에 해당하는 결과가 없슨디ㅏ.-->
-							<% if(searchList == null){ %>
-	                            <% for(Product p : list){ %>
+							    <% for(Product p : list){ %>
 	                            <tr class="prod">
 	                                <td><input type="checkbox" class="checkedPro"></td>
 	                                <td align="center"><%= p.getProductNo() %></td>
@@ -76,24 +74,6 @@
 	                                <td align="center"><button type="button" class="btn btn-primary btn-sm" onclick="receivingPro();" data-toggle="modal" data-target="#receiving">입고</button></td>
 	                            </tr>
 								<% } %>
-							<% }else{ %>
-								<% for(Product p : searchList){ %>
-	                            <tr class="prod">
-	                                <td><input type="checkbox" class="checkedPro"></td>
-	                                <td align="center"><%= p.getProductNo() %></td>
-	                                <td class="pHover"><%= p.getProductName() %> <%= p.getCapacity() %>(mL/g)</td>
-	                                <td align="right"><%= p.getStock() %></td>
-	                                <td align="center">
-	                                	<% if(p.getBrand() != null){ %>
-	                                		<%= p.getBrand() %>
-	                                	<% }else{ %>
-	                                		·
-	                                	<% } %>
-	                                </td>
-	                                <td align="center"><button type="button" class="btn btn-primary btn-sm" onclick="receivingPro();" data-toggle="modal" data-target="#receiving">입고</button></td>
-	                            </tr>
-								<% } %>
-							<% } %>
                         </tbody>
                     </table>
                     
@@ -181,7 +161,7 @@
 				url:"<%= contextPath %>/searchList.pr",
 				data:{
 					op:$("#searchOp").val(),
-					searchKey:$("#searchKey").val)()
+					searchKey:$("#searchKey").val()
 				},
 				success:function(){},
 				error: function(){}
