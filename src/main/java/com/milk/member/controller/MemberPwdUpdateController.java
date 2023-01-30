@@ -12,16 +12,16 @@ import com.milk.member.model.service.MemberService;
 import com.milk.member.model.vo.Member;
 
 /**
- * Servlet implementation class MemberIdFindController
+ * Servlet implementation class MemberPwdUpdateController
  */
-@WebServlet("/idFind.me")
-public class MemberIdFindController extends HttpServlet {
+@WebServlet("/updatePwd.me")
+public class MemberPwdUpdateController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public MemberIdFindController() {
+    public MemberPwdUpdateController() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -30,29 +30,24 @@ public class MemberIdFindController extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
-		
-		request.setCharacterEncoding("UTF-8");
-		
-		String memberName = request.getParameter("memberName");
-		String email = request.getParameter("email");
-		
-		Member findId = new MemberService().findMemberId(memberName, email);
-		
-		System.out.println(findId);
-		
-		
-		if(findId==null) { //조회결과 없음 
+
+			String memberId = request.getParameter("memberId");
+			String memberPwd = request.getParameter("memberPwd");
+			String updatePwd = request.getParameter("updatePwd");
 			
-			response.sendRedirect(request.getContextPath() + "/idFindPage.me"); 
-		
-		}else { //조회결과 있음 
+			Member updateMem = new MemberService().updatePwdMember(memberId, memberPwd, updatePwd);
 			
 			HttpSession session = request.getSession();
-			session.setAttribute("findId", findId);
-			response.sendRedirect(request.getContextPath() + "/idFindSuccess.me" );
+			if(updateMem == null) { // 실패 (현재비밀번호를 잘못입력했을경우)
+									// => 마이페이지
+				session.setAttribute("alertMsg", "현재 비밀번호를 다시 확인해주세요.");
+				
+			}else { // 성공 => 마이페이지
+				session.setAttribute("alertMsg", "성공적으로 비밀번호를 수정했습니다.");
+				session.setAttribute("loginMember", updateMem);
+			}
 			
-		}
+			response.sendRedirect(request.getContextPath() + "/myPageUpdate2.me");
 		
 	}
 

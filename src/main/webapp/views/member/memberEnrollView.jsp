@@ -10,9 +10,9 @@
         #enroll-form table{margin:auto; padding-top :50px ;}
 	    #enroll-form input{margin:2px;}
        .outer{
-        weight: 700px;
         margin:auto;
         margin-top:50px;
+		width: 700px;
         }
          input::placeholder{font-size: 5px; margin: auto;}
         td{
@@ -35,6 +35,18 @@
         	
         }
         
+        label{
+       		font-size:15px;
+       		margin:auto;
+			
+       		
+        }
+        
+		.checkbox{margin-left: 400px;}
+
+		#insert{padding-top: 20px;}
+
+		
     </style>
 </head>
 <body>
@@ -121,14 +133,13 @@
 	                </tr>
 	                <tr>
 	                    <td></td>
-	                    <td ><input type="text" id="sample6_detailAddress" name="addressDetail" placeholder="상세주소" style="width:250px"></td>
+	                    <td >
+	                    	<input type="text" id="sample6_detailAddress" name="addressDetail" placeholder="상세주소" style="width:150px">
+	                    	<input type="text" id="sample6_extraAddress" placeholder="참고항목" style="width:100px">
+	                    </td>
 	                </tr>
 					
-					 <tr>
-	                    <td></td>
-	                    <td ><input type="text" id="sample6_extraAddress" placeholder="참고항목" style="width:250px"></td>
-	                </tr>
-					
+				
 					
 				</table>
 				
@@ -169,6 +180,8 @@
 					});
 					
 					$('#memberName').keyup(function(){
+						
+						
 						if(name.test($('#memberName').val())){
 							$("#pop3").hide();	
 						}else {
@@ -279,30 +292,46 @@
 			
 			<br><br>
                
-            <div class="enroll-bottom" align="center">
+            <div class="enroll-bottom" align="center" >
 
-                <p align="center"><input type="checkbox"> 아이럽우유의 모든 약관을 확인하고 전체 동의합니다 <br> </p>
-                <div style="width: 400px;"  align="left">
-                    <table>
-                        <tr>
-                            <td><input type="checkbox"></td>
-                            <td>(필수) 이용약관</td>
-                            <td><button type="button">자세히 보기</button></td>
-                        </tr>
-                        <tr>
-                            <td><input type="checkbox"></td>
-                            <td>(필수) 개인정보 수집 및 이용</td>
-                            <td><button type="button">자세히 보기</button></td>
-                        </tr>
-                        <tr>
-                            <td><input type="checkbox"></td>
-                            <td colspan="2">(필수) 본인은 만 14세 이상입니다.</td>
-                        </tr>
-                    </table>
-                </div>
+					<input type="checkbox" id="check_all" >
+					<label for="check_all">아이럽우유의 모든 약관을 확인하고 전체 동의합니다</label>
+					<br>	
+					<div class="checkbox" align="left">	  
+						<input type="checkbox" id="check_1" class="normal" >
+						<label for="check_1" class="checkboxLabel">(필수) 이용약관</label> <button type="button" class="btn btn-outline-secondary btn-sm">자세히보기</button>
+						<br>
+						<input type="checkbox" id="check_2" class="normal" >
+						<label for="check_2">(필수) 개인정보수집 및 이용</label> <button type="button" class="btn btn-outline-secondary btn-sm">자세히보기</button>
+						<br>					  
+						<input type="checkbox" id="check_3" class="normal" >
+						<label for="check_3">(필수) 본인은 만 14세 이상입니다</label>
+	                	<br>
+                	</div>	
             </div>
-			<div align="center">
-				<button type="submit" id="submit">가입하기</button>	
+            
+            <!-- 체크박스 -->
+            <script>
+        	// 체크박스 전체 선택
+            $(".enroll-bottom").on("click", "#check_all", function () {
+                $(this).parents(".enroll-bottom").find('input').prop("checked", $(this).is(":checked"));
+            });
+        	
+         	// 체크박스 개별 선택
+            $(".enroll-bottom").on("click", ".normal", function() {
+                var is_checked = true;
+
+                $(".enroll-bottom .normal").each(function(){
+                    is_checked = is_checked && $(this).is(":checked");
+                });
+
+                $("#check_all").prop("checked", is_checked);
+            });
+            
+    		</script>
+            
+			<div align="center" id="insert">
+				<button type="submit" id="submit" class="btn btn-outline-secondary btn-sm">가입하기</button>	
 			</div>
 			<br><br>
 		</form>

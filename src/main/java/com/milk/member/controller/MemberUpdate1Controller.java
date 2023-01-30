@@ -12,16 +12,16 @@ import com.milk.member.model.service.MemberService;
 import com.milk.member.model.vo.Member;
 
 /**
- * Servlet implementation class MemberIdFindController
+ * Servlet implementation class MemberUpdate1Controller
  */
-@WebServlet("/idFind.me")
-public class MemberIdFindController extends HttpServlet {
+@WebServlet("/update1.me")
+public class MemberUpdate1Controller extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public MemberIdFindController() {
+    public MemberUpdate1Controller() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -31,26 +31,20 @@ public class MemberIdFindController extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
+		String memberId = request.getParameter("memberId");
+		String memberPwd = request.getParameter("memberPwd");
 		
-		request.setCharacterEncoding("UTF-8");
+		Member updateCheck = new MemberService().updateCheckPwd(memberId, memberPwd);
 		
-		String memberName = request.getParameter("memberName");
-		String email = request.getParameter("email");
-		
-		Member findId = new MemberService().findMemberId(memberName, email);
-		
-		System.out.println(findId);
-		
-		
-		if(findId==null) { //조회결과 없음 
+		if(updateCheck==null) { //조회결과 없음 
 			
-			response.sendRedirect(request.getContextPath() + "/idFindPage.me"); 
+			response.sendRedirect(request.getContextPath() + "/myPageUpdate.me"); 
 		
 		}else { //조회결과 있음 
 			
 			HttpSession session = request.getSession();
-			session.setAttribute("findId", findId);
-			response.sendRedirect(request.getContextPath() + "/idFindSuccess.me" );
+			session.setAttribute("updateCheck", updateCheck);
+			response.sendRedirect(request.getContextPath() + "/myPageUpdate2.me" );
 			
 		}
 		

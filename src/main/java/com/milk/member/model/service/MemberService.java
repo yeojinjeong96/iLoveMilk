@@ -5,6 +5,8 @@ import java.sql.Connection;
 
 import static com.milk.common.JDBCTemplate.*;
 
+
+import com.milk.member.model.vo.Attachment;
 import com.milk.member.model.dao.MemberDao;
 import com.milk.member.model.vo.Member;
 
@@ -62,6 +64,66 @@ public class MemberService {
 		
 		return result;
 		
+	}
+	
+	/**
+	 * 회원정보변경 비밀번호 확인 서비스 
+	 */
+	public Member updateCheckPwd(String memberId, String memberPwd) {
+		
+		Connection conn = getConnection();
+		Member m = new MemberDao().updateCheckPwd(conn, memberId, memberPwd);
+		close(conn);
+		return m;
+	}
+	
+	/**
+	 * 회원정보변경 확인 서비스 
+	 */
+//	public Attachment selectAttachment(int memberNo){
+//		Connection conn = getConnection();
+//		Attachment at = new MemberDao().selectAttachment(conn, memberNo);
+//		close(conn);
+//		return at;
+//	}
+//	
+	
+	public Member updateMember(Member m){
+		
+		Connection conn = getConnection();
+		int result = new MemberDao().updateMember(conn, m);
+		
+		Member updateMem = null;
+		
+		if(result > 0) {
+			commit(conn);
+			updateMem = new MemberDao().selectMember(conn, m.getMemberId());
+		}else {
+			rollback(conn);
+		}
+		
+		close(conn);
+		
+		return updateMem;
+		
+	}
+	
+	public Member updatePwdMember(String memberId, String memberPwd, String updatePwd) {
+		Connection conn = getConnection();
+		int result = new MemberDao().updatePwdMember(conn, memberId, memberPwd, updatePwd);
+		
+		Member updateMem = null;
+		
+		if(result > 0) {
+			commit(conn);
+			updateMem = new MemberDao().selectMember(conn, memberId);
+		}else {
+			rollback(conn);
+		}
+		
+		close(conn);
+	
+		return updateMem;
 	}
 	
 }

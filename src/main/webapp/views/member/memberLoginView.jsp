@@ -13,7 +13,7 @@
         .under {margin:auto; align :center;}
         .outer{
         weight: 700px;
-         margin:auto;
+        margin:auto;
         margin-top:50px;
         }
     </style>
