@@ -136,5 +136,113 @@ public class QADao {
 		
 		return listCount;
 	}
+	
+	public QA selectQA(Connection conn, int qNo) {
+		QA q = null;
+		ResultSet rset= null;
+		PreparedStatement pstmt= null;
+		String sql= prop.getProperty("selectQA");
+		
+		try {
+			pstmt= conn.prepareStatement(sql);
+			pstmt.setInt(1, qNo);
+			rset= pstmt.executeQuery();
+			if(rset.next()) {
+			q=	new QA(
+					rset.getInt("q_no")
+			       ,rset.getString("member_name")
+			       ,rset.getString("q_title")
+			       ,rset.getString("q_content")
+			       ,rset.getString("enroll_date")
+			       ,rset.getString("manager_name")
+			       ,rset.getString("answer_status")
+			       ,rset.getString("a_title")
+			       ,rset.getString("answer_date")
+			       ,rset.getString("a_content")
+			       ,rset.getString("fcategory_name")
+			       ,rset.getString("scategory_name")
+
+					);
+	
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rset);
+			close(pstmt);
+			
+		}
+		return q;
+		
+
+	}
+	
+	public Attachment selectAttachment(Connection conn, int qNo) {
+		
+		Attachment at= null;
+		PreparedStatement pstmt= null;
+		ResultSet rset = null;
+		String sql= prop.getProperty("selectAttachment");
+		
+		try {
+			pstmt= conn.prepareStatement(sql);
+			pstmt.setInt(1, qNo);
+			rset= pstmt.executeQuery();
+			
+			if(rset.next()) {
+				at = new Attachment(
+						rset.getInt("file_no")
+					   ,rset.getString("change_name")
+					   ,rset.getString("file_path")
+						);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return at;
+	}
+	
+	public ArrayList<QA> selectIncompletedList(Connection conn, PageInfo pi){
+		
+		ArrayList<QA>list = new ArrayList<>();
+		ResultSet rset= null;
+		PreparedStatement pstmt= null;
+		String sql= prop.getProperty("selectIncompletedList");
+		
+		try {
+			pstmt= conn.prepareStatement(sql);
+			int startRow= (pi.getCurrentPage()-1)*pi.getBoardLimit()+1;
+			int endRow= startRow + pi.getBoardLimit() -1;
+			
+			pstmt.setInt(1, startRow);
+			pstmt.setInt(2, endRow);
+			
+			rset= pstmt.executeQuery();
+			while(rset.next()) {
+				
+				list.add(new QA(
+						rset.getInt("q_no")
+					   ,rset.getString("member_Id")
+					   ,rset.getString("q_title")
+					   ,rset.getString("q_content")
+					   ,rset.getString("enroll_date")
+					   ,rset.getString("answer_status")
+					   ,rset.getString("fcategory_name")
+					   ,rset.getString("scategory_name")
+						));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return list;
+	}
 
 }

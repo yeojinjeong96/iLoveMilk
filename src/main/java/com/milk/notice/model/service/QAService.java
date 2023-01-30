@@ -9,6 +9,7 @@ import java.sql.Connection;
 import java.util.ArrayList;
 
 import com.milk.common.model.vo.PageInfo;
+import com.milk.notice.model.dao.NoticeDao;
 import com.milk.notice.model.dao.QADao;
 import com.milk.notice.model.vo.Attachment;
 import com.milk.notice.model.vo.QA;
@@ -51,5 +52,29 @@ public class QAService {
 		close(conn);
 		return result;
 	}
+	
+	public QA selectQA(int qNo) {
+		Connection conn = getConnection();
+		
+		QA q = new QADao().selectQA(conn, qNo);
+		close(conn);
+		return q;
+	}
+	
+	public Attachment selectAttachment(int qNo) {
+		Connection conn = getConnection();
+		Attachment at = new QADao().selectAttachment(conn, qNo);
+		close(conn);
+		return at;
+	}
 
+	public ArrayList<QA> selectIncompletedList(PageInfo pi){
+		Connection conn= getConnection();
+		
+		ArrayList<QA>list= new QADao().selectIncompletedList(conn, pi);
+		
+		close(conn);
+		return list;
+		
+	}
 }

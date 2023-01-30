@@ -1,5 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    <%@page import= "java.util.ArrayList, com.milk.notice.model.vo.QA, com.milk.common.model.vo.PageInfo" %>
+<% ArrayList<QA>list =(ArrayList<QA>) request.getAttribute("list"); 
+	PageInfo pi = (PageInfo)request.getAttribute("pi");
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -9,10 +13,17 @@
     #q-list td{ text-align: center;}
     .a a{text-decoration: none;
     color:black}
-    .outer{
-        width: 1000px;
-        margin:auto;
-        margin-top: 50px;
+    .outer-1{
+        width: 800px;
+        float: left;
+        box-sizing: border-box;
+    }
+    #q-list td div{ 
+        
+        overflow: hidden;
+        width: 200px;
+        white-space: nowrap ;
+        text-overflow: ellipsis;  
     }
 </style>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
@@ -23,13 +34,15 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
 </head>
 <body>
-    <div class="outer" align="center">
+	<%@include file="/views/common/managerHeader.jsp" %>
+	<%@include file="/views/common/managerMenubar.jsp" %>
+    <div class="outer-1" align="center">
         <br>
         <div style="width:700px" class="text-center">
             <h2 align="left" >미답변 문의</h2>
             <hr>
             <br>
-            <div align="right">
+            <div align="right" style="width:640px">
                 <select name="select-qa" id="">
                     <option value="">최신순</option>
                     <option value="">오래된순</option>
@@ -38,29 +51,50 @@
             <br>
             <table border="1" id="q-list">
                 <tr>
-                    <th width="100">No.</th>
-                    <th width="100">작성자아이디</th>
+                    <th width="50">No.</th>
+                    <th width="100">작성자ID</th>
                     <th width="100">작성일</th>
                     <th width="200">문의제목</th>
                     <th width="200">문의내용</th>
                 </tr>
+                <%if(list.isEmpty()){ %>
                 <tr>
                     <td colspan="5">미답변 문의가 없습니다.</td>
                 </tr>
+                <%}else{ %>
+                <%for(QA q:list){ %>
                 <tr>
-                    <td>1</td>
-                    <td>user01</td>
-                    <td>2022.01.01</td>
-                    <td>문의합니다</td>
-                    <td>문의내용</td>
+                    <td><%=q.getqNo() %></td>
+                    <td><%=q.getMemberId() %></td>
+                    <td><%=q.getEnrollDate() %></td>
+                    <td>
+                        <div>
+                            <%=q.getqTitle() %>
+                        </div>
+                       
+                    </td>
+                      
+                    <td>
+                        <div>
+                            <%=q.getqContent() %>
+                        </div>
+                    </td>
                 </tr>
+                <%} }%>
             </table>
             <br> <br>
             <div class="paging-area" >
-                <button>&lt;</button>
-                <button>1</button>
-                <button>&gt;</button>
+             <%if(pi.getCurrentPage()!=1){ %>
+                <button onclick="location.href='<%=contextPath%>/listM.qa?cpage=<%=pi.getCurrentPage()-1%>';">&lt;</button>
+            <%} %>   
+            <%for(int p= pi.getStartPage(); p<=pi.getEndPage(); p++){ %>
+                <button onclick="location.href='<%=contextPath%>/listM.qa?cpage=<%=p%>';"><%=p %></button>
+            <%} %>
+            <%if(pi.getCurrentPage()!=pi.getMaxPage()){ %>
+                <button onclick="location.href='<%=contextPath%>/listM.qa?cpage=<%=pi.getCurrentPage()+1%>';">&gt;</button>
+            <%} %>
             </div>
+            
             <div align="right" style="width:600px" class="a">
                 <a href="">> 답변 목록 조회</a>
                  <br><br>

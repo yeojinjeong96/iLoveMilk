@@ -12,9 +12,12 @@ public class QA {
 	private String answerStatus;
 	private String answerDate;
 	private String aTitle;
-	private String aConent;
+	private String aContent;
 	private String fCategory;
 	private String sCategory;
+	private String memberName;
+	private String managerName;
+	private String memberId;
 	
 	public QA() {}
 	public QA(int qNo, int qWriter, String qTitle, String qContent, String enrollDate, String status, int aWriter,
@@ -30,12 +33,59 @@ public class QA {
 		this.answerStatus = answerStatus;
 		this.answerDate = answerDate;
 		this.aTitle = aTitle;
-		this.aConent = aConent;
+		this.aContent = aConent;
 		this.fCategory = fCategory;
 		this.sCategory = sCategory;
 	}
 	
 	
+	
+	
+	
+	public QA(int qNo, String memberName, String qTitle, String qContent, String enrollDate,
+			String managerName, String answerStatus, String aTitle, String answerDate, String aContent, String fCategory, String sCategory) {
+		super();
+		this.qNo = qNo;
+		this.memberName = memberName;
+		this.qTitle = qTitle;
+		this.qContent = qContent;
+		this.enrollDate= enrollDate;
+		this.managerName = managerName;
+		this.answerStatus = answerStatus;
+		this.aTitle = aTitle;
+		this.answerDate = answerDate;
+		this.aContent = aContent;
+		this.fCategory = fCategory;
+		this.sCategory = sCategory;
+		
+	}
+	
+	
+	public QA(int qNo,String memberId, String qTitle,String qContent, String enrollDate, String answerStatus, String fCategory, String sCategory) {
+		super();
+		this.qNo = qNo;
+		this.memberId=memberId;
+		this.qTitle = qTitle;
+		this.qContent= qContent;
+		this.enrollDate = enrollDate;
+		this.answerStatus = answerStatus;
+		this.fCategory = fCategory;
+		this.sCategory = sCategory;
+	}
+	
+	
+	public String getMemberName() {
+		return memberName;
+	}
+	public void setMemberName(String memberName) {
+		this.memberName = memberName;
+	}
+	public String getManagerName() {
+		return managerName;
+	}
+	public void setManagerName(String managerName) {
+		this.managerName = managerName;
+	}
 	public QA(int qNo, String qTitle, String enrollDate, String answerStatus, String fCategory, String sCategory) {
 		super();
 		this.qNo = qNo;
@@ -44,6 +94,15 @@ public class QA {
 		this.answerStatus = answerStatus;
 		this.fCategory = fCategory;
 		this.sCategory = sCategory;
+	}
+	
+	
+	
+	public String getMemberId() {
+		return memberId;
+	}
+	public void setMemberId(String memberId) {
+		this.memberId = memberId;
 	}
 	public int getqNo() {
 		return qNo;
@@ -105,11 +164,11 @@ public class QA {
 	public void setaTitle(String aTitle) {
 		this.aTitle = aTitle;
 	}
-	public String getaConent() {
-		return aConent;
+	public String getaContent() {
+		return aContent;
 	}
-	public void setaConent(String aConent) {
-		this.aConent = aConent;
+	public void setaContent(String aContent) {
+		this.aContent = aContent;
 	}
 	public String getfCategory() {
 		return fCategory;
@@ -127,7 +186,7 @@ public class QA {
 	public String toString() {
 		return "QA [qNo=" + qNo + ", qWriter=" + qWriter + ", qTitle=" + qTitle + ", qContent=" + qContent
 				+ ", enrollDate=" + enrollDate + ", status=" + status + ", aWriter=" + aWriter + ", answerStatus="
-				+ answerStatus + ", answerDate=" + answerDate + ", aTitle=" + aTitle + ", aConent=" + aConent
+				+ answerStatus + ", answerDate=" + answerDate + ", aTitle=" + aTitle + ", aConent=" + aContent
 				+ ", fCategory=" + fCategory + ", sCategory=" + sCategory + "]";
 	}
 	

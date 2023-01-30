@@ -45,14 +45,14 @@
 	            (SELECT 
 	                   Q_NO
 	                   ,Q_TITLE
-	                   ,ENROLL_DATE
+	                   ,TO_CHAR(ENROLL_DATE,'YY-MM-DD') ENROLL_DATE
 	                   ,ANSWER_STATUS
 	                   ,FCATEGORY_NAME
 	                   ,SCATEGORY_NAME
 	                    FROM TB_QA
 	                WHERE Q_WRITER =?
 	                AND STATUS= 'Y'
-	                ORDER BY ENROLL_DATE DESC
+	                ORDER BY Q_NO DESC
 	                  )E) WHERE RNUM BETWEEN ? AND ?
 	</entry>
 	<entry key="selectQAListCount">
@@ -60,5 +60,53 @@
 		 	COUNT(*) COUNT
 		 FROM TB_QA
 		 WHERE Q_WRITER = ?
+	</entry>
+	<entry key="selectQA">
+		SELECT 
+		    Q_NO
+		   ,MEMBER_NAME
+		   ,Q_TITLE
+		   ,Q_CONTENT
+		   ,q.enroll_date
+		   ,MANAGER_NAME
+		   ,ANSWER_STATUS
+		   ,A_TITLE
+		   ,ANSWER_DATE
+		   ,A_CONTENT
+		   ,FCATEGORY_NAME
+		   ,SCATEGORY_NAME
+		FROM TB_QA q
+		JOIN TB_MEMBER ON (MEMBER_NO = Q_WRITER)
+		LEFT JOIN TB_MANAGER ON (MANAGER_NO = A_WRITER)
+		WHERE Q_NO = ?
+	</entry>
+	<entry key="selectAttachment">
+		SELECT 
+		    FILE_NO
+		   ,CHANGE_NAME
+		   ,FILE_PATH
+		FROM TB_ATTACHMENT
+		WHERE REF_NO =?
+		AND FILE_TYPE = 4
+	</entry>
+	<entry key="selectIncompletedList">
+		  SELECT * FROM
+	        (SELECT ROWNUM RNUM, E.*FROM
+	            (SELECT 
+	                   Q_NO
+                       ,MEMBER_ID
+	                   ,Q_TITLE
+	                   ,q_content
+	                   ,TO_CHAR(Q.ENROLL_DATE,'YY-MM-DD') ENROLL_DATE
+	                   ,ANSWER_STATUS
+	                   ,FCATEGORY_NAME
+	                   ,SCATEGORY_NAME
+	                    FROM TB_QA Q
+                    JOIN TB_MEMBER ON (Q_WRITER = MEMBER_NO)
+	                WHERE ANSWER_STATUS= 'N'
+	                AND Q.STATUS= 'Y'
+	                ORDER BY Q_NO DESC
+	                  )E) WHERE RNUM BETWEEN ? AND ?
+		
 	</entry>
 </properties>

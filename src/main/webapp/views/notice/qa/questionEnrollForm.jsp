@@ -60,7 +60,7 @@
                     </tr>
                     <tr>
                         <th class="text-center">* 제목</th>
-                        <td><input type="text" name="title" style="width: 300px;" required></td>
+                        <td><input type="text" name="title" style="width: 300px;" maxlength="10" required></td>
                     </tr>
                     <tr>
                         <th class="text-center">작성자</th>
@@ -72,7 +72,7 @@
                     </tr>
                     <tr>
                         <th class="text-center">* 내용</th>
-                        <td><textarea name="content" cols="30" rows="12" style="resize: none;" required></textarea></td>
+                        <td><textarea name="content"  cols="30" rows="12" style="resize: none;" required></textarea></td>
                     </tr>
                     
                 </table>

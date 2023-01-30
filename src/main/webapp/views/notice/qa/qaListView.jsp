@@ -22,6 +22,12 @@
         color:black;
         text-decoration: none;
     }
+    #qa-list tbody tr:hover{cursor: pointer;}
+    #qa-list tr{  
+        overflow: hidden;
+        width: 100px;
+   		 white-space: nowrap ;
+        text-overflow: ellipsis;   }
 </style>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
@@ -53,15 +59,16 @@
                   </form>
             </div>
             <br>
-            <table align="center" border="1" >
+            <table align="center" border="1" id="qa-list">
                 <tr>
-                    <th width="100">문의날짜</th>
+                    <th width="100" height="30">문의날짜</th>
                     <th width="150">카테고리</th>
-                    <th width="350">제목</th>
+                    <th width="350" >제목</th>
                     <th width="100">문의상태</th>
                 </tr>
 				<%if(list.isEmpty()){ %>
                 <!--게시글 없을경우-->
+                
                 <tr>
                     <td colspan="4">
                         작성된 문의사항이 없습니다.
@@ -69,19 +76,23 @@
                 </tr>
                 <%}else{ %>
                 <%for(QA q:list){ %>
-                <tr>
-                    <td><%=q.getEnrollDate() %></td>
+                <tbody>
+                <tr>  
+                	<td style="display:none"><%=q.getqNo() %></td>              	
+                    <td height="40"><%=q.getEnrollDate() %></td>
                     <td>[<%=q.getfCategory() %>/<%=q.getsCategory() %>]</td>
                     <td><%=q.getqTitle() %></td>
                     <td>
                 		  <%if(q.getAnswerStatus().equals("Y")){ %>
 	                   	답변완료
 	                   	<%}else{ %>
-	                   	답변대기중
+	                   	접수
 	                   	<%} %>
                     </td>
                 </tr>
+                </tbody>
 				<%}} %>
+				
             </table>
         </div>
         <br>
@@ -97,6 +108,13 @@
             <%} %>
             </div>
     </div>
+    <script>
+		$(function(){
+			$("#qa-list tbody tr").click(function(){
+				location.href='<%=contextPath%>/detail.qa?no='+$(this).children().eq(0).text();
+			})
+		})
+	</script>
 	<%@include file="/views/common/footer.jsp" %>
 </body>
 </html>
