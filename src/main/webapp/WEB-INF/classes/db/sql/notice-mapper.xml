@@ -14,7 +14,7 @@
 	                        NOTICE_NO
 	                       ,NOTICE_TITLE
 	                       ,COUNT
-	                       ,ENROLL_DATE
+	                       ,TO_CHAR(ENROLL_DATE,'YY-MM-DD') ENROLL_DATE
 	                       ,MANAGER_NAME
 	                   FROM TB_NOTICE N
 	                JOIN TB_MANAGER ON (WRITER_NO = MANAGER_NO)

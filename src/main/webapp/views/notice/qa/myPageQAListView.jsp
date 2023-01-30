@@ -10,38 +10,60 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <style>
-    .outer{
-        width: 1000px;
-        margin:auto;
-        margin-top: 50px;
-    }
-    table tr{
-        text-align: center;
-    }
-    .select-area a{
-        color:black;
-        text-decoration: none;
-    }
-    #qa-list tbody tr:hover{cursor: pointer;}
+.outer{
+		width: 1000px; 
+	
+		height: 1000px;
+		box-sizing: border-box; 
+		margin:auto;
+	}
+	.mainmenubar{
+		width: 23%;
+		 
+		 float: left;
+		 height: 100%;
+		 
+	}
+	
+	.mainmember{
+		float: left;
+		width: 77%;
+		
+		height: 20%;
+	}
+
+	.maincontent{
+		width: 77%;
+		height: 300px;
+		
+		float: left;
+	}
+	#qa-list tbody tr:hover{cursor: pointer;}
     #qa-list tr{  
         overflow: hidden;
         width: 100px;
    		 white-space: nowrap ;
         text-overflow: ellipsis;   }
-</style>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
-<!-- Popper JS -->
-<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
-<!-- Latest compiled JavaScript -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+     .select-area a{
+        color:black;
+        text-decoration: none;
+    }
+ </style>
 </head>
 <body>
-<%@include file="../common/serviceCenterMainTop.jsp" %>
-    <div class="outer" align="center">
-        <br>
-        <div style="width:700px">
-            <h2 align="left">1:1문의하기 </h2>
+	<%@ include file="/views/common/header.jsp" %>
+	<div class="outer">
+
+		<div class="mainmenubar" >
+			<%@ include file="/views/common/myPageMenubar.jsp" %> 	
+		</div>
+				
+		<div class="mainmember">
+			<%@ include file="/views/member/memberInformation.jsp" %>
+		</div>
+
+		<div class="maincontent">
+			<h4 align="left">나의 1:1 문의 </h4>
             <hr>
             <br>
             <div class="select-area" align="left">  
@@ -59,10 +81,10 @@
                   </form>
             </div>
             <br>
-            <table align="center" border="1" id="qa-list">
+            <table align="center" border="1" id="qa-list" class="text-center">
                 <tr>
                     <th width="100" height="30">문의날짜</th>
-                    <th width="150">카테고리</th>
+                    <th width="190">카테고리</th>
                     <th width="350" >제목</th>
                     <th width="100">문의상태</th>
                 </tr>
@@ -96,7 +118,7 @@
             </table>
         </div>
         <br>
-        <div class="paging-area" >
+        <div class="paging-area" align="center">
             <%if(pi.getCurrentPage()!=1){ %>
                 <button onclick="location.href='<%=contextPath%>/list.qa?cpage=<%=pi.getCurrentPage()-1%>';">&lt;</button>
             <%} %>   
@@ -106,15 +128,19 @@
             <%if(pi.getCurrentPage()!=pi.getMaxPage()){ %>
                 <button onclick="location.href='<%=contextPath%>/list.qa?cpage=<%=pi.getCurrentPage()+1%>';">&gt;</button>
             <%} %>
-          </div>
-    </div>
-    <script>
+         </div>
+	
+	</div>
+	
+	
+	<%@ include file="/views/common/footer.jsp" %> 	 
+    
+	 <script>
 		$(function(){
 			$("#qa-list tbody tr").click(function(){
-				location.href='<%=contextPath%>/detail.qa?no='+$(this).children().eq(0).text();
+				location.href='<%=contextPath%>/mypage.dq?no='+$(this).children().eq(0).text();
 			})
 		})
 	</script>
-	<%@include file="/views/common/footer.jsp" %>
 </body>
 </html>
