@@ -334,7 +334,9 @@
 		                   
 		                    <div style="height:5%; border-bottom:1px solid gray;"></div>
 		             
-		                    <p><%=r.getStar() %> <br> <%=r.getContent() %></p>
+		                    <p>
+								<!-- 별모양 -->
+		                    <br> <%=r.getContent() %></p>
 		                </div>
 	                <%} %>
 				<%}else{ %>
