@@ -169,9 +169,9 @@ public class ProductService {
 	 * @author 이다혜
 	 * @return listCount
 	 */
-	public int selectReSearchCount(String keyword, String keyOption, int research) {
+	public int selectReSearchCount(String keyword, String keyOption) {
 		Connection conn = getConnection();
-		int listCount = new ProductDao().selectReSearchCount(conn, keyword, keyOption, research);
+		int listCount = new ProductDao().selectReSearchCount(conn, keyword, keyOption);
 		
 		close(conn);
 		return listCount;
@@ -182,9 +182,9 @@ public class ProductService {
 	 * @author 이다혜
 	 * @return list
 	 */
-	public ArrayList<Product> selectReSearchList(PageInfo pi, String keyword, String keyOption, int research){
+	public ArrayList<Product> selectReSearchList(PageInfo pi, String keyword, String keyOption){
 		Connection conn = getConnection();
-		ArrayList<Product> list = new ProductDao().selectReSearchList(conn, keyword, keyOption, research);
+		ArrayList<Product> list = new ProductDao().selectReSearchList(conn, pi, keyword, keyOption);
 		
 		close(conn);
 		return list;

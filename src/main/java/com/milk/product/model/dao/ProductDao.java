@@ -345,22 +345,23 @@ public class ProductDao {
 		return list;
 	}
 	
-	public int selectReSearchCount(Connection conn, String keyword, String keyOption, int research) {
+	public int selectReSearchCount(Connection conn, String keyword, String keyOption) {
 		int listCount = 0;
 		ResultSet rset = null;
 		PreparedStatement pstmt = null;
-		String sql = "";
-		String sql2 = "";
+	
 		
-		if(keyOption.equals("회사명")) {
-			sql = prop.getProperty("selectReSearchCount1");
-		}else {
-			sql = prop.getProperty("selectReSearchCount2");
+		String sql = prop.getProperty("selectReSearchCount");
+		
+		if(keyOption.equals("brand")) {
+			
+			sql += "AND BRAND LIKE '%' || ? || '%'";
+			
+		}else if(keyOption.equals("productName")) {
+			
+			sql += "AND PRODUCT_NAME LIKE '%' || ? || '%'";
 		}
-		
-		if(research > 0) {
-			sql2 = prop.getProperty("selectReSearchCount3");
-		}		
+
 		
 		try {
 			
@@ -371,8 +372,6 @@ public class ProductDao {
 			if(rset.next()) {
 				listCount = rset.getInt("count");
 			}
-			
-
 			
 			
 		} catch (SQLException e) {
@@ -385,12 +384,60 @@ public class ProductDao {
 		return listCount;
 	}
 	
-	public ArrayList<Product> selectReSearchList(Connection conn, String keyword, String keyOption, int research){
+	public ArrayList<Product> selectReSearchList(Connection conn,PageInfo pi, String keyword, String keyOption){
 		ArrayList<Product> list = new  ArrayList<>();
 		ResultSet rset = null;
 		PreparedStatement pstmt = null;
+		String sql = prop.getProperty("selectResearchList");
 		
 		
+		if(keyOption.equals("brand")) {
+			
+			sql += " AND BRAND LIKE '%' || ? || '%'"
+				 + " ORDER"
+				 + " BY ENROLL_DATE DESC"
+				 + "  ) A"
+				 + ")"
+				 + "WHERE RNUM BETWEEN ? AND ? ";
+			
+		}else if(keyOption.equals("productName")) {
+			
+			sql += " AND PRODUCT_NAME LIKE '%' || ? || '%'"
+				 + " ORDER"
+				 + " BY ENROLL_DATE DESC"
+				 + " ) A"
+				 + ")"
+				 + "WHERE RNUM BETWEEN ? AND ? ";
+		}
+		
+		try {
+			
+			int startRow = (pi.getCurrentPage() -1) * pi.getBoardLimit() + 1;
+			int endRow = startRow + pi.getBoardLimit() -1;
+			
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, keyword);
+			pstmt.setInt(2, startRow);
+			pstmt.setInt(3, endRow);
+			
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				list.add(new Product(
+						rset.getInt("product_no"),
+						rset.getString("product_name"),
+						rset.getInt("price"),
+						rset.getString("product_img")	
+						));
+			}
+				
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
 		return list;
 	}
 	

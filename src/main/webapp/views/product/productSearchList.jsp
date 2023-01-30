@@ -8,6 +8,7 @@
     ArrayList<Product> list = (ArrayList<Product>)request.getAttribute("list");
     String keyword = (String)request.getAttribute("keyword");
     int listCount = (int)(request.getAttribute("listCount"));
+    String keyOption = (String)request.getAttribute("keyOption");
 %> 
            
 <!DOCTYPE html>
@@ -129,13 +130,14 @@
             <div id="search2">
             	<form action="<%=contextPath %>/reSearch.pro?cpage=1" method="post" id="search-form">
 	                <select name="keyOption" id="">
+	                	<option value="productName">상품명</option>
 	                    <option value="brand">회사명</option>
-	                    <option value="productName">제품명</option>
+	                    
 	                </select>
 	                <input type="text" name = "keyword" style="width:200px;" maxlength="30" required>
 	                <button type="submit" class="btn btn-primary btn-sm">검색</button>
-	                <input type="checkbox" name="research" id="re-search1" value="0"><label for="re-search">결과 내 재검색</label>
-	                <input type="hidden" name="research" id="re-search2" value="1"><label for="re-search">결과 내 재검색</label>
+	                <input type="checkbox" name="research" id="re-search1" value="0" checked><label for="re-search">결과 내 재검색</label>
+	                <input type="hidden" name="research" id="re-search2" value="1"><label for="re-search"></label>
                 </form>
             </div>
             
@@ -144,6 +146,12 @@
             	if($("#re-search1").checked){
             		$("#re-search2").disabled = "true";
             	}
+            
+            $("#search-form option").each(function(){
+            	if($(this).val() == "<%=keyOption%>"){
+            		$(this).attr("selected", true);
+            	}
+            })
             </script>
     
         </div>
@@ -152,7 +160,7 @@
         <div id="pro-content" >
             <!-- for문사용하여 제품 정보랑 이미지 뽑아서 화면에 출력 (갯수는 정렬 수대로 출력예정) -->
 			<% if(list.isEmpty()){ %>
-				<div class="thumbnail" align="left">
+				<div class="thumbnail" align="center" >
 					조회된 상품이 없습니다.
 				</div>
 			<%}else{ %>
@@ -241,6 +249,7 @@
         </script>
 
         <div id="pro-paging">
+        	
             <div class="paging-area" align="center">
                 <!-- 내가 보고있는 페이지가 1번 페이지가 아닐때에만 나타내기 -->
                 <% if(pi.getCurrentPage() != 1){ %>

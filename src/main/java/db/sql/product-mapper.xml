@@ -138,20 +138,27 @@
 		  WHERE RNUM BETWEEN ? AND ? 
 	</entry>  
 	
-	<entry key="selectReSearchCount1">
+	<entry key="selectReSearchCount">
 		SELECT
 		       COUNT(*) COUNT
-		  FROM TB_PRODUCT
-		 WHERE STATUS = 'Y'
-           AND BRAND LIKE '%' || ? || '%'
+		        FROM TB_PRODUCT
+			   WHERE STATUS = 'Y'
+		  
 	</entry>
 	
-	<entry key="selectReSearchCount1">
-		SELECT
-		       COUNT(*) COUNT
-		  FROM TB_PRODUCT
-		 WHERE STATUS = 'Y'
-           AND PRODUCT_NAME LIKE '%' || ? || '%'
+	<entry key = "selectResearchList">
+				SELECT *
+		  FROM (
+		        SELECT ROWNUM RNUM, A.*
+		          FROM (
+		                SELECT
+		                	   PRODUCT_NO
+		                     , PRODUCT_NAME
+		                     , PRICE
+		                     , PRODUCT_IMG
+						   FROM TB_PRODUCT B
+				 		  WHERE B.STATUS = 'Y'
+				  
 	</entry>
 	
 	

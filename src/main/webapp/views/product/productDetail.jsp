@@ -6,6 +6,7 @@
 <%  
    Product p = (Product)request.getAttribute("p");
    ArrayList<Review> list = (ArrayList<Review>)request.getAttribute("list");	
+  
 %>    
 <!DOCTYPE html>
 <html>
@@ -218,7 +219,7 @@
         </div>
 
         <div id="pro-wrap1-2">
-          <p>유통기한임박특가</p>  <!-- 1차 카테고리명 -->
+          <a href="<%=contextPath%>/proList.pro?category=<%=p.getsCategory().toString() %>&cpage=1" style ="color:gray;font-size:20px;"><%=p.getsCategory() %></a>  <!-- 2차 카테고리명 -->
         </div>
 
         <div id="pro-wrap1-3">
@@ -322,10 +323,13 @@
 		
 		                <div style="width:590px; height:100px;">
 		                    <p style="width:100%">상품번호 : <%=r.getReviewNo()%> <br>상품명 : <%= r.getProductName() %>
+		                    	<%if(loginMember != null && !(loginMember.getMemberNo() ==r.getMemberNo())){ %>
 		                            <!--조건문 써서 작성자 아니면 신고  -->
 		                            <a href="" style="float:right;" data-toggle="modal" data-target="#mem-report" >신고</a>
+		                        <%} else if(loginMember != null && (loginMember.getMemberNo()== r.getMemberNo())){ %>    
 		                            <!-- 조건문 써서 작성자일때에는 수정 | 삭제 -->
 		                            <a href="" style="float:right;">수정</a>   <a href="" style="float:right;">삭제</a>
+		                        <%} %>    
 		                    </p> 
 		                   
 		                    <div style="height:5%; border-bottom:1px solid gray;"></div>
@@ -351,7 +355,7 @@
 			
 
 
-
+	
                 <!-- 구매버튼 눌렀을때의 모달 -->
         <!-- The Modal -->
         <div class="modal" id="buy-product">
@@ -372,7 +376,9 @@
             </div>
             </div>
         </div>
-              
+
+
+ 
         <script>
 
 	     
