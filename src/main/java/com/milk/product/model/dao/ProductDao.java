@@ -276,7 +276,123 @@ public class ProductDao {
 		}
 		return result;
 	}
+	
+	public int selectSearchCount(Connection conn, String keyword) {
+		int listCount = 0;
+		ResultSet rset = null;
+		PreparedStatement pstmt = null;
+		String sql = prop.getProperty("selectSearchCount");
+		
+		try {
+			
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, keyword);
+			pstmt.setString(2, keyword);
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				listCount = rset.getInt("count");
+			}
+			
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return listCount;
+	}
+	
+	public ArrayList<Product> selectSearchList (Connection conn, PageInfo pi, String keyword){
+		
+		ArrayList<Product> list = new ArrayList<>();
+		ResultSet rset = null;
+		PreparedStatement pstmt = null;
+		
+		String sql = prop.getProperty("selectSearchList");
+		try {
+			
+			pstmt = conn.prepareStatement(sql);
+			
+			int startRow = (pi.getCurrentPage() -1) * pi.getBoardLimit() + 1;
+			int endRow = startRow + pi.getBoardLimit() -1;
 
+			pstmt.setString(1, keyword);
+			pstmt.setString(2, keyword);
+			pstmt.setInt(3, startRow);
+			pstmt.setInt(4, endRow);
+			
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				list.add(new Product(
+						rset.getInt("product_no"),
+						rset.getString("product_name"),
+						rset.getInt("price"),
+						rset.getString("product_img")
+						));
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return list;
+	}
+	
+	public int selectReSearchCount(Connection conn, String keyword, String keyOption, int research) {
+		int listCount = 0;
+		ResultSet rset = null;
+		PreparedStatement pstmt = null;
+		String sql = "";
+		String sql2 = "";
+		
+		if(keyOption.equals("회사명")) {
+			sql = prop.getProperty("selectReSearchCount1");
+		}else {
+			sql = prop.getProperty("selectReSearchCount2");
+		}
+		
+		if(research > 0) {
+			sql2 = prop.getProperty("selectReSearchCount3");
+		}		
+		
+		try {
+			
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, keyword);
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				listCount = rset.getInt("count");
+			}
+			
+
+			
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return listCount;
+	}
+	
+	public ArrayList<Product> selectReSearchList(Connection conn, String keyword, String keyOption, int research){
+		ArrayList<Product> list = new  ArrayList<>();
+		ResultSet rset = null;
+		PreparedStatement pstmt = null;
+		
+		
+		return list;
+	}
 	
 	
 	public int insertProduct(Connection conn, Product p) {

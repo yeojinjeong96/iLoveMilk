@@ -14,16 +14,16 @@ import com.milk.product.model.service.ProductService;
 import com.milk.product.model.vo.Product;
 
 /**
- * Servlet implementation class ProductSearchController
+ * Servlet implementation class ProductReSearchController
  */
-@WebServlet("/search.pro")
-public class ProductSearchController extends HttpServlet {
+@WebServlet("/reSearch.pro")
+public class ProductReSearchController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public ProductSearchController() {
+    public ProductReSearchController() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -32,11 +32,15 @@ public class ProductSearchController extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
+
 		request.setCharacterEncoding("UTF-8");
-		String keyword = request.getParameter("keyword");
+		String keyword = request.getParameter("keyword");	
+		String keyOption = request.getParameter("keyOption"); 
 		
+		int research = Integer.parseInt(request.getParameter("research"));
 		
+		System.out.println(keyOption + research);
+
 		
 		int listCount = new ProductService().selectSearchCount(keyword);
 		int currentPage = Integer.parseInt(request.getParameter("cpage"));
@@ -51,15 +55,10 @@ public class ProductSearchController extends HttpServlet {
 		}
 		
 		PageInfo pi = new PageInfo(listCount, currentPage, pageLimit, boardLimit, maxPage, startPage, endPage);
+
+		ArrayList<Product> list = new ProductService().selectReSearchList(pi, keyword, keyOption, research);
 		
-		ArrayList<Product> list = new ProductService().selectSearchList(pi, keyword);
-				
 		
-		request.setAttribute("list", list);
-		request.setAttribute("pi", pi);
-		request.setAttribute("keyword", keyword);
-		request.setAttribute("listCount", listCount);
-		request.getRequestDispatcher("views/product/productSearchList.jsp").forward(request, response);
 	}
 
 	/**

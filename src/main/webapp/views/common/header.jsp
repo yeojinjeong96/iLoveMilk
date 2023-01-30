@@ -174,8 +174,10 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
 <!-- Latest compiled and minified CSS -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.1/dist/jquery.slim.min.js"></script>
 <!-- Popper JS -->
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+
 <!-- Latest compiled JavaScript -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
@@ -193,9 +195,11 @@
     <div class="wrap" align="center">
         <div class="header">
             <div class="header-1">
-                <input id="searchKeyword" name="keyword" type="text" required maxlength="20">
-                <button class="btn btn-primary btn-sm" location.href="<%=contextPath %>/search.pro?keyword='$("#searchKeyword").val()'">검색</button>
-            </div>
+            	<form action="<%=contextPath %>/search.pro?cpage=1" method="post" id="search-form">
+	                <input id="keyword" name="keyword"  type=“text"  maxlength="30" required>
+	                <button type="submit" class="btn btn-primary btn-sm">검색</button>
+                </form>
+            </div>										 
             <div class="header-2"><a href="<%= contextPath %>"><img src="resources/images/logo.jpg" width="100px;"></a></div>
             <div class="header-3"><a href="<%= contextPath %>"><b class="text-primary">아이럽우유</b></a></div>
             <div class="header-4">
@@ -307,7 +311,7 @@
 </div>
 
 	<script>
-		$('.dropdown-toggle').dropdown();
+//	$('.btn dropdown-toggle').dropdown();
 	</script>
 
 </body>

@@ -100,12 +100,58 @@
 		    ) 	
 	</entry>
 	
-		<entry key="deleteProductLike">
+	<entry key="deleteProductLike">
 	    DELETE 
 	      FROM TB_PRODUCT_LIKE
 	     WHERE PRODUCT_NO = ?
 	       AND MEMBER_NO = ?  
 	     
+	</entry>
+	
+	<entry key="selectSearchCount">
+		SELECT
+		       COUNT(*) COUNT
+		  FROM TB_PRODUCT
+		 WHERE STATUS = 'Y'
+           AND PRODUCT_NAME LIKE '%' || ? || '%'
+            OR BRAND LIKE '%' || ? || '%'
+	</entry>
+	
+	<entry key ="selectSearchList">
+		SELECT *
+		  FROM (
+		        SELECT ROWNUM RNUM, A.*
+		          FROM (
+		                SELECT
+		                	   PRODUCT_NO
+		                     , PRODUCT_NAME
+		                     , PRICE
+		                     , PRODUCT_IMG
+		                  FROM TB_PRODUCT B
+		                 WHERE B.STATUS = 'Y'
+	                          AND PRODUCT_NAME LIKE '%' || ? || '%'
+	                           OR BRAND LIKE '%' || ? || '%'
+		                 ORDER
+		                    BY ENROLL_DATE DESC
+		                ) A
+		        )
+		  WHERE RNUM BETWEEN ? AND ? 
+	</entry>  
+	
+	<entry key="selectReSearchCount1">
+		SELECT
+		       COUNT(*) COUNT
+		  FROM TB_PRODUCT
+		 WHERE STATUS = 'Y'
+           AND BRAND LIKE '%' || ? || '%'
+	</entry>
+	
+	<entry key="selectReSearchCount1">
+		SELECT
+		       COUNT(*) COUNT
+		  FROM TB_PRODUCT
+		 WHERE STATUS = 'Y'
+           AND PRODUCT_NAME LIKE '%' || ? || '%'
 	</entry>
 	
 	

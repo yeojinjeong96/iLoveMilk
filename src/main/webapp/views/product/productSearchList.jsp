@@ -6,6 +6,8 @@
 <% 
     PageInfo pi = (PageInfo)request.getAttribute("pi");
     ArrayList<Product> list = (ArrayList<Product>)request.getAttribute("list");
+    String keyword = (String)request.getAttribute("keyword");
+    int listCount = (int)(request.getAttribute("listCount"));
 %> 
            
 <!DOCTYPE html>
@@ -122,17 +124,27 @@
         <div class="search-outer" align="center">
             <br>
             <div>
-                <p style="font-size:25px;">"제주도우유"검색결과 3개</p>
+                <p style="font-size:25px;">"<%=keyword %>"검색결과 <%=listCount%>개</p>
             </div>
             <div id="search2">
-                <select name="keyword" id="">
-                    <option value="brand">회사명</option>
-                    <option value="productName">제품명</option>
-                </select>
-                <input type="text" name = "searchKeyword" style="width:200px;" required>
-                <button type="submit">검색</button>
-                <input type="checkbox" id="re-search"><label for="re-search">결과 내 재검색</label> 
+            	<form action="<%=contextPath %>/reSearch.pro?cpage=1" method="post" id="search-form">
+	                <select name="keyOption" id="">
+	                    <option value="brand">회사명</option>
+	                    <option value="productName">제품명</option>
+	                </select>
+	                <input type="text" name = "keyword" style="width:200px;" maxlength="30" required>
+	                <button type="submit" class="btn btn-primary btn-sm">검색</button>
+	                <input type="checkbox" name="research" id="re-search1" value="0"><label for="re-search">결과 내 재검색</label>
+	                <input type="hidden" name="research" id="re-search2" value="1"><label for="re-search">결과 내 재검색</label>
+                </form>
             </div>
+            
+            <script>
+            // if문 사용하여 결과내 재검색 넘겨줄값 설정하기
+            	if($("#re-search1").checked){
+            		$("#re-search2").disabled = "true";
+            	}
+            </script>
     
         </div>
 
@@ -168,11 +180,11 @@
 			     
         
          		// 로그인이 되어있을 경우     			
-			    <% if(loginMember != null ){ %>			   
+			   	   
 				   
 		           		var i = 0;
 		           	  $('i').on('click',function(){
-
+						 <% if(loginMember != null ){ %>		
 			           	
 			        	   // 찜하기 하트
 			               if(i==0){
@@ -187,42 +199,43 @@
 			                    i--;   
 			                    
 				           }
-			           	
+			           					       // 로그인 안했을 경우
+						<%} else{ %>
+							alert("로그인이 필요한 기능입니다. 로그인 후 사용해주세요");
+							location = "<%=contextPath%>/loginpage.me";
+						<%}%>
 		           	  })			   
 			    	
-				       // 로그인 안했을 경우
-					<%} else{ %>
-						alert("로그인이 필요한 기능입니다. 로그인 후 사용해주세요");
-						location = "<%=contextPath%>/loginpage.me";
-					<%}%>
+
 					
 					
 					// 찜하기 AJAX
 					function memberLike(pno){
 						
-						<% if(loginMember != null){%>
-							let memberNo = <%=loginMember.getMembeNo()%>;
-						<%}%>
+		           		<% if(loginMember != null){%>
+							let memberNo = <%=loginMember.getMemberNo()%>;
 						
-		               $.ajax({
-		                   url: "<%=contextPath%>/likeProduct.pro",
-		                  data: {pno: pno, 
-		                     memberNo:memberNo
-		                   },
-		                   success:function(result){
-		                      	
-		                	   if(result > 0){
-									console.log("성공");
-		                         }
-		                       
-		                    },
-		                    error: function(){
-		                      alert("찜하기 실패");
-		                   }
-		
-		               });
-         			}
+			               $.ajax({
+			                   url: "<%=contextPath%>/likeProduct.pro",
+			                  data: {pno: pno, 
+			                     memberNo:memberNo
+			                   },
+			                   success:function(result){
+			                      	
+			                	   if(result > 0){
+										console.log("성공");
+			                         }
+			                       
+			                    },
+			                    error: function(){
+			                      alert("찜하기 실패");
+			                   }
+			
+			               });
+	         			
+					<%}%>
 					
+					}
 
 
         </script>
@@ -231,19 +244,19 @@
             <div class="paging-area" align="center">
                 <!-- 내가 보고있는 페이지가 1번 페이지가 아닐때에만 나타내기 -->
                 <% if(pi.getCurrentPage() != 1){ %>
-                <button onclick="location.href='<%=contextPath%>/proList.pro?category=<%=category %>&cpage=<%= pi.getCurrentPage()-1%>';">&lt;</button>
+                <button onclick="location.href='<%=contextPath%>/search.pro?cpage=<%= pi.getCurrentPage()-1%>&keyword=<%=keyword%>';">&lt;</button>
                 <%} %> 
                 
 
                 
                 <%for(int p = pi.getStartPage() ; p <= pi.getEndPage() ; p++) { %>
-                <button onclick="location.href='<%=contextPath%>/proList.pro?category=<%=category %>&cpage=<%=p%>';"><%= p %></button>
+                <button onclick="location.href='<%=contextPath%>/search.pro?cpage=<%=p%>&keyword=<%=keyword%>';"><%= p %></button>
                 <% } %>
                 
 
                 <!--  내가 보고있는 페이지가 마지막 페이지가 아닐 때에만 나타내기 -->
                 <%if(pi.getCurrentPage() != pi.getMaxPage()){ %> 
-                <button onclick="location.href='<%=contextPath %>/proList.pro?category=<%=category %>&cpage=<%=pi.getCurrentPage()+1%>';">&gt;</button>
+                <button onclick="location.href='<%=contextPath %>/search.pro?cpage=<%=pi.getCurrentPage()+1%>&keyword=<%=keyword%>';">&gt;</button>
                  <%} %> 
                 
             </div>

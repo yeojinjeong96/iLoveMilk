@@ -137,6 +137,59 @@ public class ProductService {
 		return result1 + result2;
 	}
 	
+	/**
+	 * 상품검색용 갯수 조회(페이징)
+	 * @author 이다혜
+	 * @return listCount
+	 */
+	public int selectSearchCount(String keyword) {
+		Connection conn = getConnection();
+		int listCount = new ProductDao().selectSearchCount(conn, keyword);
+		
+		close(conn);
+		return listCount;
+	}
+	
+	/**
+	 * 메인페이지 상품검색
+	 * @param keyword
+	 * @return list
+	 */
+	public ArrayList<Product> selectSearchList(PageInfo pi, String keyword){
+		Connection conn = getConnection();
+		ArrayList<Product> list = new ProductDao().selectSearchList(conn, pi, keyword);
+		
+		close(conn);
+		return list;
+	}
+	
+	
+	/**
+	 * 상품 재검색용 갯수 조회(페이징)
+	 * @author 이다혜
+	 * @return listCount
+	 */
+	public int selectReSearchCount(String keyword, String keyOption, int research) {
+		Connection conn = getConnection();
+		int listCount = new ProductDao().selectReSearchCount(conn, keyword, keyOption, research);
+		
+		close(conn);
+		return listCount;
+	}
+	
+	/**
+	 * 상품 재검색 리스트조회
+	 * @author 이다혜
+	 * @return list
+	 */
+	public ArrayList<Product> selectReSearchList(PageInfo pi, String keyword, String keyOption, int research){
+		Connection conn = getConnection();
+		ArrayList<Product> list = new ProductDao().selectReSearchList(conn, keyword, keyOption, research);
+		
+		close(conn);
+		return list;
+	}
+	
 	
 	/**
 	 * 상품 등록
