@@ -49,12 +49,13 @@ public class AnswerInsertController extends HttpServlet {
 		
 		int result = new QAService().enrollAnswer(q);
 		if(result>0) {
+			
 			session.setAttribute("alertMsg", "답변 입력 성공");
-			response.sendRedirect(request.getContextPath()+"/listM.a");
+			response.sendRedirect(request.getContextPath()+"/listM.a?cpage=1");
 		}else {
 			
 			session.setAttribute("alertMsg", "답변 입력 실패");
-			response.sendRedirect(request.getContextPath()+"/listM.a");
+			response.sendRedirect(request.getContextPath()+"/listM.a?cpage=1");
 		}
 		
 		

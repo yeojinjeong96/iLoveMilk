@@ -103,7 +103,7 @@
                 </form>
                 <br>
                 <div align="right" style="width:700px" class="a">
-                    <a href="">> 답변 목록 조회</a>
+                    <a href="<%=contextPath%>/listM.a?cpage=1">> 답변 목록 조회</a>
                     <br><br>
                 </div>
         </div>

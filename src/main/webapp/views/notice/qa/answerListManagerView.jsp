@@ -1,5 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@page import= "java.util.ArrayList, com.milk.notice.model.vo.QA, com.milk.common.model.vo.PageInfo" %>
+<% 
+	ArrayList<QA>list =(ArrayList<QA>) request.getAttribute("list"); 
+	PageInfo pi = (PageInfo)request.getAttribute("pi");
+	
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -19,6 +25,15 @@
         width: 800px;
         float: left;
         box-sizing: border-box;
+    }
+    #answer-list tr div{
+
+        overflow: hidden;
+        width:170px;
+   		 white-space: nowrap ;
+        text-overflow: ellipsis;  
+        padding: 10px;
+       align-content: center;
     }
     
 </style>
@@ -62,36 +77,56 @@
                 </form>
             </div>
             <br>
-            <table border="1" class="text-center"> 
+            <table border="1" class="text-center" id="answer-list">  
+           
                 <tr>
                     <th width="100">완료일</th>
-                    <th width="150">문의종류</th>
-                    <th width="175">문의내용</th>
+                    <th width="150">카테고리</th>
+                    <th width="170">문의내용</th>
                     <th width="100">작성자</th>
-                    <th width="175">답변내용</th>
+                    <th width="170">답변내용</th>
                 </tr>
+                <%if(list.isEmpty()){ %>
                 <!--데이터 없을시-->
                 <tr>
                     <td colspan="5">답변 목록이 없습니다.</td>
                 </tr>
                 <!--데이터 있을시-->
+                <%}else{ %>
+                 <%for (QA q :list){ %>
                 <tr>
-                    <td>2022-01-01</td>
-                    <td>[고객불만/품질불만]</td>
-                    <td>문의합니다..</td>
-                    <td>관리자</td>
-                    <td>안녕하세요..</td>
+                    <td style="height: 25px; "><%=q.getAnswerDate() %></td>
+                    <td>[<%=q.getfCategory() %>/<%=q.getsCategory() %>]</td>
+                    <td>
+                        <div>
+                            <%=q.getqContent() %>
+                        </div>
+                       
+                    </td>
+                    <td><%=q.getManagerName() %></td>
+                    <td>
+                        <div>
+                            <%=q.getaContent() %>
+                        </div>
+                    </td>
                 </tr>
+                <%}} %>
             </table>
             <br>
             <div class="paging-area" >
-                <button>&lt;</button>
-                <button>1</button>
-                <button>&gt;</button>
+            <%if(pi.getCurrentPage()!=1){ %>
+                <button onclick="location.href='<%=contextPath%>/listM.qa?cpage=<%=pi.getCurrentPage()-1%>';">&lt;</button>
+            <%} %>   
+            <%for(int p= pi.getStartPage(); p<=pi.getEndPage(); p++){ %>
+                <button onclick="location.href='<%=contextPath%>/listM.qa?cpage=<%=p%>';"><%=p %></button>
+            <%} %>
+            <%if(pi.getCurrentPage()!=pi.getMaxPage()){ %>
+                <button onclick="location.href='<%=contextPath%>/listM.qa?cpage=<%=pi.getCurrentPage()+1%>';">&gt;</button>
+            <%} %>
             </div>
     
             <div align="right" style="width:650px" class="a">
-                <a href="">&lt; 미답변 목록 조회</a>
+                <a href="<%=contextPath%>/listM.qa?cpage=1">&lt; 미답변 목록 조회</a>
                  <br><br>
             </div>
     

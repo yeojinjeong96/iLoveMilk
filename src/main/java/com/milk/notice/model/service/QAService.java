@@ -90,4 +90,23 @@ public class QAService {
 		
 		return result;
 	}
+	
+	public int selectAnswerListCount() {
+		
+		Connection conn = getConnection();
+		
+		int result = new QADao().selectAnswerListCount(conn);
+		close(conn);
+		return result;
+	}
+	
+	public ArrayList<QA> selectAnswerList(PageInfo pi){
+		
+		Connection conn= getConnection();
+		
+		ArrayList<QA>list= new QADao().selectAnswerList(conn, pi);
+		
+		close(conn);
+		return list;
+	}
 }

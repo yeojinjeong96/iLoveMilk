@@ -17,6 +17,12 @@
         margin-top: 50px;
     
     }
+    #content-area{
+
+        width: 100%;
+        height: 100%;
+        text-align: left;
+    }
 
   
 </style>
@@ -82,7 +88,7 @@
             <%}else{ %>
             <!--답변완료시-->
             <br>
-            <div class="answer-area, text-center" >
+            <div class="answer-area, text-center" style="width: 700px;">
                 <table border="1" style="width: 700px;">
                     <tr>
                         <td colspan="2"><%=q.getaTitle() %></td>
@@ -93,11 +99,16 @@
                         <td><%=q.getAnswerDate() %></td>
                     </tr>
                     <tr>
-                        <td colspan="2" height="200"><%=q.getaContent() %></td>
+                        <td colspan="2" height="200" style="align-items: left;">
+                            <div id="content-area">
+                                <%=q.getaContent()%>
+                            </div>
+                        </td>
             
                     </tr>
                 </table>
                 <br><br>
+                <button type="button" onclick=location.href="<%=contextPath%>/list.qa?cpage=1">목록으로</button>
 
             </div>
             <%} %>
