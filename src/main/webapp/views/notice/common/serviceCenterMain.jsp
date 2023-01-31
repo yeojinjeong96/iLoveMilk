@@ -4,6 +4,7 @@
 <% 
 	ArrayList<Faq>list= (ArrayList<Faq>)request.getAttribute("list");
 	PageInfo pi = (PageInfo)request.getAttribute("pi");
+	String category= (String)request.getAttribute("category");
 	
 %>	
 <!DOCTYPE html>
@@ -103,7 +104,21 @@
                 
                 
                 <div class="paging-area">
-                <%if(!list.isEmpty()) {%>
+                <%if(category !=null) {%>
+                
+               <%if(pi.getCurrentPage()!=1){ %>
+                <button onclick="location.href='<%=contextPath%>/list.sv?cpage=<%=pi.getCurrentPage()-1%>&category=<%=category%>';">&lt;</button>
+	            <%} %>   
+	            <%for(int p= pi.getStartPage(); p<=pi.getEndPage(); p++){ %>
+	                <button onclick="location.href='<%=contextPath%>/list.sv?cpage=<%=p%>&category=<%=category%>';"><%=p %></button>
+	            <%} %>
+	            <%if(pi.getCurrentPage()!=pi.getMaxPage()){ %>
+	                <button onclick="location.href='<%=contextPath%>/list.sv?cpage=<%=pi.getCurrentPage()+1%>&category=<%=category%>';">&gt;</button>
+	            <% }}%>
+              
+           		</div>
+           		<div class="paging-area">
+                <%if(category ==null) {%>
                 
                <%if(pi.getCurrentPage()!=1){ %>
                 <button onclick="location.href='<%=contextPath%>/list.sv?cpage=<%=pi.getCurrentPage()-1%>';">&lt;</button>

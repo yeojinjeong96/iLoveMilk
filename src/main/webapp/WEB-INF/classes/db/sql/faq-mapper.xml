@@ -16,9 +16,7 @@
 		               ,FAQ_WRITER
 		               ,CATEGORY_NAME
 		                FROM TB_FAQ
-                     WHERE CATEGORY_NAME = ?
-		              ORDER BY CATEGORY_NAME)E)E
-		              WHERE RNUM BETWEEN ? AND ?
+                   
 	</entry>
 	<entry key="selectBestFaqList">
 		SELECT RNUM, E.*

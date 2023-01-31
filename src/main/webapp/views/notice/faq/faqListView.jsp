@@ -4,6 +4,7 @@
 <% 
 	ArrayList<Faq>list= (ArrayList<Faq>)request.getAttribute("list");
 	PageInfo pi = (PageInfo)request.getAttribute("pi");
+	String category = (String)request.getAttribute("category");
 %>	
 <!DOCTYPE html>
 <html>
@@ -31,6 +32,16 @@
 
     }
     .faq-list table{ text-align: center;}
+    #answer-area{
+            border: 1px solid lightgrey;
+            width: 450px;
+            height: 100px;
+            margin-top: 5px;
+            padding: 10px;
+            box-sizing: border-box;
+            border-radius: 10px;
+            display: none;
+        }
 </style>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
@@ -75,11 +86,11 @@
             </div>
             <br>
             <div class="faq-list">
-                <table border="1" >
+                <table border="1"  class="">
                     <tr>
-                        <th width="150">번호</th>
+                        <th width="100">번호</th>
                         <th width="150">분류</th>
-                        <th width="400">내용</th>
+                        <th width="450">내용</th>
                     </tr>
                     <%if (list.isEmpty()){ %>
                     <tr>
@@ -91,14 +102,39 @@
                     <%}else{ %>
                     <%for(Faq f: list){ %>
                     <tr>
+               
                         <td><%=f.getFaqNo() %></td>
                         <td><%=f.getCategoryName() %></td>
-                        <td><%=f.getQuestion() %></td>
+                        <td id="question-area">
+                       		<div >
+                       			 <%=f.getQuestion() %>
+                
+                       		</div>
+                            <p id="answer-area">
+                                <%=f.getAnswer() %>
+                            </p>
+                        </td>
+                     
                     </tr>
                     <%} }%>
                 </table>
             </div>
             <br>
+            <%if(category!=null){ %>
+            <div class="paging-area">
+                
+               <%if(pi.getCurrentPage()!=1){ %>
+                <button onclick="location.href='<%=contextPath%>/list.faq?cpage=<%=pi.getCurrentPage()-1%>&category=<%=category%>';">&lt;</button>
+	            <%} %>   
+	            <%for(int p= pi.getStartPage(); p<=pi.getEndPage(); p++){ %>
+	                <button onclick="location.href='<%=contextPath%>/list.faq?cpage=<%=p%>&category=<%=category%>';"><%=p %></button>
+	            <%} %>
+	            <%if(pi.getCurrentPage()!=pi.getMaxPage()){ %>
+	                <button onclick="location.href='<%=contextPath%>/list.faq?cpage=<%=pi.getCurrentPage()+1%>&category=<%=category%>';">&gt;</button>
+
+            </div>
+         	 <%} }%>
+         	 <%if(category==null){ %>
             <div class="paging-area">
                 
                <%if(pi.getCurrentPage()!=1){ %>
@@ -109,13 +145,29 @@
 	            <%} %>
 	            <%if(pi.getCurrentPage()!=pi.getMaxPage()){ %>
 	                <button onclick="location.href='<%=contextPath%>/list.faq?cpage=<%=pi.getCurrentPage()+1%>';">&gt;</button>
-	            <%} %>
-              
+
             </div>
-         
+         	 <%} }%>
         </div>
 
     </div>
+    <script>
+        $(function(){
+
+            $("#question-area").click(function(){
+
+                const $p= $(this).next();
+                if($p.css("display") == "none"){
+                    
+                    $(this).siblings("p").slideUp();
+                    $p.slideDown();
+                }else{
+                    $p.slideUp();   
+                }
+
+            })
+        })
+    </script>
     <%@include file="/views/common/footer.jsp" %>
 </body>
 </html>
