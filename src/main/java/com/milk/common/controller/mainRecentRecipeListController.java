@@ -1,4 +1,4 @@
-package com.milk.recipe.controller;
+package com.milk.common.controller;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -11,20 +11,19 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.google.gson.Gson;
 import com.milk.recipe.model.service.RecipeService;
-import com.milk.recipe.model.vo.Attachment;
-import com.milk.recipe.model.vo.Reply;
+import com.milk.recipe.model.vo.Recipe;
 
 /**
- * Servlet implementation class AjaxReplyListController
+ * Servlet implementation class mainRecentProductListController
  */
-@WebServlet("/relist.re")
-public class AjaxReplyListController extends HttpServlet {
+@WebServlet("/recentList.re")
+public class mainRecentRecipeListController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public AjaxReplyListController() {
+    public mainRecentRecipeListController() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -33,16 +32,15 @@ public class AjaxReplyListController extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+		// 메인화면 레시피 게시글 3개 뿌려줄 ArrayList
+		ArrayList <Recipe> recentList = new RecipeService().selectRecentRecipeList();
 		
+		System.out.println(recentList);
 		
-		int recipeNo = Integer.parseInt(request.getParameter("no"));
-		
-		ArrayList<Reply> list = new RecipeService().selectReplyList(recipeNo);
-		
-	
 		response.setContentType("application/json; charset=UTF-8");
-		new Gson().toJson(list, response.getWriter());
-		
+		new Gson().toJson(recentList, response.getWriter());
+
 	}
 
 	/**
