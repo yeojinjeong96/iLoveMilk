@@ -9,7 +9,11 @@ public class Reply {
 	private String enrollDate;
 	private String deleteStatus;
 	private String reportStatus;
+	
 	private String profileImg;
+	
+	private String recipeTItle;
+	private String reportContent;
 	
 	
 	public Reply() {}
@@ -37,6 +41,20 @@ public class Reply {
 		this.replyContent = replyContent;
 		this.enrollDate = enrollDate;
 		this.profileImg = profileImg;
+	}
+
+
+
+	public Reply(int replyNo, String memberNo, String replyContent, String reportStatus, String recipeTItle,
+			String reportContent, int refNo) {
+		super();
+		this.replyNo = replyNo;
+		this.memberNo = memberNo;
+		this.replyContent = replyContent;
+		this.reportStatus = reportStatus;
+		this.recipeTItle = recipeTItle;
+		this.reportContent = reportContent;
+		this.refNo = refNo;
 	}
 
 
@@ -134,6 +152,30 @@ public class Reply {
 
 	public void setProfileImg(String profileImg) {
 		this.profileImg = profileImg;
+	}
+
+
+
+	public String getRecipeTItle() {
+		return recipeTItle;
+	}
+
+
+
+	public void setRecipeTItle(String recipeTItle) {
+		this.recipeTItle = recipeTItle;
+	}
+
+
+
+	public String getReportContent() {
+		return reportContent;
+	}
+
+
+
+	public void setReportContent(String reportContent) {
+		this.reportContent = reportContent;
 	}
 
 

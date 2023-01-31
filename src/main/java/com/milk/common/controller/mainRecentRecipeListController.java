@@ -36,7 +36,7 @@ public class mainRecentRecipeListController extends HttpServlet {
 		// 메인화면 레시피 게시글 3개 뿌려줄 ArrayList
 		ArrayList <Recipe> recentList = new RecipeService().selectRecentRecipeList();
 		
-		System.out.println(recentList);
+		// System.out.println(recentList);
 		
 		response.setContentType("application/json; charset=UTF-8");
 		new Gson().toJson(recentList, response.getWriter());
