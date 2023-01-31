@@ -93,8 +93,8 @@
                                 <td><%=m.getAddress() %></td>
                                 <td><%=m.getTotalpay() %></td>
                                 <td><%=m.getTotal() %>
-                                    <button type="button" onclick="memDetail('<%=m.getMemberId() %>', '<%=m.getMemberGrade() %>', <%=m.getTotal() %>, <%=m.getMemberNo() %>);" class="btn btn-outline-secondary btn-sm" data-toggle="modal" data-target="#point-info" style="font-size:9px;">상세</button>
-                                    <button type="button" onclick="memModify('<%=m.getMemberId() %>');" class="btn btn-outline-secondary btn-sm" data-toggle="modal" data-target="#point-change" style="font-size:9px;">변경</button>
+                                    <button type="button" id="btn1" onclick="memDetail('<%=m.getMemberId() %>', '<%=m.getMemberGrade() %>', <%=m.getTotal() %>, <%=m.getMemberNo() %>);" class="btn btn-outline-secondary btn-sm" data-toggle="modal" data-target="#point-info" style="font-size:9px;">상세</button>
+                                    <button type="button" id="btn2" onclick="memModify('<%=m.getMemberId() %>');" class="btn btn-outline-secondary btn-sm" data-toggle="modal" data-target="#point-change" style="font-size:9px;">변경</button>
                                 </td>
                                 <td>
                                     <%=m.getEnrollDate() %>
@@ -107,6 +107,87 @@
                 </table>
             </div>
             <br>
+            
+         <script>
+         /*
+		     	$(function(){
+		    		$(".member-info>tbody #btn1").click(function(){
+		    			
+		    			var memId = $(this).siblings().eq(1).text();
+		    			var memGrade = $(this).siblings().eq(3).text();
+		    			var point = $(this).siblings().eq(8).text();
+		    			
+	       				$("#detailModalId").text(memId);
+	       				$("#detailModalGrade").text(memGrade);
+	       				$("#detailModalPoint").text(point);
+		    			
+		    		})
+		    	})*/
+         		
+		    	
+		           
+            	function memDetail(a, b, c, d){
+            
+       				$("#detailModalId").text(a);
+       				$("#detailModalGrade").text(b);
+       				$("#detailModalPoint").text(c);
+       				
+       				memberPoint(d);
+       				
+       			}
+            	
+            	function memModify(a){
+            		$("#modifyModalId").text(a);
+            	}
+            	
+ 		    	function memberPoint(d){
+       				$.ajax({
+       					url:"<%=contextPath%>/memPoint.ma?",
+       				   data: {memNo:d, ppage:1}
+       				   ,success:function(result1, result2){
+       					   
+                           let value = "";
+                           
+						   if(result1.length == 0){
+							   value += "<td colspan='3'>" + "내역이 없습니다." + " </td>";
+						   }else{
+	                           for(let i = 0; i<result1.length; i++){
+	
+	                               value += "<td>" + result1[i].modifyDate + "</td>"
+	                                       +"<td>" + result1[i].montent + "</td>"
+	                                       +"<td>" + result1[i].total + "</td>";
+	
+	                           }
+						   }
+                          $("#pointHistory").html(value);
+                          
+                          
+		                    let value2 = "";
+		                     if(result2.currentPage != 1){ 
+		                        	   value2 += "<button onclick=" + "'location.href='"+"'<%=contextPath%>/memPoint.ma?ppage=result2.currentPage-1'" + ";>&lt;</button>";
+		                     		} 
+		          
+		                     for(int p=result2.startPage; p<=result2.endPage; p++){ 
+		                    	 value2+=" <button onclick="+"'location.href='" + "'<%=contextPath%>/memPoint.ma?ppage=p'" + ";>" + p +" </button>";
+		                       } 
+		          <!--  내가 보고있는 페이지가 마지막 페이지가 아닐 때에만 나타내기 -->
+		          
+		                       if(result2.currentPage != result2.maxPage){
+		                    	   value2+=" <button onclick=" + "'location.href='" + "'<%=contextPath%>/memPoint.ma?ppage=result2.currentPage+1'" + ";>&gt;</button>";
+		                      } 
+                          
+       					   
+       				   },error:function(){
+       					   alert("데이터 통신 실패");
+       				   }
+       				});
+            		
+            	}
+        	 
+           	
+            	
+   		 </script>
+            
             <div id="mem-3">
                 <div class="paging-area">
                     <!-- 내가 보고있는 페이지가 1번 페이지가 아닐때에만 나타내기 -->
@@ -127,62 +208,7 @@
                 
             </div>
             
-            <script>
-            
-            	function memDetail(a, b, c, d){
-            		
-       				$("#detailModalId").text(a);
-       				$("#detailModalGrade").text(b);
-       				$("#detailModalPoint").text(c);
-       				
-       				
-       				$.ajax({
-       					url:"<%=contextPath%>/memPoint.ma?ppage=1",
-       				   data: {memNo:d, ppage:1}
-       				   ,success:function(result1, result2){
-       					   
-                           let value = "";
-						   if(result.isEmpty()){
-							   value += "<td colspan='3'> 내역이 없습니다. </td>"
-						   }else{
-	                           for(let i = 0; i<result1.length; i++){
-	
-	                               value += "<td>" + result1[i].modifyDate + "</td>"
-	                                       +"<td>" + result1[i].montent + "</td>"
-	                                       +"<td>" + result1[i].total + "</td>";
-	
-	                           }
-						   }
-                          $("pointHistory").html(value);
-                          
-		                    let value2 = "";
-		                           if(result2.currentPage != 1){ 
-		                        	   value2 += ""<button onclick="location.href='<%=contextPath%>/memPoint.ma?ppage=<%=result2.currentPage-1%>';">&lt;</button>
-		                     		} 
-		          
-		                     for(int p=result2.startPage; p<=result2.endPage(); p++){ 
-		                          <button onclick="location.href='<%=contextPath%>/memPoint.ma?ppage=p';">p </button>
-		                       } 
-		          <!--  내가 보고있는 페이지가 마지막 페이지가 아닐 때에만 나타내기 -->
-		          
-		                       if(result2.currentPage != result2.maxPage){
-		                          <button onclick="location.href='<%=contextPath%>/memPoint.ma?ppage=<%=result2.currentPage+1%>';">&gt;</button>
-		                      } 
-                          
-       					   
-       				   },error:function(){
-       					   alert("데이터 통신 실패");
-       				   }
-       				});
-            		
-            	}
-            	
-            	function memModify(d){
-            		$("#modifyModalId").text(a);
-            	}
-            	
-            	
-            </script>
+   
 
 
             <!-- 적립금상세조회 모달 div -->
@@ -229,9 +255,7 @@
                           </thead>
                           <tbody>
                             <tr id="pointHistory">
-                                <td>23-01-01 00:00:00</td>
-                                <td>회원가입</td>
-                                <td>2,000</td>
+
                             </tr>
                             <tr>
                             	<td colspan="3">
