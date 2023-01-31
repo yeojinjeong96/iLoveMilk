@@ -12,10 +12,10 @@ import com.milk.notice.model.vo.Faq;
 
 public class FaqService {
 	
-	public int selectFaqListCount() {
+	public int selectFaqListCount(String category) {
 		Connection conn = getConnection();
 		
-		int listCount = new FaqDao().selectFaqListCount(conn);
+		int listCount = new FaqDao().selectFaqListCount(conn,category);
 		close(conn);
 		return listCount;
 		

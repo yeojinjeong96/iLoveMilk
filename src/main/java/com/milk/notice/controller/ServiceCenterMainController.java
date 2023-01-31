@@ -57,7 +57,7 @@ public class ServiceCenterMainController extends HttpServlet {
 		ArrayList<Faq>list= new FaqService().selectBestFaqList(pi,category);
 		
 		
-		
+		request.setAttribute("category", category);
 		request.setAttribute("list", list);
 		request.setAttribute("pi", pi);
 	
