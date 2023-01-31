@@ -128,7 +128,6 @@
 
         <form action="<%= contextPath %>/update.re" method="post" enctype="multipart/form-data">
 			<input type="hidden" name="no" value="<%= r.getRecipeNo() %>">
-			
             <div class="enroll-area">
                 <table>
                     <tr >
@@ -173,6 +172,7 @@
                     </thead>
                     <tbody>
                     <% for(RecipeIngre ri : listI) { %>
+                    <input type="hidden" name="ingreNo" value="<%= ri.getIngreNo() %>">
                         <tr>
                             <td width="220px" style="padding-left: 10px;">
                                 <br>
@@ -215,6 +215,7 @@
                     </thead>
                     <tbody>
                     <% for(RecipeOrder ro : listO) { %>
+                    <input type="hidden" name="orderNo" value="<%= ro.getRecipeOrderNo() %>">
                         <tr>
                             <td width="70px" align="center">
                                 <div id="num1" >step <%= ro.getRecipeOrder() %></div>

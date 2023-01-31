@@ -52,8 +52,10 @@ public class RecipeUpdateController extends HttpServlet {
 			String content = multiRequest.getParameter("content");
 			String mainImg = "resources/recipe_upfiles/" + multiRequest.getFilesystemName("file1");
 			
-			
 			Recipe r = new Recipe();
+			
+			
+		
 			r.setRecipeNo(recipeNo);
 			r.setRecipeTitle(title);
 			r.setRecipeIntro(content);
@@ -63,14 +65,12 @@ public class RecipeUpdateController extends HttpServlet {
 			ArrayList<RecipeIngre> listIngre = new ArrayList<>();
 			
 			
-			
-			
-			for(int li=1; li<=10 ; li++) {
+			for(int i=1 ; i<=10 ; i++) {
 				
 				int recipeNoI = Integer.parseInt(multiRequest.getParameter("no"));
 				int ingreNo = Integer.parseInt(multiRequest.getParameter("ingreNo"));
-				String ingreName = multiRequest.getParameter("ingre-name" + li);
-				String ingreAmount = multiRequest.getParameter("ingre-amount" + li);
+				String ingreName = multiRequest.getParameter("ingre-name" + i);
+				String ingreAmount = multiRequest.getParameter("ingre-amount" + i);
 				
 
 				if(ingreName != null) {
@@ -82,6 +82,7 @@ public class RecipeUpdateController extends HttpServlet {
 			
 					listIngre.add(listI);
 					
+					System.out.println(listIngre);
 					
 				}
 			
@@ -91,8 +92,8 @@ public class RecipeUpdateController extends HttpServlet {
 			ArrayList<RecipeOrder> listOrder = new ArrayList<>();
 			
 			
-			for(int lo=2 ; lo<=11 ; lo++) {
-				String orderExp = multiRequest.getParameter("order" + (lo-1));
+			for(int lo=1 ; lo<=10 ; lo++) {
+				String orderExp = multiRequest.getParameter("order" + lo);
 				int recipeNoO = Integer.parseInt(multiRequest.getParameter("no"));
 				int orderNo = Integer.parseInt(multiRequest.getParameter("orderNo"));
 				
@@ -101,9 +102,9 @@ public class RecipeUpdateController extends HttpServlet {
 					listO.setRecipeExplain(orderExp);
 					listO.setRecipeNo(recipeNoO);
 					listO.setRecipeOrderNo(orderNo);
-					listO.setRecipeOrder(lo-1);
+					listO.setRecipeOrder(lo);
 					
-					String orderFile = "resources/recipe_upfiles/" + multiRequest.getFilesystemName("file" + lo);
+					String orderFile = "resources/recipe_upfiles/" + multiRequest.getFilesystemName("file" + (lo+1));
 					listO.setRecipeImg(orderFile);
 					
 					listOrder.add(listO);

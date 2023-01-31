@@ -386,7 +386,8 @@ public Member updateCheckPwd(Connection conn, String memberId, String memberPwd)
 						   rset.getString("status"),
 						   rset.getString("member_grade"),
 						   rset.getInt("total"),
-						   rset.getInt("totalpay")));
+						   rset.getInt("totalpay")
+						   ));
 			}
 			
 		} catch (SQLException e) {
