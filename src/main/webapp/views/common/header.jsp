@@ -285,13 +285,13 @@
                                             <li><a class="dropdown-item" href="<%=contextPath%>/proList.pro?category=락토프리&cpage=1">락토프리우유</a></li>
                                         </ul>
                                     </li>
-                                    <li><a class="dropdown-header" href="">레시피</a>
+                                    <li><a class="dropdown-header" href="<%= contextPath %>/listR.re?cpage=1">레시피</a>
                                         <br>
                                         <!-- <div style="border:1px solid gray; width:110px"></div> -->
                                         <br>
                                         <ul>
-                                            <li><a class="dropdown-item" href="<%= contextPath %>/listR.re?cpage=1&cpage=1">추천레시피</a></li>
-                                            <li><a class="dropdown-item" href="<%= contextPath %>/list.re?cpage=1&cpage=1">자유게시판</a></li>
+                                            <li><a class="dropdown-item" href="<%= contextPath %>/listR.re?cpage=1">추천레시피</a></li>
+                                            <li><a class="dropdown-item" href="<%= contextPath %>/list.re?cpage=1">자유게시판</a></li>
                                         </ul>
                                     </li>
                                 </ul>
@@ -306,7 +306,7 @@
             <li><a href="<%=contextPath%>/proList.pro?category=발효유&cpage=1">발효유</a></li>
             <li><a href="<%=contextPath%>/proList.pro?category=치즈&cpage=1">치즈</a></li>
             <li><a href="<%=contextPath%>/proList.pro?category=락토프리&cpage=1">락토프리</a></li>
-            <li><a href="">레시피</a></li>
+            <li><a href="<%= contextPath %>/listR.re?cpage=1">레시피</a></li>
         </ul>
 </div>
 

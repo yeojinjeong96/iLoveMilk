@@ -77,9 +77,12 @@
                                 </td>
                             </tr>
                             <tr>
-                            <!-- 상ㄴ품이미지가 없을경우 점으로 나오게 -->
                                 <th>상품 이미지&nbsp;</th>
-                                <td><%= p.getProductImg().substring(26) %><input type="file" name="productImg" value="<%= p.getProductImg() %>"></td>
+                                <td>
+                                	<%= p.getProductImg().substring(26) %>
+                                	<input type="hidden" name="productImg" value="<%= p.getProductImg() %>">
+                                	<input type="file" name="updateImg">
+                                </td>
                             </tr>
                             <tr>
                                 <th><span>*</span> 판매가격&nbsp;</th>
@@ -127,6 +130,12 @@
 			if($("#fCate").val() == "- 1차 카테고리 -" || $("#sCate").val() == "- 2차 카테고리 -"){
 				alert("카테고리를 입력하세요.");
 				return false;
+			}else{
+    			// 매니저 비밀번호 체크
+    			if('<%= loginManager.getManagerPwd() %>' != prompt('비밀번호를 입력하세요.')){
+    				alert('비밀번호가 틀렸습니다.');
+					return false;
+    			}
 			}
 		}
     

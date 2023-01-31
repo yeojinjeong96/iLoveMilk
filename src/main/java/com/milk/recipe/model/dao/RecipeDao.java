@@ -14,7 +14,6 @@ import java.util.InvalidPropertiesFormatException;
 import java.util.Properties;
 
 import com.milk.common.model.vo.PageInfo;
-import com.milk.recipe.model.vo.Attachment;
 import com.milk.recipe.model.vo.Recipe;
 import com.milk.recipe.model.vo.RecipeIngre;
 import com.milk.recipe.model.vo.RecipeOrder;
@@ -666,6 +665,91 @@ public class RecipeDao {
 									rset.getString("MEMBER_ID"),
 									rset.getString("MAIN_IMG")));
 			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return list;
+	}
+	
+	
+	public ArrayList<Reply> selectReplyListM(Connection conn, PageInfo pi){
+		ArrayList<Reply> list = new ArrayList<>();
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		String sql = prop.getProperty("selectReplyListM");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			int startRow = (pi.getCurrentPage() - 1) * pi.getBoardLimit() + 1;
+			int endRow = startRow + pi.getBoardLimit() - 1;
+			
+			pstmt.setInt(1, startRow);
+			pstmt.setInt(2, endRow);
+			
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				list.add(new Reply(rset.getInt("REPLY_NO"),
+						   		   rset.getString("MEMBER_ID"),
+						   		   rset.getString("REPLY_CONTENT"),
+						   		   rset.getString("REPORT_STATUS"), 		   
+						   		   rset.getString("RECIPE_TITLE"),
+						   		   rset.getString("REPORT_CONTENT"),
+						   		   rset.getInt("REF_NO")
+						   		   ));
+						   		   
+			}
+			
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return list;
+		
+	}
+	
+	public ArrayList<Recipe> selectRecipeListDeleteM(Connection conn, PageInfo pi){
+		ArrayList<Recipe> list = new ArrayList<>();
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		String sql = prop.getProperty("selectRecipeListDeleteM");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			int startRow = (pi.getCurrentPage() - 1) * pi.getBoardLimit() + 1;
+			int endRow = startRow + pi.getBoardLimit() - 1;
+			
+			
+			pstmt.setInt(1, startRow);
+			pstmt.setInt(2, endRow);
+		
+			
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				
+				list.add(new Recipe(rset.getInt("RECIPE_NO"),
+									rset.getString("RECIPE_TITLE"),
+									rset.getString("MEMBER_ID"),
+									rset.getString("ENROLL_DATE")));
+						   		   
+			}
+			
+			System.out.println(list);
+			
+			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {

@@ -30,6 +30,13 @@ public class Faq {
 		this.faqWriter = faqWriter;
 		this.categoryName = categoryName;
 	}
+	
+	public Faq(int faqNo, String question, String categoryName) {
+		super();
+		this.faqNo = faqNo;
+		this.question = question;
+		this.categoryName = categoryName;
+	}
 	public int getFaqNo() {
 		return faqNo;
 	}

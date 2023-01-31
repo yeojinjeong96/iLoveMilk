@@ -157,7 +157,7 @@
 
     </div>
     <script>
-        $(function(){
+     $(function(){
 
             $(".question-area").on("click","div",function(){
 
@@ -172,7 +172,9 @@
                 }
 
             })
-        })
+        }) 
+
+    
     </script>
     <%@include file="/views/common/footer.jsp" %>
 </body>

@@ -192,9 +192,45 @@ public class ProductService {
 	
 	
 	/**
+	 * 상품 갯수 조회
+	 * @author 승하
+	 * @return 상품 갯수
+	 */
+	public int selectAllListCount(String op, String searchKey) {
+		Connection conn = getConnection();
+		int result = new ProductDao().selectAllListCount(conn, op, searchKey);
+		close(conn);
+		return result;
+	}
+	
+	/**
+	 * 상품 조회
+	 * @author 승하
+	 * @return ArrayList
+	 */
+	public ArrayList<Product> selectAllList(PageInfo pi, String op, String searchKey){
+		Connection conn = getConnection();
+		ArrayList<Product> list = new ProductDao().selectAllList(conn, pi, op, searchKey);
+		close(conn);
+		return list;
+	}
+	
+	/**
+	 * 상품 1개의 정보 조회
+	 * @author 승하
+	 * @return Product
+	 */
+	public Product productDetail(int proNo) {
+		Connection conn = getConnection();
+		Product p = new ProductDao().productDetail(conn, proNo);
+		close(conn);
+		return p;
+	}
+	
+	/**
 	 * 상품 등록
 	 * @author 승하
-	 * @return 상품 등록 성공시 1, 실패시 2
+	 * @return 성공시 1, 실패시 2
 	 */
 	public int insertProduct(Product p) {
 		Connection conn = getConnection();
@@ -211,7 +247,7 @@ public class ProductService {
 	/**
 	 * 상품 수정
 	 * @author 승하
-	 * @return 상품 등록 성공시 1, 실패시 2
+	 * @return 성공시 1, 실패시 2
 	 */
 	public int updateProduct(Product p) {
 		Connection conn = getConnection();
@@ -226,40 +262,37 @@ public class ProductService {
 	}
 
 	/**
-	 * 상품 전체 갯수 조회
+	 * 상품 삭제
 	 * @author 승하
-	 * @return 상품 전체 갯수
+	 * @return 성공시 1, 실패시 2
 	 */
-	public int selectAllListCount(String op, String searchKey) {
+	public int deleteProduct(int[] arrpNo) {
 		Connection conn = getConnection();
-		int result = new ProductDao().selectAllListCount(conn, op, searchKey);
+		int result = new ProductDao().deleteProduct(conn, arrpNo);
+		if(result > 0) {
+			commit(conn);
+		} else {
+			rollback(conn);
+		}
 		close(conn);
 		return result;
 	}
 	
 	/**
-	 * 상품 전체 조회
+	 * 상품 입고
 	 * @author 승하
-	 * @return 전체 상품이 들어있는 ArrayList
+	 * @return 성공시 1, 실패시 2
 	 */
-	public ArrayList<Product> selectAllList(PageInfo pi, String op, String searchKey){
+	public int receivingProduct(int proNo, int count) {
 		Connection conn = getConnection();
-		ArrayList<Product> list = new ProductDao().selectAllList(conn, pi, op, searchKey);
+		int result = new ProductDao().receivingProduct(conn, proNo, count);
+		if(result > 0) {
+			commit(conn);
+		} else {
+			rollback(conn);
+		}
 		close(conn);
-		return list;
+		return result;
 	}
-	
-	/**
-	 * 상품 1개의 정보 조회
-	 * @author 승하
-	 * @return 상품 정보가 들어있는 Product 객체
-	 */
-	public Product productDetail(int proNo) {
-		Connection conn = getConnection();
-		Product p = new ProductDao().productDetail(conn, proNo);
-		close(conn);
-		return p;
-	}
-
 
 }

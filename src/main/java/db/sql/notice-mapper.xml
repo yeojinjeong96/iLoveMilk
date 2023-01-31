@@ -149,4 +149,5 @@
 		    SET STATUS ='N'
 		 WHERE NOTICE_NO IN (
 	</entry>
+	
 </properties>

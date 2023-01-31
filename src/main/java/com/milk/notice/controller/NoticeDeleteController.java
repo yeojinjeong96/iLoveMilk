@@ -31,7 +31,7 @@ public class NoticeDeleteController extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		
-		String [] delNoArr=  request.getParameterValues("delete");
+		String [] delNoArr=  request.getParameterValues("delNoArr");
 		
 		String delNo="";
 		if(delNoArr !=null) {
@@ -40,12 +40,7 @@ public class NoticeDeleteController extends HttpServlet {
 		
 		int result = new NoticeService().deleteNotice(delNo);
 		
-		if(result>0) {
-			request.getSession().setAttribute("alertMsg", "공지사항 삭제 성공");
-			response.sendRedirect(request.getContextPath()+"/listM.no?cpage=1");
-		}else {
-			
-		}
+		response.getWriter().print(result);
 	}
 
 	/**
