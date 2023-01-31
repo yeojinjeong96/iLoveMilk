@@ -76,7 +76,7 @@
 	                                	<% if(p.getBrand() != null){ %>
 	                                		<%= p.getBrand() %>
 	                                	<% }else{ %>
-	                                		·
+	                                		
 	                                	<% } %>
 	                                </td>
 	                                <td align="center"><button type="button" class="btn btn-primary btn-sm" onclick="receivingPro();" data-toggle="modal" data-target="#receiving">입고</button></td>
@@ -134,8 +134,9 @@
 								<div class="modal-body">
 									<table class="table">
 				                        <tr>
-				                            <th>선택한 상품코드</td>
-				                            <td id="proNo" name="proNo"></td>
+				                            <th width="150px">선택한 상품코드</td>
+				                            <td id="no"></td>
+				                            <input type="hidden" name="proNo" id="proNo">
 				                        </tr>
 				                        <tr>
 				                            <th>선택한 상품명</td>
@@ -147,26 +148,32 @@
 				                        </tr>
 				                        <tr>
 				                            <th>입고 수량</td>
-				                            <td><input type="number" name="receNo">&nbsp;개</td>
+				                            <td><input type="number" name="count">&nbsp;개</td>
 				                        </tr>
 				                    </table>
 				                </div>
 				                
 				                <script>
 					            	function receivingPro(){
-					            		$("#proNo").text($(window.event.target).parent().prev().prev().prev().prev().text());
-					        			if($(window.event.target).parent().prev().text() == "·"){
-					        				$("#proName").text($(window.event.target).parent().prev().text() + " " + $(window.event.target).parent().prev().prev().prev().text());
-					        	    	}else{
-					        	    		$("#proName").text($(window.event.target).parent().prev().prev().prev().text());
-					        	    	}
+					            		$("#no").text($(window.event.target).parent().prev().prev().prev().prev().text());
+					        			$("#proName").text($(window.event.target).parent().prev().prev().prev().text());
 					        			$("#stock").text($(window.event.target).parent().prev().prev().text());
+					        			
+					        			$("#proNo").attr("value", $(window.event.target).parent().prev().prev().prev().prev().text());
 					        		}
+					            	
+					            	// 매니저 비밀번호 체크
+				            		function pwdCheck(){
+					            		if('<%= loginManager.getManagerPwd() %>' != prompt("비밀번호를 입력하세요.")){
+					            			alert("비밀번호가 틀렸습니다.");
+					            			return false;
+					            		}
+					            	}
 					        	</script>
 				                
 								<!-- Modal footer -->
 								<div class="modal-footer">
-									<button type="submit" class="btn btn-primary">입력</button>
+									<button onclick="return pwdCheck();" type="submit" class="btn btn-primary">입력</button>
 									<button type="button" class="btn btn-danger" data-dismiss="modal">닫기</button>
 								</div>
 							</form>
@@ -207,12 +214,27 @@
 			if($(".checkedPro:checked").parent().next().text() == ""){
 				alert("선택된 상품이 없습니다.");
 			}else if(confirm("선택된 상품을 정말로 삭제하시겠습니까?")){
+				// 매니저 비밀번호 체크
+    			if('<%= loginManager.getManagerPwd() %>' != prompt('비밀번호를 입력하세요.')){
+    				alert('비밀번호가 틀렸습니다.');
+					return false;
+    			}
 				
+				// 상품 삭제 ajax
+				let proNo = "";
+				$(".checkedPro:checked").each(function(){
+					proNo += $(this).parent().next().text() + ",";
+				})
 				$.ajax({
 					url:"<%= contextPath %>/delete.pr",
-					data:{proNo:$(".checkedPro:checked").parent().next().text()},
-					success:function(){
-						
+					data:{proNo:proNo},
+					success:function(result){
+						if(result > 0){
+							alert("상품 삭제 성공");
+							location.reload();
+						}else{
+							alert("상품 삭제 실패")
+						}
 					},
 					error:function(){
 						console.log("상품 삭제용 ajax통신 실패");

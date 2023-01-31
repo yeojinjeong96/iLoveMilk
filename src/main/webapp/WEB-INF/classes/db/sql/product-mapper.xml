@@ -253,7 +253,22 @@
 		   AND PRODUCT_NO = ?
 	</entry>
 	
-	<entry key="receivingProduct">
+	<entry key="stockProduct">
+		INSERT
+		  INTO TB_STOCK
+		     (
+		       STOCK_NO
+		     , PRODUCT_NO
+		     , COUNT
+		     , STATUS
+		     )
+		VALUES
+		     (
+		       SEQ_SNO.NEXTVAL
+		     , ?
+		     , ?
+		     , ?
+		     )
 	</entry>
 	
 	<entry key="selectStockList">

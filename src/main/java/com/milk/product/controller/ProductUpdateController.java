@@ -50,8 +50,13 @@ public class ProductUpdateController extends HttpServlet {
 			String pInfo = multiRequest.getParameter("productInfo");
 			String fCate = multiRequest.getParameter("fCate");
 			String sCate = multiRequest.getParameter("sCate");
-			//넘어오는 첨부파일이 있을경우 / 없을 경우
-			String pImg = "resources/product_upfiles/" + multiRequest.getFilesystemName("productImg");
+			String pImg = "";
+			if(multiRequest.getFilesystemName("updateImg") != null) {
+				pImg = "resources/product_upfiles/" + multiRequest.getFilesystemName("updateImg");
+			} else {
+				pImg = multiRequest.getParameter("productImg");
+			}
+			System.out.println(pImg);
 			
 			Product p = new Product(pNo, pName, price, capacity, brand, pInfo, fCate, sCate, pImg);
 			

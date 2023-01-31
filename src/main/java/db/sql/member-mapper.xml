@@ -220,5 +220,19 @@
 		  WHERE RNUM BETWEEN ? AND ? 
 	</entry>
 	
-	
+	  <entry key="UpdateProfile">
+   UPDATE TB_MEMBER
+         SET MEMBER_ID = ?
+             , MEMBER_PWD = ?
+             , MEMBER_NAME = ?
+             , PHONE =?
+             , EMAIL = ?
+             , ADDRESS_NUMBER =?
+             , ADDRESS = ?
+             , ADDRESS_DETAIL =?
+             , PROFILE = ?
+           , MODIFY_DATE = SYSDATE
+       WHERE MEMBER_NO = ?
+        
+   </entry>
 </properties>

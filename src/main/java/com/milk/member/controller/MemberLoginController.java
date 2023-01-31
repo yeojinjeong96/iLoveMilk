@@ -40,7 +40,7 @@ public class MemberLoginController extends HttpServlet {
 		
 		if(loginMember == null) { // 실패시
 			
-			request.getSession().setAttribute("loginFail", "F");
+			request.getSession().setAttribute("alertMsg", "다시 로그인해주세요");
 			response.sendRedirect(request.getContextPath() + "/loginpage.me");
 			
 			

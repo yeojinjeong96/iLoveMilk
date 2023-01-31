@@ -399,4 +399,36 @@ public Member updateCheckPwd(Connection conn, String memberId, String memberPwd)
 		
 		return list;
 	}
+	
+	
+	public int UpdateProfile(Connection conn, Member m) {
+		
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String sql = prop.getProperty("UpdateProfile");
+		
+		try {
+			pstmt=conn.prepareStatement(sql);
+			pstmt.setString(1, m.getMemberId());
+			pstmt.setString(2, m.getMemberPwd());
+			pstmt.setString(3, m.getMemberName());
+			pstmt.setString(4, m.getPhone());
+			pstmt.setString(5, m.getEmail());
+			pstmt.setString(6, m.getAddressNumber());
+			pstmt.setString(7, m.getAddress());
+			pstmt.setString(8, m.getAddressDetail());
+			pstmt.setString(9, m.getProfile());
+			pstmt.setInt(10, m.getMemberNo());
+			
+			result=pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}
+		
+		return result;
+	}
+	
 }

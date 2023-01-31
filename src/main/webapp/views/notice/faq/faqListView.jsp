@@ -32,16 +32,21 @@
 
     }
     .faq-list table{ text-align: center;}
-    #answer-area{
+    .answer-area{
             border: 1px solid lightgrey;
             width: 450px;
-            height: 100px;
+            height: 140px;
             margin-top: 5px;
             padding: 10px;
             box-sizing: border-box;
             border-radius: 10px;
             display: none;
         }
+    .question-area{
+        cursor: pointer;
+     
+        height: 100%;
+    }
 </style>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
@@ -105,12 +110,12 @@
                
                         <td><%=f.getFaqNo() %></td>
                         <td><%=f.getCategoryName() %></td>
-                        <td id="question-area">
+                        <td class="question-area">
                        		<div >
                        			 <%=f.getQuestion() %>
                 
                        		</div>
-                            <p id="answer-area">
+                            <p class="answer-area">
                                 <%=f.getAnswer() %>
                             </p>
                         </td>
@@ -136,7 +141,7 @@
          	 <%} }%>
          	 <%if(category==null){ %>
             <div class="paging-area">
-                
+                  
                <%if(pi.getCurrentPage()!=1){ %>
                 <button onclick="location.href='<%=contextPath%>/list.faq?cpage=<%=pi.getCurrentPage()-1%>';">&lt;</button>
 	            <%} %>   
@@ -152,21 +157,24 @@
 
     </div>
     <script>
-        $(function(){
+     $(function(){
 
-            $("#question-area").click(function(){
+            $(".question-area").on("click","div",function(){
 
                 const $p= $(this).next();
                 if($p.css("display") == "none"){
                     
-                    $(this).siblings("p").slideUp();
+                   
+                    $(".answer-area").slideUp();
                     $p.slideDown();
                 }else{
                     $p.slideUp();   
                 }
 
             })
-        })
+        }) 
+
+    
     </script>
     <%@include file="/views/common/footer.jsp" %>
 </body>

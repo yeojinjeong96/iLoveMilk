@@ -175,7 +175,24 @@ public class MemberService {
 		return list;
 	}
 
-	
+	 /**
+	    * 회원프로필 변경 서비스 
+	    */
+	   
+	   public int UpdateProfile(Member m) {
+	      Connection conn = getConnection();
+	      int result = new MemberDao().UpdateProfile(conn, m);
+	      
+	      if(result > 0) {
+	         commit(conn);
+	      }else {
+	         rollback(conn);
+	      }
+	      
+	      close(conn);
+	   
+	      return result;
+	      }
 	
 	
 }
