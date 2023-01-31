@@ -85,20 +85,79 @@
 		  , ?
 		  , ?
 		  , ?
-		  , '/milk/resources/profile_upfiles/회원프로필.png'
+		  , DEFAULT
 		  , DEFAULT
 		  , DEFAULT
 		  , DEFAULT
 		  , DEFAULT
 		  , DEFAULT
 		  )
-		  
-		  
-		  
-		  
-		  
-		  
-		  
+		   
+	</entry>
+	
+	<entry key="updateCheckPwd">
+		SELECT
+			   MEMBER_NO
+			 , MEMBER_ID
+			 , MEMBER_PWD
+			 , MEMBER_NAME
+			 , PHONE
+			 , EMAIL
+			 , ADDRESS_NUMBER
+			 , ADDRESS
+			 , ADDRESS_DETAIL
+			 , PROFILE
+			 , ENROLL_DATE
+			 , MODIFY_DATE
+			 , BLACK_LIST
+			 , STATUS
+			 , MEMBER_GRADE
+		  FROM TB_MEMBER
+		 WHERE MEMBER_ID = ?
+		   AND MEMBER_PWD = ?
+	</entry>
+	
+	<entry key="updateMember">
+		UPDATE TB_MEMBER
+		   SET MEMBER_NAME = ?
+		   	 , PHONE =?
+		   	 , EMAIL = ?
+		   	 , ADDRESS_NUMBER =?
+		   	 , ADDRESS = ?
+		   	 , ADDRESS_DETAIL =?
+		   	 , MODIFY_DATE = SYSDATE
+		 WHERE MEMBER_ID =? 
+	
+	</entry>
+	
+	<entry key="selectMember">
+	SELECT
+			   MEMBER_NO
+			 , MEMBER_ID
+			 , MEMBER_PWD
+			 , MEMBER_NAME
+			 , PHONE
+			 , EMAIL
+			 , ADDRESS_NUMBER
+			 , ADDRESS
+			 , ADDRESS_DETAIL
+			 , PROFILE
+			 , ENROLL_DATE
+			 , MODIFY_DATE
+			 , BLACK_LIST
+			 , STATUS
+			 , MEMBER_GRADE
+		  FROM TB_MEMBER
+		 WHERE MEMBER_ID = ?
+		   AND STATUS = 'Y'
+	</entry>
+	
+	<entry key="updatePwdMember">
+		UPDATE TB_MEMBER
+		   SET MEMBER_PWD = ?
+		     , MODIFY_DATE = SYSDATE
+		 WHERE MEMBER_ID = ?
+		   AND MEMBER_PWD = ?
 	</entry>
 	
 	

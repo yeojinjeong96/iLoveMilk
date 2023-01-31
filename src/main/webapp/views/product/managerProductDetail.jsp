@@ -74,7 +74,7 @@
 
                     <div>
                         <button type="button" class="btn btn-primary updateBtn">수정</button>
-                        <a href="<%= contextPath %>/listUpDeRe.pr?cup=1" type="submit" class="btn btn-secondary">이전으로</a>
+                        <a href="<%= contextPath %>/listUpDeRe.pr?cp=1" type="submit" class="btn btn-secondary">이전으로</a>
                     </div>
                 </div>
                 <br><br><br><br><br>

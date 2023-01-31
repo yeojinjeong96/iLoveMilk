@@ -25,6 +25,7 @@
         white-space: nowrap ;
         text-overflow: ellipsis;  
     }
+    #q-list tbody tr:hover{ cursor: pointer;}
 </style>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
@@ -63,8 +64,9 @@
                 </tr>
                 <%}else{ %>
                 <%for(QA q:list){ %>
+                <tbody>
                 <tr>
-                    <td><%=q.getqNo() %></td>
+                    <td height="40"><%=q.getqNo() %></td>
                     <td><%=q.getMemberId() %></td>
                     <td><%=q.getEnrollDate() %></td>
                     <td>
@@ -80,6 +82,7 @@
                         </div>
                     </td>
                 </tr>
+                </tbody>
                 <%} }%>
             </table>
             <br> <br>
@@ -96,12 +99,19 @@
             </div>
             
             <div align="right" style="width:600px" class="a">
-                <a href="">> 답변 목록 조회</a>
+                <a href="<%=contextPath %>/listM.a?cpage=1">> 답변 목록 조회</a>
                  <br><br>
             </div>
         </div>
         
     </div>
+    <script>
+		$(function(){
+			$("#q-list tbody tr").click(function(){
+				location.href='<%=contextPath%>/detailM.qa?no='+$(this).children().eq(0).text();
+			})
+		})
+	</script>
    
 </body>
 </html>

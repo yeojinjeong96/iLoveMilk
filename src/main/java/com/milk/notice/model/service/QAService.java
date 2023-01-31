@@ -9,7 +9,6 @@ import java.sql.Connection;
 import java.util.ArrayList;
 
 import com.milk.common.model.vo.PageInfo;
-import com.milk.notice.model.dao.NoticeDao;
 import com.milk.notice.model.dao.QADao;
 import com.milk.notice.model.vo.Attachment;
 import com.milk.notice.model.vo.QA;
@@ -76,5 +75,38 @@ public class QAService {
 		close(conn);
 		return list;
 		
+	}
+	
+	public int enrollAnswer(QA q) {
+		
+		Connection conn= getConnection();
+		int result = new QADao().enrollAnswer(conn, q);
+		
+		if(result>0) {
+			commit(conn);
+		}else {
+			rollback(conn);
+		}
+		
+		return result;
+	}
+	
+	public int selectAnswerListCount() {
+		
+		Connection conn = getConnection();
+		
+		int result = new QADao().selectAnswerListCount(conn);
+		close(conn);
+		return result;
+	}
+	
+	public ArrayList<QA> selectAnswerList(PageInfo pi){
+		
+		Connection conn= getConnection();
+		
+		ArrayList<QA>list= new QADao().selectAnswerList(conn, pi);
+		
+		close(conn);
+		return list;
 	}
 }

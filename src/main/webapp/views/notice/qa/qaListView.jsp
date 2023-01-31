@@ -106,7 +106,7 @@
             <%if(pi.getCurrentPage()!=pi.getMaxPage()){ %>
                 <button onclick="location.href='<%=contextPath%>/list.qa?cpage=<%=pi.getCurrentPage()+1%>';">&gt;</button>
             <%} %>
-            </div>
+          </div>
     </div>
     <script>
 		$(function(){

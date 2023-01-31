@@ -132,7 +132,7 @@
                 <td align="right">
                     <!-- 로그인한 회원이고 본인의 게시글일때만 보여지도록 -->
                     <a href="<%= contextPath %>/updateForm.re?no=<%= r.getRecipeNo() %>" class="btn btn-primary btn-sm">수정</a>
-                    <a href="" class="btn btn-danger btn-sm">삭제</a>
+                    <a href="<%= contextPath %>/delete.re?no=<%= r.getRecipeNo() %>" class="btn btn-danger btn-sm">삭제</a>
                 </td>
                 <% } %>
             </tr>

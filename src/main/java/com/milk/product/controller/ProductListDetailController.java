@@ -33,18 +33,18 @@ public class ProductListDetailController extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
+		
 		int no = Integer.parseInt(request.getParameter("pno"));
 		// 상품1개의 정보 조회
 		Product p = new ProductService().productDetail(no);
 		// 상품번호에 해당되는 리뷰 가져오기
 		ArrayList<Review> list = new ProductService().selectProductReview(no); 
-
+		
+	
 		request.setAttribute("p", p);
 		request.setAttribute("list", list);
 		
-		for(Review r : list) {
-			System.out.println(r);
-		} 
+		
 		
 		request.getRequestDispatcher("views/product/productDetail.jsp").forward(request, response);
 	}

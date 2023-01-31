@@ -18,6 +18,7 @@ public class QA {
 	private String memberName;
 	private String managerName;
 	private String memberId;
+	private int managerNo;
 	
 	public QA() {}
 	public QA(int qNo, int qWriter, String qTitle, String qContent, String enrollDate, String status, int aWriter,
@@ -96,8 +97,28 @@ public class QA {
 		this.sCategory = sCategory;
 	}
 	
+	public QA(int qNo, String qContent, String aContent,String answerDate, String answerStatus, String fCategory, String sCategory,String managerName, int managerNo) {
+		super();
+		this.qNo = qNo;
+		this.qContent = qContent;
+		this.aContent= aContent;
+		this.answerDate = answerDate;
+		this.answerStatus = answerStatus;
+		this.fCategory = fCategory;
+		this.sCategory = sCategory;
+		this.managerName= managerName;
+		this.managerNo =managerNo;
+
+	}
 	
 	
+	
+	public int getManagerNo() {
+		return managerNo;
+	}
+	public void setManagerNo(int managerNo) {
+		this.managerNo = managerNo;
+	}
 	public String getMemberId() {
 		return memberId;
 	}

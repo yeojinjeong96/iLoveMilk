@@ -32,12 +32,17 @@ public class ProductUpdateFormController extends HttpServlet {
 		int proNo = Integer.parseInt(request.getParameter("no"));
 		Product p = new ProductService().productDetail(proNo);
 		
-		if(p != null) {
-			request.setAttribute("p", p);
-			request.getRequestDispatcher("views/product/managerProductUpdateForm.jsp").forward(request, response);
+		if(request.getSession().getAttribute("loginManager") != null) {
+			if(p != null) {
+				request.setAttribute("p", p);
+				request.getRequestDispatcher("views/product/managerProductUpdateForm.jsp").forward(request, response);
+			} else {
+				request.setAttribute("alertMsg", "상품 정보 없음");
+				response.sendRedirect(request.getContextPath() + "/listUpDeRe.pr?cp=1");
+			}
 		} else {
-			request.setAttribute("alertMsg", "상품 정보 없음");
-			response.sendRedirect(request.getContextPath() + "/listUpDeRe.pr?cp=1");
+			response.setContentType("text/html; charset=utf-8");
+			response.getWriter().print("<script>alert('로그인 후 이용가능한 서비스입니다.');location.href='loginForm.ma'</script>");
 		}
 	}
 

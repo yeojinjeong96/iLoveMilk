@@ -109,4 +109,40 @@
 	                  )E) WHERE RNUM BETWEEN ? AND ?
 		
 	</entry>
+	<entry key="enrollAnswer">
+		UPDATE TB_QA
+		    SET A_WRITER = ?
+		       ,A_TITLE = ?
+		       ,A_CONTENT = ?
+		       ,ANSWER_STATUS ='Y'
+		       ,ANSWER_DATE = SYSDATE
+		  WHERE Q_NO = ?
+	</entry>
+	<entry key="selectAnswerListCount">
+		SELECT 
+	    COUNT(*) COUNT
+	    FROM TB_QA
+	    WHERE ANSWER_STATUS = 'Y'
+	</entry>
+	<entry key="selectAnswerList">
+		  SELECT * FROM
+	        (SELECT ROWNUM RNUM, E.*FROM
+	            (SELECT 
+	                   Q_NO
+	                   ,Q_CONTENT
+                       ,A_CONTENT
+	                   ,ANSWER_DATE
+	                   ,ANSWER_STATUS
+	                   ,FCATEGORY_NAME
+	                   ,SCATEGORY_NAME
+                       ,MANAGER_NAME
+                       ,MANAGER_NO
+	                    FROM TB_QA Q
+	                JOIN TB_MANAGER ON (MANAGER_NO = A_WRITER)
+                    WHERE Q.STATUS= 'Y'
+                    AND ANSWER_STATUS = 'Y'
+                    
+	                ORDER BY ANSWER_DATE DESC
+	                  )E) WHERE RNUM BETWEEN ? AND ?
+	</entry>
 </properties>

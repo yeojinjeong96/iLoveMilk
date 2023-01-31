@@ -244,5 +244,91 @@ public class QADao {
 		
 		return list;
 	}
+	
+	public int enrollAnswer(Connection conn, QA q) {
+		int result= 0;
+		PreparedStatement pstmt= null;
+		String sql= prop.getProperty("enrollAnswer");
+		
+		try {
+			pstmt= conn.prepareStatement(sql);
+			pstmt.setInt(1, q.getaWriter());
+			pstmt.setString(2, q.getaTitle());
+			pstmt.setString(3, q.getaContent());
+			pstmt.setInt(4,q.getqNo());
+			
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}
+		return result;
+		
+	}
+	
+	public int selectAnswerListCount(Connection conn) {
+		int listCount =0;
+		ResultSet rset= null;
+		PreparedStatement pstmt= null;
+		String sql= prop.getProperty("selectAnswerListCount");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+	
+			rset= pstmt.executeQuery();
+			
+			if(rset.next()) {
+				listCount = rset.getInt("count");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(conn);
+		}
+		
+		return listCount;
+	}
+	
+	public ArrayList<QA> selectAnswerList(Connection conn, PageInfo pi){
+		
+		ArrayList<QA>list = new ArrayList<>();
+		ResultSet rset= null;
+		PreparedStatement pstmt= null;
+		String sql= prop.getProperty("selectAnswerList");
+		
+		try {
+			pstmt= conn.prepareStatement(sql);
+			int startRow= (pi.getCurrentPage()-1)*pi.getBoardLimit()+1;
+			int endRow= startRow + pi.getBoardLimit() -1;
+			
+			pstmt.setInt(1, startRow);
+			pstmt.setInt(2, endRow);
+			
+			rset= pstmt.executeQuery();
+			while(rset.next()) {
+				
+				list.add(new QA(
+						rset.getInt("q_no")
+					   ,rset.getString("q_content")
+					   ,rset.getString("a_content")
+					   ,rset.getString("answer_date")
+					   ,rset.getString("answer_status")
+					   ,rset.getString("fcategory_name")
+					   ,rset.getString("scategory_name")
+					   ,rset.getString("manager_name")
+					   ,rset.getInt("manager_no")
+						));
+		}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return list;
+		
+	}
 
 }

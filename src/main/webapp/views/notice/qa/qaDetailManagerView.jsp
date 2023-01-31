@@ -1,17 +1,22 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ page import = "com.milk.notice.model.vo.QA, com.milk.notice.model.vo.Attachment" %>
+<% 
+	QA q= (QA)request.getAttribute("q");
+	Attachment at = (Attachment)request.getAttribute("at");
+%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <style>
-    .outer{
-        width: 1000px;
-        margin:auto;
-        margin-top: 50px;
+    .outer-1{
+        width: 800px;
+        box-sizing: border-box;
+        float: left;
     }
-    .answer-form td *{
+    #answer-form td *{
         width:100%;
     }
     .a a{text-decoration: none;
@@ -26,7 +31,9 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
 </head>
 <body>
-    <div class="outer" align="center">
+	<%@include file="/views/common/managerHeader.jsp" %>
+	<%@include file="/views/common/managerMenubar.jsp" %>
+    <div class="outer-1" align="center">
         <br>
         <div style="width:700px">
             <h2 align="left">미답변 문의 </h2>
@@ -35,30 +42,50 @@
             <table  width="700px" border="1" class="text-center">
                 <tr>
                     <th>제목</th>
-                    <td>제목내용!!~~~~</td>
+                    <td><%=q.getqTitle() %></td>
                     <th>작성자명</th>
-                    <td>정여진</td>
+                    <td><%=q.getMemberName() %></td>
                 </tr>
                 <tr>
                     <th>카테고리</th>
-                    <td>[고객불만/제품/품질불만]</td>
+                    <td>[<%=q.getfCategory() %>/<%=q.getsCategory() %>]</td>
                     <th>작성일자</th>
-                    <td>2022.02.02 00:00:00</td>
+                    <td><%=q.getEnrollDate() %></td>
                     
                 </tr>
+                <%if(at!=null) {%>
                 <tr>
-                    <th>문의내용</th>
+                	<th>
+                	첨부파일
+                	</th>
+                	<td colspan="3">
+                		
+                    	  <div>
+                           <a download="<%=at.getChangeName() %>"href="<%=contextPath %>/<%=at.getFilePath() %><%=at.getChangeName() %>"><%=at.getChangeName() %></a>
+                       	  </div> 
+	         			
+                	</td>
                 </tr>
-                <tr height="300px">
-                    <td colspan="4">문의내용!</td>
+                <%} %>
+                <tr>
+                    <th colspan="4">문의내용</th>
+                </tr>
+                <tr height="">
+                    <td colspan="4">
+                        <div style="text-align: left; padding: 12px;">
+                            <%=q.getqContent() %>
+                    	
+                        </div>
+                    </td>
                 </tr>
             </table>
             <br>
-            <button type="button">답변하기</button>
+            <button type="button" onclick="showForm();">답변하기</button>
             <br>
             <br>
-                <form action="" class="answer-form">
-                    <table >
+                <form action="<%=contextPath%>/enroll.a" id="answer-form" style="display: none;">
+                    <input type="hidden" name="qNo" value="<%=q.getqNo()%>">
+                    <table id="answer-form">
                         <tr>
                             <th width="50">제목</th>
                             <td width="650"><input type="text" name="title" placeholder="제목을 입력하세요" required></td>
@@ -66,7 +93,7 @@
                         <tr>
                             <th>내용 </th>
                             <td>
-                                <textarea name="content" cols="30" rows="20" placeholder="내용을 입력하세요" style="resize:none" required></textarea>
+                                <textarea name="content" cols="30" rows="10" placeholder="내용을 입력하세요" style="resize:none" required></textarea>
                             </td>
                         </tr>
 
@@ -75,13 +102,20 @@
                     <button type="submit">답변완료</button>
                 </form>
                 <br>
-                <div align="right" style="width:850px" class="a">
-                    <a href="">> 답변 목록 조회</a>
+                <div align="right" style="width:700px" class="a">
+                    <a href="<%=contextPath%>/listM.a?cpage=1">> 답변 목록 조회</a>
                     <br><br>
                 </div>
         </div>
         
     </div>
+    <script>    
+       function showForm(){
+
+        $("#answer-form").attr("style","display:block");
+
+       }
+    </script>
 
 </body>
 </html>

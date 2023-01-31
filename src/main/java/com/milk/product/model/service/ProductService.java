@@ -169,9 +169,9 @@ public class ProductService {
 	 * @author 이다혜
 	 * @return listCount
 	 */
-	public int selectReSearchCount(String keyword, String keyOption, int research) {
+	public int selectReSearchCount(String keyword, String keyOption) {
 		Connection conn = getConnection();
-		int listCount = new ProductDao().selectReSearchCount(conn, keyword, keyOption, research);
+		int listCount = new ProductDao().selectReSearchCount(conn, keyword, keyOption);
 		
 		close(conn);
 		return listCount;
@@ -182,9 +182,9 @@ public class ProductService {
 	 * @author 이다혜
 	 * @return list
 	 */
-	public ArrayList<Product> selectReSearchList(PageInfo pi, String keyword, String keyOption, int research){
+	public ArrayList<Product> selectReSearchList(PageInfo pi, String keyword, String keyOption){
 		Connection conn = getConnection();
-		ArrayList<Product> list = new ProductDao().selectReSearchList(conn, keyword, keyOption, research);
+		ArrayList<Product> list = new ProductDao().selectReSearchList(conn, pi, keyword, keyOption);
 		
 		close(conn);
 		return list;
@@ -207,15 +207,32 @@ public class ProductService {
 		close(conn);
 		return result;
 	}
+	
+	/**
+	 * 상품 수정
+	 * @author 승하
+	 * @return 상품 등록 성공시 1, 실패시 2
+	 */
+	public int updateProduct(Product p) {
+		Connection conn = getConnection();
+		int result = new ProductDao().updateProduct(conn, p);
+		if(result > 0) {
+			commit(conn);
+		} else {
+			rollback(conn);
+		}
+		close(conn);
+		return result;
+	}
 
 	/**
 	 * 상품 전체 갯수 조회
 	 * @author 승하
 	 * @return 상품 전체 갯수
 	 */
-	public int selectAllListCount() {
+	public int selectAllListCount(String op, String searchKey) {
 		Connection conn = getConnection();
-		int result = new ProductDao().selectAllListCount(conn);
+		int result = new ProductDao().selectAllListCount(conn, op, searchKey);
 		close(conn);
 		return result;
 	}
@@ -225,9 +242,9 @@ public class ProductService {
 	 * @author 승하
 	 * @return 전체 상품이 들어있는 ArrayList
 	 */
-	public ArrayList<Product> selectAllList(PageInfo pi){
+	public ArrayList<Product> selectAllList(PageInfo pi, String op, String searchKey){
 		Connection conn = getConnection();
-		ArrayList<Product> list = new ProductDao().selectAllList(conn, pi);
+		ArrayList<Product> list = new ProductDao().selectAllList(conn, pi, op, searchKey);
 		close(conn);
 		return list;
 	}

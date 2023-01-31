@@ -37,12 +37,10 @@ public class ProductReSearchController extends HttpServlet {
 		String keyword = request.getParameter("keyword");	
 		String keyOption = request.getParameter("keyOption"); 
 		
-		int research = Integer.parseInt(request.getParameter("research"));
 		
-		System.out.println(keyOption + research);
-
+		int listCount = new ProductService().selectReSearchCount(keyword, keyOption);
 		
-		int listCount = new ProductService().selectSearchCount(keyword);
+		
 		int currentPage = Integer.parseInt(request.getParameter("cpage"));
 		int pageLimit = 5;
 		int boardLimit = 12;
@@ -56,7 +54,16 @@ public class ProductReSearchController extends HttpServlet {
 		
 		PageInfo pi = new PageInfo(listCount, currentPage, pageLimit, boardLimit, maxPage, startPage, endPage);
 
-		ArrayList<Product> list = new ProductService().selectReSearchList(pi, keyword, keyOption, research);
+		ArrayList<Product> list = new ProductService().selectReSearchList(pi, keyword, keyOption);
+		
+		request.setAttribute("list", list);
+		request.setAttribute("keyword", keyword);
+		request.setAttribute("pi", pi);
+		request.setAttribute("listCount", listCount);
+		request.setAttribute("keyOption", keyOption);
+		request.getRequestDispatcher("views/product/productSearchList.jsp").forward(request, response);
+		
+		
 		
 		
 	}

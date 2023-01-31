@@ -1,4 +1,4 @@
-package com.milk.product.controller;
+package com.milk.recipe.controller;
 
 import java.io.IOException;
 
@@ -8,20 +8,19 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.milk.product.model.service.ProductService;
-import com.milk.product.model.vo.Product;
+import com.milk.recipe.model.service.RecipeService;
 
 /**
- * Servlet implementation class ProductmDetailController
+ * Servlet implementation class RecipeDeleteController
  */
-@WebServlet("/detail.pr")
-public class ProductmDetailController extends HttpServlet {
+@WebServlet("/delete.re")
+public class RecipeDeleteController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public ProductmDetailController() {
+    public RecipeDeleteController() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -30,16 +29,15 @@ public class ProductmDetailController extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		int proNo = Integer.parseInt(request.getParameter("no"));
-		Product p = new ProductService().productDetail(proNo);
+		int recipeNo = Integer.parseInt(request.getParameter("no"));
 		
-		if(p != null) {
-			request.setAttribute("p", p);
-			request.getRequestDispatcher("views/product/managerProductDetail.jsp").forward(request, response);
-		} else {
-			request.setAttribute("error", "상품 상세조회 실패");
-			response.sendRedirect(request.getContextPath() + "/listUpDeRe.pr?cp=1");
+		int result = new RecipeService().deleteRecipe(recipeNo);
+		
+		if(result > 0) {
+			request.getSession().setAttribute("alertMsg", "성공적으로 삭제되었습니다.");
+			response.sendRedirect(request.getContextPath() + "/list.re?cpage=1");
 		}
+		
 	}
 
 	/**
