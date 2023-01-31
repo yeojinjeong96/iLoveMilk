@@ -134,8 +134,9 @@
 								<div class="modal-body">
 									<table class="table">
 				                        <tr>
-				                            <th>선택한 상품코드</td>
-				                            <td id="proNo" name="proNo"></td>
+				                            <th width="150px">선택한 상품코드</td>
+				                            <td id="no"></td>
+				                            <input type="hidden" name="proNo" id="proNo">
 				                        </tr>
 				                        <tr>
 				                            <th>선택한 상품명</td>
@@ -147,26 +148,32 @@
 				                        </tr>
 				                        <tr>
 				                            <th>입고 수량</td>
-				                            <td><input type="number" name="receNo">&nbsp;개</td>
+				                            <td><input type="number" name="count">&nbsp;개</td>
 				                        </tr>
 				                    </table>
 				                </div>
 				                
 				                <script>
 					            	function receivingPro(){
-					            		$("#proNo").text($(window.event.target).parent().prev().prev().prev().prev().text());
-					        			if($(window.event.target).parent().prev().text() == "·"){
-					        				$("#proName").text($(window.event.target).parent().prev().text() + " " + $(window.event.target).parent().prev().prev().prev().text());
-					        	    	}else{
-					        	    		$("#proName").text($(window.event.target).parent().prev().prev().prev().text());
-					        	    	}
+					            		$("#no").text($(window.event.target).parent().prev().prev().prev().prev().text());
+					        			$("#proName").text($(window.event.target).parent().prev().prev().prev().text());
 					        			$("#stock").text($(window.event.target).parent().prev().prev().text());
+					        			
+					        			$("#proNo").attr("value", $(window.event.target).parent().prev().prev().prev().prev().text());
 					        		}
+					            	
+					            	// 매니저 비밀번호 체크
+				            		function pwdCheck(){
+					            		if('<%= loginManager.getManagerPwd() %>' != prompt("비밀번호를 입력하세요.")){
+					            			alert("비밀번호가 틀렸습니다.");
+					            			return false;
+					            		}
+					            	}
 					        	</script>
 				                
 								<!-- Modal footer -->
 								<div class="modal-footer">
-									<button type="submit" class="btn btn-primary">입력</button>
+									<button onclick="return pwdCheck();" type="submit" class="btn btn-primary">입력</button>
 									<button type="button" class="btn btn-danger" data-dismiss="modal">닫기</button>
 								</div>
 							</form>

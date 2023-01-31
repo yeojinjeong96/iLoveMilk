@@ -277,5 +277,22 @@ public class ProductService {
 		close(conn);
 		return result;
 	}
+	
+	/**
+	 * 상품 입고
+	 * @author 승하
+	 * @return 성공시 1, 실패시 2
+	 */
+	public int receivingProduct(int proNo, int count) {
+		Connection conn = getConnection();
+		int result = new ProductDao().receivingProduct(conn, proNo, count);
+		if(result > 0) {
+			commit(conn);
+		} else {
+			rollback(conn);
+		}
+		close(conn);
+		return result;
+	}
 
 }
