@@ -1,11 +1,14 @@
 package com.milk.product.controller;
 
 import java.io.IOException;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import com.milk.product.model.service.ProductService;
 
 /**
  * Servlet implementation class ProductDeleteController
@@ -27,17 +30,20 @@ public class ProductDeleteController extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
-		String[] arrsNo = request.getParameterValues("proNo");
+		String proNo = request.getParameter("proNo");
+		proNo = proNo.substring(0, proNo.length()-1);
 		
-		int[] arrNo = new int[arrsNo.length];
-		for(int i=0; i<arrsNo.length; i++) {
-			arrNo[i] = Integer.parseInt(arrsNo[i]);
-			System.out.println(arrNo[i]);
+		String[] arrNo = proNo.split(",");
+		
+		int[] arrpNo = new int[arrNo.length];
+		for(int i=0; i<arrNo.length; i++) {
+			arrpNo[i] = Integer.parseInt(arrNo[i]);
 		}
 		
-		//int result = new ProductService().deleteProduct(arrNo);
+		int result = new ProductService().deleteProduct(arrpNo);
 		
-		//if(result > 0) {}
+		response.setContentType("text/html; charset=utf-8");
+		response.getWriter().print(result);
 	}
 
 	/**
