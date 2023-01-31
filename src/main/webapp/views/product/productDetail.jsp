@@ -213,7 +213,7 @@
 
         <div id="pro-wrap1-1" align="left">
             <a href="<%=contextPath %>">HOME &gt; </a>
-            <a href=""> 전체상품 </a> <!-- 경로이름 -->
+            <a href="<%=contextPath%>/proList.pro?category=<%=p.getfCategory().toString() %>&cpage=1"> 전체상품 </a> <!-- 경로이름 -->
         </div>
 
         <div id="pro-wrap1-2">

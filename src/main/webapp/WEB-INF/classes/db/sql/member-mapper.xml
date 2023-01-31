@@ -160,5 +160,12 @@
 		   AND MEMBER_PWD = ?
 	</entry>
 	
+	<entry key="selectListCount">
+	 SELECT
+            COUNT(*) COUNT
+       FROM TB_MEMBER
+      WHERE STATUS = 'Y' 
+	</entry>
+	
 	
 </properties>
