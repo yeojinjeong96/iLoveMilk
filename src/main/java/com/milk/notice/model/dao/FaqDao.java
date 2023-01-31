@@ -67,7 +67,7 @@ public class FaqDao {
 		if(category != null) {
 			sql+=" WHERE CATEGORY_NAME = '"+category+"'";
 		}
-		sql+=")E order by rnum desc)E  WHERE RNUM BETWEEN ? AND ? ";
+		sql+="order by SHOWNO DESC) E) WHERE RNUM BETWEEN ? AND ? ";
 		
 		try {
 			pstmt= conn.prepareStatement(sql);
@@ -76,7 +76,7 @@ public class FaqDao {
 			
 			rset= pstmt.executeQuery();
 			while(rset.next()) {
-				list.add(new Faq(rset.getInt("rnum")
+				list.add(new Faq(rset.getInt("showno")
 								,rset.getString("question")
 								,rset.getString("answer")
 								,rset.getInt("faq_writer")
@@ -166,5 +166,67 @@ public class FaqDao {
 		
 		
 	}
+	
+	public ArrayList<Faq> selectManagerFaqList(Connection conn, PageInfo pi){
+		PreparedStatement pstmt= null;
+		ResultSet rset= null;
+		ArrayList<Faq>list = new ArrayList<>();
+		String sql= prop.getProperty("selectManagerFaqList");
+		
+		int startRow= (pi.getCurrentPage()-1)*pi.getBoardLimit()+1;
+		int endRow= startRow + pi.getBoardLimit() -1;
+		
+		
+		try {
+			pstmt= conn.prepareStatement(sql);
+			pstmt.setInt(1, startRow);
+			pstmt.setInt(2, endRow);
+			
+			rset= pstmt.executeQuery();
+			while(rset.next()) {
+				list.add(new Faq(rset.getInt("faq_no")
+								,rset.getString("question")
+								,rset.getString("answer")
+								,rset.getInt("faq_writer")
+								,rset.getString("category_name"))
+	
+						);
+			}
+			
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return list;
+		
+	}
+	
+	public int deleteFaq(Connection conn,String delNo) {
+		
+		int result =0;
+		PreparedStatement pstmt = null;
+		String sql= prop.getProperty("deleteFaq");
+		sql+= delNo +")";
+		
+		try {
+			pstmt= conn.prepareStatement(sql);
+			
+			
+			result= pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}
+		
+		return result;
+		
+		
+	}
+	
 
 }

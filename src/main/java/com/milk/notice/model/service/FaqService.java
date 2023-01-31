@@ -1,6 +1,6 @@
 package com.milk.notice.model.service;
 
-import static com.milk.common.JDBCTemplate.close;
+import static com.milk.common.JDBCTemplate.*;
 import static com.milk.common.JDBCTemplate.getConnection;
 
 import java.sql.Connection;
@@ -45,6 +45,30 @@ public class FaqService {
 		close(conn);
 		return listCount;
 		
+	}
+	
+	public ArrayList<Faq> selectManagerFaqList(PageInfo pi){
+		Connection conn = getConnection();
+		ArrayList<Faq>list= new FaqDao().selectManagerFaqList(conn,pi);
+		
+		close(conn);
+		return list;
+		
+	}
+	
+	public int deleteFaq(String delNo) {
+		
+		Connection conn= getConnection();
+		
+		int result = new FaqDao().deleteFaq(conn, delNo);
+		if(result>0) {
+			commit(conn);
+		}else {
+			rollback(conn);
+		}
+		
+		close(conn);
+		return result;
 	}
 	
 }

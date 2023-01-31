@@ -7,15 +7,18 @@
 		    FROM TB_FAQ
 	</entry>
 	<entry key="selectFaqList">
-		SELECT RNUM, E.*
-		    FROM(SELECT ROWNUM RNUM, E.*
-		            FROM (SELECT 
-		                FAQ_NO
-		               ,QUESTION
-		               ,ANSWER
-		               ,FAQ_WRITER
-		               ,CATEGORY_NAME
-		                FROM TB_FAQ
+		SELECT *
+		  FROM (
+		        SELECT ROWNUM RNUM, E.*
+		          FROM(SELECT 
+		                    ROWNUM SHOWNO
+		                   ,FAQ_NO
+		                   ,QUESTION
+		                   ,ANSWER
+		                   ,FAQ_WRITER
+		                   ,CATEGORY_NAME
+		                FROM TB_FAQ 
+		               
                    
 	</entry>
 	<entry key="selectBestFaqList">
@@ -35,5 +38,23 @@
 		    COUNT(*) COUNT
 		    FROM TB_FAQ
 		WHERE BEST_FAQ= 'Y'
+	</entry>
+	<entry key="selectManagerFaqList">
+		SELECT *
+		  FROM (
+		        SELECT ROWNUM RNUM, E.*
+		          FROM(SELECT 
+		          			FAQ_NO
+		                   ,QUESTION
+		                   ,ANSWER
+		                   ,FAQ_WRITER
+		                   ,CATEGORY_NAME
+		                FROM TB_FAQ 
+		               ) E) WHERE RNUM BETWEEN ? AND ? 
+	</entry>
+	<entry key="deleteFaq">
+		DELETE 
+		    FROM TB_FAQ
+		 WHERE FAQ_NO IN (
 	</entry>
 </properties>
