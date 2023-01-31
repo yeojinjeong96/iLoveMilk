@@ -66,12 +66,12 @@
             <div align="left" class="list-area" style="width:700px" >
                 <h2 align="left">FAQ</h2>
                 <br>
-                <a href="<%=contextPath%>/list.faq">전체</a> |
-                <a href="<%=contextPath%>/list.faq?category=회원가입/정보">회원가입/정보</a> |
-                <a href="<%=contextPath%>/list.faq?category=결제/배송">결제/배송</a> |
-                <a href="<%=contextPath%>/list.faq?category=적립금">적립금</a> |
-                <a href="<%=contextPath%>/list.faq?category=제품정보">제품정보</a> |
-                <a href="<%=contextPath%>/list.faq?category=기타">기타</a>
+                <a href="<%=contextPath%>/list.faq?cpage=1">전체</a> |
+                <a href="<%=contextPath%>/list.faq?cpage=1&category=회원가입/정보">회원가입/정보</a> |
+                <a href="<%=contextPath%>/list.faq?cpage=1&category=결제/배송">결제/배송</a> |
+                <a href="<%=contextPath%>/list.faq?cpage=1&category=적립금">적립금</a> |
+                <a href="<%=contextPath%>/list.faq?cpage=1&category=제품정보">제품정보</a> |
+                <a href="<%=contextPath%>/list.faq?cpage=1&category=기타">기타</a>
             </div>
             <br>
             <div class="faq-list">

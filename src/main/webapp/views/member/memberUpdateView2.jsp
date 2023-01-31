@@ -272,7 +272,6 @@
 			            <div align="center">
 							<button type="submit" class = "btn btn-secondary btn-sm">정보변경</button>
 							<button type="button" class = "btn btn-warning btn-sm" data-toggle="modal" data-target="#updatePwdModal">비밀번호변경</button>
-			                <button type="button" class = "btn btn-danger btn-sm" data-toggle="modal" data-target ="#deleteModal">회원탈퇴</button>
 						</div>
 						<br><br>
 			        </form>

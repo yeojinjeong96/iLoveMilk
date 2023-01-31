@@ -1,5 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ page import="com.milk.notice.model.vo.Faq, com.milk.common.model.vo.PageInfo, java.util.ArrayList" %>
+<% 
+	ArrayList<Faq>list= (ArrayList<Faq>)request.getAttribute("list");
+	PageInfo pi = (PageInfo)request.getAttribute("pi");
+	
+%>	
 <!DOCTYPE html>
 <html>
 <head>
@@ -56,19 +62,19 @@
                     </strong>
                     <br>
                     <br>
-                    <a href="">1:1 문의</a>
+                    <a href="<%=contextPath%>/enroll.q" class="btn btn-sm btn-secondary">1:1 문의</a>
                     </p>
                 </div>
                 <br>
                 <h2 align="left">BEST FAQ</h2>
                 <br>
                 <p align="left" id="category">
-                    <a href="">전체</a>&nbsp;
-                    <a href="">회원가입/정보</a>&nbsp;
-                    <a href="">결제/배송</a>&nbsp;
-                    <a href="">적립금</a>&nbsp;
-                    <a href="">제품정보</a>&nbsp;
-                    <a href="">기타</a>&nbsp;
+                    <a href="<%=contextPath%>/list.sv?cpage=1">전체</a>&nbsp;
+                    <a href="<%=contextPath%>/list.sv?cpage=1&category=회원가입/정보">회원가입/정보</a>&nbsp;
+                    <a href="<%=contextPath%>/list.sv?cpage=1&category=결제/배송">결제/배송</a>&nbsp;
+                    <a href="<%=contextPath%>/list.sv?cpage=1&category=적립금">적립금</a>&nbsp;
+                    <a href="<%=contextPath%>/list.sv?cpage=1&category=제품정보">제품정보</a>&nbsp;
+                    <a href="<%=contextPath%>/list.sv?cpage=1&category=기타">기타</a>&nbsp;
                 </p>
                 
                 <table  border="1" style="text-align:center" class="content-area">
@@ -77,26 +83,39 @@
                         <th width="100">분류</th>
                         <th width="500">내용</th>
                     </tr>
-                    <!--내용이 있을 경우-->
-                    <tr>
-                        <td>글번호</td>
-                        <td>제품정보</td>
-                        <td>우유의 내용이 흰색인 이유는 무엇인가요?</td>
-                    </tr>
-                    <!--내용이 없을 경우-->
+                    <%if(list.isEmpty()) {%>
+                      <!--내용이 없을 경우-->
                     <tr>
                         <td colspan="3">표시할 목록이 없습니다.</td>
                     </tr>
-                    
+                    <%}else{ %>
+                  
+                    <%for(Faq f:list){ %>
+                    <tr>
+                        <td><%=f.getFaqNo() %></td>
+                        <td><%=f.getCategoryName() %></td>
+                        <td><%=f.getQuestion() %></td>
+                    </tr>
+                    <%} }%>
     
                 </table>
                 <br>
-                <div class="paging-area" >
-                    <button>&lt;</button>
-                    <button>1</button>
-                    <button>&gt;</button>
-                </div>
-    
+                
+                
+                <div class="paging-area">
+                <%if(!list.isEmpty()) {%>
+                
+               <%if(pi.getCurrentPage()!=1){ %>
+                <button onclick="location.href='<%=contextPath%>/list.sv?cpage=<%=pi.getCurrentPage()-1%>';">&lt;</button>
+	            <%} %>   
+	            <%for(int p= pi.getStartPage(); p<=pi.getEndPage(); p++){ %>
+	                <button onclick="location.href='<%=contextPath%>/list.sv?cpage=<%=p%>';"><%=p %></button>
+	            <%} %>
+	            <%if(pi.getCurrentPage()!=pi.getMaxPage()){ %>
+	                <button onclick="location.href='<%=contextPath%>/list.sv?cpage=<%=pi.getCurrentPage()+1%>';">&gt;</button>
+	            <% }}%>
+              
+           		</div>
     
                 
 

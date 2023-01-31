@@ -167,5 +167,12 @@
       WHERE STATUS = 'Y' 
 	</entry>
 	
+	<entry key="MemberDelete">
+		UPDATE TB_MEMBER
+		   SET STATUS = 'N'
+		     , MODIFY_DATE = SYSDATE
+		 WHERE MEMBER_ID = ?
+		   AND MEMBER_PWD = ?
 	
+	</entry>
 </properties>
