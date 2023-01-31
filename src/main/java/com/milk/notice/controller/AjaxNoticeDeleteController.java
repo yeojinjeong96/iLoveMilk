@@ -14,13 +14,13 @@ import com.milk.notice.model.service.NoticeService;
  * Servlet implementation class NoticeDeleteController
  */
 @WebServlet("/delete.no")
-public class NoticeDeleteController extends HttpServlet {
+public class AjaxNoticeDeleteController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public NoticeDeleteController() {
+    public AjaxNoticeDeleteController() {
         super();
         // TODO Auto-generated constructor stub
     }

@@ -293,6 +293,30 @@ public class FaqDao {
 		
 	}
 	
+	public int insertFaq(Connection conn, Faq f) {
+		int result= 0;
+		PreparedStatement pstmt = null;
+		String sql= prop.getProperty("insertFaq");
+		
+		try {
+			pstmt= conn.prepareStatement(sql);
+			pstmt.setString(1, f.getQuestion());
+			pstmt.setString(2, f.getAnswer());
+			pstmt.setString(3, f.getBestFaq());
+			pstmt.setInt(4, f.getFaqWriter());
+			pstmt.setString(5, f.getCategoryName());
+			
+			result= pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+			
+		}
+		return result;
+		
+	}
+	
 
 
 }

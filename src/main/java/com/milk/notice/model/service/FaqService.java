@@ -87,4 +87,17 @@ public class FaqService {
 		return list;
 	}
 	
+	public int insertFaq(Faq f) {
+		
+		Connection conn = getConnection();
+		int result = new FaqDao().insertFaq(conn, f);
+		
+		if(result>0) {
+			commit(conn);
+		}else {
+			rollback(conn);
+		}
+		return result;
+	}
+	
 }

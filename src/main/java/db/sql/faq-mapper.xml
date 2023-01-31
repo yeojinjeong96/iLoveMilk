@@ -76,4 +76,25 @@
 		               WHERE RNUM BETWEEN ? AND ?
 	
 	</entry>
+	<entry key="insertFaq">
+		INSERT 
+		    INTO TB_FAQ 
+		    (
+		    FAQ_NO
+		    ,QUESTION
+		    ,ANSWER
+		    ,BEST_FAQ
+		    ,FAQ_WRITER
+		    ,CATEGORY_NAME
+		    )
+		    VALUES
+		    (
+		    SEQ_FNO.NEXTVAL
+		    ,?
+		    ,?
+		    ,?
+		    ,?
+		    ,?
+		    )
+	</entry>
 </properties>
