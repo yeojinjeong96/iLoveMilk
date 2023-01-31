@@ -4,6 +4,7 @@
 <% 
 	ArrayList<Faq>list= (ArrayList<Faq>)request.getAttribute("list");
 	PageInfo pi = (PageInfo)request.getAttribute("pi");
+	
 %>	
 <!DOCTYPE html>
 <html>
@@ -99,7 +100,10 @@
     
                 </table>
                 <br>
+                
+                
                 <div class="paging-area">
+                <%if(!list.isEmpty()) {%>
                 
                <%if(pi.getCurrentPage()!=1){ %>
                 <button onclick="location.href='<%=contextPath%>/list.sv?cpage=<%=pi.getCurrentPage()-1%>';">&lt;</button>
@@ -109,7 +113,7 @@
 	            <%} %>
 	            <%if(pi.getCurrentPage()!=pi.getMaxPage()){ %>
 	                <button onclick="location.href='<%=contextPath%>/list.sv?cpage=<%=pi.getCurrentPage()+1%>';">&gt;</button>
-	            <%} %>
+	            <% }}%>
               
            		</div>
     

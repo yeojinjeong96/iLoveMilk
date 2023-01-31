@@ -38,5 +38,13 @@ public class FaqService {
 		return list;
 		
 	}
+	public int selectBestFaqListCount(String category) {
+		Connection conn = getConnection();
+		
+		int listCount = new FaqDao().selectBestFaqListCount(conn,category);
+		close(conn);
+		return listCount;
+		
+	}
 	
 }

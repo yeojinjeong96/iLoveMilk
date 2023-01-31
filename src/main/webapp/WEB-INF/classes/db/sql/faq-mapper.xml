@@ -30,7 +30,12 @@
 		               ,FAQ_WRITER
 		               ,CATEGORY_NAME
 		                FROM TB_FAQ
-		              WHERE BEST_FAQ = 'Y')E)E
-		              WHERE RNUM BETWEEN ? AND ?
+		              WHERE BEST_FAQ = 'Y'
+	</entry>
+	<entry key="selectBestFaqListCount">
+		SELECT 
+		    COUNT(*) COUNT
+		    FROM TB_FAQ
+		WHERE BEST_FAQ= 'Y'
 	</entry>
 </properties>
