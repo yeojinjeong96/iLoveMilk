@@ -45,10 +45,10 @@
                     <h2 align="left">공지사항 관리</h2>
                     <hr>
                     <br>
-                    <form action="<%=contextPath %>/delete.no" method="post">
+              
                         <div class="btn-area" align="right">
                             <a href="<%=contextPath%>/enroll.no" class="btn btn-secondary btn-sm">공지작성</a>
-                            <button type="submit" class="btn btn-secondary btn-sm">선택삭제</button>
+                            <button type="button" class="btn btn-secondary btn-sm" onclick="deleteNotice();">선택삭제</button>
                         </div>
                         <br>
                         <table id="notice-list" border="1" class="text-center" >
@@ -74,7 +74,7 @@
                                 <!--공지사항이 있을 경우-->
                                 <%for(Notice n : list){%>
                                     <tr>
-                                        <td><input type="checkbox" name="delete" value="<%=n.getNoticeNo()%>"></td>
+                                        <td onclick="event.cancelBubble=true"><input type="checkbox" name="delete" value="<%=n.getNoticeNo()%>" ></td>
                                         <td class="detail-area"><%=n.getNoticeNo() %></td>
                                         <td class="detail-area"><%=n.getNoticeTitle() %></td>
                                         <td class="detail-area"><%=n.getManagerName() %></td>
@@ -87,8 +87,9 @@
             
             
                         </table>
-                    </form>
+                
                     <br>
+                    <%if(!list.isEmpty()){ %>
                   	<%if(searchNo == null){ %>
                     <div class="paging-area" >
                     <%if(pi.getCurrentPage()!=1){ %>
@@ -114,7 +115,7 @@
                         <button onclick="location.href='<%=contextPath%>/search.no?cpage=<%=pi.getCurrentPage()+1%>';">&gt;</button>
                     <%} %>
                     </div>
-              		<%} %>
+              		<%}} %>
                     <br>
                   
                     
@@ -149,8 +150,35 @@
                 $(this).css('background-color','black');
             })
     	})
+   
+    	function deleteNotice(){
+    		const delNoArr = new Array();
+			$("input[type=checkbox]:checked").each(function(){
+				delNoArr.push($(this).val())
+			})
+    		$.ajax({
+    			url:"<%=contextPath%>/delete.no",
+    			data:{delNoArr: delNoArr},
+    			type:"post",
+    			traditional:true,
+    			success:function(result){
+    				if(result>0){
+    					alert("공지사항 삭제 성공");
+                        location.reload();
+    				}else{
+    					alert("공지사항 삭제 실패");
+    				}
+    		
+    				
+    			},
+    			error:function(){
+    				console.log("공지사항 삭제 ajax 통신 실패");
+    			}
+    		
+    		})
+    		
+    	}
     </script>
-    
 
 </body>
 </html>

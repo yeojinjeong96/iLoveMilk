@@ -6,10 +6,10 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <style>
-     .outer{
-        width: 1000px;
-        margin:auto;
-        margin-top: 50px;
+      .outer-1{ 
+        width: 800px;
+        float: left;
+        box-sizing: border-box;
     }
     #faq-enroll input[type=text], #faq-enroll textarea{
         width:100%;
@@ -29,7 +29,7 @@
     <%@include file="/views/common/managerHeader.jsp" %>
 	<%@include file="/views/common/managerMenubar.jsp" %>
 
-    <div class="outer" align="center">
+    <div class="outer-1" align="center">
         <br>
         <div style="width: 700px;">
             <br>
