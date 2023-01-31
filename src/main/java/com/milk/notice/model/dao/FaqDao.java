@@ -98,7 +98,11 @@ public class FaqDao {
 		
 		int startRow= (pi.getCurrentPage()-1)*pi.getBoardLimit()+1;
 		int endRow= startRow + pi.getBoardLimit() -1;
-		
+		if(category != null) {
+			
+			sql+= "and category_name = '" + category+"'";
+		}
+		sql+=")E)E WHERE RNUM BETWEEN ? AND ?";
 		try {
 			pstmt= conn.prepareStatement(sql);
 		
@@ -125,6 +129,34 @@ public class FaqDao {
 		}
 		
 		return list;
+		
+	}
+	
+	public int selectBestFaqListCount(Connection conn,String category) {
+		ResultSet rset= null;
+		int result = 0;
+		PreparedStatement pstmt= null;
+		
+		String sql= prop.getProperty("selectBestFaqListCount");
+		if(category!=null) {
+			sql+= "AND CATEGORY_NAME='"+category+"'";
+		}
+		
+		try {
+			pstmt= conn.prepareStatement(sql);
+			
+			rset= pstmt.executeQuery();
+			if(rset.next()) {
+				result = rset.getInt("count");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rset);
+			close(pstmt);
+		}
+		return result;
+		
 		
 	}
 

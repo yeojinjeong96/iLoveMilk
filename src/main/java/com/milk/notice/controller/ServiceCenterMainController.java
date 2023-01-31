@@ -40,8 +40,8 @@ public class ServiceCenterMainController extends HttpServlet {
 		int maxPage;     
 		int startPage;	 
 		int endPage;	
-		
-		listCount = new FaqService().selectFaqListCount();
+		String category = request.getParameter("category");
+		listCount = new FaqService().selectBestFaqListCount(category);
 		currentPage= Integer.parseInt(request.getParameter("cpage"));
 		pageLimit= 5;
 		boardLimit=5;
@@ -53,7 +53,7 @@ public class ServiceCenterMainController extends HttpServlet {
 		}
 		
 		PageInfo pi = new PageInfo(listCount,currentPage, pageLimit, boardLimit,maxPage,startPage,endPage);
-		String category = request.getParameter("category");
+		
 		ArrayList<Faq>list= new FaqService().selectBestFaqList(pi,category);
 		
 		
