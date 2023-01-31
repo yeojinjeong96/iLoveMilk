@@ -34,13 +34,14 @@
     .faq-list table{ text-align: center;}
     .answer-area{
             border: 1px solid lightgrey;
-            width: 450px;
+            width: 700px;
             height: 140px;
             margin-top: 5px;
             padding: 10px;
             box-sizing: border-box;
             border-radius: 10px;
             display: none;
+            text-align: left;
         }
     .question-area{
         cursor: pointer;
@@ -115,11 +116,16 @@
                        			 <%=f.getQuestion() %>
                 
                        		</div>
-                            <p class="answer-area">
+                        </td>     
+                    </tr>
+                    <tr>
+                        <td colspan="3">
+                            <div class="answer-area">
+                        
                                 <%=f.getAnswer() %>
-                            </p>
+                                
+                            </div>
                         </td>
-                     
                     </tr>
                     <%} }%>
                 </table>
@@ -141,7 +147,7 @@
          	 <%} }%>
          	 <%if(category==null){ %>
             <div class="paging-area">
-                  
+                
                <%if(pi.getCurrentPage()!=1){ %>
                 <button onclick="location.href='<%=contextPath%>/list.faq?cpage=<%=pi.getCurrentPage()-1%>';">&lt;</button>
 	            <%} %>   
@@ -161,11 +167,11 @@
 
             $(".question-area").on("click","div",function(){
 
-                const $p= $(this).next();
+                const $p= $(".answer-area");
                 if($p.css("display") == "none"){
                     
                    
-                    $(".answer-area").slideUp();
+                    $(".answer-area").hide();
                     $p.slideDown();
                 }else{
                     $p.slideUp();   
@@ -174,6 +180,7 @@
             })
         })
     </script>
+   
     <%@include file="/views/common/footer.jsp" %>
 </body>
 </html>

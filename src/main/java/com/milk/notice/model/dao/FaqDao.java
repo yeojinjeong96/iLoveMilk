@@ -67,7 +67,7 @@ public class FaqDao {
 		if(category != null) {
 			sql+=" WHERE CATEGORY_NAME = '"+category+"'";
 		}
-		sql+="ORDER BY CATEGORY_NAME)E)E  WHERE RNUM BETWEEN ? AND ?";
+		sql+=")E order by rnum desc)E  WHERE RNUM BETWEEN ? AND ? ";
 		
 		try {
 			pstmt= conn.prepareStatement(sql);
@@ -76,7 +76,7 @@ public class FaqDao {
 			
 			rset= pstmt.executeQuery();
 			while(rset.next()) {
-				list.add(new Faq(rset.getInt("faq_no")
+				list.add(new Faq(rset.getInt("rnum")
 								,rset.getString("question")
 								,rset.getString("answer")
 								,rset.getInt("faq_writer")
