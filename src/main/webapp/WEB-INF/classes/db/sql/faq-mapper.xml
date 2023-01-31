@@ -57,4 +57,23 @@
 		    FROM TB_FAQ
 		 WHERE FAQ_NO IN (
 	</entry>
+	<entry key="selectSearchListCount">
+		SELECT
+		    COUNT(*) COUNT
+		 FROM TB_FAQ
+		WHERE QUESTION LIKE '%'||?||'%'
+	</entry>
+	<entry key="selectSearchList">
+		    SELECT * 
+		       FROM (SELECT  ROWNUM RNUM, E.*
+		               FROM (SELECT 
+		                        FAQ_NO
+		                       ,QUESTION
+		                       ,CATEGORY_NAME
+		                   FROM TB_FAQ
+		                JOIN TB_MANAGER ON (FAQ_WRITER = MANAGER_NO)
+		               AND QUESTION LIKE '%'||?||'%') E)
+		               WHERE RNUM BETWEEN ? AND ?
+	
+	</entry>
 </properties>

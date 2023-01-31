@@ -1,7 +1,6 @@
 package com.milk.notice.model.service;
 
 import static com.milk.common.JDBCTemplate.*;
-import static com.milk.common.JDBCTemplate.getConnection;
 
 import java.sql.Connection;
 import java.util.ArrayList;
@@ -9,6 +8,7 @@ import java.util.ArrayList;
 import com.milk.common.model.vo.PageInfo;
 import com.milk.notice.model.dao.FaqDao;
 import com.milk.notice.model.vo.Faq;
+
 
 public class FaqService {
 	
@@ -69,6 +69,22 @@ public class FaqService {
 		
 		close(conn);
 		return result;
+	}
+	
+	public int selectSearchListCount(String searchFaq) {
+		Connection conn = getConnection();
+		
+		int listCount = new FaqDao().selectSearchListCount(conn,searchFaq);
+		close(conn);
+		return listCount;
+		
+	}
+	
+	public ArrayList<Faq> selectSearchList(PageInfo pi, String searchFaq){
+		Connection conn= getConnection();
+		ArrayList<Faq>list= new FaqDao().selectSearchList(conn,pi,searchFaq);
+		close(conn);
+		return list;
 	}
 	
 }

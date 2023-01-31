@@ -5,6 +5,7 @@
 	ArrayList<Faq>list= (ArrayList<Faq>)request.getAttribute("list");
 	PageInfo pi = (PageInfo)request.getAttribute("pi");
 	String category = (String)request.getAttribute("category");
+	String searchFaq = (String)request.getAttribute("searchFaq");
 %>	
 <!DOCTYPE html>
 <html>
@@ -54,7 +55,7 @@
                     </tr>
                     <%if (list.isEmpty()){ %>
                     <tr>
-                 		<td colspan="3">
+                 		<td colspan="4">
                  		 등록된 FAQ가 없습니다.
                  		</td>
              
@@ -72,6 +73,8 @@
 
            
             <br>
+            <%if(!list.isEmpty()) {%>
+            <%if(searchFaq == null){ %>
             <div class="paging-area" >
                 <%if(pi.getCurrentPage()!=1){ %>
                 <button onclick="location.href='<%=contextPath%>/listM.faq?cpage=<%=pi.getCurrentPage()-1%>';">&lt;</button>
@@ -83,9 +86,27 @@
 	                <button onclick="location.href='<%=contextPath%>/listM.faq?cpage=<%=pi.getCurrentPage()+1%>';">&gt;</button>
             	<%} %>
             </div>
+            <%}else{ %>
+            <div class="paging-area" >
+                <%if(pi.getCurrentPage()!=1){ %>
+                <button onclick="location.href='<%=contextPath%>/searchM.faq?cpage=<%=pi.getCurrentPage()-1%>';">&lt;</button>
+	            <%} %>   
+	            <%for(int p= pi.getStartPage(); p<=pi.getEndPage(); p++){ %>
+	                <button onclick="location.href='<%=contextPath%>/searchM.faq?cpage=<%=p%>';"><%=p %></button>
+	            <%} %>
+	            <%if(pi.getCurrentPage()!=pi.getMaxPage()){ %>
+	                <button onclick="location.href='<%=contextPath%>/searchM.faq?cpage=<%=pi.getCurrentPage()+1%>';">&gt;</button>
+            	<%} %>
+            </div>
+            
+            <%} }%>
             <br>
-            <form action="" method="get">
-                <input type="text">
+            <form action="<%=contextPath %>/searchM.faq?cpage=1" method="post">
+            	<%if (searchFaq ==null){ %>
+                <input type="text" name="searchFaq">
+                <%}else{ %>
+                <input tyle="text" name ="searchFaq" value="<%=searchFaq%>">
+                <%} %>
                 <button type="submit">검색</button>
             </form>
         
@@ -110,15 +131,12 @@
     				}else{
     					alert("FAQ 삭제 실패");
     				}
-    		
-    				
+    		    				
     			},
     			error:function(){
     				console.log("FAQ삭제용 ajax 통신 실패");
-    			}
-    		
+    			}	
     		})
-    		
     	}
     </script>
 

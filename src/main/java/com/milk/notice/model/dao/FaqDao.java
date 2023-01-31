@@ -13,6 +13,7 @@ import java.util.Properties;
 
 import com.milk.common.model.vo.PageInfo;
 import com.milk.notice.model.vo.Faq;
+import com.milk.notice.model.vo.Notice;
 
 public class FaqDao {
 	
@@ -228,5 +229,70 @@ public class FaqDao {
 		
 	}
 	
+	public int selectSearchListCount(Connection conn, String searchFaq) {
+		int listCount= 0;
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String sql= prop.getProperty("selectSearchListCount");
+		
+		try {
+			pstmt= conn.prepareStatement(sql);
+			pstmt.setString(1, searchFaq);
+			
+			rset= pstmt.executeQuery();
+			if(rset.next()) {
+				listCount=  rset.getInt("count");
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return listCount;
+		
+		
+	}
+	
+	public ArrayList<Faq> selectSearchList(Connection conn,PageInfo pi, String searchFaq){
+		
+		ArrayList<Faq>list = new ArrayList<>();
+		PreparedStatement pstmt= null;
+		ResultSet rset = null;
+		String sql= prop.getProperty("selectSearchList");
+		
+		try {
+			
+			pstmt= conn.prepareStatement(sql);
+			int startRow= (pi.getCurrentPage()-1)*pi.getBoardLimit()+1;
+			int endRow= startRow + pi.getBoardLimit() -1;
+			
+			pstmt.setString(1, searchFaq);
+			pstmt.setInt(2, startRow);
+			pstmt.setInt(3, endRow);
+			
+			rset = pstmt.executeQuery();
+			while(rset.next()) {
+				list.add(new Faq(
+						rset.getInt("FAQ_NO")
+					   ,rset.getString("QUESTION")
+					   ,rset.getString("CATEGORY_NAME")			
+						));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return list;
+		
+		
+	}
+	
+
 
 }
