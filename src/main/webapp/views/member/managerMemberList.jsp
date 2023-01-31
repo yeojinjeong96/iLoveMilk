@@ -137,12 +137,39 @@
        				
        				
        				$.ajax({
-       					url:"<%=contextPath%>/memPoint.ma?c",
+       					url:"<%=contextPath%>/memPoint.ma?ppage=1",
        				   data: {memNo:d, ppage:1}
        				   ,success:function(result1, result2){
        					   
-       					   console.log(result1);
-       					   console.log(result2);
+                           let value = "";
+						   if(result.isEmpty()){
+							   value += "<td colspan='3'> 내역이 없습니다. </td>"
+						   }else{
+	                           for(let i = 0; i<result1.length; i++){
+	
+	                               value += "<td>" + result1[i].modifyDate + "</td>"
+	                                       +"<td>" + result1[i].montent + "</td>"
+	                                       +"<td>" + result1[i].total + "</td>";
+	
+	                           }
+						   }
+                          $("pointHistory").html(value);
+                          
+		                    let value2 = "";
+		                           if(result2.currentPage != 1){ 
+		                        	   value2 += ""<button onclick="location.href='<%=contextPath%>/memPoint.ma?ppage=<%=result2.currentPage-1%>';">&lt;</button>
+		                     		} 
+		          
+		                     for(int p=result2.startPage; p<=result2.endPage(); p++){ 
+		                          <button onclick="location.href='<%=contextPath%>/memPoint.ma?ppage=p';">p </button>
+		                       } 
+		          <!--  내가 보고있는 페이지가 마지막 페이지가 아닐 때에만 나타내기 -->
+		          
+		                       if(result2.currentPage != result2.maxPage){
+		                          <button onclick="location.href='<%=contextPath%>/memPoint.ma?ppage=<%=result2.currentPage+1%>';">&gt;</button>
+		                      } 
+                          
+       					   
        				   },error:function(){
        					   alert("데이터 통신 실패");
        				   }
@@ -151,7 +178,7 @@
             	}
             	
             	function memModify(d){
-            		$("#modifyModalId").text(d);
+            		$("#modifyModalId").text(a);
             	}
             	
             	
@@ -193,16 +220,40 @@
                         <br><br>
 
                         <table class="table mem-point" style="width:100%;">
+                          <thead>
                             <tr>
                                 <th>날짜</th>
                                 <th>내용</th>
                                 <th>금액</th>
                             </tr>
-                            <tr>
+                          </thead>
+                          <tbody>
+                            <tr id="pointHistory">
                                 <td>23-01-01 00:00:00</td>
                                 <td>회원가입</td>
                                 <td>2,000</td>
                             </tr>
+                            <tr>
+                            	<td colspan="3">
+				                    <div class="paging-area">
+				                    <!-- 내가 보고있는 페이지가 1번 페이지가 아닐때에만 나타내기 -->
+				                    
+				                                <% if(pi.getCurrentPage() != 1){ %>
+				                                    <button onclick="location.href='<%=contextPath%>/memList.ma?cpage=<%=pi.getCurrentPage()-1%>';">&lt;</button>
+				                                <% } %>
+				                    
+				                                <% for(int p=pi.getStartPage(); p<=pi.getEndPage(); p++){ %>
+				                                    <button onclick="location.href='<%=contextPath%>/memList.ma?cpage=<%=p%>';"><%= p %></button>
+				                                <% } %>
+				                    <!--  내가 보고있는 페이지가 마지막 페이지가 아닐 때에만 나타내기 -->
+				                    
+				                                <% if(pi.getCurrentPage() != pi.getMaxPage()){ %>
+				                                    <button onclick="location.href='<%=contextPath%>/memList.ma?cpage=<%=pi.getCurrentPage()+1%>';">&gt;</button>
+				                                <% } %>
+				                	</div>
+                            	</td>
+                            </tr>
+                          </tbody>
                         </table>
                         <br><br>
                 </form>
