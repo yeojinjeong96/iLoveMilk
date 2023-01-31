@@ -3,7 +3,7 @@
 <!DOCTYPE html>
 <html>
     <style>
-    div{border:1px solid red;} 
+
     .mem-wrap{
         width:800px;
         padding-left:50px;    
@@ -53,7 +53,7 @@
                     <p  style="font-size:20px; line-height: 90px;"><b>신고관리</b></p>  
                     </div>
                     <br><br>
-                    <div align="right" style="width:600px">
+                    <div align="right" style="width:630px;">
                             <input type="text" name = "searchReport" required><button type="submit"  style="border:none" >검색</button>
                         </div>
                     </div>

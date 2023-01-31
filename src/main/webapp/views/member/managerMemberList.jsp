@@ -1,7 +1,8 @@
  <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ page import="java.util.ArrayList, com.milk.member.model.vo.Member, com.milk.common.model.vo.PageInfo" %>    
-<% ArrayList<Member> list = (ArrayList<Member>)request.getAttribute("list");
+<% 
+	ArrayList<Member> list = (ArrayList<Member>)request.getAttribute("list");
 	PageInfo pi = (PageInfo)request.getAttribute("pi");
 %>    
 <!DOCTYPE html>
@@ -11,7 +12,6 @@
 <title>Insert title here</title>
     <style>
 
-     div{border:1px solid red;}   
     .mem-wrap{
         width:800px;
         padding-left:50px;
@@ -56,8 +56,8 @@
                     <p  style="font-size:20px; line-height: 90px;"><b>회원조회</b></p> 
                 </div> 
                 <br><br>
-                <div align="right" style="width:600px;">
-                        <input type="text" name = "searchMem" required><button type="submit"  style="border:none">검색</button>
+                <div align="right" style="width:640px;">
+                        <input type="text" name = "searchMem" required><button type="submit" style="border:none">검색</button>
                 </div>
             </div>
             <div id="mem-2">
@@ -84,20 +84,20 @@
                     <%}else{ %>
                         <%for(Member m : list){ %>
                             <tr>
-                                <td><%m.getMemberNo(); %></td>
-                                <td><%m.getMemberId(); %></td>
-                                <td><%m.getMemberName(); %></td>
-                                <td><%m.getMemberGrade(); %></td>
-                                <td><%m.getEmail(); %></td>
-                                <td><%m.getPhone(); %></td>
-                                <td><%m.getAddress(); %></td>
-                                <td><%m.getTotalpay(); %></td>
-                                <td><%m.getTotal(); %>
-                                    <button type="button" class="btn btn-outline-secondary btn-sm" data-toggle="modal" data-target="#point-info" style="font-size:9px;">상세</button>
-                                    <button type="button" class="btn btn-outline-secondary btn-sm" data-toggle="modal" data-target="#point-change" style="font-size:9px;">변경</button>
+                                <td><%=m.getMemberNo() %></td>
+                                <td><%=m.getMemberId() %></td>
+                                <td><%=m.getMemberName() %></td>
+                                <td><%=m.getMemberGrade() %></td>
+                                <td><%=m.getEmail() %></td>
+                                <td><%=m.getPhone() %></td>
+                                <td><%=m.getAddress() %></td>
+                                <td><%=m.getTotalpay() %></td>
+                                <td><%=m.getTotal() %>
+                                    <button type="button" onclick="memDetail('<%=m.getMemberId() %>', '<%=m.getMemberGrade() %>', <%=m.getTotal() %>, <%=m.getMemberNo() %>);" class="btn btn-outline-secondary btn-sm" data-toggle="modal" data-target="#point-info" style="font-size:9px;">상세</button>
+                                    <button type="button" onclick="memModify('<%=m.getMemberId() %>');" class="btn btn-outline-secondary btn-sm" data-toggle="modal" data-target="#point-change" style="font-size:9px;">변경</button>
                                 </td>
                                 <td>
-                                    <%m.getEnrollDate(); %>
+                                    <%=m.getEnrollDate() %>
                                 </td> 
                                 
                             </tr>
@@ -106,6 +106,7 @@
                 </tbody>
                 </table>
             </div>
+            <br>
             <div id="mem-3">
                 <div class="paging-area">
                     <!-- 내가 보고있는 페이지가 1번 페이지가 아닐때에만 나타내기 -->
@@ -125,6 +126,27 @@
                 </div>
                 
             </div>
+            
+            <script>
+            
+            	function memDetail(a, b, c){
+            		
+       				$("#detailModalId").text(a);
+       				$("#detailModalGrade").text(b);
+       				$("#detailModalPoint").text(c);
+       				
+       				$.ajax({
+       					url:"<%=contextPath%>/memberPoint.me",
+       				});
+            		
+            	}
+            	
+            	function memModify(d){
+            		$("#modifyModalId").text(d);
+            	}
+            	
+            	
+            </script>
 
 
             <!-- 적립금상세조회 모달 div -->
@@ -146,15 +168,15 @@
                         <table  class="table table-borderless" style="width:100%;">
                                 <tr>
                                     <td>아이디</td>
-                                    <td>아이디자리</td>
+                                    <td id="detailModalId"></td>
                                 </tr>
                                 <tr>
                                     <td>등급</td>
-                                    <td>등급자리</td>
+                                    <td id="detailModalGrade"></td>
                                 </tr>
                                 <tr>
                                     <td>가용적립금</td>
-                                    <td><b>적립금자리</b></td>
+                                    <td id="detailModalPoint" style="font-weight:800px;"></td>
                                 </tr>
                                 
                         </table>
@@ -203,8 +225,8 @@
                         <input type="hidden" name="" value="">
                         <table style="width:100%;" class="table table-borderless">
                                 <tr>
-                                    <td>아이디</td>
-                                    <td>아이디자리</td>
+                                    <td >아이디</td>
+                                    <td id="modifyModalId"></td>
                                 </tr>
                                 <tr>
                                     <td>구분</td>
@@ -238,5 +260,6 @@
 
         </div>
     </div>
+
 </body>
 </html>
