@@ -78,6 +78,8 @@
     </style>
 </head>
 <body>	
+
+	
 	
 	<%@ include file="../common/header.jsp" %>
 	
@@ -96,6 +98,8 @@
 		
 		 <%
     	String memberId = loginMember.getMemberId();
+		int memberNo = loginMember.getMemberNo();
+		String memberPwd = loginMember.getMemberPwd();
 		String profile = loginMember.getProfile();
 		String memberName = loginMember.getMemberName();
     	String phone = loginMember.getPhone() == null ? "" : loginMember.getPhone(); 
@@ -128,49 +132,7 @@
 			                    <tr>
 			                        <th>프로필</th>
 			                        <td id="image_outer">
-			                            <form action="" id="enroll-form" method="post" enctype="multipart/form-data">
-			                                <div id="image">
-			                                    <img src="<%= profile %>" width="90px" height="90px" onclick="clickFile(1);">
-			                                </div>
-			                                <br>
-			                                <div id="imagesubmit"> 
-			                                    <button id="image_input">등록하기</button>
-			                                </div>
-			
-			                                <div class="file-area" style="display: none;">
-			                                    <input type="file" name="file1" onchange="loadImg(this, 1);">
-			                                </div>
-			
-			                                <script>
-			                                    function clickFile(num){
-			                                        $("input[name=file"+ num + "]").click();
-			                                    }
-			                    
-			                                    function loadImg(inputFile, num){
-			                                       
-			                                        if(inputFile.files.length == 1) {
-			                                            
-			                                            const reader = new FileReader();
-			                                           
-			                                            reader.readAsDataURL(inputFile.files[0]);
-			                                           
-			                                            reader.onload = function(e){
-			                                               
-			                                                switch(num) {
-			                                                    case 1: $("#titleImg").attr("src", e.target.result); break;
-			                                                }
-			                                            }
-			                    
-			                                        }else { 
-			                                            switch(num) {
-			                                                    case 1: $("#titleImg").attr("src", null); break;
-			                                                }
-			                                        }
-			                    
-			                                    }
-			                                </script>
-			
-			                            </form>
+			                         <button type="button" class = "btn btn-sm" data-toggle="modal" data-target="#updateProfileModal">프로필 변경</button>   
 			                        </td>
 			                    </tr>
 			
@@ -283,7 +245,7 @@
 					      
 					            <!-- Modal Header -->
 					            <div class="modal-header">
-					              <h4 class="modal-title">비밀번호 변경</h4>
+					              <h4 class="modal-title">프로필 변경</h4>
 					              <button type="button" class="close" data-dismiss="modal">&times;</button>
 					            </div>
 					      
@@ -291,6 +253,7 @@
 					            <div class="modal-body">
 					                <form action="<%=contextPath %>/updatePwd.me" method="post">
 					                    <input type="hidden" name ="memberId" value="<%= memberId %>">
+					                   
 					                    <table>
 					                        <tr>
 					                            <td>현재 비밀번호</td>
@@ -309,6 +272,81 @@
 					                    
 					                    <button type="submit" class = "btn btn-secondary btn-sm">비밀번호 변경</button>
 					                
+					                </form>
+					            </div>
+					      
+					          </div>
+					        </div>
+					      </div>
+					      
+					      
+					      <!-- 프로필 변경용 모달 div -->
+						<div class="modal" id="updateProfileModal">
+					        <div class="modal-dialog">
+					          <div class="modal-content">
+					      
+					            <!-- Modal Header -->
+					            <div class="modal-header">
+					              <h4 class="modal-title">프로필 변경</h4>
+					              <button type="button" class="close" data-dismiss="modal">&times;</button>
+					            </div>
+					      
+					            <!-- Modal body -->
+					            <div class="modal-body">
+					            	 
+					                <form action="<%=contextPath %>/profile.me" id="" method="post" enctype="multipart/form-data">
+					                    
+					                    <input type="hidden" name ="memberId" value="<%= memberId %>">
+					                    <input type="hidden" name ="memberPwd" value="<%= memberPwd %>">
+					                    <input type="hidden" name ="memberName" value="<%= memberName %>">
+					                    <input type="hidden" name ="phone" value="<%= phone %>">
+					                    <input type="hidden" name ="email" value="<%= email %>">
+					                    <input type="hidden" name ="addressNumber" value="<%= addressNumber%>">
+					                    <input type="hidden" name ="address" value="<%= address %>">
+					                    <input type="hidden" name ="addressDetail" value="<%= addressDetail %>">
+					                    
+					                    <div id="image">
+			                                <img src="<%= profile %>" width="100px" height="100px" >
+			                                </div>
+			                                <br>
+			                                
+			                                <div class="form-group bg-light"> 
+			                                	<input type="file" name="profile" id="img__preview"/>
+			                                </div>
+			
+					                    <br>
+					                    
+					                    <button type="submit" class = "btn btn-secondary btn-sm">프로필 변경</button>
+					                
+					                
+					                	<script>
+					                                $("#img__preview").on("change", function(e){
+					                            		var f=e.target.files[0];
+	
+					                            		if(!f.type.match("image*")){
+					                            			alert("이미지만 첨부할 수 있습니다..");
+					                            			$("#img__preview").val('');
+					                            			return;
+					                            		}
+	
+					                            		
+	
+					                            		if(f.size>1024*1024*10){
+					                            			alert("10mb까지의 사진만 업데이트 할 수 있습니다.");
+					                            			$("#img__preview").val('');
+					                            			return;
+					                            		}
+	
+					                            		var reader=new FileReader();
+	
+					                            		reader.onload=function(e){
+					                            			$("#img__wrap").attr("src",e.target.result);
+					                            		}
+					                            		reader.readAsDataURL(f); //비동기적 진행(파일 읽기)
+	
+					                            	});
+				                                </script>
+				                    		<input type="hidden" name ="memberNo" value="<%= memberNo %>">
 					                </form>
 					            </div>
 					      
