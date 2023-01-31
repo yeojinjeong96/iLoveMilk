@@ -32,15 +32,15 @@
 </head>
 <body>
     <div class="nav">
-               
+           
         <br>
         <br>
         <div class="nav-area" >
             <div class="menu mainmenu"><a href="">회원정보 관리</a></div> <br>
-            <div class="menu"><a href="<%= contextPath %>//myPageUpdate.me">회원정보변경</a></div>
+            <div class="menu"><a href="<%= contextPath %>/myPageUpdate.me">회원정보변경</a></div>
             <div class="menu"><a href="">적립금</a></div>
             <div class="menu"><a href="">리뷰관리</a></div>
-            <div class="menu"><a href="">회원탈퇴</a></div>
+            <div class="menu" ><a href="" data-toggle="modal" data-target ="#deleteModal">회원탈퇴</a></div>
             <br>
             <br>
             <div class="menu mainmenu"><a href="">주문내역</a></div> <br>
@@ -57,7 +57,42 @@
             <div class="menu"><a href="">나의 1:1문의</a></div>
         </div>
     </div >
-
+	
+	
+	 <!-- 회원탈퇴용 모달 div -->
+	<div class="modal" id="deleteModal">
+        <div class="modal-dialog">
+          <div class="modal-content">
+      
+            <!-- Modal Header -->
+            <div class="modal-header">
+              <h4 class="modal-title">회원 탈퇴</h4>
+              <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+      
+            <!-- Modal body -->
+            <div class="modal-body">
+            
+                <div id="modaltext">
+                    아이럽우유 탈퇴 안내<br><br>
+                    
+                    1. 회원탈퇴 시 회원님의 정보는 소비자 보호에 관한 법률에 의거한 고객정보 보호정책에 따라 관리됩니다. <br>
+                    2. 탈퇴 시 회원님께서 보유하셨던 적립금과 쿠폰은 모두 삭제됩니다.
+                </div> 
+                <br><br>
+                
+                <form action="<%= contextPath %>/delete.me" method="post">
+                    <input type="hidden" name ="memberId" value="<%= loginMember.getMemberId() %>">
+                    비밀번호 : <input type="password" name="memberPwd" required> <br><br>
+                    
+                    <button type="submit" class="btn btn-danger btn-sm">탈퇴하기</button>
+                    
+                </form>
+            </div>
+      
+          </div>
+        </div>
+      </div>
     
 </body>
 </html>

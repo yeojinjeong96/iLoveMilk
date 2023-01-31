@@ -302,5 +302,27 @@ public Member updateCheckPwd(Connection conn, String memberId, String memberPwd)
 		
 	}
 	
+	
+	public int MemberDelete(Connection conn, String memberId, String memberPwd ) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String sql = prop.getProperty("MemberDelete");
+		
+		try {
+			pstmt=conn.prepareStatement(sql);
+			pstmt.setString(1, memberId);
+			pstmt.setString(2, memberPwd);
+			
+			result=pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		return result;
+	}
+	
 
 }

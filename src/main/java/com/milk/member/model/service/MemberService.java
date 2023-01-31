@@ -126,4 +126,29 @@ public class MemberService {
 		return updateMem;
 	}
 	
+	
+	/**
+	 * 회원정보변경 확인 서비스 
+	 */
+	
+	public int MemberDelete(String memberId, String memberPwd) {
+		Connection conn = getConnection();
+		int result = new MemberDao().MemberDelete(conn, memberId, memberPwd);
+		
+		if(result > 0) {
+			commit(conn);
+		}else {
+			rollback(conn);
+		}
+		
+		close(conn);
+	
+		return result;
+		
+		
+		
+	}
+	
+	
+	
 }

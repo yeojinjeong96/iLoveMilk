@@ -9,19 +9,18 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.milk.member.model.service.MemberService;
-import com.milk.member.model.vo.Member;
 
 /**
- * Servlet implementation class MemberUpdate1Controller
+ * Servlet implementation class MemberDeleteController
  */
-@WebServlet("/update1.me")
-public class MemberUpdate1Controller extends HttpServlet {
+@WebServlet("/delete.me")
+public class MemberDeleteController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public MemberUpdate1Controller() {
+    public MemberDeleteController() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -34,20 +33,16 @@ public class MemberUpdate1Controller extends HttpServlet {
 		String memberId = request.getParameter("memberId");
 		String memberPwd = request.getParameter("memberPwd");
 		
-		Member updateCheck = new MemberService().updateCheckPwd(memberId, memberPwd);
-		
+		int result = new MemberService().MemberDelete(memberId, memberPwd);
 		
 		HttpSession session = request.getSession();
-		if(updateCheck==null) { //조회결과 없음 
-			
-			response.sendRedirect(request.getContextPath() + "/myPageUpdate.me"); 
-		
-		}else { //조회결과 있음 
-			
-			
-			session.setAttribute("updateCheck", updateCheck);
-			response.sendRedirect(request.getContextPath() + "/myPageUpdate2.me" );
-			
+		if(result > 0) {
+			session.setAttribute("alertMsg", "성공적으로 탈퇴되었습니다. 그동안 이용해주셔서 감사합니다.");
+			session.removeAttribute("loginMember");
+			response.sendRedirect(request.getContextPath());
+		}else {
+			session.setAttribute("alertMsg", "비밀번호를 다시 확인해주세요.");
+			response.sendRedirect(request.getContextPath() + "/mypage.me");
 		}
 		
 	}
