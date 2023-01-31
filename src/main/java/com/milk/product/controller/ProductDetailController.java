@@ -38,7 +38,7 @@ public class ProductDetailController extends HttpServlet {
 				request.setAttribute("p", p);
 				request.getRequestDispatcher("views/product/managerProductDetail.jsp").forward(request, response);
 			} else {
-				request.setAttribute("alertMsg", "상품 상세조회 실패");
+				request.getSession().setAttribute("alertMsg", "상품 상세조회 실패");
 				response.sendRedirect(request.getContextPath() + "/listUpDeRe.pr?cp=1");
 			}
 		} else {

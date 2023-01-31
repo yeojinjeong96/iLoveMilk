@@ -512,6 +512,24 @@ public class ProductDao {
 		}
 		return result;
 	}
+	
+	public int receivingProduct(Connection conn, int proNo, int count) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String sql = prop.getProperty("stockProduct");
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, proNo);
+			pstmt.setInt(2, count);
+			pstmt.setString(3, "입고");
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		return result;
+	}
 
 	public int selectAllListCount(Connection conn, String op, String searchKey) {
 		int result = 0;
