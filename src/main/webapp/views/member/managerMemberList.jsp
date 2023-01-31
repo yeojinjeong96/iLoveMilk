@@ -129,14 +129,23 @@
             
             <script>
             
-            	function memDetail(a, b, c){
+            	function memDetail(a, b, c, d){
             		
        				$("#detailModalId").text(a);
        				$("#detailModalGrade").text(b);
        				$("#detailModalPoint").text(c);
        				
+       				
        				$.ajax({
-       					url:"<%=contextPath%>/memberPoint.me",
+       					url:"<%=contextPath%>/memPoint.ma?c",
+       				   data: {memNo:d, ppage:1}
+       				   ,success:function(result1, result2){
+       					   
+       					   console.log(result1);
+       					   console.log(result2);
+       				   },error:function(){
+       					   alert("데이터 통신 실패");
+       				   }
        				});
             		
             	}

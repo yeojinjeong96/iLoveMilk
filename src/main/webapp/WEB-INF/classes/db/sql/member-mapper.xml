@@ -220,6 +220,35 @@
 		  WHERE RNUM BETWEEN ? AND ? 
 	</entry>
 	
+	<entry key="selectPointListCount">
+		SELECT COUNT(*)COUNT
+		 FROM TB_POINT P 
+		WHERE MEMBER_NO =?
+	</entry>
+	
+	<entry key="selectPointList">
+        SELECT *
+            FROM(                     
+ 		        SELECT ROWNUM RNUM, A.*
+		          FROM (                            
+                        SELECT 
+                                POINT_NO,
+                                COUNT,
+                                STATUS,
+                                TOTAL,
+                                MODIFY_DATE,
+                                CONTENT,
+                                ORDER_NO,
+                                MEMBER_NO
+                          FROM TB_POINT
+                         WHERE MEMBER_NO =?	
+                         ORDER
+                           BY MODIFY_DATE DESC
+                        )A
+                    )
+         WHERE RNUM BETWEEN ? AND ? 	
+	</entry>
+	
 	  <entry key="UpdateProfile">
    UPDATE TB_MEMBER
          SET MEMBER_ID = ?

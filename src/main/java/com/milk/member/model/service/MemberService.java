@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import com.milk.common.model.vo.PageInfo;
 import com.milk.member.model.dao.MemberDao;
 import com.milk.member.model.vo.Member;
+import com.milk.member.model.vo.Point;
 
 
 public class MemberService {
@@ -171,6 +172,30 @@ public class MemberService {
 	public ArrayList<Member> selectMemberList(PageInfo pi){
 		Connection conn = getConnection();
 		ArrayList<Member> list = new MemberDao().selectMemberList(conn, pi);
+		close(conn);
+		return list;
+	}
+	
+	/**
+	 * 회원별 포인트적립내역 페이징처리를 위한 카운드
+	 * @author 이다혜
+	 * @return listCount
+	 */
+	public int selectPointListCount(int memNo) {
+		Connection conn = getConnection();
+		int listCount = new MemberDao().selectPointListCount(conn, memNo);
+		close(conn);
+		return listCount;
+	}
+	
+	/**
+	 * 회원별 포인트 적립내역
+	 * @author 이다혜
+	 * @return ArrayList<Point> list
+	 */
+	public ArrayList<Point> selectPointList(PageInfo pi, int memNo){
+		Connection conn = getConnection();
+		ArrayList<Point> list = new MemberDao().selectPointList(conn,pi, memNo);
 		close(conn);
 		return list;
 	}

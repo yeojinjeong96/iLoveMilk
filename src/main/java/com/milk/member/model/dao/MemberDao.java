@@ -13,6 +13,7 @@ import java.util.Properties;
 
 import com.milk.common.model.vo.PageInfo;
 import com.milk.member.model.vo.Member;
+import com.milk.member.model.vo.Point;
 
 
 public class MemberDao {
@@ -400,6 +401,68 @@ public Member updateCheckPwd(Connection conn, String memberId, String memberPwd)
 		return list;
 	}
 	
+	public int selectPointListCount(Connection conn, int memNo) {
+		ResultSet rset = null;
+		PreparedStatement pstmt  = null;
+		int listCount = 0;
+		
+		String sql = prop.getProperty("selectPointListCount");
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, memNo);
+			rset = pstmt.executeQuery();
+			if(rset.next()) {
+				listCount = rset.getInt("count");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return listCount;
+	}
+	
+	public ArrayList<Point> selectPointList(Connection conn, PageInfo pi, int memNo){
+		ArrayList<Point>list = new ArrayList<>();
+		ResultSet rset= null;
+		PreparedStatement pstmt = null;
+		String sql = prop.getProperty("selectPointList");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			int startRow = (pi.getCurrentPage() -1) * pi.getBoardLimit() + 1;
+			int endRow = startRow + pi.getBoardLimit() -1;
+
+			pstmt.setInt(1, memNo);
+			pstmt.setInt(2, startRow);
+			pstmt.setInt(3, endRow);
+			
+			rset = pstmt.executeQuery();
+			while(rset.next()) {
+				list.add(new Point(
+							rset.getInt("POINT_NO"),
+							rset.getInt("count"),
+							rset.getString("status"),
+							rset.getInt("total"),
+							rset.getString("MODIFY_DATE"),
+							rset.getString("content"),
+							rset.getString("ORDER_NO"),
+							rset.getInt("member_no")
+						));
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return list;
+	}
 	
 	public int UpdateProfile(Connection conn, Member m) {
 		
