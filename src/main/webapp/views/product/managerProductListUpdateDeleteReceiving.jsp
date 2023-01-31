@@ -76,7 +76,7 @@
 	                                	<% if(p.getBrand() != null){ %>
 	                                		<%= p.getBrand() %>
 	                                	<% }else{ %>
-	                                		·
+	                                		
 	                                	<% } %>
 	                                </td>
 	                                <td align="center"><button type="button" class="btn btn-primary btn-sm" onclick="receivingPro();" data-toggle="modal" data-target="#receiving">입고</button></td>
@@ -207,12 +207,27 @@
 			if($(".checkedPro:checked").parent().next().text() == ""){
 				alert("선택된 상품이 없습니다.");
 			}else if(confirm("선택된 상품을 정말로 삭제하시겠습니까?")){
+				// 매니저 비밀번호 체크
+    			if('<%= loginManager.getManagerPwd() %>' != prompt('비밀번호를 입력하세요.')){
+    				alert('비밀번호가 틀렸습니다.');
+					return false;
+    			}
 				
+				// 상품 삭제 ajax
+				let proNo = "";
+				$(".checkedPro:checked").each(function(){
+					proNo += $(this).parent().next().text() + ",";
+				})
 				$.ajax({
 					url:"<%= contextPath %>/delete.pr",
-					data:{proNo:$(".checkedPro:checked").parent().next().text()},
-					success:function(){
-						
+					data:{proNo:proNo},
+					success:function(result){
+						if(result > 0){
+							alert("상품 삭제 성공");
+							location.reload();
+						}else{
+							alert("상품 삭제 실패")
+						}
 					},
 					error:function(){
 						console.log("상품 삭제용 ajax통신 실패");

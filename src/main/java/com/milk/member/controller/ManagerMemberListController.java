@@ -33,7 +33,7 @@ public class ManagerMemberListController extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-		int currentPage = Integer.parseInt(request.getParameter("cp"));
+		int currentPage = Integer.parseInt(request.getParameter("cpage"));
 		int listCount = new MemberService().selectListCount();
 		int pageLimit = 10;
 		int boardLimit = 10;
@@ -48,8 +48,10 @@ public class ManagerMemberListController extends HttpServlet {
 		
 		ArrayList<Member> list = new MemberService().selectMemberList(pi);
 		
+		
 		request.setAttribute("pi", pi);
 		request.setAttribute("list", list);
+		request.getRequestDispatcher("views/member/managerMemberList.jsp").forward(request, response);
 		
 		
 		

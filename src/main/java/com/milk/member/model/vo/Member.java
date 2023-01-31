@@ -69,7 +69,26 @@ public class Member {
 		this.memberName = memberName;
 	}
 	
-	
+	public Member(int memberNo, String memberId, String memberPwd, String memberName, String phone, String email,
+		         String addressNumber, String address, String addressDetail, String profile) {
+		      super();
+		      this.memberNo = memberNo;
+		      this.memberId = memberId;
+		      this.memberPwd = memberPwd;
+		      this.memberName = memberName;
+		      this.phone = phone;
+		      this.email = email;
+		      this.addressNumber = addressNumber;
+		      this.address = address;
+		      this.addressDetail = addressDetail;
+		      this.profile = profile;
+		   }
+
+	public Member(int memberNo, String profile) {
+		      super();
+		      this.memberNo = memberNo;
+		      this.profile = profile;
+		   }	
 
 	public Member(String memberId, String memberName, String phone, String email, String addressNumber, String address,
 			String addressDetail) {

@@ -489,6 +489,29 @@ public class ProductDao {
 		}
 		return result;
 	}
+	
+	public int deleteProduct(Connection conn, int[] arrpNo) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String sql = prop.getProperty("deleteProduct");
+		
+		for(int i=0; i<arrpNo.length-1; i++) {
+			sql += "OR PRODUCT_NO = ?";
+		}
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			for(int i=0; i<arrpNo.length; i++) {
+				pstmt.setInt(i+1, arrpNo[i]);
+			}
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		return result;
+	}
 
 	public int selectAllListCount(Connection conn, String op, String searchKey) {
 		int result = 0;

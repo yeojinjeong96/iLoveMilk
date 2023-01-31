@@ -52,7 +52,7 @@ public class MemberUpdate2Controller extends HttpServlet {
 		
 		Member updateMem = new MemberService().updateMember(m); 
 		
-		System.out.println(m);
+		//System.out.println(m);
 		HttpSession session = request.getSession();
 		if(updateMem == null) { // 실패
 			session.setAttribute("alertMsg", "다시한번 확인해주세요");
@@ -70,54 +70,6 @@ public class MemberUpdate2Controller extends HttpServlet {
 		}
 		
 		
-		
-		
-//		if(ServletFileUpload.isMultipartContent(request)) {
-//			
-//			int maxSize = 10*1024 * 1024;
-//			String savePath = request.getSession().getServletContext().getRealPath("/resources/member_upfiles/");
-//			MultipartRequest multiRequest = new MultipartRequest(request, savePath, maxSize, "UTF-8", new MyFileRenamePolicy());
-//			
-//			int memberNo = Integer.parseInt(request.getParameter("memberNo"));
-//			String memberId = request.getParameter("memberId");
-//			String memberPwd = request.getParameter("memberPwd");
-//			String memberName = request.getParameter("memberName");
-//			String email = request.getParameter("email");
-//			String phone = request.getParameter("phone");
-//			String addressNumber = request.getParameter("addressNumber");
-//			String address = request.getParameter("address");
-//			String addressDetail = request.getParameter("addressDetail");
-//			
-//			Member m = new Member();
-//			m.setMemberNo(memberNo);
-//			m.setMemberId(memberId);
-//			m.setMemberPwd(memberPwd);
-//			m.setMemberName(memberName);
-//			m.setEmail(email);
-//			m.setPhone(phone);
-//			m.setAddressNumber(addressNumber);
-//			m.setAddress(address);
-//			m.setAddressDetail(addressDetail);
-//			
-//			Attachment at = null;
-//			
-//			if(multiRequest.getOriginalFileName("upfile")!=null) {//넘어온파일있음
-//				at= new Attachment();
-//				at.setChangeName(multiRequest.getFilesystemName("upfile"));
-//				at.setFilePath("resources/notice_upfiles/");
-//				
-//				if(multiRequest.getParameter("changeName")!=null) {//기존파일있음
-//					at.setFileNo(Integer.parseInt(multiRequest.getParameter("originFileNo")));
-//				}else {//기존파일없음
-//					at.setRefNo(memberNo);
-//				}
-//			
-//			}
-//			
-//			int result = new MemberService().updateMember(m,at);
-//			
-//			
-//		}
 		
 		
 	}
