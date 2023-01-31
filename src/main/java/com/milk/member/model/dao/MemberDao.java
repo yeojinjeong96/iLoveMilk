@@ -303,6 +303,31 @@ public Member updateCheckPwd(Connection conn, String memberId, String memberPwd)
 		
 	}
 	
+
+	
+	public int MemberDelete(Connection conn, String memberId, String memberPwd ) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String sql = prop.getProperty("MemberDelete");
+		
+		try {
+			pstmt=conn.prepareStatement(sql);
+			pstmt.setString(1, memberId);
+			pstmt.setString(2, memberPwd);
+			
+			result=pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		return result;
+	}
+	
+
+
 	public int selectListCount(Connection conn) {
 		ResultSet rset= null;
 		PreparedStatement pstmt = null;
@@ -345,7 +370,7 @@ public Member updateCheckPwd(Connection conn, String memberId, String memberPwd)
 			
 			while(rset.next()) {
 				list.add(new Member(
-						rset.getInt("member_no"),
+						   rset.getInt("member_no"),
 						   rset.getString("member_id"),
 						   rset.getString("member_pwd"),
 						   rset.getString("member_name"),
@@ -361,37 +386,16 @@ public Member updateCheckPwd(Connection conn, String memberId, String memberPwd)
 						   rset.getString("status"),
 						   rset.getString("member_grade"),
 						   rset.getInt("total"),
-						   rset.getInt("totalpay")
-						);
+						   rset.getInt("totalpay")));
 			}
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
-		}
-		
-		
-		return list;
-	
-	public int MemberDelete(Connection conn, String memberId, String memberPwd ) {
-		int result = 0;
-		PreparedStatement pstmt = null;
-		String sql = prop.getProperty("MemberDelete");
-		
-		try {
-			pstmt=conn.prepareStatement(sql);
-			pstmt.setString(1, memberId);
-			pstmt.setString(2, memberPwd);
-			
-			result=pstmt.executeUpdate();
-			
-		} catch (SQLException e) {
-			e.printStackTrace();
 		} finally {
+			close(rset);
 			close(pstmt);
 		}
 		
-		return result;
+		return list;
 	}
-	
-
 }

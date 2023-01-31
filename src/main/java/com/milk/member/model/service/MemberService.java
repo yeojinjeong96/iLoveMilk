@@ -128,6 +128,29 @@ public class MemberService {
 		return updateMem;
 	}
 	
+	
+	/**
+	 * 회원정보변경 확인 서비스 
+	 */
+	
+	public int MemberDelete(String memberId, String memberPwd) {
+		Connection conn = getConnection();
+		int result = new MemberDao().MemberDelete(conn, memberId, memberPwd);
+		
+		if(result > 0) {
+			commit(conn);
+		}else {
+			rollback(conn);
+		}
+		
+		close(conn);
+	
+		return result;
+		
+		
+		
+	}
+	
 	/**
 	 * 페이징처리를 위한 회원 리스트 수 조회
 	 * @author 이다혜
@@ -151,29 +174,7 @@ public class MemberService {
 		close(conn);
 		return list;
 	}
-	
-	
-	/**
-	 * 회원정보변경 확인 서비스 
-	 */
-	
-	public int MemberDelete(String memberId, String memberPwd) {
-		Connection conn = getConnection();
-		int result = new MemberDao().MemberDelete(conn, memberId, memberPwd);
-		
-		if(result > 0) {
-			commit(conn);
-		}else {
-			rollback(conn);
-		}
-		
-		close(conn);
-	
-		return result;
-		
-		
-		
-	}
+
 	
 	
 	

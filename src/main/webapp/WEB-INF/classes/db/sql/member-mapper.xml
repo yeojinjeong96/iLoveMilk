@@ -160,12 +160,7 @@
 		   AND MEMBER_PWD = ?
 	</entry>
 	
-	<entry key="selectListCount">
-	 SELECT
-            COUNT(*) COUNT
-       FROM TB_MEMBER
-      WHERE STATUS = 'Y' 
-	</entry>
+
 	
 	<entry key="MemberDelete">
 		UPDATE TB_MEMBER
@@ -175,4 +170,58 @@
 		   AND MEMBER_PWD = ?
 	
 	</entry>
+	
+	<entry key="selectListCount">
+	 SELECT
+            COUNT(*) COUNT
+       FROM TB_MEMBER
+      WHERE STATUS = 'Y' 
+	</entry>
+	
+	<entry key="selectMemberList">
+		SELECT *    
+		  FROM(SELECT ROWNUM RNUM, A*  
+		        FROM(
+		             SELECT
+		                    COUNT(*) COUNT
+		               FROM TB_MEMBER
+		              WHERE STATUS = 'Y' 
+		              
+		                SELECT
+		                        MEMBER_NO,
+		                        MEMBER_ID,
+		                        MEMBER_PWD,
+		                        MEMBER_NAME,
+		                        PHONE,
+		                        EMAIL,
+		                        ADDRESS_NUMBER,
+		                        ADDRESS,
+		                        ADDRESS_DETAIL,
+		                        PROFILE,
+		                        ENROLL_DATE,
+		                        MODIFY_DATE,
+		                        BLACK_LIST,
+		                        STATUS,
+		                        MEMBER_GRADE,
+		                        TOTAL,
+		                         (SELECT SUM (PRICE)
+		                            FROM TB_ORDER
+		                            JOIN TB_PAYMENT USING (ORDER_NO)
+		                            WHERE MEMBER_NO = (SELECT MEMBER_NO
+		                                                 FROM TB_MEMBER
+		                                                WHERE STATUS = 'Y'
+		                                               )
+		                            GROUP 
+		                               BY MEMBER_NO)TOTALPAY
+		                   FROM TB_MEMBER
+		                   JOIN TB_POINT USING (MEMBER_NO)
+		                  WHERE STATUS = 'Y'
+		                  ORDER 
+		                     BY ENROLL_DATE DESC
+		           )A
+		     )  
+		  WHERE RNUM BETWEEN ? AND ?  		
+	</entry>
+	
+	
 </properties>
