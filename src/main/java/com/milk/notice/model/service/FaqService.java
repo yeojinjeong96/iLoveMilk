@@ -21,12 +21,22 @@ public class FaqService {
 		
 	}
 	
-	public ArrayList<Faq> selectFaqList(PageInfo pi){
+	public ArrayList<Faq> selectFaqList(PageInfo pi,String category){
 		Connection conn = getConnection();
-		ArrayList<Faq>list= new FaqDao().selectFaqList(conn,pi);
+		ArrayList<Faq>list= new FaqDao().selectFaqList(conn,pi,category);
 		
 		close(conn);
 		return list;
 		
 	}
+	
+	public ArrayList<Faq> selectBestFaqList(PageInfo pi,String category){
+		Connection conn = getConnection();
+		ArrayList<Faq>list= new FaqDao().selectBestFaqList(conn,pi,category);
+		
+		close(conn);
+		return list;
+		
+	}
+	
 }

@@ -16,7 +16,21 @@
 		               ,FAQ_WRITER
 		               ,CATEGORY_NAME
 		                FROM TB_FAQ
+                     WHERE CATEGORY_NAME = ?
 		              ORDER BY CATEGORY_NAME)E)E
+		              WHERE RNUM BETWEEN ? AND ?
+	</entry>
+	<entry key="selectBestFaqList">
+		SELECT RNUM, E.*
+		    FROM(SELECT ROWNUM RNUM, E.*
+		            FROM (SELECT 
+		                FAQ_NO
+		               ,QUESTION
+		               ,ANSWER
+		               ,FAQ_WRITER
+		               ,CATEGORY_NAME
+		                FROM TB_FAQ
+		              WHERE BEST_FAQ = 'Y')E)E
 		              WHERE RNUM BETWEEN ? AND ?
 	</entry>
 </properties>

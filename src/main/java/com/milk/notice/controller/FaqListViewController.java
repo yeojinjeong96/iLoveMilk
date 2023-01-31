@@ -55,8 +55,9 @@ public class FaqListViewController extends HttpServlet {
 		}
 		
 		PageInfo pi = new PageInfo(listCount,currentPage, pageLimit, boardLimit,maxPage,startPage,endPage);
-		ArrayList<Faq>list= new FaqService().selectFaqList(pi);
 		String category = request.getParameter("category");
+		ArrayList<Faq>list= new FaqService().selectFaqList(pi,category);
+		
 		
 		
 		request.setAttribute("list", list);

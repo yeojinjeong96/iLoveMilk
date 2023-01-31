@@ -52,7 +52,7 @@ public class FaqDao {
 		
 		
 	}
-	public ArrayList<Faq> selectFaqList(Connection conn, PageInfo pi){
+	public ArrayList<Faq> selectFaqList(Connection conn, PageInfo pi,String category){
 		PreparedStatement pstmt= null;
 		ResultSet rset= null;
 		ArrayList<Faq>list = new ArrayList<>();
@@ -63,6 +63,45 @@ public class FaqDao {
 		
 		try {
 			pstmt= conn.prepareStatement(sql);
+			pstmt.setString(1, category);
+			pstmt.setInt(2, startRow);
+			pstmt.setInt(3, endRow);
+			
+			rset= pstmt.executeQuery();
+			while(rset.next()) {
+				list.add(new Faq(rset.getInt("faq_no")
+								,rset.getString("question")
+								,rset.getString("answer")
+								,rset.getInt("faq_writer")
+								,rset.getString("category_name"))
+	
+						);
+			}
+			
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return list;
+		
+	}
+	
+	public ArrayList<Faq> selectBestFaqList(Connection conn, PageInfo pi,String category){
+		PreparedStatement pstmt= null;
+		ResultSet rset= null;
+		ArrayList<Faq>list = new ArrayList<>();
+		String sql= prop.getProperty("selectBestFaqList");
+		
+		int startRow= (pi.getCurrentPage()-1)*pi.getBoardLimit()+1;
+		int endRow= startRow + pi.getBoardLimit() -1;
+		
+		try {
+			pstmt= conn.prepareStatement(sql);
+		
 			pstmt.setInt(1, startRow);
 			pstmt.setInt(2, endRow);
 			
