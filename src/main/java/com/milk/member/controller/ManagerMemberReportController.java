@@ -46,6 +46,10 @@ public class ManagerMemberReportController extends HttpServlet {
 		
 		PageInfo pi = new PageInfo(listCount, currentPage, pageLimit, boardLimit, maxPage, startPage, endPage);
 		ArrayList<Report> list = new MemberService().selectMemberReportList(pi);
+		
+		request.setAttribute("pi", pi);
+		request.setAttribute("list", list);
+		request.getRequestDispatcher("views/member/managerMemberReport.jsp").forward(request, response);
 	}	
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)

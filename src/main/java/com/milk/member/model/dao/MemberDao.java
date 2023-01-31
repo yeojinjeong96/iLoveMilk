@@ -14,6 +14,7 @@ import java.util.Properties;
 import com.milk.common.model.vo.PageInfo;
 import com.milk.member.model.vo.Member;
 import com.milk.member.model.vo.Point;
+import com.milk.member.model.vo.Report;
 
 
 public class MemberDao {
@@ -489,6 +490,43 @@ public Member updateCheckPwd(Connection conn, String memberId, String memberPwd)
 		}
 		
 		return listCount;
+	}
+	
+	public ArrayList<Report> selectMemberReportList(Connection conn, PageInfo pi){
+		ArrayList<Report> list = new ArrayList<>();
+		ResultSet rset = null;
+		PreparedStatement pstmt = null;
+		String sql = prop.getProperty("selectMemberReportList");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			int startRow = (pi.getCurrentPage() -1) * pi.getBoardLimit() + 1;
+			int endRow = startRow + pi.getBoardLimit() -1;
+			
+			pstmt.setInt(1, startRow);
+			pstmt.setInt(2, endRow);
+			
+			rset= pstmt.executeQuery();
+			while(rset.next()) {
+				list.add(new Report(
+						rset.getInt("REPORT_NO"),
+						rset.getInt("REPORTING_MEM_NO"),
+						rset.getInt("REF_NO"),
+						rset.getString("REPORT_CONTENT"),
+						rset.getString("REPORT_DATE"),
+						rset.getString("REPORT_TYPE"),
+						rset.getString("MEMBER_ID")
+						));
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return list;
 	}
 	
 	public int UpdateProfile(Connection conn, Member m) {

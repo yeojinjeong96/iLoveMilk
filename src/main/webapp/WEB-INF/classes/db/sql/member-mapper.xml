@@ -249,6 +249,33 @@
          WHERE RNUM BETWEEN ? AND ? 	
 	</entry>
 	
+	<entry key="selectReportListCount">
+		SELECT 
+			   COUNT(*) COUNT
+		  FROM TB_REPORT		
+	</entry>
+	<entry key="selectMemberReportList">
+	        SELECT *
+            FROM(                     
+ 		        SELECT ROWNUM RNUM, A.*
+		          FROM (                            
+                        SELECT 
+								REPORT_NO,
+								REPORTING_MEM_NO,
+								REF_NO,
+								REPORT_CONTENT,
+								REPORT_DATE,
+								REPORT_TYPE,
+								MEMBER_ID
+                          FROM TB_REPORT
+                         JOIN TB_MEMBER ON (MEMBER_NO = REPORTING_MEM_NO) 
+                         ORDER
+                           BY REPORT_DATE DESC
+                        )A
+                    )
+         WHERE RNUM BETWEEN ? AND ? 
+	</entry>
+	
 	  <entry key="UpdateProfile">
    UPDATE TB_MEMBER
          SET MEMBER_ID = ?

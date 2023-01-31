@@ -8,6 +8,7 @@ public class Report {
 	private String repContent;
 	private String repDate;
 	private String repType;
+	private String memberId;
 	
 	public Report() {}
 
@@ -19,6 +20,20 @@ public class Report {
 		this.repContent = repContent;
 		this.repDate = repDate;
 		this.repType = repType;
+	}
+	
+	
+
+	public Report(int reportNo, int repMemNo, int refNo, String repContent, String repDate, String repType,
+			String memberId) {
+		super();
+		this.reportNo = reportNo;
+		this.repMemNo = repMemNo;
+		this.refNo = refNo;
+		this.repContent = repContent;
+		this.repDate = repDate;
+		this.repType = repType;
+		this.memberId = memberId;
 	}
 
 	public int getReportNo() {
@@ -68,12 +83,24 @@ public class Report {
 	public void setRepType(String repType) {
 		this.repType = repType;
 	}
+	
+	
+
+	public String getMemberId() {
+		return memberId;
+	}
+
+	public void setMemberId(String memberId) {
+		this.memberId = memberId;
+	}
 
 	@Override
 	public String toString() {
 		return "Report [reportNo=" + reportNo + ", repMemNo=" + repMemNo + ", refNo=" + refNo + ", repContent="
-				+ repContent + ", repDate=" + repDate + ", repType=" + repType + "]";
+				+ repContent + ", repDate=" + repDate + ", repType=" + repType + ", memberId=" + memberId + "]";
 	}
+
+
 	
 	
 
