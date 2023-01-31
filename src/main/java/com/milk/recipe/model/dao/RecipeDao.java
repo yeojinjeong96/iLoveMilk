@@ -369,6 +369,7 @@ public class RecipeDao {
 			while(rset.next()) {
 				RecipeIngre ri = new RecipeIngre();
 				
+				ri.setIngreNo(rset.getInt("INGRE_NO"));
 				ri.setIngreName(rset.getString("INGRE_NAME"));
 				ri.setIngreAmount(rset.getString("INGRE_AMOUNT"));
 				
@@ -401,6 +402,7 @@ public class RecipeDao {
 			while(rset.next()) {
 				RecipeOrder ro = new RecipeOrder();
 				
+				ro.setRecipeOrderNo(rset.getInt("RECIPE_ORDER_NO"));
 				ro.setRecipeOrder(rset.getInt("RECIPE_ORDER"));
 				ro.setRecipeExplain(rset.getString("RECIPE_EXPLN"));
 				ro.setRecipeImg(rset.getString("RECIPE_IMG"));
@@ -643,5 +645,34 @@ public class RecipeDao {
 		
 		return result;
 		
+	}
+	
+	public ArrayList<Recipe> selectRecentRecipeList(Connection conn){
+		ArrayList<Recipe> list = new ArrayList<>();
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		String sql = prop.getProperty("selectRecentRecipeList");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+	
+			
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				list.add(new Recipe(rset.getInt("RECIPE_NO"),
+									rset.getString("RECIPE_TITLE"),
+									rset.getString("MEMBER_ID"),
+									rset.getString("MAIN_IMG")));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return list;
 	}
 }

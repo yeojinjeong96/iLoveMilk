@@ -4,6 +4,8 @@
 <%
 	PageInfo pi = (PageInfo)request.getAttribute("pi");
 	ArrayList<Product> list = (ArrayList<Product>)request.getAttribute("list");
+	String op = (String)request.getAttribute("op");
+	String key = (String)request.getAttribute("key");
 %>
 <!DOCTYPE html>
 <html>
@@ -14,6 +16,7 @@
     .outer-1{float: left; width: 800px; box-sizing: border-box;}
     .outer-2{width: 700px;}
     .pHover:hover{cursor: pointer;}
+    #keyword{float:left; margin-top:15px;}
 </style>
 </head>
 <body>
@@ -37,12 +40,17 @@
                                     <option>상품코드</option>
                                     <option>브랜드</option>
                                 </select>
-                                <input type="text" name="searchKey" required>
-                                <button type="button" onclick="opNeed();" class="btn btn-primary btn-sm">검색</button>
+                                <input type="text" name="searchKey" id="searchKey" required>
+                                <button type="button" onclick=" return opNeed();" class="btn btn-primary btn-sm">검색</button>
 	                        </td>
                         </tr>
                     </table>
                     <div align="right">
+                    	<div id="keyword" align="left">
+                    		<% if(op != null && key != null){ %>
+                    			<b>"<%= key %>"</b>에 대한 검색 결과
+                    		<% } %>
+                    	</div>
                         <button type="button" onclick="deleteBtn();" class="btn btn-primary btn-sm" style="margin: 15px;">선택 상품 삭제</button>
                     </div>
                     <table class="table">
@@ -57,7 +65,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                        <!-- 검색시 검색단어 보이기, 상품리스트 null시 상품리스트가 존재하지않습니다. 검색리스트가 null시 검색조건에 해당하는 결과가 없슨디ㅏ.-->
+                       		<% if(!list.isEmpty()){ %>
 							    <% for(Product p : list){ %>
 	                            <tr class="prod">
 	                                <td><input type="checkbox" class="checkedPro"></td>
@@ -68,30 +76,50 @@
 	                                	<% if(p.getBrand() != null){ %>
 	                                		<%= p.getBrand() %>
 	                                	<% }else{ %>
-	                                		·
+	                                		
 	                                	<% } %>
 	                                </td>
 	                                <td align="center"><button type="button" class="btn btn-primary btn-sm" onclick="receivingPro();" data-toggle="modal" data-target="#receiving">입고</button></td>
 	                            </tr>
 								<% } %>
+							<% }else{ %>
+								<tr>
+									<td colspan="6" align="center">상품이 존재하지 않습니다.</td>
+								</tr>
+							<% } %>
                         </tbody>
                     </table>
                     
                     <br>
-					<div class="paging-area">
-			            <% if(pi.getCurrentPage() != 1){ %>
-			            <button class="btn btn-primary btn-sm" onclick="location.href='<%= contextPath %>/listUpDeRe.pr?cp=<%= pi.getCurrentPage() - 1 %>';">&lt;</button>
-			            <% } %>
-			
-						<% for(int p=pi.getStartPage(); p<=pi.getEndPage(); p++){ %>
-			            <button class="btn btn-primary btn-sm" onclick="location.href='<%= contextPath %>/listUpDeRe.pr?cp=<%= p %>';"><%= p %></button>
-						<% } %>
-						
-						<% if(pi.getCurrentPage() != pi.getMaxPage()){ %>
-			            <button class="btn btn-primary btn-sm" onclick="location.href='<%= contextPath %>/listUpDeRe.pr?cp=<%= pi.getCurrentPage() + 1%>';">&gt;</button>
-			            <% } %>
-			        </div>
-			        
+                    <% if(op == null){ %>
+	                    <div class="paging-area">
+				            <% if(pi.getCurrentPage() != 1){ %>
+				            <button class="btn btn-primary btn-sm" onclick="location.href='<%= contextPath %>/listUpDeRe.pr?cp=<%= pi.getCurrentPage() - 1 %>';">&lt;</button>
+				            <% } %>
+				
+							<% for(int p=pi.getStartPage(); p<=pi.getEndPage(); p++){ %>
+				            <button class="btn btn-primary btn-sm" onclick="location.href='<%= contextPath %>/listUpDeRe.pr?cp=<%= p %>';"><%= p %></button>
+							<% } %>
+							
+							<% if(pi.getCurrentPage() != pi.getMaxPage()){ %>
+				            <button class="btn btn-primary btn-sm" onclick="location.href='<%= contextPath %>/listUpDeRe.pr?cp=<%= pi.getCurrentPage() + 1%>';">&gt;</button>
+				            <% } %>
+				        </div>
+			        <% }else{ %>
+						<div class="paging-area">
+				            <% if(pi.getCurrentPage() != 1){ %>
+				            <button class="btn btn-primary btn-sm" onclick="location.href='<%= contextPath %>/listUpDeRe.pr?searchOp=<%= op %>&searchKey=<%= key %>&cp=<%= pi.getCurrentPage() - 1 %>';">&lt;</button>
+				            <% } %>
+				
+							<% for(int p=pi.getStartPage(); p<=pi.getEndPage(); p++){ %>
+				            <button class="btn btn-primary btn-sm" onclick="location.href='<%= contextPath %>/listUpDeRe.pr?searchOp=<%= op %>&searchKey=<%= key %>&cp=<%= p %>';"><%= p %></button>
+							<% } %>
+							
+							<% if(pi.getCurrentPage() != pi.getMaxPage()){ %>
+				            <button class="btn btn-primary btn-sm" onclick="location.href='<%= contextPath %>/listUpDeRe.pr?searchOp=<%= op %>&searchKey=<%= key %>&cp=<%= pi.getCurrentPage() + 1%>';">&gt;</button>
+				            <% } %>
+				        </div>
+			        <% } %>
 			        <!-- 입고 모달 시작 -->
 					<div class="modal fade" id="receiving">
 						<div class="modal-dialog">
@@ -123,20 +151,19 @@
 				                        </tr>
 				                    </table>
 				                </div>
-				                <!--  
+				                
 				                <script>
 					            	function receivingPro(){
-					            		console.log($(this).val());
-					            		$("#proNo").text($(this).parent().prev().prev().prev().prev().text());
-					        			if($(this).parent().prev().text() == "·"){
-					        				$("#proName").text($(this).parent().prev().text() + " " + $(this).parent().prev().prev().prev().text());
+					            		$("#proNo").text($(window.event.target).parent().prev().prev().prev().prev().text());
+					        			if($(window.event.target).parent().prev().text() == "·"){
+					        				$("#proName").text($(window.event.target).parent().prev().text() + " " + $(window.event.target).parent().prev().prev().prev().text());
 					        	    	}else{
-					        	    		$("#proName").text($(this).parent().prev().prev().prev().text());
+					        	    		$("#proName").text($(window.event.target).parent().prev().prev().prev().text());
 					        	    	}
-					        			$("#stock").text($(this).parent().prev().prev().text());
+					        			$("#stock").text($(window.event.target).parent().prev().prev().text());
 					        		}
 					        	</script>
-				                -->
+				                
 								<!-- Modal footer -->
 								<div class="modal-footer">
 									<button type="submit" class="btn btn-primary">입력</button>
@@ -155,17 +182,15 @@
     </div>
     
 	<script>
-		// 검색조건 미선택시 alert
 		function opNeed(){
-			$.ajax({
-				url:"<%= contextPath %>/searchList.pr",
-				data:{
-					op:$("#searchOp").val(),
-					searchKey:$("#searchKey").val()
-				},
-				success:function(){},
-				error: function(){}
-			});
+			if($("#searchOp").val() == "- 검색 조건 -"){
+				// 검색조건 미선택시 alert
+				alert("검색 조건을 선택하세요.");
+				return false;
+			}else{
+				// 검색 리스트 가져오기
+				location.href = "<%= contextPath %>/listUpDeRe.pr?searchOp=" + $('#searchOp').val() + "&searchKey=" + $('#searchKey').val() + "&cp=1";
+			}
 		}
 			
 		$(function(){
@@ -182,12 +207,27 @@
 			if($(".checkedPro:checked").parent().next().text() == ""){
 				alert("선택된 상품이 없습니다.");
 			}else if(confirm("선택된 상품을 정말로 삭제하시겠습니까?")){
+				// 매니저 비밀번호 체크
+    			if('<%= loginManager.getManagerPwd() %>' != prompt('비밀번호를 입력하세요.')){
+    				alert('비밀번호가 틀렸습니다.');
+					return false;
+    			}
 				
+				// 상품 삭제 ajax
+				let proNo = "";
+				$(".checkedPro:checked").each(function(){
+					proNo += $(this).parent().next().text() + ",";
+				})
 				$.ajax({
 					url:"<%= contextPath %>/delete.pr",
-					data:{proNo:$(".checkedPro:checked").parent().next().text()},
-					success:function(){
-						
+					data:{proNo:proNo},
+					success:function(result){
+						if(result > 0){
+							alert("상품 삭제 성공");
+							location.reload();
+						}else{
+							alert("상품 삭제 실패")
+						}
 					},
 					error:function(){
 						console.log("상품 삭제용 ajax통신 실패");

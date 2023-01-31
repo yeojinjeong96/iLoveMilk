@@ -279,5 +279,27 @@
 		   SET DELETE_STATUS = 'Y'
 		 WHERE RECIPE_NO = ?
 	</entry>
+	
+	<entry key="selectRecentRecipeList">
+		SELECT
+			   RECIPE_NO
+			 , RECIPE_TITLE
+			 , MEMBER_ID
+			 , MAIN_IMG
+		  FROM (
+		  			SELECT
+	                         RECIPE_NO
+	                       , RECIPE_TITLE
+	                       , MEMBER_ID
+	                       , MAIN_IMG
+	                    FROM TB_RECIPE R
+	                    JOIN TB_MEMBER ON (RECIPE_WRITER = MEMBER_NO)
+	                   WHERE DELETE_STATUS = 'N'
+	                     AND RECIPE_TYPE = 2
+	                   ORDER
+	                      BY R.ENROLL_DATE DESC
+		  		)
+		 WHERE ROWNUM <![CDATA[<=]]> 3 
+	</entry>
 
 </properties>

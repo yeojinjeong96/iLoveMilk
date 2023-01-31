@@ -28,7 +28,7 @@
                 <br>
                 <div>
                     <div class="text-primary menu">회원관리</div>
-                    <a href="">회원조회</a><br>
+                    <a href="<%= request.getContextPath() %>/memList.ma?cpage=1">회원조회</a><br>
                     <a href="">신고관리</a>
                 </div><br>
                 <div>

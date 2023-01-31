@@ -489,6 +489,29 @@ public class ProductDao {
 		}
 		return result;
 	}
+	
+	public int deleteProduct(Connection conn, int[] arrpNo) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String sql = prop.getProperty("deleteProduct");
+		
+		for(int i=0; i<arrpNo.length-1; i++) {
+			sql += "OR PRODUCT_NO = ?";
+		}
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			for(int i=0; i<arrpNo.length; i++) {
+				pstmt.setInt(i+1, arrpNo[i]);
+			}
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		return result;
+	}
 
 	public int selectAllListCount(Connection conn, String op, String searchKey) {
 		int result = 0;
@@ -496,11 +519,11 @@ public class ProductDao {
 		ResultSet rset = null;
 		String sql = prop.getProperty("selectAllListCount");
 		
-		if(op.equals("상품명")) {
+		if(op != null && op.equals("상품명")) {
 			sql += "AND PRODUCT_NAME LIKE '%" + searchKey + "%'";
-		} else if(op.equals("상품코드")) {
-			sql += "AND PRODUCT_NO LIKE '%" + searchKey + "%'";
-		} else if(op.equals("브랜드")) {
+		} else if(op != null && op.equals("상품코드")) {
+			sql += "AND PRODUCT_NO =" + searchKey;
+		} else if(op != null && op.equals("브랜드")) {
 			sql += "AND BRAND LIKE '%" + searchKey + "%'";
 		}
 				
@@ -525,11 +548,11 @@ public class ProductDao {
 		ResultSet rset = null;
 		String sql = prop.getProperty("selectAllList");
 		
-		if(op.equals("상품명")) {
+		if(op != null && op.equals("상품명")) {
 			sql += "AND PRODUCT_NAME LIKE '%" + searchKey + "%'";
-		} else if(op.equals("상품코드")) {
-			sql += "AND PRODUCT_NO LIKE '%" + searchKey + "%'";
-		} else if(op.equals("브랜드")) {
+		} else if(op != null && op.equals("상품코드")) {
+			sql += "AND PRODUCT_NO =" + searchKey;
+		} else if(op != null && op.equals("브랜드")) {
 			sql += "AND BRAND LIKE '%" + searchKey + "%'";
 		}
 		sql += "ORDER BY PRODUCT_NO DESC) A) WHERE RNUM BETWEEN ? AND ?";

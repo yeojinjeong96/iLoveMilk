@@ -226,4 +226,14 @@ public class RecipeService {
 		close(conn);
 		return result;
 	}
+	
+	
+	public ArrayList<Recipe> selectRecentRecipeList(){
+		Connection conn = getConnection();
+		
+		ArrayList<Recipe> list = new RecipeDao().selectRecentRecipeList(conn);
+		
+		close(conn);
+		return list;
+	}
 }

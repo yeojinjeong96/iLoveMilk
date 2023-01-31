@@ -58,6 +58,17 @@ public class Recipe {
 
 
 
+	public Recipe(int recipeNo, String recipeTitle, String recipeWriter, String mainImg) {
+		super();
+		this.recipeNo = recipeNo;
+		this.recipeTitle = recipeTitle;
+		this.recipeWriter = recipeWriter;
+		this.mainImg = mainImg;
+	}
+
+
+
+
 	public int getRecipeNo() {
 		return recipeNo;
 	}

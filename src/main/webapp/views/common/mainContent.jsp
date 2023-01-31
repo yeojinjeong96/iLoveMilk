@@ -201,42 +201,59 @@
             </div>
 
             <div id="con2-2">
-                
-                <div class="thumbnail" align="left">
-                    <a href="" style="color:rgb(113, 113, 113); text-decoration:none;">
-                    <img src="" alt="" width="200" height="200">
-                    
-                    <p>
-                        레시피제목<br>
-                        레시피작성자
-                    </p>
-                    </a>
-                </div>
+            
 
-                <div class="thumbnail" align="left">
-                    <a href="" style="color:rgb(113, 113, 113); text-decoration:none;">
-                    <img src="" alt="" width="200" height="200">
-                    
-                    <p>
-                        레시피제목<br>
-                        레시피작성자
-                    </p>
-                    </a>
-                </div>
+			</div>
+			
+			
+			<script>
+            
+            	$(function(){
+            		
+            		selectRecentRecipe();
+					
+            	}) 
+            	
+            	function selectRecentRecipe(){
+           	        $.ajax({ 
+	           			url : "<%=contextPath%>/recentList.re", 
+	           			success :function(recentList){
+	           			
+	           			
+	           				let value = "";
+	           				if(recentList.length == 0){
+	           					
+	           					value +=
+	           				        "<div class='thumbnail' align='left'>"
+	           		       		   + "조회된 게시글이 없습니다.</div>"
+	           				}else{
+	           					
+	           				    for(let i = 0; i< recentList.length; i++){ 
+	           				    
+	           			        value += "<div class='thumbnail' align='left'>"
+	           			              + "<a href='"+ '<%=contextPath %>/detail.re?no='+ recentList[i].recipeNo +"' style='color:rgb(113, 113, 113); text-decoration:none;'>"
+	           			              + "<img src='" + recentList[i].mainImg + "' alt='' width='200' height='200'>"
+	           			              + "<p>"
+	           			              + recentList[i].recipeTitle + "<br>"
+	           			              + recentList[i].recipeWriter
+	           			              + "</p>"
+	           			              + "</a>"
+	           			       	      + "</div>"
+	           			        
+	           			        }
+	           				    $("#con2-2").html(value);
+	           				}
+							
+	           				
+	           			},error:function(){
+	           				console.log("에러발생");
+	           			}
+            		})	
+            	}
+            	
 
-                <div class="thumbnail" align="left">
-                    <a href="" style="color:rgb(113, 113, 113); text-decoration:none;">
-                    <img src="" alt="" width="200" height="200">
-                    
-                    <p>
-                        레시피제목<br>
-                        레시피작성자
-                    </p>
-                    </a>
-                </div>
-
-
-            </div>
+            </script>
+	
         </div>
     </div>
     
