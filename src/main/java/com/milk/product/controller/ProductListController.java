@@ -41,9 +41,13 @@ public class ProductListController extends HttpServlet {
 		int currentPage = Integer.parseInt(request.getParameter("cp"));
 		int pageLimit = 10;
 		int productLimit = 10;
-		int maxPage = (int)Math.ceil((double)listCount / productLimit);
+		int maxPage = (int)Math.ceil((double)listCount / productLimit < 1 ? 1 : listCount / productLimit);
 		int startPage = (currentPage - 1) / pageLimit * pageLimit + 1;
 		int endPage = startPage + pageLimit - 1 > maxPage ? maxPage : startPage + pageLimit - 1;
+		
+		if(endPage > maxPage) {
+			endPage = maxPage;
+		}
 		
 		PageInfo pi = new PageInfo(listCount, currentPage, pageLimit, productLimit, maxPage, startPage, endPage);
 		
@@ -52,6 +56,8 @@ public class ProductListController extends HttpServlet {
 		if(request.getSession().getAttribute("loginManager") != null) {
 			request.setAttribute("list", list);
 			request.setAttribute("pi", pi);
+			request.setAttribute("op", op);
+			request.setAttribute("key", searchKey);
 			request.getRequestDispatcher("views/product/managerProductListUpdateDeleteReceiving.jsp").forward(request, response);
 		} else {
 			response.setContentType("text/html; charset=utf-8");

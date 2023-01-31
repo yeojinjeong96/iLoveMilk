@@ -499,7 +499,7 @@ public class ProductDao {
 		if(op != null && op.equals("상품명")) {
 			sql += "AND PRODUCT_NAME LIKE '%" + searchKey + "%'";
 		} else if(op != null && op.equals("상품코드")) {
-			sql += "AND PRODUCT_NO LIKE '%" + searchKey + "%'";
+			sql += "AND PRODUCT_NO =" + searchKey;
 		} else if(op != null && op.equals("브랜드")) {
 			sql += "AND BRAND LIKE '%" + searchKey + "%'";
 		}
@@ -528,7 +528,7 @@ public class ProductDao {
 		if(op != null && op.equals("상품명")) {
 			sql += "AND PRODUCT_NAME LIKE '%" + searchKey + "%'";
 		} else if(op != null && op.equals("상품코드")) {
-			sql += "AND PRODUCT_NO LIKE '%" + searchKey + "%'";
+			sql += "AND PRODUCT_NO =" + searchKey;
 		} else if(op != null && op.equals("브랜드")) {
 			sql += "AND BRAND LIKE '%" + searchKey + "%'";
 		}

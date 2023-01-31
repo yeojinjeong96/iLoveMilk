@@ -4,6 +4,8 @@
 <%
 	PageInfo pi = (PageInfo)request.getAttribute("pi");
 	ArrayList<Product> list = (ArrayList<Product>)request.getAttribute("list");
+	String op = (String)request.getAttribute("op");
+	String key = (String)request.getAttribute("key");
 %>
 <!DOCTYPE html>
 <html>
@@ -14,7 +16,7 @@
     .outer-1{float: left; width: 800px; box-sizing: border-box;}
     .outer-2{width: 700px;}
     .pHover:hover{cursor: pointer;}
-    #keyOutput{float:left; margin-top:15px;}
+    #keyword{float:left; margin-top:15px;}
 </style>
 </head>
 <body>
@@ -44,7 +46,11 @@
                         </tr>
                     </table>
                     <div align="right">
-                    	<div id="keyOutput" align="left"></div>
+                    	<div id="keyword" align="left">
+                    		<% if(op != null && key != null){ %>
+                    			<b>"<%= key %>"</b>에 대한 검색 결과
+                    		<% } %>
+                    	</div>
                         <button type="button" onclick="deleteBtn();" class="btn btn-primary btn-sm" style="margin: 15px;">선택 상품 삭제</button>
                     </div>
                     <table class="table">
@@ -59,49 +65,61 @@
                             </tr>
                         </thead>
                         <tbody>
-                        <!-- 검색시 검색단어 보이기, 검색리스트가 null시 검색조건에 해당하는 결과가 없슨디ㅏ.-->
-                        	<div id=listOutput>
-                        		<% if(!list.isEmpty()){ %>
-								    <% for(Product p : list){ %>
-		                            <tr class="prod">
-		                                <td><input type="checkbox" class="checkedPro"></td>
-		                                <td align="center"><%= p.getProductNo() %></td>
-		                                <td class="pHover"><%= p.getProductName() %> <%= p.getCapacity() %>(mL/g)</td>
-		                                <td align="right"><%= p.getStock() %></td>
-		                                <td align="center">
-		                                	<% if(p.getBrand() != null){ %>
-		                                		<%= p.getBrand() %>
-		                                	<% }else{ %>
-		                                		·
-		                                	<% } %>
-		                                </td>
-		                                <td align="center"><button type="button" class="btn btn-primary btn-sm" onclick="receivingPro();" data-toggle="modal" data-target="#receiving">입고</button></td>
-		                            </tr>
-									<% } %>
-								<% }else{ %>
-									<tr>
-										<td colspan="6" align="center">상품 리스트가 존재하지 않습니다.</td>
-									</tr>
+                       		<% if(!list.isEmpty()){ %>
+							    <% for(Product p : list){ %>
+	                            <tr class="prod">
+	                                <td><input type="checkbox" class="checkedPro"></td>
+	                                <td align="center"><%= p.getProductNo() %></td>
+	                                <td class="pHover"><%= p.getProductName() %> <%= p.getCapacity() %>(mL/g)</td>
+	                                <td align="right"><%= p.getStock() %></td>
+	                                <td align="center">
+	                                	<% if(p.getBrand() != null){ %>
+	                                		<%= p.getBrand() %>
+	                                	<% }else{ %>
+	                                		·
+	                                	<% } %>
+	                                </td>
+	                                <td align="center"><button type="button" class="btn btn-primary btn-sm" onclick="receivingPro();" data-toggle="modal" data-target="#receiving">입고</button></td>
+	                            </tr>
 								<% } %>
-							</div>
+							<% }else{ %>
+								<tr>
+									<td colspan="6" align="center">상품이 존재하지 않습니다.</td>
+								</tr>
+							<% } %>
                         </tbody>
                     </table>
                     
                     <br>
-					<div class="paging-area">
-			            <% if(pi.getCurrentPage() != 1){ %>
-			            <button class="btn btn-primary btn-sm" onclick="location.href='<%= contextPath %>/listUpDeRe.pr?cp=<%= pi.getCurrentPage() - 1 %>';">&lt;</button>
-			            <% } %>
-			
-						<% for(int p=pi.getStartPage(); p<=pi.getEndPage(); p++){ %>
-			            <button class="btn btn-primary btn-sm" onclick="location.href='<%= contextPath %>/listUpDeRe.pr?cp=<%= p %>';"><%= p %></button>
-						<% } %>
-						
-						<% if(pi.getCurrentPage() != pi.getMaxPage()){ %>
-			            <button class="btn btn-primary btn-sm" onclick="location.href='<%= contextPath %>/listUpDeRe.pr?cp=<%= pi.getCurrentPage() + 1%>';">&gt;</button>
-			            <% } %>
-			        </div>
-			        
+                    <% if(op == null){ %>
+	                    <div class="paging-area">
+				            <% if(pi.getCurrentPage() != 1){ %>
+				            <button class="btn btn-primary btn-sm" onclick="location.href='<%= contextPath %>/listUpDeRe.pr?cp=<%= pi.getCurrentPage() - 1 %>';">&lt;</button>
+				            <% } %>
+				
+							<% for(int p=pi.getStartPage(); p<=pi.getEndPage(); p++){ %>
+				            <button class="btn btn-primary btn-sm" onclick="location.href='<%= contextPath %>/listUpDeRe.pr?cp=<%= p %>';"><%= p %></button>
+							<% } %>
+							
+							<% if(pi.getCurrentPage() != pi.getMaxPage()){ %>
+				            <button class="btn btn-primary btn-sm" onclick="location.href='<%= contextPath %>/listUpDeRe.pr?cp=<%= pi.getCurrentPage() + 1%>';">&gt;</button>
+				            <% } %>
+				        </div>
+			        <% }else{ %>
+						<div class="paging-area">
+				            <% if(pi.getCurrentPage() != 1){ %>
+				            <button class="btn btn-primary btn-sm" onclick="location.href='<%= contextPath %>/listUpDeRe.pr?searchOp=<%= op %>&searchKey=<%= key %>&cp=<%= pi.getCurrentPage() - 1 %>';">&lt;</button>
+				            <% } %>
+				
+							<% for(int p=pi.getStartPage(); p<=pi.getEndPage(); p++){ %>
+				            <button class="btn btn-primary btn-sm" onclick="location.href='<%= contextPath %>/listUpDeRe.pr?searchOp=<%= op %>&searchKey=<%= key %>&cp=<%= p %>';"><%= p %></button>
+							<% } %>
+							
+							<% if(pi.getCurrentPage() != pi.getMaxPage()){ %>
+				            <button class="btn btn-primary btn-sm" onclick="location.href='<%= contextPath %>/listUpDeRe.pr?searchOp=<%= op %>&searchKey=<%= key %>&cp=<%= pi.getCurrentPage() + 1%>';">&gt;</button>
+				            <% } %>
+				        </div>
+			        <% } %>
 			        <!-- 입고 모달 시작 -->
 					<div class="modal fade" id="receiving">
 						<div class="modal-dialog">
@@ -170,8 +188,8 @@
 				alert("검색 조건을 선택하세요.");
 				return false;
 			}else{
-				location.href = "<%= contextPath %>/listUpDeRe.pr?op=" + $('#searchOp').val() + "&searchKey=" + $('#searchKey').val() + "&cp=1";
-				
+				// 검색 리스트 가져오기
+				location.href = "<%= contextPath %>/listUpDeRe.pr?searchOp=" + $('#searchOp').val() + "&searchKey=" + $('#searchKey').val() + "&cp=1";
 			}
 		}
 			
