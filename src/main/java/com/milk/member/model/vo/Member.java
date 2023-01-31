@@ -20,6 +20,10 @@ public class Member {
 	private String status;
 	private String memberGrade;
 	
+	// 회원적립금, 누적결제금액조회용
+	private int total; 
+	private int totalpay;
+	
 	public Member() {}
 
 	public Member(int memberNo, String memberId, String memberPwd, String memberName, String phone, String email,
@@ -77,6 +81,31 @@ public class Member {
 		this.addressNumber = addressNumber;
 		this.address = address;
 		this.addressDetail = addressDetail;
+	}
+	
+	
+
+	public Member(int memberNo, String memberId, String memberPwd, String memberName, String phone, String email,
+			String addressNumber, String address, String addressDetail, String profile, Date enrollDate,
+			Date modifyDate, String blackList, String status, String memberGrade, int total, int totalpay) {
+		super();
+		this.memberNo = memberNo;
+		this.memberId = memberId;
+		this.memberPwd = memberPwd;
+		this.memberName = memberName;
+		this.phone = phone;
+		this.email = email;
+		this.addressNumber = addressNumber;
+		this.address = address;
+		this.addressDetail = addressDetail;
+		this.profile = profile;
+		this.enrollDate = enrollDate;
+		this.modifyDate = modifyDate;
+		this.blackList = blackList;
+		this.status = status;
+		this.memberGrade = memberGrade;
+		this.total = total;
+		this.totalpay = totalpay;
 	}
 
 	public int getMemberNo() {
@@ -198,6 +227,24 @@ public class Member {
 	public void setMemberGrade(String memberGrade) {
 		this.memberGrade = memberGrade;
 	}
+	
+	
+
+	public int getTotal() {
+		return total;
+	}
+
+	public void setTotal(int total) {
+		this.total = total;
+	}
+
+	public int getTotalpay() {
+		return totalpay;
+	}
+
+	public void setTotalpay(int totalpay) {
+		this.totalpay = totalpay;
+	}
 
 	@Override
 	public String toString() {
@@ -205,7 +252,8 @@ public class Member {
 				+ memberName + ", phone=" + phone + ", email=" + email + ", addressNumber=" + addressNumber
 				+ ", address=" + address + ", addressDetail=" + addressDetail + ", profile=" + profile + ", enrollDate="
 				+ enrollDate + ", modifyDate=" + modifyDate + ", blackList=" + blackList + ", status=" + status
-				+ ", memberGrade=" + memberGrade + "]";
-	};
+				+ ", memberGrade=" + memberGrade + ", total=" + total + ", totalpay=" + totalpay + "]";
+	}
+
 
 }

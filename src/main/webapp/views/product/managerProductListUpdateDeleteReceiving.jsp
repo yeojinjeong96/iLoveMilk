@@ -14,6 +14,7 @@
     .outer-1{float: left; width: 800px; box-sizing: border-box;}
     .outer-2{width: 700px;}
     .pHover:hover{cursor: pointer;}
+    #keyOutput{float:left; margin-top:15px;}
 </style>
 </head>
 <body>
@@ -37,12 +38,13 @@
                                     <option>상품코드</option>
                                     <option>브랜드</option>
                                 </select>
-                                <input type="text" name="searchKey" required>
-                                <button type="button" onclick="opNeed();" class="btn btn-primary btn-sm">검색</button>
+                                <input type="text" name="searchKey" id="searchKey" required>
+                                <button type="button" onclick=" return opNeed();" class="btn btn-primary btn-sm">검색</button>
 	                        </td>
                         </tr>
                     </table>
                     <div align="right">
+                    	<div id="keyOutput" align="left"></div>
                         <button type="button" onclick="deleteBtn();" class="btn btn-primary btn-sm" style="margin: 15px;">선택 상품 삭제</button>
                     </div>
                     <table class="table">
@@ -57,23 +59,31 @@
                             </tr>
                         </thead>
                         <tbody>
-                        <!-- 검색시 검색단어 보이기, 상품리스트 null시 상품리스트가 존재하지않습니다. 검색리스트가 null시 검색조건에 해당하는 결과가 없슨디ㅏ.-->
-							    <% for(Product p : list){ %>
-	                            <tr class="prod">
-	                                <td><input type="checkbox" class="checkedPro"></td>
-	                                <td align="center"><%= p.getProductNo() %></td>
-	                                <td class="pHover"><%= p.getProductName() %> <%= p.getCapacity() %>(mL/g)</td>
-	                                <td align="right"><%= p.getStock() %></td>
-	                                <td align="center">
-	                                	<% if(p.getBrand() != null){ %>
-	                                		<%= p.getBrand() %>
-	                                	<% }else{ %>
-	                                		·
-	                                	<% } %>
-	                                </td>
-	                                <td align="center"><button type="button" class="btn btn-primary btn-sm" onclick="receivingPro();" data-toggle="modal" data-target="#receiving">입고</button></td>
-	                            </tr>
+                        <!-- 검색시 검색단어 보이기, 검색리스트가 null시 검색조건에 해당하는 결과가 없슨디ㅏ.-->
+                        	<div id=listOutput>
+                        		<% if(!list.isEmpty()){ %>
+								    <% for(Product p : list){ %>
+		                            <tr class="prod">
+		                                <td><input type="checkbox" class="checkedPro"></td>
+		                                <td align="center"><%= p.getProductNo() %></td>
+		                                <td class="pHover"><%= p.getProductName() %> <%= p.getCapacity() %>(mL/g)</td>
+		                                <td align="right"><%= p.getStock() %></td>
+		                                <td align="center">
+		                                	<% if(p.getBrand() != null){ %>
+		                                		<%= p.getBrand() %>
+		                                	<% }else{ %>
+		                                		·
+		                                	<% } %>
+		                                </td>
+		                                <td align="center"><button type="button" class="btn btn-primary btn-sm" onclick="receivingPro();" data-toggle="modal" data-target="#receiving">입고</button></td>
+		                            </tr>
+									<% } %>
+								<% }else{ %>
+									<tr>
+										<td colspan="6" align="center">상품 리스트가 존재하지 않습니다.</td>
+									</tr>
 								<% } %>
+							</div>
                         </tbody>
                     </table>
                     
@@ -123,20 +133,19 @@
 				                        </tr>
 				                    </table>
 				                </div>
-				                <!--  
+				                
 				                <script>
 					            	function receivingPro(){
-					            		console.log($(this).val());
-					            		$("#proNo").text($(this).parent().prev().prev().prev().prev().text());
-					        			if($(this).parent().prev().text() == "·"){
-					        				$("#proName").text($(this).parent().prev().text() + " " + $(this).parent().prev().prev().prev().text());
+					            		$("#proNo").text($(window.event.target).parent().prev().prev().prev().prev().text());
+					        			if($(window.event.target).parent().prev().text() == "·"){
+					        				$("#proName").text($(window.event.target).parent().prev().text() + " " + $(window.event.target).parent().prev().prev().prev().text());
 					        	    	}else{
-					        	    		$("#proName").text($(this).parent().prev().prev().prev().text());
+					        	    		$("#proName").text($(window.event.target).parent().prev().prev().prev().text());
 					        	    	}
-					        			$("#stock").text($(this).parent().prev().prev().text());
+					        			$("#stock").text($(window.event.target).parent().prev().prev().text());
 					        		}
 					        	</script>
-				                -->
+				                
 								<!-- Modal footer -->
 								<div class="modal-footer">
 									<button type="submit" class="btn btn-primary">입력</button>
@@ -155,17 +164,15 @@
     </div>
     
 	<script>
-		// 검색조건 미선택시 alert
 		function opNeed(){
-			$.ajax({
-				url:"<%= contextPath %>/searchList.pr",
-				data:{
-					op:$("#searchOp").val(),
-					searchKey:$("#searchKey").val()
-				},
-				success:function(){},
-				error: function(){}
-			});
+			if($("#searchOp").val() == "- 검색 조건 -"){
+				// 검색조건 미선택시 alert
+				alert("검색 조건을 선택하세요.");
+				return false;
+			}else{
+				location.href = "<%= contextPath %>/listUpDeRe.pr?op=" + $('#searchOp').val() + "&searchKey=" + $('#searchKey').val() + "&cp=1";
+				
+			}
 		}
 			
 		$(function(){

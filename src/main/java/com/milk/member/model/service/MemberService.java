@@ -1,12 +1,14 @@
 package com.milk.member.model.service;
 
+import static com.milk.common.JDBCTemplate.close;
+import static com.milk.common.JDBCTemplate.commit;
+import static com.milk.common.JDBCTemplate.getConnection;
+import static com.milk.common.JDBCTemplate.rollback;
+
 import java.sql.Connection;
+import java.util.ArrayList;
 
-
-import static com.milk.common.JDBCTemplate.*;
-
-
-import com.milk.member.model.vo.Attachment;
+import com.milk.common.model.vo.PageInfo;
 import com.milk.member.model.dao.MemberDao;
 import com.milk.member.model.vo.Member;
 
@@ -148,6 +150,31 @@ public class MemberService {
 		
 		
 	}
+	
+	/**
+	 * 페이징처리를 위한 회원 리스트 수 조회
+	 * @author 이다혜
+	 * @return listCount
+ 	 */
+	public int selectListCount() {
+		Connection conn = getConnection();
+		int listCount = new MemberDao().selectListCount(conn);
+		close(conn);
+		return listCount;
+	}
+	
+	/**
+	 * 회원조회를 위한 전체회원 가져오기
+	 * @author 이다혜
+	 * @return list
+	 */
+	public ArrayList<Member> selectMemberList(PageInfo pi){
+		Connection conn = getConnection();
+		ArrayList<Member> list = new MemberDao().selectMemberList(conn, pi);
+		close(conn);
+		return list;
+	}
+
 	
 	
 	

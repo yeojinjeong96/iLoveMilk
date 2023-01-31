@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.google.gson.Gson;
 import com.milk.common.model.vo.PageInfo;
 import com.milk.product.model.service.ProductService;
 import com.milk.product.model.vo.Product;
@@ -32,8 +33,9 @@ public class ProductListController extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String op = "없음";
-		String searchKey = "없음";
+		request.setCharacterEncoding("UTF-8");
+		String op = request.getParameter("searchOp");
+		String searchKey = request.getParameter("searchKey");
 		
 		int listCount = new ProductService().selectAllListCount(op, searchKey);
 		int currentPage = Integer.parseInt(request.getParameter("cp"));
@@ -47,10 +49,9 @@ public class ProductListController extends HttpServlet {
 		
 		ArrayList<Product> list = new ProductService().selectAllList(pi, op, searchKey);
 		
-		request.setAttribute("list", list);
-		request.setAttribute("pi", pi);
-		
 		if(request.getSession().getAttribute("loginManager") != null) {
+			request.setAttribute("list", list);
+			request.setAttribute("pi", pi);
 			request.getRequestDispatcher("views/product/managerProductListUpdateDeleteReceiving.jsp").forward(request, response);
 		} else {
 			response.setContentType("text/html; charset=utf-8");

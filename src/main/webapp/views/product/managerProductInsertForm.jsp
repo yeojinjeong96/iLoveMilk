@@ -96,45 +96,17 @@
     
     <script>
    		function cateNeed(){
-    		// 1차, 2차 카테고리 미선택시 alert창 띄우기
     		if($("#fCate").val() == "- 1차 카테고리 -" || $("#sCate").val() == "- 2차 카테고리 -"){
+    			// 1차, 2차 카테고리 미선택시 alert창 띄우기
     			alert("카테고리를 입력하세요.");
     			return false;
     		}else{
     			// 매니저 비밀번호 체크
-    			
-    			//1
-    			if(<%= loginManager.getManagerPwd() %> != prompt('비밀번호를 입력하세요.')){
+    			if('<%= loginManager.getManagerPwd() %>' != prompt('비밀번호를 입력하세요.')){
     				alert('비밀번호가 틀렸습니다.');
 					return false;
     			}
-				//2
-    			let pwd = prompt('비밀번호를 입력하세요.');
-    			if(loginManager.getManagerPwd() != pwd){
-    				alert('비밀번호가 틀렸습니다.');
-						return false;
-    			}
-    			//3
-    			$.ajax({
-       				url:"<%= contextPath %>/pwdCheck.ma",
-       				data:{
-       					pwd:prompt('비밀번호를 입력하세요.')
-       				},
-       				type:"post",
-       				success:function(result){
-       					//console.log(result);
-       	    			if(result == '실패'){
-       						alert('비밀번호가 틀렸습니다.');
-       						return false;
-       					}else{
-       						return true;
-       					}
-       				},
-       				error:function(){
-       					console.log("비밀번호 체크용 ajax통신 실패");
-       				}
-       			})
-    		}
+			}
     	}
    		
     	// 1차 카테고리 선택에 따른 2차 카테고리 옵션리스트 변경

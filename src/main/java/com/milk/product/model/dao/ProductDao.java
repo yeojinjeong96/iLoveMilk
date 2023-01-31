@@ -496,11 +496,11 @@ public class ProductDao {
 		ResultSet rset = null;
 		String sql = prop.getProperty("selectAllListCount");
 		
-		if(op.equals("상품명")) {
+		if(op != null && op.equals("상품명")) {
 			sql += "AND PRODUCT_NAME LIKE '%" + searchKey + "%'";
-		} else if(op.equals("상품코드")) {
+		} else if(op != null && op.equals("상품코드")) {
 			sql += "AND PRODUCT_NO LIKE '%" + searchKey + "%'";
-		} else if(op.equals("브랜드")) {
+		} else if(op != null && op.equals("브랜드")) {
 			sql += "AND BRAND LIKE '%" + searchKey + "%'";
 		}
 				
@@ -525,11 +525,11 @@ public class ProductDao {
 		ResultSet rset = null;
 		String sql = prop.getProperty("selectAllList");
 		
-		if(op.equals("상품명")) {
+		if(op != null && op.equals("상품명")) {
 			sql += "AND PRODUCT_NAME LIKE '%" + searchKey + "%'";
-		} else if(op.equals("상품코드")) {
+		} else if(op != null && op.equals("상품코드")) {
 			sql += "AND PRODUCT_NO LIKE '%" + searchKey + "%'";
-		} else if(op.equals("브랜드")) {
+		} else if(op != null && op.equals("브랜드")) {
 			sql += "AND BRAND LIKE '%" + searchKey + "%'";
 		}
 		sql += "ORDER BY PRODUCT_NO DESC) A) WHERE RNUM BETWEEN ? AND ?";
