@@ -81,6 +81,8 @@ private Properties prop = new Properties();
 		return m;
 	}
 	
+
+	
 	public Member findMemberId(Connection conn, String memberName, String email) {
 		
 		Member m = null;
@@ -278,6 +280,8 @@ public Member updateCheckPwd(Connection conn, String memberId, String memberPwd)
 		return m;
 	}
 	
+
+	
 	public int updatePwdMember(Connection conn, String memberId, String memberPwd, String updatePwd) {
 		
 		int result = 0;
@@ -462,6 +466,29 @@ public Member updateCheckPwd(Connection conn, String memberId, String memberPwd)
 		}
 		
 		return list;
+	}
+	
+	public int selectReportListCount(Connection conn) {
+		int listCount = 0;
+		ResultSet rset = null;
+		PreparedStatement pstmt = null;
+		String sql = prop.getProperty("selectReportListCount");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			rset = pstmt.executeQuery();
+			if(rset.next()) {
+				listCount = rset.getInt("count");
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return listCount;
 	}
 	
 	public int UpdateProfile(Connection conn, Member m) {

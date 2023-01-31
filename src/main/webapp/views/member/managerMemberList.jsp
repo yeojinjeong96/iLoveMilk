@@ -122,8 +122,8 @@
 	       				$("#detailModalPoint").text(point);
 		    			
 		    		})
-		    	})*/
-         		
+		    	})
+         */		
 		    	
 		           
             	function memDetail(a, b, c, d){
@@ -132,16 +132,7 @@
        				$("#detailModalGrade").text(b);
        				$("#detailModalPoint").text(c);
        				
-       				memberPoint(d);
-       				
-       			}
-            	
-            	function memModify(a){
-            		$("#modifyModalId").text(a);
-            	}
-            	
- 		    	function memberPoint(d){
-       				$.ajax({
+        		$.ajax({
        					url:"<%=contextPath%>/memPoint.ma?",
        				   data: {memNo:d, ppage:1}
        				   ,success:function(result1, result2){
@@ -182,7 +173,17 @@
        				   }
        				});
             		
+       				
+       				
+       				
+       			}
+            	
+            	function memModify(a){
+            		$("#modifyModalId").text(a);
             	}
+            	
+ 		    	
+           
         	 
            	
             	

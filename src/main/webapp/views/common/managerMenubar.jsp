@@ -29,7 +29,7 @@
                 <div>
                     <div class="text-primary menu">회원관리</div>
                     <a href="<%= request.getContextPath() %>/memList.ma?cpage=1">회원조회</a><br>
-                    <a href="">신고관리</a>
+                    <a href="<%= request.getContextPath() %>/repList.ma?cpage=1">신고관리</a>
                 </div><br>
                 <div>
                     <div class="text-primary menu">상품관리</div>

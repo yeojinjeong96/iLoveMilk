@@ -12,6 +12,7 @@ import com.milk.common.model.vo.PageInfo;
 import com.milk.member.model.dao.MemberDao;
 import com.milk.member.model.vo.Member;
 import com.milk.member.model.vo.Point;
+import com.milk.member.model.vo.Report;
 
 
 public class MemberService {
@@ -196,6 +197,32 @@ public class MemberService {
 	public ArrayList<Point> selectPointList(PageInfo pi, int memNo){
 		Connection conn = getConnection();
 		ArrayList<Point> list = new MemberDao().selectPointList(conn,pi, memNo);
+		close(conn);
+		return list;
+	}
+	
+	/**
+	 * 회원 신고내역 페이징처리를 위한 카운트
+	 * @author 이다혜
+	 * @return listCount
+	 */
+	public int selectReportListCount() {
+		Connection conn = getConnection();
+		int listCount = new MemberDao().selectReportListCount(conn);
+		
+		close(conn);
+		return listCount;
+	}
+	
+	/**
+	 * 회원 신고내역 리스트 조회
+	 * @author 이다혜
+	 * @return
+	 */
+	public ArrayList<Report> selectMemberReportList(PageInfo pi){
+		
+		Connection conn = getConnection();
+		ArrayList<Report> list = new MemberDao().selectMemberReportList(conn, pi);
 		close(conn);
 		return list;
 	}
