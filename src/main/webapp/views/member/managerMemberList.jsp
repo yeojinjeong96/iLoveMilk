@@ -57,7 +57,9 @@
                 </div> 
                 <br><br>
                 <div align="right" style="width:640px;">
-                        <input type="text" name = "searchMem" required><button type="submit" style="border:none">검색</button>
+                	<form action="" method="post" id="search-form">
+                        <input type="text" name = "keyword" required><button type="submit" id="search-btn" class="btn btn-primary btn-sm">검색</button>
+                    </form>
                 </div>
             </div>
             <div id="mem-2">
@@ -76,7 +78,7 @@
                         <td>가입일</td>
                     </tr>
                     </thead>
-                    <tbody>
+                    <tbody class="memContent">
                     <%if(list.isEmpty()){ %>
                         <tr>
                             <td colspan="10">조회되는 회원정보가 없습니다.</td>
@@ -91,7 +93,7 @@
                                 <td><%=m.getEmail() %></td>
                                 <td><%=m.getPhone() %></td>
                                 <td><%=m.getAddress() %></td>
-                                <td></td>
+                                <td><%=m.getTotalpay() %></td>
                                 <td><%=m.getTotal() %>
                                     <button type="button" id="btn1" onclick="memDetail('<%=m.getMemberId() %>', '<%=m.getMemberGrade() %>', <%=m.getTotal() %>, <%=m.getMemberNo() %>);" class="btn btn-outline-secondary btn-sm" data-toggle="modal" data-target="#point-info" style="font-size:9px;">상세</button>
                                     <button type="button" id="btn2" onclick="memModify('<%=m.getMemberId() %>');" class="btn btn-outline-secondary btn-sm" data-toggle="modal" data-target="#point-change" style="font-size:9px;">변경</button>
@@ -109,94 +111,140 @@
             <br>
             
          <script>
-         /*
-		     	$(function(){
-		    		$(".member-info>tbody #btn1").click(function(){
-		    			
-		    			var memId = $(this).siblings().eq(1).text();
-		    			var memGrade = $(this).siblings().eq(3).text();
-		    			var point = $(this).siblings().eq(8).text();
-		    			
-	       				$("#detailModalId").text(memId);
-	       				$("#detailModalGrade").text(memGrade);
-	       				$("#detailModalPoint").text(point);
-		    			
-		    		})
-		    	})
-         */		
-		    	
-		           
-            	function memDetail(a, b, c, d){
-            
-       				$("#detailModalId").text(a);
-       				$("#detailModalGrade").text(b);
-       				$("#detailModalPoint").text(c);
-       				
-        		$.ajax({
-       					url:"<%=contextPath%>/memPoint.ma?",
-       				   data: {memNo:d, ppage:1}
-       				   ,success:function(result){
-       					   console.log(result); 
-       					   
-       					   // PageInfo => result.pi  =>   {}
-       					   // ArrayList => result.list  =>  [{}, {}, ..]
-       					   
-       					   /*
-                           let value = "";
-                           
-						   if(result1.length == 0){
-							   value += "<td colspan='3'>" + "내역이 없습니다." + " </td>";
-						   }else{
-	                           for(let i = 0; i<result1.length; i++){
-	
-	                               value += "<td>" + result1[i].modifyDate + "</td>"
-	                                       +"<td>" + result1[i].montent + "</td>"
-	                                       +"<td>" + result1[i].total + "</td>";
-	
-	                           }
-						   }
-                          $("#pointHistory").html(value);
-                          
-                          
-		                    let value2 = "";
-		                     if(result2.currentPage != 1){ 
-		                        	   value2 += "<button onclick=" + "'location.href='"+"'<%=contextPath%>/memPoint.ma?ppage=result2.currentPage-1'" + ";>&lt;</button>";
-		                     		} 
-		          
-		                     for(let p=result2.startPage; p<=result2.endPage; p++){ 
-		                    	 value2+=" <button onclick="+"'location.href='" + "'<%=contextPath%>/memPoint.ma?ppage=p'" + ";>" + p +" </button>";
-		                       } 
-		          <!--  내가 보고있는 페이지가 마지막 페이지가 아닐 때에만 나타내기 -->
-		          
-		                       if(result2.currentPage != result2.maxPage){
-		                    	   value2+=" <button onclick=" + "'location.href='" + "'<%=contextPath%>/memPoint.ma?ppage=result2.currentPage+1'" + ";>&gt;</button>";
-		                      } 
-                          
-       					   	*/
-       				   },error:function(){
-       					   alert("데이터 통신 실패");
-       				   }
-       				});
-            		
-       				
-       				
-       				
-       			}
-            	
-            	function memModify(a){
-            		$("#modifyModalId").text(a);
-            	}
-            	
- 		    	
-           
-        	 
-           	
+	    	
+         
+     	function memDetail(a, b, c, d){
+     
+				$("#detailModalId").text(a);
+				$("#detailModalGrade").text(b);
+				$("#detailModalPoint").text(c);
+				
+ 		$.ajax({
+					url:"<%=contextPath%>/memPoint.ma?",
+				   data: {memNo:d, ppage:1}
+				   ,success:function(result){
+					  // console.log(result); 
+					   
+					   // PageInfo => result.pi  =>   {}
+					   // ArrayList => result.list  =>  [{}, {}, ..]
+					   
+					   // 스크립트문으로 작성하는것 잊지말기
+                    let value = "";
+                    
+					   if(result.list.length == 0){
+						   value += "<td colspan='3'>" + "내역이 없습니다." + " </td>";
+					   }else{
+                        for(let i = 0; i<result.list.length; i++){
+
+                            value += "<td>" + result.list[i].modifyDate + "</td>"
+                                    +"<td>" + result.list[i].content + "</td>"
+                                    +"<td>" + result.list[i].total + "</td>";
+
+                        }
+					   }
+					   
+                   $("#pointHistory").html(value);
+                   
+                   
+	                    let value2 = "";
+	                     if(result.pi.currentPage != 1){ 
+	                        	   value2 += "<button onclick=" + "'location.href='<%=contextPath%>/memPoint.ma?ppage=result.pi.currentPage-1&memNo=d''" + ";>&lt;</button>";
+	                     		} 
+	          
+	                     for(let p=result.pi.startPage; p<=result.pi.endPage; p++){ 
+	                    	 value2+=" <button onclick="+"'location.href='<%=contextPath%>/memPoint.ma?ppage=p&memNo=d''" + ";> p </button>";
+	                       } 
+	         
+	                       if(result.pi.currentPage != result.pi.maxPage){
+	                    	   value2+=" <button onclick=" + "'location.href='<%=contextPath%>/memPoint.ma?ppage=result.pi.currentPage+1&memNo=d''"+ ";>&gt;</button>";
+	                      } 
+	                   $(".paging-area2").html(value2);    
+                   
+					   	
+				   },error:function(){
+					   alert("데이터 통신 실패");
+				   }
+				});
+     		
+				
+				
+				
+			}
+     	
+     	function memModify(a){
+     		$("#modifyModalId").text(a);
+     	}
+     	
+	    	
+    		$("#search-btn").click(function(){
+    			
+    			var str = $("form[id=search-form]").serialize();
+    			
+    			$.ajax({
+    				url:"<%=contextPath %>/memSearch.ma?cpage=1",
+    				data : str,
+    				success:function(result){
+    					
+    					console.log(result);
+    					// 검색결과 리스트
+    					let sval1 = "";
+    					if(result.slist.length == 0){
+    						sval1 += "<td colspan='10'>조회되는 회원정보가 없습니다.</td>";
+    					}else{
+    						for(var i = 0; i < result.slist.length; i++){
+    							sval1 += "<tr>" 
+                                + "<td>" + result.slist[i].memberNo + "</td>"
+                                + "<td>" + result.slist[i].memberId + "</td>"
+                                + "<td>" + result.slist[i].memberName + "</td>"
+                                + "<td>" + result.slist[i].memberGrade + "</td>"
+                                + "<td>" + result.slist[i].email + "</td>"
+                                + "<td>" + result.slist[i].phone + "</td>"
+                                + "<td>" + result.slist[i].address + "</td>"
+                                + "<td>" + result.slist[i].totalpay + "</td>"
+                                + "<td>" + result.slist[i].total 
+                                +  "<button type='button' id='btn1' onclick= 'memDetail('result.slist[i].memberId', 'result.slist[i].memberGrade', result.slist[i].total , result.slist[i].memberNo);'" +  "class='btn btn-outline-secondary btn-sm' data-toggle='modal' data-target='#point-info' style='font-size:9px;'>상세</button>";
+                                +  "<button type='button' id='btn2' onclick= 'memModify('result.slist[i].memberId'); class='btn btn-outline-secondary btn-sm' data-toggle='modal' data-target='#point-change' style='font-size:9px;'>"+ 변경 + "</button>";
+                                 + "</td>"
+                                 + "<td>" + 
+                                     result.slist[i].enrollDate
+                                 + "</td>"
+                             + "</tr>";
+    						}
+    					}
+    					
+    					$(".memContent").html(sval1);
+    					
+    					// 검색결과 페이징
+    					let sval2 = "";
+    					
+	                     if(result.spi.currentPage != 1){ 
+	                    	 sval2 += "<button onclick=" + "'location.href='<%=contextPath%>/memSearch.ma?cpage=result.pi.currentPage-1&keyword=str''" + ";>&lt;</button>";
+                  		} 
+       
+	                     for(let p=result.spi.startPage; p<=result.spi.endPage; p++){ 
+	                    	 sval2 +=" <button onclick="+"'location.href='<%=contextPath%>/memSearch.ma?cpage=p&keyword=str''" + ";>p </button>";
+	                       } 
+      
+                      if(result.spi.currentPage != result.spi.maxPage){
+                     	 sval2 +=" <button onclick=" + "'location.href='<%=contextPath%>/memSearch.ma?cpage=result.spi.currentPage+1&keyword=str''" + ";>&gt;</button>";
+                   } 
+                $(".paging-area").html(sval2);   
+    					
+    					
+    				}, error:function(){
+    					alert("데이터 통신 실패");
+    				}
+    				
+    			});
+    			
+    		})
+ 	 	
+    	
             	
    		 </script>
             
             <div id="mem-3">
                 <div class="paging-area">
-                    <!-- 내가 보고있는 페이지가 1번 페이지가 아닐때에만 나타내기 -->
                     
                                 <% if(pi.getCurrentPage() != 1){ %>
                                     <button onclick="location.href='<%=contextPath%>/memList.ma?cpage=<%=pi.getCurrentPage()-1%>';">&lt;</button>
@@ -205,7 +253,6 @@
                                 <% for(int p=pi.getStartPage(); p<=pi.getEndPage(); p++){ %>
                                     <button onclick="location.href='<%=contextPath%>/memList.ma?cpage=<%=p%>';"><%= p %></button>
                                 <% } %>
-                    <!--  내가 보고있는 페이지가 마지막 페이지가 아닐 때에만 나타내기 -->
                     
                                 <% if(pi.getCurrentPage() != pi.getMaxPage()){ %>
                                     <button onclick="location.href='<%=contextPath%>/memList.ma?cpage=<%=pi.getCurrentPage()+1%>';">&gt;</button>
@@ -265,21 +312,10 @@
                             </tr>
                             <tr>
                             	<td colspan="3">
-				                    <div class="paging-area">
+				                    <div class="paging-area2">
 				                    <!-- 내가 보고있는 페이지가 1번 페이지가 아닐때에만 나타내기 -->
 				                    
-				                                <% if(pi.getCurrentPage() != 1){ %>
-				                                    <button onclick="location.href='<%=contextPath%>/memList.ma?cpage=<%=pi.getCurrentPage()-1%>';">&lt;</button>
-				                                <% } %>
-				                    
-				                                <% for(int p=pi.getStartPage(); p<=pi.getEndPage(); p++){ %>
-				                                    <button onclick="location.href='<%=contextPath%>/memList.ma?cpage=<%=p%>';"><%= p %></button>
-				                                <% } %>
-				                    <!--  내가 보고있는 페이지가 마지막 페이지가 아닐 때에만 나타내기 -->
-				                    
-				                                <% if(pi.getCurrentPage() != pi.getMaxPage()){ %>
-				                                    <button onclick="location.href='<%=contextPath%>/memList.ma?cpage=<%=pi.getCurrentPage()+1%>';">&gt;</button>
-				                                <% } %>
+
 				                	</div>
                             	</td>
                             </tr>

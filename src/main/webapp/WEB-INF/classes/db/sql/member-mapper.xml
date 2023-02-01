@@ -212,7 +212,7 @@
                           ORDER BY ENROLL_DATE DESC
 		           )A
 		     )  
-		  WHERE RNUM BETWEEN 1 AND 100 ;
+		  WHERE RNUM BETWEEN ? AND ?
 	</entry>
 	
 	<entry key="selectPointListCount">
@@ -269,6 +269,52 @@
                         )A
                     )
          WHERE RNUM BETWEEN ? AND ? 
+	</entry>
+	
+	<entry key="selectMemberSearchCount">
+		SELECT 
+			   COUNT(*)COUNT
+		  FROM TB_MEMBER
+		 WHERE MEMBER_ID LIKE '%' || ? || '%'
+		   AND STATUS = 'Y'   
+	</entry>
+	
+	<entry key ="selectSearchMemberList">
+	 		SELECT *    
+		  FROM(
+		      SELECT ROWNUM RNUM, A.*  
+		        FROM( 
+                        SELECT
+                                M.MEMBER_NO,
+                                MEMBER_ID,
+                                MEMBER_PWD,
+                                MEMBER_NAME,
+                                NVL(PHONE, '없음')PHONE,
+                                EMAIL,
+                                ADDRESS_NUMBER,
+                                NVL(ADDRESS, '없음')ADDRESS,
+                                ADDRESS_DETAIL,
+                                PROFILE,
+                                ENROLL_DATE,
+                                M.MODIFY_DATE,
+                                BLACK_LIST,
+                                M.STATUS,
+                                MEMBER_GRADE,
+                                TOTAL,
+                                (
+                               SELECT NVL(SUM(PRICE), 0)
+                                  FROM TB_ORDER
+                                  JOIN TB_PAYMENT USING(ORDER_NO)
+                                 WHERE MEMBER_NO = M.MEMBER_NO
+                                )TOTALPAY
+                           FROM TB_MEMBER M
+                          LEFT JOIN TB_POINT P ON (M.MEMBER_NO = P.MEMBER_NO)
+                          WHERE M.STATUS = 'Y'
+                          AND MEMBER_ID LIKE '%' || ? || '%'
+                          ORDER BY ENROLL_DATE DESC
+		           )A
+		     )  
+		  WHERE RNUM BETWEEN ? AND ? 
 	</entry>
 	
 	  <entry key="UpdateProfile">

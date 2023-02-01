@@ -226,6 +226,26 @@ public class MemberService {
 		close(conn);
 		return list;
 	}
+	
+	/**
+	 * 회원 아이디검색시 페이징처리를 위한 카운트
+	 * @author 이다헤
+	 * @return listCount
+	 */
+	public int selectMemberSearchCount(String keyword) {
+		Connection conn = getConnection();
+		int listCount = new MemberDao().selectMemberSearchCount(conn, keyword);
+		close(conn);
+		return listCount;
+	}
+	
+	public ArrayList<Member> selectSearchMemberList (PageInfo pi, String keyword){
+		Connection conn = getConnection();
+		ArrayList<Member> list = new MemberDao().selectSearchMemberList(conn, pi, keyword);
+		close(conn);
+		return list;
+	}
+	
 
 	 /**
 	    * 회원프로필 변경 서비스 

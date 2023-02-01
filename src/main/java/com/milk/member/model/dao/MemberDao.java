@@ -529,6 +529,79 @@ public Member updateCheckPwd(Connection conn, String memberId, String memberPwd)
 		return list;
 	}
 	
+	public int selectMemberSearchCount(Connection conn, String keyword) {
+		int listCount = 0;
+		ResultSet rset = null;
+		PreparedStatement pstmt = null;
+		String sql = prop.getProperty("selectMemberSearchCount");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, keyword);
+			rset = pstmt.executeQuery();
+			if(rset.next()) {
+				listCount = rset.getInt("count");
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return listCount;
+	}
+	
+	public ArrayList<Member> selectSearchMemberList(Connection conn, PageInfo pi, String keyword){
+		
+		ArrayList<Member> list = new ArrayList<>();
+		ResultSet rset = null;
+		PreparedStatement pstmt = null;
+		String sql = prop.getProperty("selectSearchMemberList");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			int startRow = (pi.getCurrentPage() -1)* pi.getBoardLimit() + 1;
+			int endRow = startRow + pi.getBoardLimit() -1;
+			
+			pstmt.setString(1, keyword);
+			pstmt.setInt(2, startRow);
+			pstmt.setInt(3, endRow);
+			
+			rset = pstmt.executeQuery();
+			while(rset.next()) {
+				list.add(new Member(
+						   rset.getInt("member_no"),
+						   rset.getString("member_id"),
+						   rset.getString("member_pwd"),
+						   rset.getString("member_name"),
+						   rset.getString("phone"),
+						   rset.getString("email"),
+						   rset.getString("address_number"),
+						   rset.getString("address"),
+						   rset.getString("address_detail"),
+						   rset.getString("profile"),
+						   rset.getDate("enroll_date"),
+						   rset.getDate("modify_date"),
+						   rset.getString("black_list"),
+						   rset.getString("status"),
+						   rset.getString("member_grade"),
+						   rset.getInt("total"),
+						   rset.getInt("totalpay")					
+						));
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return list;
+	}
+	
 	public int UpdateProfile(Connection conn, Member m) {
 		
 		int result = 0;
