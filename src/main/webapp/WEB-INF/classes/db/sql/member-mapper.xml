@@ -179,45 +179,40 @@
 	</entry>
 	
 	<entry key="selectMemberList">
-		SELECT *    
+ 		SELECT *    
 		  FROM(
 		      SELECT ROWNUM RNUM, A.*  
 		        FROM( 
-		   		                SELECT
-				                        M.MEMBER_NO,
-				                        MEMBER_ID,
-				                        MEMBER_PWD,
-				                        MEMBER_NAME,
-				                        NVL(PHONE, '없음')PHONE,
-				                        EMAIL,
-				                        ADDRESS_NUMBER,
-				                        NVL(ADDRESS, '없음')ADDRESS,
-				                        ADDRESS_DETAIL,
-				                        PROFILE,
-				                        ENROLL_DATE,
-				                        M.MODIFY_DATE,
-				                        BLACK_LIST,
-				                        M.STATUS,
-				                        MEMBER_GRADE,
-				                        TOTAL,
-		                                 (SELECT SUM (PRICE)
-		                                    FROM TB_ORDER
-		                                    JOIN TB_PAYMENT USING (ORDER_NO)
-		                                    WHERE MEMBER_NO = (SELECT MEMBER_NO
-		                                                         FROM TB_MEMBER
-		                                                        WHERE STATUS = 'Y'
-		                                                       )
-		                                    GROUP 
-		                                       BY MEMBER_NO
-		                                ) TOTALPAY
-		          		           FROM TB_MEMBER M
-		                          LEFT JOIN TB_POINT P ON (M.MEMBER_NO = P.MEMBER_NO)
-				                  WHERE M.STATUS = 'Y'
-				                  ORDER 
-				                     BY ENROLL_DATE DESC
+                        SELECT
+                                M.MEMBER_NO,
+                                MEMBER_ID,
+                                MEMBER_PWD,
+                                MEMBER_NAME,
+                                NVL(PHONE, '없음')PHONE,
+                                EMAIL,
+                                ADDRESS_NUMBER,
+                                NVL(ADDRESS, '없음')ADDRESS,
+                                ADDRESS_DETAIL,
+                                PROFILE,
+                                ENROLL_DATE,
+                                M.MODIFY_DATE,
+                                BLACK_LIST,
+                                M.STATUS,
+                                MEMBER_GRADE,
+                                TOTAL,
+                                (
+                               SELECT NVL(SUM(PRICE), 0)
+                                  FROM TB_ORDER
+                                  JOIN TB_PAYMENT USING(ORDER_NO)
+                                 WHERE MEMBER_NO = M.MEMBER_NO
+                                )TOTALPAY
+                           FROM TB_MEMBER M
+                          LEFT JOIN TB_POINT P ON (M.MEMBER_NO = P.MEMBER_NO)
+                          WHERE M.STATUS = 'Y'
+                          ORDER BY ENROLL_DATE DESC
 		           )A
 		     )  
-		  WHERE RNUM BETWEEN ? AND ? 
+		  WHERE RNUM BETWEEN 1 AND 100 ;
 	</entry>
 	
 	<entry key="selectPointListCount">

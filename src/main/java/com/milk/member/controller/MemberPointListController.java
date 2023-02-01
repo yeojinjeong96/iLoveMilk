@@ -2,6 +2,7 @@ package com.milk.member.controller;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -49,9 +50,13 @@ public class MemberPointListController extends HttpServlet {
 		PageInfo pi = new PageInfo(listCount, currentPage, pageLimit, boardLimit, maxPage, startPage, endPage);
 		ArrayList<Point> list = new MemberService().selectPointList(pi, memNo);
 		
-		response.setContentType ("application/jsonl charset-UTF-8");
-		new Gson().toJson(list,response.getWriter());
-		new Gson().toJson(pi,response.getWriter());
+		HashMap<String, Object> map = new HashMap<>();
+		map.put("pi", pi);
+		map.put("list", list);
+		
+		response.setContentType ("application/json; charset=UTF-8");
+		new Gson().toJson(map,response.getWriter());
+		// {"pi":{currentPage:xx, listCount:xx, ...}, "list":[{}, {}, {}, ..]}
 
 	}
 

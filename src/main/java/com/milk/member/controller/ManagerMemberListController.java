@@ -48,7 +48,7 @@ public class ManagerMemberListController extends HttpServlet {
 		
 		ArrayList<Member> list = new MemberService().selectMemberList(pi);
 		
-		
+ 		
 		request.setAttribute("pi", pi);
 		request.setAttribute("list", list);
 		request.getRequestDispatcher("views/member/managerMemberList.jsp").forward(request, response);

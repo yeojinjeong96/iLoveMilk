@@ -62,6 +62,30 @@ public class Member {
 		this.address = address;
 		this.addressDetail = addressDetail;
 	}
+	
+	
+
+	public Member(int memberNo, String memberId, String memberPwd, String memberName, String phone, String email,
+			String addressNumber, String address, String addressDetail, String profile, Date enrollDate,
+			Date modifyDate, String blackList, String status, String memberGrade, int total) {
+		super();
+		this.memberNo = memberNo;
+		this.memberId = memberId;
+		this.memberPwd = memberPwd;
+		this.memberName = memberName;
+		this.phone = phone;
+		this.email = email;
+		this.addressNumber = addressNumber;
+		this.address = address;
+		this.addressDetail = addressDetail;
+		this.profile = profile;
+		this.enrollDate = enrollDate;
+		this.modifyDate = modifyDate;
+		this.blackList = blackList;
+		this.status = status;
+		this.memberGrade = memberGrade;
+		this.total = total;
+	}
 
 	public Member(String memberId, String memberName) {
 		super();

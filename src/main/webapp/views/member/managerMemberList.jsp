@@ -91,7 +91,7 @@
                                 <td><%=m.getEmail() %></td>
                                 <td><%=m.getPhone() %></td>
                                 <td><%=m.getAddress() %></td>
-                                <td><%=m.getTotalpay() %></td>
+                                <td></td>
                                 <td><%=m.getTotal() %>
                                     <button type="button" id="btn1" onclick="memDetail('<%=m.getMemberId() %>', '<%=m.getMemberGrade() %>', <%=m.getTotal() %>, <%=m.getMemberNo() %>);" class="btn btn-outline-secondary btn-sm" data-toggle="modal" data-target="#point-info" style="font-size:9px;">상세</button>
                                     <button type="button" id="btn2" onclick="memModify('<%=m.getMemberId() %>');" class="btn btn-outline-secondary btn-sm" data-toggle="modal" data-target="#point-change" style="font-size:9px;">변경</button>
@@ -135,8 +135,13 @@
         		$.ajax({
        					url:"<%=contextPath%>/memPoint.ma?",
        				   data: {memNo:d, ppage:1}
-       				   ,success:function(result1, result2){
+       				   ,success:function(result){
+       					   console.log(result); 
        					   
+       					   // PageInfo => result.pi  =>   {}
+       					   // ArrayList => result.list  =>  [{}, {}, ..]
+       					   
+       					   /*
                            let value = "";
                            
 						   if(result1.length == 0){
@@ -158,7 +163,7 @@
 		                        	   value2 += "<button onclick=" + "'location.href='"+"'<%=contextPath%>/memPoint.ma?ppage=result2.currentPage-1'" + ";>&lt;</button>";
 		                     		} 
 		          
-		                     for(int p=result2.startPage; p<=result2.endPage; p++){ 
+		                     for(let p=result2.startPage; p<=result2.endPage; p++){ 
 		                    	 value2+=" <button onclick="+"'location.href='" + "'<%=contextPath%>/memPoint.ma?ppage=p'" + ";>" + p +" </button>";
 		                       } 
 		          <!--  내가 보고있는 페이지가 마지막 페이지가 아닐 때에만 나타내기 -->
@@ -167,7 +172,7 @@
 		                    	   value2+=" <button onclick=" + "'location.href='" + "'<%=contextPath%>/memPoint.ma?ppage=result2.currentPage+1'" + ";>&gt;</button>";
 		                      } 
                           
-       					   
+       					   	*/
        				   },error:function(){
        					   alert("데이터 통신 실패");
        				   }
