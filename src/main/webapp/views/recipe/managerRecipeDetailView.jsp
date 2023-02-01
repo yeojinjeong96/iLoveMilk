@@ -119,7 +119,9 @@
 
 	<div class="outer" align="center">
         <br>
+        <a href="<%= contextPath %>/updateM.re?no<%= r.getRecipeNo() %>" class="btn btn-secondary btn-sm" width="700px" style="margin-left: 650px">수정</a>
         
+        <br><br>
         <table class="detail-area"> 
             <thead>
                 <tr>
@@ -214,10 +216,10 @@
         </table>
 
         <div style="border-bottom: 3px solid gray; width: 700px;"></div>
-        <br><br>
+        <br>
 
-
-        <a href="<%= contextPath %>/upDelM.re?cpage=1" class="btn btn-primary" style="margin-left: 350px; "width="700px" align="left">이전으로</a>
+		<a href="<%= contextPath %>/upDelM.re?cpage=1" class="btn btn-primary btn-sm" width="700px" style="margin-left: 350px">이전으로</a>
+		
 		
 
          <!-- 이미지 미리보기 스크립트 -->

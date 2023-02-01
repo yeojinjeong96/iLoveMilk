@@ -78,7 +78,6 @@
                     <th width="275px">제목</th>
                     <th width="100px">작성자</th>
                     <th width="100px">작성일</th>
-                    <th width="105px">수정/삭제</th>
                 </tr>
             </thead>
             <tbody>
@@ -89,10 +88,6 @@
                     <td><a href="<%= contextPath %>/detailM.re?no=<%= r.getRecipeNo() %>"><%= r.getRecipeTitle() %></a></td>
                     <td><%= r.getRecipeWriter() %></td>
                     <td><%= r.getEnrollDate() %></td>
-                    <td>
-                        <a href="" class="btn btn-secondary btn-sm" style="color: white;">수정</a>
-                        <a href="" class="btn btn-danger btn-sm" style="color: white;">삭제</a>
-                    </td>
                 </tr>
             <% } %>
             </tbody>
@@ -101,7 +96,7 @@
         <table id="delete">
             <tr>
                 <td align="right" style="padding: 5px 5px;">
-                    <a href="" class="btn btn-danger btn-sm" onclick="recipeDelete();">삭제</a>
+                    <a class="btn btn-danger btn-sm" onclick="recipeDelete();">삭제</a>
                 </td>
             </tr>
         </table>
@@ -161,6 +156,7 @@
         		   })	
         		}
         	}
+        	
         </script>
 
         <div class="paging-area">

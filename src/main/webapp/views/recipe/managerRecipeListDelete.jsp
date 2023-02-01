@@ -104,7 +104,7 @@
         <table id="delete">
             <tr>
                 <td align="right" style="padding: 5px 5px;">
-                    <a href="" class="btn btn-danger btn-sm" onclick="recipeDelete();">삭제</a>
+                    <a class="btn btn-danger btn-sm" onclick="recipeDelete();">삭제</a>
                 </td>
             </tr>
         </table>
