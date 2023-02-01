@@ -17,8 +17,6 @@ public class Recipe {
 	private int recipeType;
 	private String mainImg;
 	
-	private int replyCount;
-	
 	
 	public Recipe() {}
 
@@ -67,24 +65,22 @@ public class Recipe {
 
 
 
-/*
-	public Recipe(int recipeNo, String recipeWriter, String recipeTitle, String enrollDate, int replyCount) {
+
+	public Recipe(String recipeWriter, int recipeNo, String recipeTitle, String enrollDate) {
 		super();
-		this.recipeNo = recipeNo;
 		this.recipeWriter = recipeWriter;
+		this.recipeNo = recipeNo;
 		this.recipeTitle = recipeTitle;
 		this.enrollDate = enrollDate;
-		this.replyCount = replyCount;
 	}
-*/
 
 
 
-	public Recipe(int recipeNo, String recipeWriter, String recipeTitle, String enrollDate) {
+	public Recipe(String recipeTitle, String recipeWriter, int recipeNo, String enrollDate) {
 		super();
-		this.recipeNo = recipeNo;
-		this.recipeWriter = recipeWriter;
 		this.recipeTitle = recipeTitle;
+		this.recipeWriter = recipeWriter;
+		this.recipeNo = recipeNo;
 		this.enrollDate = enrollDate;
 	}
 
@@ -192,17 +188,7 @@ public class Recipe {
 
 
 
-	public int getReplyCount() {
-		return replyCount;
-	}
-
-
-
-
-	public void setReplyCount(int replyCount) {
-		this.replyCount = replyCount;
-	}
-
+	
 
 
 
@@ -211,7 +197,7 @@ public class Recipe {
 		return "Recipe [recipeNo=" + recipeNo + ", recipeWriter=" + recipeWriter + ", recipeTitle=" + recipeTitle
 				+ ", recipeIntro=" + recipeIntro + ", count=" + count + ", enrollDate=" + enrollDate + ", deleteStatus="
 				+ deleteStatus + ", reportStatus=" + reportStatus + ", recipeType=" + recipeType + ", mainImg="
-				+ mainImg + ", replyCount=" + replyCount + "]";
+				+ mainImg + "]";
 	}
 
 

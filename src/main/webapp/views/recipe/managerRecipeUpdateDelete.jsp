@@ -46,35 +46,28 @@
 </style>
 </head>
 <body>
-
+	
 	<%@include file="/views/common/managerHeader.jsp" %>
 	<%@include file="/views/common/managerMenubar.jsp" %>
 	
-	<div class="outer" align="center">
+	 <div class="outer" align="center">
         <br>
-        <br>
-        <div width="700px" align="left"style="margin-left: 250px;">
-            <h4>게시글 관리</h4>
-        </div>
 
         <div class="dropdown" width="700px" align="left" style="margin-left: 250px;">
             <button type="button" class="btn btn-primary dropdown-toggle btn-secondary btn-sm" data-toggle="dropdown">
-              게시글 관리
+              레시피 등록/수정/삭제
             </button>
             <div class="dropdown-menu">
-              <a class="dropdown-item" href="<%= contextPath %>/recipeDeleteListM.re?cpage=1" target="_self">게시글 삭제</a>
-              <a class="dropdown-item" href="<%= contextPath %>/recipeReportDeleteListM.re?cpage=1" target="_self">신고 게시글 처리</a>
-              <a class="dropdown-item" href="<%= contextPath %>/recipeListRestoreM.re?cpage=1" target="_self">삭제글 관리</a>
+              <a class="dropdown-item" href="<%= request.getContextPath() %>/enrollFormM.re?cpage=1" target="_self">레시피 등록</a>
+              <a class="dropdown-item" href="<%= contextPath %>/upDelM.re?cpage=1" target="_self">레시피 수정/삭제</a>
             </div>
-          </div>
-          <br><br><br><br>
-
-        <div width="700px" align="left"style="margin-left: 250px;">
-            <h4>게시글 삭제</h4>
         </div>
+        <br><br><br><br>
+
+        
         <table class="list-area" border="1"> 
             <thead>
-                <tr height="30px">
+                <tr>
                     <th width="20px">
                         <div class="custom-control custom-checkbox">
                             <input type="checkbox" name="allCheck" class="custom-control-input allCheck" id="customCheck" onclick="allChecked(this)">
@@ -85,6 +78,7 @@
                     <th width="275px">제목</th>
                     <th width="100px">작성자</th>
                     <th width="100px">작성일</th>
+                    <th width="105px">수정/삭제</th>
                 </tr>
             </thead>
             <tbody>
@@ -92,12 +86,15 @@
                 <tr height="30px">
                     <td><input type="checkbox" class="check" name="check" onclick="checkClicked()" value="<%= r.getRecipeNo() %>"></td>
                     <td><%= r.getRecipeNo() %></td>
-                    <td><a href="<%= contextPath %>/detail.re?no=<%= r.getRecipeNo() %>"><%= r.getRecipeTitle() %></a></td>
+                    <td><a href="<%= contextPath %>/detailM.re?no=<%= r.getRecipeNo() %>"><%= r.getRecipeTitle() %></a></td>
                     <td><%= r.getRecipeWriter() %></td>
                     <td><%= r.getEnrollDate() %></td>
+                    <td>
+                        <a href="" class="btn btn-secondary btn-sm" style="color: white;">수정</a>
+                        <a href="" class="btn btn-danger btn-sm" style="color: white;">삭제</a>
+                    </td>
                 </tr>
             <% } %>
-                
             </tbody>
         </table>
         
@@ -153,7 +150,7 @@
         		if(confirmAlert){
         			
         			$.ajax({
-        		       url:"<%= contextPath %>/selectDelete.re",
+        		       url:"<%= contextPath %>/selectDeleteM.re",
         		       data:{recipeArray:recipeArray},
         		       type:"post",
         		       traditional:true,
@@ -168,17 +165,18 @@
 
         <div class="paging-area">
             <% if(pi.getCurrentPage() != 1) { %>
-                <button onclick="location.href='<%= contextPath %>/recipeDeleteListM.re?cpage=<%= pi.getCurrentPage()-1 %>';">&lt;</button>
+                <button onclick="location.href='<%= contextPath %>/upDelM.re?cpage=<%= pi.getCurrentPage()-1 %>';">&lt;</button>
             <% } %>
             
             <% for(int p=pi.getStartPage() ; p<=pi.getEndPage() ; p++) { %>
-                <button onclick="location.href='<%= contextPath %>/recipeDeleteListM.re?cpage=<%= p %>';"><%= p %></button>
+                <button onclick="location.href='<%= contextPath %>/upDelM.re?cpage=<%= p %>';"><%= p %></button>
             <% } %>
                
              <% if(pi.getCurrentPage() != pi.getMaxPage()) { %>
-                <button onclick="location.href='<%= contextPath %>/recipeDeleteListM.re?cpage=<%= pi.getCurrentPage()+1 %>';">&gt;</button>
+                <button onclick="location.href='<%= contextPath %>/upDelM.re?cpage=<%= pi.getCurrentPage()+1 %>';">&gt;</button>
              <% } %>
         </div>
+        <br><br>
         <br><br>
 
         <form action="" method="">
@@ -205,5 +203,6 @@
             
         </form>
     </div>
+	
 </body>
 </html>

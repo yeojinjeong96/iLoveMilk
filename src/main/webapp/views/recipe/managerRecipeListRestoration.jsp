@@ -33,13 +33,8 @@
         text-overflow: ellipsis;
         -webkit-box-orient: vertical;
     }
-    
-    .list-area tbody a{
-    	text-decoration: none;
-    	color: black;
-    }
 
-    #delete{
+    #restore{
         width: 700px;
     }
 
@@ -49,11 +44,10 @@
 
 	<%@include file="/views/common/managerHeader.jsp" %>
 	<%@include file="/views/common/managerMenubar.jsp" %>
-	
+
 	<div class="outer" align="center">
         <br>
-        <br>
-        <div width="700px" align="left"style="margin-left: 250px;">
+        <div width="700px" align="left" style="margin-left: 250px;">
             <h4>게시글 관리</h4>
         </div>
 
@@ -70,7 +64,7 @@
           <br><br><br><br>
 
         <div width="700px" align="left"style="margin-left: 250px;">
-            <h4>게시글 삭제</h4>
+            <h4>삭제글 관리</h4>
         </div>
         <table class="list-area" border="1"> 
             <thead>
@@ -82,7 +76,7 @@
                         </div>
                     </th>
                     <th width="100px">글번호</th>
-                    <th width="275px">제목</th>
+                    <th width="280px">제목</th>
                     <th width="100px">작성자</th>
                     <th width="100px">작성일</th>
                 </tr>
@@ -92,19 +86,18 @@
                 <tr height="30px">
                     <td><input type="checkbox" class="check" name="check" onclick="checkClicked()" value="<%= r.getRecipeNo() %>"></td>
                     <td><%= r.getRecipeNo() %></td>
-                    <td><a href="<%= contextPath %>/detail.re?no=<%= r.getRecipeNo() %>"><%= r.getRecipeTitle() %></a></td>
+                    <td><%= r.getRecipeTitle() %></td>
                     <td><%= r.getRecipeWriter() %></td>
                     <td><%= r.getEnrollDate() %></td>
                 </tr>
             <% } %>
-                
             </tbody>
         </table>
-        
-        <table id="delete">
+
+        <table id="restore">
             <tr>
                 <td align="right" style="padding: 5px 5px;">
-                    <a href="" class="btn btn-danger btn-sm" onclick="recipeDelete();">삭제</a>
+                    <a class="btn btn-primary btn-sm" onclick="recipeRestore();">복구</a>
                 </td>
             </tr>
         </table>
@@ -134,7 +127,7 @@
         		
         	}
         	
-        	function recipeDelete(){
+        	function recipeRestore(){
         		var recipeArray = [];
         		
         		$("input:checkbox[name=check]:checked").each(function(){
@@ -144,21 +137,21 @@
         		// console.log(recipeArray);
         		
         		if(recipeArray == ""){
-        			alert("삭제할 항목을 선택해주세요.");
+        			alert("복구할 항목을 선택해주세요.");
         			return false;
         		}
         		
-        		var confirmAlert = confirm("정말로 삭제하시겠습니까?");
+        		var confirmAlert = confirm("정말로 복구하시겠습니까?");
 
         		if(confirmAlert){
         			
         			$.ajax({
-        		       url:"<%= contextPath %>/selectDelete.re",
+        		       url:"<%= contextPath %>/selectRestore.re",
         		       data:{recipeArray:recipeArray},
         		       type:"post",
         		       traditional:true,
         		       success:function(result) {
-        					alert("해당글이 정상적으로 삭제되었습니다.");
+        					alert("해당글이 정상적으로 복구되었습니다.");
         					location.reload();
         		       }
         		   })	
@@ -168,17 +161,18 @@
 
         <div class="paging-area">
             <% if(pi.getCurrentPage() != 1) { %>
-                <button onclick="location.href='<%= contextPath %>/recipeDeleteListM.re?cpage=<%= pi.getCurrentPage()-1 %>';">&lt;</button>
+                <button onclick="location.href='<%= contextPath %>/recipeListRestoreM.re?cpage=<%= pi.getCurrentPage()-1 %>';">&lt;</button>
             <% } %>
             
             <% for(int p=pi.getStartPage() ; p<=pi.getEndPage() ; p++) { %>
-                <button onclick="location.href='<%= contextPath %>/recipeDeleteListM.re?cpage=<%= p %>';"><%= p %></button>
+                <button onclick="location.href='<%= contextPath %>/recipeListRestoreM.re?cpage=<%= p %>';"><%= p %></button>
             <% } %>
                
              <% if(pi.getCurrentPage() != pi.getMaxPage()) { %>
-                <button onclick="location.href='<%= contextPath %>/recipeDeleteListM.re?cpage=<%= pi.getCurrentPage()+1 %>';">&gt;</button>
+                <button onclick="location.href='<%= contextPath %>/recipeListRestoreM.re?cpage=<%= pi.getCurrentPage()+1 %>';">&gt;</button>
              <% } %>
         </div>
+        <br><br>
         <br><br>
 
         <form action="" method="">
@@ -189,9 +183,8 @@
                         <select name="" style="height:30px;">
                             <option value="">전체</option>
                             <option value="">제목</option>
-                            <option value="">본문</option>
                             <option value="">작성자</option>
-                            <option value="">재료</option>
+                            <option value="">삭제자</option>
                         </select>
                     </td>
                     <td>
@@ -205,5 +198,6 @@
             
         </form>
     </div>
+
 </body>
 </html>

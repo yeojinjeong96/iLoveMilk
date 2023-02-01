@@ -9,14 +9,12 @@ import java.sql.Connection;
 import java.util.ArrayList;
 
 import com.milk.common.model.vo.PageInfo;
-import com.milk.notice.model.service.NoticeService;
-import com.milk.notice.model.vo.Notice;
 import com.milk.recipe.model.dao.RecipeDao;
-import com.milk.recipe.model.vo.Attachment;
 import com.milk.recipe.model.vo.Recipe;
 import com.milk.recipe.model.vo.RecipeIngre;
 import com.milk.recipe.model.vo.RecipeOrder;
 import com.milk.recipe.model.vo.Reply;
+import com.milk.recipe.model.vo.Report;
 
 public class RecipeService {
 
@@ -256,4 +254,89 @@ public class RecipeService {
 		close(conn);
 		return list;
 	}
+	
+	
+	public ArrayList<Report> selectRecipeReportDelListM(PageInfo pi) {
+		Connection conn = getConnection();
+		
+		ArrayList<Report> list = new RecipeDao().selectRecipeReportDelListM(conn, pi);
+		
+		close(conn);
+		return list;
+	}
+	
+	public ArrayList<Recipe> selectRecipeListRestorationM(PageInfo pi){
+		Connection conn = getConnection();
+		
+		ArrayList<Recipe> list = new RecipeDao().selectRecipeListRestorationM(conn, pi);
+		
+		close(conn);
+		return list;
+	}
+	
+	public int insertRecipeM(Recipe r, ArrayList<RecipeIngre> listIngre, ArrayList<RecipeOrder> listOrder) {
+		Connection conn = getConnection();
+		
+		int result1 = new RecipeDao().insertRecipeM(conn, r);
+		
+		int result2 = new RecipeDao().insertRecipeIngreList(conn, listIngre);
+		
+		int result3 = new RecipeDao().insertRecipeOrderList(conn, listOrder);
+		
+		
+		if(result1 > 0 && result2 > 0 && result3 > 0) {
+			commit(conn);
+		}else {
+			rollback(conn);
+		}
+		
+		close(conn);
+		
+		
+		return result1 * result2 * result3;
+	}
+	
+	
+	public ArrayList<Recipe> selectRecipeListUpDelM(PageInfo pi) {
+		Connection conn = getConnection();
+		
+		
+		ArrayList<Recipe> list = new RecipeDao().selectRecipeListUpDelM(conn, pi);
+		
+		close(conn);
+		return list;
+	}
+	
+	
+	public int selectDelRecipeM(String deleteRe) {
+		Connection conn = getConnection();
+		
+		int result = new RecipeDao().selectDelRecipeM(conn, deleteRe);
+		
+		if(result > 0) {
+			commit(conn);
+		}else {
+			rollback(conn);
+		}
+		
+		close(conn);
+		return result;
+	}
+	
+	
+	public int selectRestoreRecipeM(String restoreRe) {
+		Connection conn = getConnection();
+		
+		int result = new RecipeDao().selectRestoreRecipeM(conn, restoreRe);
+		
+		if(result > 0) {
+			commit(conn);
+		}else {
+			rollback(conn);
+		}
+		
+		close(conn);
+		return result;
+	}
+	
 }
