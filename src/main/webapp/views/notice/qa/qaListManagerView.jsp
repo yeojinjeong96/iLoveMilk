@@ -44,9 +44,10 @@
             <hr>
             <br>
             <div align="right" style="width:640px">
+                
                 <select name="select-qa" onchange="orderQA();">
-                    <option value="최신순">최신순</option>
-                    <option value="오래된순">오래된순</option>
+                    <option value="desc">최신순</option>
+                    <option value="asc">오래된순</option>
                 </select>
             </div>
             <br>
@@ -115,19 +116,8 @@
 		
 		function orderQA(){
 			const value = $("select[name=select-qa] option").val();
-			$.ajax({
-				url:"<%=contextPath%>/order.qa",
-				data:{value:value},
-				type:"post",
-				success:function(){
-				
-					location.reload();
-				},
-				error: function(){
-					console.log("ajax 통신 실패");
-				}
-				
-			})
+			
+			
 			
 		}
 	</script>

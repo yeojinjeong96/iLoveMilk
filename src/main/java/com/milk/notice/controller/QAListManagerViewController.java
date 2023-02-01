@@ -61,11 +61,13 @@ public class QAListManagerViewController extends HttpServlet {
 		PageInfo pi = new PageInfo(listCount,currentPage, pageLimit, boardLimit,maxPage,startPage,endPage);
 		
 		
-	
+		String value="";
+		if(request.getParameter("value")!=null) {
+			 value= request.getParameter("value");
+		}
 		
 		
-		
-		ArrayList<QA>list = new QAService().selectIncompletedList(pi);
+		ArrayList<QA>list = new QAService().selectIncompletedList(pi,value);
 		request.setAttribute("list",list);
 		request.setAttribute("pi", pi);
 		request.getRequestDispatcher("views/notice/qa/qaListManagerView.jsp").forward(request, response);

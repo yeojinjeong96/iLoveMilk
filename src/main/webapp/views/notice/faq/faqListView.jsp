@@ -62,12 +62,13 @@
         <br>
         <div style="width:700;">
             <div class="search">
-                <form action="<%=contextPath %>/search.faq?cpage=1" method="post" >  
+                <form action="<%=contextPath %>/search.faq" method="get" >  
                 		<%if(searchFaq !=null){ %>
                 		<input type="text" name="searchFaq" placeholder="검색어를 입력하세요." value="<%=searchFaq%>"><button type="submit" >검색</button> 
                 		<%}else{ %>
                         <input type="text" name="searchFaq" placeholder="검색어를 입력하세요."><button type="submit" >검색</button>   
                         <%} %>           
+                        <input type="hidden" name="cpage" value="1">
                 </form>     
             </div>
             &nbsp;

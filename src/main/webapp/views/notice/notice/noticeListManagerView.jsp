@@ -120,7 +120,7 @@
                   
                     
                     
-                    <form action="<%=contextPath%>/search.no?cpage=1" method="post">
+                    <form action="<%=contextPath%>/search.no?cpage=1" method="get">
                        	
                   
        					  <%if(searchNo != null){ %>

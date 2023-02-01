@@ -105,7 +105,6 @@
                     JOIN TB_MEMBER ON (Q_WRITER = MEMBER_NO)
 	                WHERE ANSWER_STATUS= 'N'
 	                AND Q.STATUS= 'Y'
-	                ORDER BY Q_NO DESC
 	                  )E) WHERE RNUM BETWEEN ? AND ?
 		
 	</entry>

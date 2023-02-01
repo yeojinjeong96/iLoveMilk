@@ -51,8 +51,9 @@
             <br>
             <div style="width: 700px;">
                 <div class="search">
-                    <form action="<%=contextPath%>/search.bfaq?cpage=1" method="post" >  
+                    <form action="<%=contextPath%>/search.bfaq" method="get" >  
                             <input type="text" name="searchFaq" placeholder="검색어를 입력하세요."><button type="submit" >검색</button>              
+                    		 <input type="hidden" name="cpage" value="1">
                     </form>     
                 </div>
                 &nbsp;

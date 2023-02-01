@@ -206,13 +206,15 @@ public class QADao {
 		return at;
 	}
 	
-	public ArrayList<QA> selectIncompletedList(Connection conn, PageInfo pi){
+	public ArrayList<QA> selectIncompletedList(Connection conn, PageInfo pi,String value){
 		
 		ArrayList<QA>list = new ArrayList<>();
 		ResultSet rset= null;
 		PreparedStatement pstmt= null;
 		String sql= prop.getProperty("selectIncompletedList");
-		
+		if(value!=null) {
+			sql+= "ORDER BY ENROLL_DATE "+value ;
+ 		}
 		try {
 			pstmt= conn.prepareStatement(sql);
 			int startRow= (pi.getCurrentPage()-1)*pi.getBoardLimit()+1;

@@ -67,10 +67,10 @@ public class QAService {
 		return at;
 	}
 
-	public ArrayList<QA> selectIncompletedList(PageInfo pi){
+	public ArrayList<QA> selectIncompletedList(PageInfo pi,String value){
 		Connection conn= getConnection();
 		
-		ArrayList<QA>list= new QADao().selectIncompletedList(conn, pi);
+		ArrayList<QA>list= new QADao().selectIncompletedList(conn, pi,value);
 		
 		close(conn);
 		return list;
