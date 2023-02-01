@@ -226,7 +226,7 @@
 						<!-- 로그인 후 -->
 	                    <a href=""><img src="resources/images/order.png" style="width:50px"></a>&nbsp;&nbsp;
 	                    <a href="<%= contextPath %>/cart.pr"><img src="resources/images/cart.png" style="width:50px"></a>&nbsp;
-	                    <a href="<%= contextPath%>/mypage.me"><img src="resources/images/myPage.png" style="width:50px"></a>
+	                    <a href="<%= contextPath %>/myorder.me"><img src="resources/images/myPage.png" style="width:50px"></a>
                     <% } %>
                 
                    

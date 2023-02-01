@@ -36,20 +36,20 @@
         <br>
         <br>
         <div class="nav-area" >
-            <div class="menu mainmenu"><a href="">회원정보 관리</a></div> <br>
+            <div class="menu mainmenu"><a>회원정보 관리</a></div> <br>
             <div class="menu"><a href="<%= contextPath %>/myPageUpdate.me">회원정보변경</a></div>
-            <div class="menu"><a href="">적립금</a></div>
-            <div class="menu"><a href="">리뷰관리</a></div>
+            <div class="menu"><a href="<%= contextPath %>/point.me">적립금</a></div>
+            <div class="menu"><a href="<%= contextPath %>/review.me">리뷰관리</a></div>
             <div class="menu" ><a href="" data-toggle="modal" data-target ="#deleteModal">회원탈퇴</a></div>
             <br>
             <br>
-            <div class="menu mainmenu"><a href="">주문내역</a></div> <br>
-            <div class="menu"><a href="">상품주문내역</a></div>
-            <div class="menu"><a href="">찜리스트</a></div>
+            <div class="menu mainmenu"><a >주문내역</a></div> <br>
+            <div class="menu"><a href="<%= contextPath %>/myorder.me">상품주문내역</a></div>
+            <div class="menu"><a href="<%= contextPath %>/plike.me">찜리스트</a></div>
             <br>
             <br>
-            <div class="menu mainmenu"><a href="">레시피관리</a></div> <br>
-            <div class="menu"><a href="">내가 쓴 레시피</a></div>
+            <div class="menu mainmenu"><a >레시피관리</a></div> <br>
+            <div class="menu"><a href="<%= contextPath %>/MyRecipe.me">내가 쓴 레시피</a></div>
             <div class="menu"><a href="">내가 좋아요한 레시피</a></div>
             <br>
             <br>

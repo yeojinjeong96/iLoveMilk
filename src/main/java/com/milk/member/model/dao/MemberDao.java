@@ -15,6 +15,7 @@ import com.milk.common.model.vo.PageInfo;
 import com.milk.member.model.vo.Member;
 import com.milk.member.model.vo.Point;
 import com.milk.member.model.vo.Report;
+import com.milk.product.model.vo.ProductLike;
 
 
 public class MemberDao {
@@ -631,5 +632,42 @@ public Member updateCheckPwd(Connection conn, String memberId, String memberPwd)
 		
 		return result;
 	}
+	
+	   public ArrayList<ProductLike> productLikeList(Connection conn, int memberNo) {
+		      
+		      ResultSet rset = null;
+		      PreparedStatement pstmt = null;
+		      ArrayList<ProductLike> list = new ArrayList<>();
+		      
+		      String sql = prop.getProperty("productLikeList");
+		      
+		      try {
+		         pstmt=conn.prepareStatement(sql);
+		         
+		         pstmt.setInt(1, memberNo);
+		         
+		         rset=pstmt.executeQuery();
+		         
+		         while(rset.next()) {
+		            
+		            list.add(new ProductLike (
+		                  rset.getInt("PRODUCT_NO"),
+		                  rset.getInt("MEMBER_NO"),
+		                  rset.getDate("P_LIKE_DATE"),
+		                  rset.getString("PRODUCT_IMG"),
+		                  rset.getInt("PRICE"),
+		                  rset.getString("PRODUCT_NAME")
+		                  ));
+		            
+		         }
+		         
+		      } catch (SQLException e) {
+		         e.printStackTrace();
+		      } finally {
+		         close(rset);
+		         close(pstmt);
+		      }
+		      return list;
+		   }
 	
 }
