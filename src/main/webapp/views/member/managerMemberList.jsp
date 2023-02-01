@@ -350,7 +350,7 @@
                 
                 <form action="" method="post">
                         <input type="hidden" name="" value="">
-                           <form action="<%=contextPath %>/memPointch.ma" method="post" id="">
+                           <form action="<%=contextPath %>/memPointCh.ma" method="post" id="">
 	                        <table style="width:100%;" class="table table-borderless">
 	                                <tr>
 	                                    <td >아이디</td>
@@ -358,7 +358,7 @@
 	                                </tr>
 	                                <tr>
 	                                    <td>구분</td>
-	                                    <td> <input type="radio" name="status" value="Y"> 적립금 지급 <input type="radio" name="status" value="N"> 적립금 차감 </td>
+	                                    <td> <input type="radio" name="poStatus" value="Y"> 적립금 지급 <input type="radio" name="status" value="N"> 적립금 차감 </td>
 	                                </tr>
 	                                <tr>
 	                                    <td>적립금</td>
