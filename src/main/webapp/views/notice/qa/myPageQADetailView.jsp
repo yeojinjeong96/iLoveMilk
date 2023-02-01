@@ -63,7 +63,7 @@
 			<%@ include file="/views/member/memberInformation.jsp" %>
 		</div>
 
-		<div class="maincontent">
+		<div class="maincontent" align="center">
 			<h4 align="left">나의 1:1 문의 </h4>
             <hr>
             <br>
@@ -107,8 +107,8 @@
             <!--답변 미완료시-->
               <%if(q.getAnswerStatus().equals("N")){ %>
             <div align="center">
-                <a href="<%=contextPath %>/delete.q" class="btn btn-sm btn-secondary">삭제</a>
-                <a href="" class="btn btn-sm btn-secondary">수정</a>
+                <a href="<%=contextPath %>/delete.q?qNo=<%=q.getqNo()%>" class="btn btn-sm btn-secondary">삭제</a>
+                <a href="<%=contextPath%>/updateForm.qa?qNo=<%=q.getqNo() %>" class="btn btn-sm btn-secondary">수정</a>
                 <a href="<%=contextPath %>/mypage.qa?cpage=1" class="btn btn-sm btn-secondary">목록</a>
             </div>
             <%}else{ %>
@@ -134,7 +134,7 @@
                     </tr>
                 </table>
                 <br><br>
-                <button type="button" onclick=location.href="<%=contextPath%>/list.qa?cpage=1">목록으로</button>
+                <button type="button" onclick=location.href="<%=contextPath%>/mypage.qa?cpage=1">목록으로</button>
 
             </div>
             <%} %>

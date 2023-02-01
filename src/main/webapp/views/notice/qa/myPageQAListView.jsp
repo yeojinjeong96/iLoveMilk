@@ -48,6 +48,9 @@
         color:black;
         text-decoration: none;
     }
+    .paging-area{
+     margin-top: ;
+    }
  </style>
 </head>
 <body>
@@ -74,10 +77,10 @@
                     <a href="">7일</a>&nbsp;
                     <a href="">15일</a>&nbsp;
                     <a href="">1개월</a>&nbsp;
-                    <a href="">3개월</a>
+                    <a href="">3개월</a>&nbsp;
                     <input type="date"> -
-                    <input type="date">       
-
+                    <input type="date"> &nbsp;      
+                    <button type="submit">조회</button>
                   </form>
             </div>
             <br>
@@ -116,20 +119,21 @@
 				<%}} %>
 				
             </table>
+           
+            <br>
+            <div class="paging-area" align="center">
+                <%if(pi.getCurrentPage()!=1){ %>
+                    <button class="btn-sm btn btn-primary" onclick="location.href='<%=contextPath%>/mypage.qa?cpage=<%=pi.getCurrentPage()-1%>';">&lt;</button>
+                <%} %>   
+                <%for(int p= pi.getStartPage(); p<=pi.getEndPage(); p++){ %>
+                    <button class="btn-sm btn btn-primary" onclick="location.href='<%=contextPath%>/mypage.qa?cpage=<%=p%>';"><%=p %></button>
+                <%} %>
+                <%if(pi.getCurrentPage()!=pi.getMaxPage()){ %>
+                    <button class="btn-sm btn btn-primary" onclick="location.href='<%=contextPath%>/mypage.qa?cpage=<%=pi.getCurrentPage()+1%>';">&gt;</button>
+                <%} %>
+            </div>
         </div>
-        <br>
-        <br>
-        <div class="paging-area" align="center">
-            <%if(pi.getCurrentPage()!=1){ %>
-                <button class="btn-sm btn btn-primary" onclick="location.href='<%=contextPath%>/mypage.qa?cpage=<%=pi.getCurrentPage()-1%>';">&lt;</button>
-            <%} %>   
-            <%for(int p= pi.getStartPage(); p<=pi.getEndPage(); p++){ %>
-                <button class="btn-sm btn btn-primary" onclick="location.href='<%=contextPath%>/mypage.qa?cpage=<%=p%>';"><%=p %></button>
-            <%} %>
-            <%if(pi.getCurrentPage()!=pi.getMaxPage()){ %>
-                <button class="btn-sm btn btn-primary" onclick="location.href='<%=contextPath%>/mypage.qa?cpage=<%=pi.getCurrentPage()+1%>';">&gt;</button>
-            <%} %>
-         </div>
+        
 	
 	</div>
 	

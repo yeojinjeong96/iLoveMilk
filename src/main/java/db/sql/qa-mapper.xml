@@ -144,5 +144,9 @@
 	                ORDER BY ANSWER_DATE DESC
 	                  )E) WHERE RNUM BETWEEN ? AND ?
 	</entry>
-
+	<entry key="deleteQuestion">
+		DELETE 
+		    FROM TB_QA
+		WHERE Q_NO = ?
+	</entry>
 </properties>

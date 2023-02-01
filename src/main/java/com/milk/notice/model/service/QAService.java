@@ -110,5 +110,17 @@ public class QAService {
 		return list;
 	}
 	
+	public int deleteQuestion(int qNo) {
+		Connection conn= getConnection();
+		int result = new QADao().deleteQuestion(conn, qNo);
+		
+		if(result>0) {
+			commit(conn);
+		}else {
+			rollback(conn);
+		}
+		
+		return result;
+	}
 	
 }

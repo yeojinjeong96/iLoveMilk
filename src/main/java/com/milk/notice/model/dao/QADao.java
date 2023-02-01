@@ -332,5 +332,24 @@ public class QADao {
 		return list;
 		
 	}
+	
+	public int deleteQuestion(Connection conn, int qNo) {
+		int result= 0;
+		PreparedStatement pstmt= null;
+		String sql= prop.getProperty("deleteQuestion");
+		
+		try {
+			pstmt= conn.prepareStatement(sql);
+			pstmt.setInt(1, qNo);
+			
+			result= pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}
+		return result;
+		
+	}
 
 }
