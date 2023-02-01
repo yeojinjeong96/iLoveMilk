@@ -45,19 +45,22 @@
           
        }
         
-       .reviewheader{font-size: 25px; font-weight: bolder; padding-bottom: 50px;}
-       .reviewinformation{font-size: 10px;}
-       .reviewTop{padding-bottom: 50px;}
-       #rInfoBody{font-size: 15px;}
-       .rbtn{
-            background: rgb(16, 108, 255);
-            border: none;
-            border-radius: 20px;
-            width: 200px;
-            height: 50px;
-            font-weight: bold;
-            color: white;
-       }
+       .myorderheader{font-size: 25px; font-weight: bolder; padding-bottom: 50px;}
+       .ordersearch{
+            border: 1px solid gray;
+        }
+        
+        .order-list{
+            
+            width: 100%;
+           
+        }
+        #list {
+            width: 100%;
+        }
+
+        #information{ width: 100%;}
+        #information th{ width: 30%;}
    </style>
 </head>
 <body>	
@@ -88,7 +91,7 @@
             <%@ include file="../member/memberInformation.jsp" %> 
        </div>
        
-        <div class="reviewheader">
+        <div class="myorderheader">
             주문목록 / 배송조회
            
         </div>
