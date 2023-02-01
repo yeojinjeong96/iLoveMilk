@@ -310,7 +310,7 @@
                            FROM TB_MEMBER M
                           LEFT JOIN TB_POINT P ON (M.MEMBER_NO = P.MEMBER_NO)
                           WHERE M.STATUS = 'Y'
-                          AND MEMBER_ID LIKE '%' || ? || '%'
+                          AND MEMBER_ID LIKE '%' ||?|| '%'
                           ORDER BY ENROLL_DATE DESC
 		           )A
 		     )  
