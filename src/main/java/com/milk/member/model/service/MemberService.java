@@ -13,6 +13,7 @@ import com.milk.member.model.dao.MemberDao;
 import com.milk.member.model.vo.Member;
 import com.milk.member.model.vo.Point;
 import com.milk.member.model.vo.Report;
+import com.milk.product.model.vo.ProductLike;
 
 
 public class MemberService {
@@ -246,5 +247,10 @@ public class MemberService {
 	      return result;
 	      }
 	
-	
+	   public ArrayList<ProductLike> productLikeList(int memberNo){
+			Connection conn = getConnection();
+			ArrayList<ProductLike> list = new MemberDao().productLikeList(conn, memberNo);
+			close(conn);
+			return list;
+	   }
 }
