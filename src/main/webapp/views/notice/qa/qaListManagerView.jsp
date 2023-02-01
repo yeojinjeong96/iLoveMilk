@@ -44,9 +44,9 @@
             <hr>
             <br>
             <div align="right" style="width:640px">
-                <select name="select-qa" id="">
-                    <option value="">최신순</option>
-                    <option value="">오래된순</option>
+                <select name="select-qa" onchange="orderQA();">
+                    <option value="최신순">최신순</option>
+                    <option value="오래된순">오래된순</option>
                 </select>
             </div>
             <br>
@@ -110,7 +110,26 @@
 			$("#q-list tbody tr").click(function(){
 				location.href='<%=contextPath%>/detailM.qa?no='+$(this).children().eq(0).text();
 			})
+						
 		})
+		
+		function orderQA(){
+			const value = $("select[name=select-qa] option").val();
+			$.ajax({
+				url:"<%=contextPath%>/order.qa",
+				data:{value:value},
+				type:"post",
+				success:function(){
+				
+					location.reload();
+				},
+				error: function(){
+					console.log("ajax 통신 실패");
+				}
+				
+			})
+			
+		}
 	</script>
    
 </body>

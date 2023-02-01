@@ -3,6 +3,7 @@
 <%@page import = "com.milk.notice.model.vo.Faq" %>
 <% 
 	Faq f = (Faq)request.getAttribute("f");
+
 %>
 <!DOCTYPE html>
 <html>
@@ -41,9 +42,9 @@
             <hr>
             <form action="<%=contextPath%>/update.faq" method="post">
                 <table id="faq-update" >
-                    <tr>
+                    <tr>                  
                         <th width="120" height="50">* 질문</th>
-                        <td width="480"><input type="text" value="<%=f.getQuestion() %>" required></td>
+                        <td width="480"><input type="text" name="question" value="<%=f.getQuestion() %>" required></td>
                     </tr>       
                     <tr >
                         <th height="50">* 카테고리 선택</th>
@@ -56,21 +57,22 @@
                                 <option>기타</option>
                             </select>
                             &nbsp;<label for="best-faq">BEST FAQ</label>
-                            <input type="checkbox" id="best-faq" name="best-faq" value="best-faq">
+                            <input type="hidden" name = "no" value="<%=f.getFaqNo()%>">
+                            <input type="checkbox" id="best-faq" name="best-faq" value="Y">
                         </td>
                     </tr>
                     <tr>
                         <th>* 답변</th>
                         <td>
-                            <textarea name="content" id="" cols="30" rows="20" style="resize:none" required><%=f.getAnswer() %></textarea>
+                            <textarea name="answer" cols="30" rows="20" style="resize:none" required><%=f.getAnswer() %></textarea>
                         </td>
                     </tr>
                 
                 </table>
                 <br>
-                <button type="button">이전으로</button>
+                <button type="button" onclick="history.back();">이전으로</button>
                 <button type="submit">수정하기</button>
-                <button type="button" onclick="location.href='<%=contextPath%>/delete.faq?no=<%=f.getFaqNo()%>';">삭제하기</button>
+
                 
             </form>
         </div>

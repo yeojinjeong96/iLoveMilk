@@ -109,4 +109,19 @@ public class FaqService {
 		return f;
 	}
 	
+	public int updateFaq(Faq f) {
+		
+		Connection conn = getConnection();
+		int result = new FaqDao().updateFaq(conn, f);
+		
+		if(result>0) {
+			commit(conn);
+		}else {
+			rollback(conn);
+		}
+		return result;
+	}
+	
+	
+	
 }

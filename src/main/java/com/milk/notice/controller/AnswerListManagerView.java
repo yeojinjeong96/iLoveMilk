@@ -32,6 +32,8 @@ public class AnswerListManagerView extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+		
 		int listCount;  
 		int currentPage; 
 		int pageLimit;   
@@ -51,6 +53,7 @@ public class AnswerListManagerView extends HttpServlet {
 		if(endPage>maxPage) {
 			endPage = maxPage;
 		}
+		
 		
 		PageInfo pi = new PageInfo(listCount,currentPage, pageLimit, boardLimit,maxPage,startPage,endPage);
 		

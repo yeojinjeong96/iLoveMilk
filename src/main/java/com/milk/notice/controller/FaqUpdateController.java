@@ -6,6 +6,11 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import com.milk.manager.model.vo.Manager;
+import com.milk.notice.model.service.FaqService;
+import com.milk.notice.model.vo.Faq;
 
 /**
  * Servlet implementation class FaqUpdateController
@@ -26,8 +31,32 @@ public class FaqUpdateController extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+		request.setCharacterEncoding("UTF-8");
+		int faqNo =  Integer.parseInt(request.getParameter("no"));
+		String question = request.getParameter("question");
+		String answer = request.getParameter("answer");
+		String bestFaq= request.getParameter("best-faq");
+		String category= request.getParameter("category");
+		HttpSession session = request.getSession();
+		int managerNo= ((Manager)session.getAttribute("loginManager")).getManagerNo();
+		
+		
+		Faq f = new Faq();
+		f.setFaqNo(faqNo);
+		f.setQuestion(question);
+		f.setAnswer(answer);
+		f.setBestFaq(bestFaq);
+		f.setFaqWriter(managerNo);
+		f.setCategoryName(category);
+		
+		int result=  new FaqService().updateFaq(f);
+		if(result>0) {
+			session.setAttribute("alertMsg", "FAQ 수정 성공");
+			response.sendRedirect(request.getContextPath()+"/listM.faq?cpage=1");
+			
+		}else {
+			
+		}
 	}
 
 	/**

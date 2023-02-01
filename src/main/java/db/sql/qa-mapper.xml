@@ -145,4 +145,5 @@
 	                ORDER BY ANSWER_DATE DESC
 	                  )E) WHERE RNUM BETWEEN ? AND ?
 	</entry>
+
 </properties>

@@ -7,17 +7,16 @@
 		    FROM TB_FAQ
 	</entry>
 	<entry key="selectFaqList">
-		SELECT *
+		    SELECT *
 		  FROM (
 		        SELECT ROWNUM RNUM, E.*
-		          FROM(SELECT 
-		                    ROWNUM SHOWNO
-		                   ,FAQ_NO
+		          FROM(SELECT  
+		                   FAQ_NO
 		                   ,QUESTION
 		                   ,ANSWER
 		                   ,FAQ_WRITER
 		                   ,CATEGORY_NAME
-		                FROM TB_FAQ 
+		                FROM TB_FAQ
 		               
                    
 	</entry>
@@ -50,6 +49,7 @@
 		                   ,FAQ_WRITER
 		                   ,CATEGORY_NAME
 		                FROM TB_FAQ 
+		                order by faq_no DESC
 		               ) E) WHERE RNUM BETWEEN ? AND ? 
 	</entry>
 	<entry key="deleteFaq">
@@ -107,5 +107,15 @@
 			       ,CATEGORY_NAME
 			    FROM TB_FAQ
 			 WHERE FAQ_NO =?
+	</entry>
+	<entry key="updateFaq">
+	UPDATE
+	    TB_FAQ
+		  SET QUESTION = ?
+		 , ANSWER = ?
+		 , BEST_FAQ = ?
+		 , FAQ_WRITER = ?
+		 ,CATEGORY_NAME = ?
+	 WHERE FAQ_NO = ?
 	</entry>
 </properties>

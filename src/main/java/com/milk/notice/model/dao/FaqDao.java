@@ -67,7 +67,7 @@ public class FaqDao {
 		if(category != null) {
 			sql+=" WHERE CATEGORY_NAME = '"+category+"'";
 		}
-		sql+="order by SHOWNO DESC) E) WHERE RNUM BETWEEN ? AND ? ";
+		sql+="order by faq_no desc) E) WHERE RNUM BETWEEN ? AND ? ";
 		
 		try {
 			pstmt= conn.prepareStatement(sql);
@@ -76,7 +76,7 @@ public class FaqDao {
 			
 			rset= pstmt.executeQuery();
 			while(rset.next()) {
-				list.add(new Faq(rset.getInt("showno")
+				list.add(new Faq(rset.getInt("faq_no")
 								,rset.getString("question")
 								,rset.getString("answer")
 								,rset.getInt("faq_writer")
@@ -327,6 +327,7 @@ public class FaqDao {
 			pstmt.setInt(1, faqNo);
 			
 			rset= pstmt.executeQuery();
+			
 			if(rset.next()) {
 				 f= new Faq(
 						rset.getInt("FAQ_NO")
@@ -351,6 +352,29 @@ public class FaqDao {
 		
 	}
 	
-
+	public int updateFaq(Connection conn, Faq f) {
+		int result= 0;
+		PreparedStatement pstmt = null;
+		String sql= prop.getProperty("updateFaq");
+		
+		try {
+			pstmt= conn.prepareStatement(sql);
+			pstmt.setString(1, f.getQuestion());
+			pstmt.setString(2, f.getAnswer());
+			pstmt.setString(3, f.getBestFaq());
+			pstmt.setInt(4, f.getFaqWriter());
+			pstmt.setString(5, f.getCategoryName());
+			pstmt.setInt(6, f.getFaqNo());
+			
+			result= pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+			
+		}
+		return result;
+	
+	}
 
 }

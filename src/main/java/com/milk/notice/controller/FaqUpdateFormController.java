@@ -33,6 +33,7 @@ public class FaqUpdateFormController extends HttpServlet {
 		int faqNo= Integer.parseInt(request.getParameter("no"));
 		Faq f = new FaqService().selectFaq(faqNo);
 		
+		
 		request.setAttribute("f", f);
 		request.getRequestDispatcher("views/notice/faq/faqUpdateForm.jsp").forward(request, response);
 		
