@@ -236,11 +236,11 @@
                 <div id="pro-1-3-2-2">
                 </div>
 
-                <div id="pro-1-3-2-3">
+			    <div id="pro-1-3-2-3">
                     <table class="pro-qna">
                         <tr>
                             <td>상품코드</td>
-                            <td><%= p.getProductNo() %></td>
+                            <td id="pNo"><%= p.getProductNo() %></td>
                         </tr>
                         <tr>
                             <td>브랜드</td>
@@ -268,10 +268,27 @@
 
                 <div id="pro-1-3-2-4"  align=center>
                     <i class="bi-heart like-btn" style="font-size:2rem; color: red; cursor: pointer;" onclick="memberLike(<%=p.getProductNo()%>);" ></i>
-                    <button type="submit" id="btn-buy"  style=" width:270px; height:40px;" class="btn btn-outline-primary">바로구매</button>
+                    <button type="button" onclick="cartInput();" id="btn-buy"  style=" width:270px; height:40px;" class="btn btn-outline-primary">장바구니</button>
                    
                 </div>
-
+                <script>
+	                function cartInput(){
+	                	$.ajax({
+	                		url:"<%= contextPath %>/cartIn.pr",
+	                		data:{
+	                			proNo:$("#pNo").html(),
+	                			amount:$("#pro-amount").val()
+	                		},
+	    					type:"post",
+	                		success:function(){
+	                			
+	                		},
+	                		error:function(){
+	                			console.log("장바구니 추가용 ajax통신 실패");
+	                		}
+	                	});
+	                }
+                </script>
             </div>
         </div>
 

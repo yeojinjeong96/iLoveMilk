@@ -271,6 +271,19 @@
 		     )
 	</entry>
 	
-	<entry key="selectStockList">
+	<entry key="productCartInsert">
+		INSERT
+		  INTO TB_CART
+		  	 (
+		  	   PRODUCT_NO
+		  	 , MEMBER_NO
+		  	 , COUNT
+		  	 )
+		VALUES
+			 (
+			   ?
+			 , ?
+			 , ?
+			 )
 	</entry>
 </properties>

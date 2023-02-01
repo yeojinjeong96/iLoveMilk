@@ -294,5 +294,22 @@ public class ProductService {
 		close(conn);
 		return result;
 	}
+	
+	/**
+	 * 상품 장바구니에 추가
+	 * @author 승하
+	 * @return 성공시 1, 실패시 2
+	 */
+	public int productCartInsert(int proNo, int memNo, int amount) {
+		Connection conn = getConnection();
+		int result = new ProductDao().productCartInsert(conn, proNo, memNo, amount);
+		if(result > 0) {
+			commit(conn);
+		} else {
+			rollback(conn);
+		}
+		close(conn);
+		return result;
+	}
 
 }

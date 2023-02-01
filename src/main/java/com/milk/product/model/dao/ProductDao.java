@@ -635,4 +635,22 @@ public class ProductDao {
 		}
 		return p;
 	}
+	
+	public int productCartInsert(Connection conn, int proNo, int memNo, int amount) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String sql = prop.getProperty("productCartInsert");
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, proNo);
+			pstmt.setInt(2, memNo);
+			pstmt.setInt(3, amount);
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		return result;
+	}
 }
