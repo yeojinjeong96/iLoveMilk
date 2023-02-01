@@ -366,7 +366,7 @@
 	                                </tr>
 	                                <tr>
 	                                    <td>사유</td>
-	                                    <td><input type="text" name="nemPointCon"></td>
+	                                    <td><input type="text" name="memPointCon"></td>
 	                                </tr>
 	                                
 	                        </table>
