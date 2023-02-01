@@ -1,9 +1,17 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    
+    
+<%@page import ="com.milk.common.model.vo.PageInfo, java.util.ArrayList, com.milk.member.model.vo.Report" %>    
+    
+<% 
+	PageInfo pi = (PageInfo)request.getAttribute("pi");
+	ArrayList<Report> list = (ArrayList<Report>)request.getAttribute("list");
+%>    
 <!DOCTYPE html>
 <html>
     <style>
-    div{border:1px solid red;} 
+
     .mem-wrap{
         width:800px;
         padding-left:50px;    
@@ -53,7 +61,7 @@
                     <p  style="font-size:20px; line-height: 90px;"><b>신고관리</b></p>  
                     </div>
                     <br><br>
-                    <div align="right" style="width:600px">
+                    <div align="right" style="width:630px;">
                             <input type="text" name = "searchReport" required><button type="submit"  style="border:none" >검색</button>
                         </div>
                     </div>
@@ -64,21 +72,26 @@
                                 <td>신고일</td>
                                 <td>신고내용</td>
                                 <td>아이디</td>
-                                <td>신고지</td>
                                 <td></td>
 
                             </tr>
+                            <%if(list.isEmpty()){ %>
+                            	<tr>
+                            		<td colspan="5">조회내역이 없습니다.</td>
+                            	</tr>
+                            <%}else{ %>
                             <tr>
-                                <td>1</td>
-                                <td>23-01-01 00:00</td>
-                                <td>재수없어요</td>
-                                <td>아이디자리</td>
-                                <td>신고자아이디</td>
+                            	<%for(Report r : list){ %>
+                                <td><%=r.getReportNo() %></td>
+                                <td><%=r.getRepDate() %></td>
+                                <td><%=r.getRepContent() %></td>
+                                <td><%=r.getMemberId() %></td>
                                 <td>
                                     <button type="button" class="btn btn-outline-secondary btn-sm" data-toggle="modal" data-target="#report-delete">삭제</button>
                                 </td>
-
-                            </tr>
+	                            <%} %>
+	                           </tr>
+							<%} %>
                         </table>
                     </div>
                     <div id="mem-3">
@@ -87,19 +100,19 @@
                             <button type="button" class="btn btn-outline-secondary btn-sm" data-toggle="modal" data-target="#blacklist-view">블랙리스트조회</button>
                     </div>    
                         <div class="paging-area">
-                            <!-- 내가 보고있는 페이지가 1번 페이지가 아닐때에만 나타내기 
+                            <!-- 내가 보고있는 페이지가 1번 페이지가 아닐때에만 나타내기 -->
                             
                                         <% if(pi.getCurrentPage() != 1){ %>
-                                            <button onclick="location.href='<%=contextPath%>/list.bo?cpage=<%=pi.getCurrentPage()-1%>';">&lt;</button>
+                                            <button onclick="location.href='<%=contextPath%>/repList.ma?cpage=<%=pi.getCurrentPage()-1%>';">&lt;</button>
                                         <% } %>
                             
                                         <% for(int p=pi.getStartPage(); p<=pi.getEndPage(); p++){ %>
-                                            <button onclick="location.href='<%=contextPath%>/list.bo?cpage=<%=p%>';"><%= p %></button>
-                                        <% } %>-->
-                            <!--  내가 보고있는 페이지가 마지막 페이지가 아닐 때에만 나타내기 
+                                            <button onclick="location.href='<%=contextPath%>/repList.ma?cpage=<%=p%>';"><%= p %></button>
+                                        <% } %>
+                            <!--  내가 보고있는 페이지가 마지막 페이지가 아닐 때에만 나타내기 -->
                             
-                                        <% if(pi.getCurrentPage() != pi.getMaxPage()){ %>-->
-                                            <button onclick="location.href='<%=contextPath%>/list.bo?cpage=<%=pi.getCurrentPage()+1%>';">&gt;</button>
+                                        <% if(pi.getCurrentPage() != pi.getMaxPage()){ %>
+                                            <button onclick="location.href='<%=contextPath%>/repList.ma?cpage=<%=pi.getCurrentPage()+1%>';">&gt;</button>
                                         <% } %>
                         </div>
                         

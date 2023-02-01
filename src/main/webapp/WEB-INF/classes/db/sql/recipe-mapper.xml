@@ -301,5 +301,78 @@
 		  		)
 		 WHERE ROWNUM <![CDATA[<=]]> 3 
 	</entry>
+	
+	
+	<entry key="selectReplyListM">
+	SELECT *
+		  FROM (
+		        SELECT ROWNUM RNUM, A.*
+		          FROM (
+		                SELECT
+                               RE.REPORT_STATUS
+                             , RE.REPLY_NO
+                             , RP.REPORT_CONTENT
+                             , MEMBER_ID
+                             , RECIPE_TITLE
+                             , RE.REF_NO
+                             , RE.REPLY_CONTENT
+		                  FROM TB_REPLY RE
+                          JOIN TB_MEMBER USING (MEMBER_NO)
+                          JOIN TB_RECIPE R ON (REF_NO = R.RECIPE_NO)
+                          LEFT JOIN TB_REPORT RP ON (RP.REPORTING_MEM_NO = RE.REF_NO)
+		                 ORDER
+		                    BY REPLY_NO DESC
+		                ) "A"
+	        	)
+ 		 WHERE RNUM BETWEEN ? AND ?
+	</entry>
+	
+	<!--
+	<entry key="selectRecipeListDeleteM">
+	SELECT *
+		  FROM (
+		        SELECT ROWNUM RNUM, A.*
+		          FROM (
+		                SELECT
+                               RECIPE_NO
+                             , RECIPE_TITLE
+                             , MEMBER_ID
+                             , TO_CHAR(R.ENROLL_DATE, 'YYYY-MM-DD') "ENROLL_DATE"
+                             , (
+                                SELECT
+                                       COUNT(*) COUNT
+                                  FROM TB_REPLY
+                                  JOIN TB_RECIPE ON (RECIPE_NO = REF_NO)
+                                 WHERE RECIPE_NO = ?
+                                ) "REPLY_COUNT"
+		                  FROM TB_RECIPE R
+                          JOIN TB_MEMBER M ON (RECIPE_WRITER = MEMBER_NO)
+                          join TB_REPLY ON (REF_NO = RECIPE_NO)
+		                 ORDER
+		                    BY ENROLL_DATE DESC
+		                ) "A"
+	        	)
+ 		 WHERE RNUM BETWEEN ? AND ?
+	</entry>
+	 -->
+	 
+	<entry key="selectRecipeListDeleteM">
+	SELECT *
+		  FROM (
+		        SELECT ROWNUM RNUM, A.*
+		          FROM (
+		                SELECT
+                               RECIPE_NO
+                             , RECIPE_TITLE
+                             , MEMBER_ID
+                             , TO_CHAR(R.ENROLL_DATE, 'YYYY-MM-DD') "ENROLL_DATE"
+		                  FROM TB_RECIPE R
+                          JOIN TB_MEMBER M ON (RECIPE_WRITER = MEMBER_NO)
+		                 ORDER
+		                    BY RECIPE_NO DESC
+		                ) "A"
+	        	)
+ 		 WHERE RNUM BETWEEN ? AND ?
+	</entry>
 
 </properties>

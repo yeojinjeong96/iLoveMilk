@@ -1,26 +1,23 @@
-package com.milk.product.controller;
+package com.milk.notice.controller;
 
 import java.io.IOException;
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.milk.product.model.service.ProductService;
-
 /**
- * Servlet implementation class ProductReceivingController
+ * Servlet implementation class NoticeEnrollForm
  */
-@WebServlet("/receiving.pr")
-public class ProductReceivingController extends HttpServlet {
+@WebServlet("/enroll.no")
+public class NoticeEnrollFormController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public ProductReceivingController() {
+    public NoticeEnrollFormController() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -29,17 +26,7 @@ public class ProductReceivingController extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		int proNo = Integer.parseInt(request.getParameter("proNo"));
-		int count = Integer.parseInt(request.getParameter("count"));
-		
-		int result = new ProductService().receivingProduct(proNo, count);
-		
-		if(result > 0) {
-			request.getSession().setAttribute("alertMsg", "상품 입고 성공");
-		} else {
-			request.getSession().setAttribute("alertMsg", "상품 입고 실패");
-		}
-		response.sendRedirect(request.getContextPath() + "/listUpDeRe.pr?cp=1");
+		request.getRequestDispatcher("views/notice/notice/noticeEnrollForm.jsp").forward(request, response);
 	}
 
 	/**

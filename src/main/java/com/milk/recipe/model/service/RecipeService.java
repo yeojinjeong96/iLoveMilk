@@ -236,4 +236,24 @@ public class RecipeService {
 		close(conn);
 		return list;
 	}
+	
+	
+	public ArrayList<Reply> selectReplyListM(PageInfo pi){
+		Connection conn = getConnection();
+		
+		ArrayList<Reply> list = new RecipeDao().selectReplyListM(conn, pi);
+		
+		close(conn);
+		return list;
+	}
+	
+	public ArrayList<Recipe> selectRecipeListDeleteM(PageInfo pi) {
+		Connection conn = getConnection();
+		
+		
+		ArrayList<Recipe> list = new RecipeDao().selectRecipeListDeleteM(conn, pi);
+		
+		close(conn);
+		return list;
+	}
 }

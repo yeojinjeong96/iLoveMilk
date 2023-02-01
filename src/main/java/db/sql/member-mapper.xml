@@ -188,10 +188,10 @@
 				                        MEMBER_ID,
 				                        MEMBER_PWD,
 				                        MEMBER_NAME,
-				                        PHONE,
+				                        NVL(PHONE, '없음')PHONE,
 				                        EMAIL,
 				                        ADDRESS_NUMBER,
-				                        ADDRESS,
+				                        NVL(ADDRESS, '없음')ADDRESS,
 				                        ADDRESS_DETAIL,
 				                        PROFILE,
 				                        ENROLL_DATE,
@@ -218,6 +218,62 @@
 		           )A
 		     )  
 		  WHERE RNUM BETWEEN ? AND ? 
+	</entry>
+	
+	<entry key="selectPointListCount">
+		SELECT COUNT(*)COUNT
+		 FROM TB_POINT P 
+		WHERE MEMBER_NO =?
+	</entry>
+	
+	<entry key="selectPointList">
+        SELECT *
+            FROM(                     
+ 		        SELECT ROWNUM RNUM, A.*
+		          FROM (                            
+                        SELECT 
+                                POINT_NO,
+                                COUNT,
+                                STATUS,
+                                TOTAL,
+                                MODIFY_DATE,
+                                CONTENT,
+                                ORDER_NO,
+                                MEMBER_NO
+                          FROM TB_POINT
+                         WHERE MEMBER_NO =?	
+                         ORDER
+                           BY MODIFY_DATE DESC
+                        )A
+                    )
+         WHERE RNUM BETWEEN ? AND ? 	
+	</entry>
+	
+	<entry key="selectReportListCount">
+		SELECT 
+			   COUNT(*) COUNT
+		  FROM TB_REPORT		
+	</entry>
+	<entry key="selectMemberReportList">
+	        SELECT *
+            FROM(                     
+ 		        SELECT ROWNUM RNUM, A.*
+		          FROM (                            
+                        SELECT 
+								REPORT_NO,
+								REPORTING_MEM_NO,
+								REF_NO,
+								REPORT_CONTENT,
+								REPORT_DATE,
+								REPORT_TYPE,
+								MEMBER_ID
+                          FROM TB_REPORT
+                         JOIN TB_MEMBER ON (MEMBER_NO = REPORTING_MEM_NO) 
+                         ORDER
+                           BY REPORT_DATE DESC
+                        )A
+                    )
+         WHERE RNUM BETWEEN ? AND ? 
 	</entry>
 	
 	  <entry key="UpdateProfile">

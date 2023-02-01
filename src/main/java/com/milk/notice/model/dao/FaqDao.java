@@ -13,6 +13,7 @@ import java.util.Properties;
 
 import com.milk.common.model.vo.PageInfo;
 import com.milk.notice.model.vo.Faq;
+import com.milk.notice.model.vo.Notice;
 
 public class FaqDao {
 	
@@ -67,7 +68,7 @@ public class FaqDao {
 		if(category != null) {
 			sql+=" WHERE CATEGORY_NAME = '"+category+"'";
 		}
-		sql+=")E order by rnum desc)E  WHERE RNUM BETWEEN ? AND ? ";
+		sql+="order by SHOWNO DESC) E) WHERE RNUM BETWEEN ? AND ? ";
 		
 		try {
 			pstmt= conn.prepareStatement(sql);
@@ -76,7 +77,7 @@ public class FaqDao {
 			
 			rset= pstmt.executeQuery();
 			while(rset.next()) {
-				list.add(new Faq(rset.getInt("rnum")
+				list.add(new Faq(rset.getInt("showno")
 								,rset.getString("question")
 								,rset.getString("answer")
 								,rset.getInt("faq_writer")
@@ -166,5 +167,156 @@ public class FaqDao {
 		
 		
 	}
+	
+	public ArrayList<Faq> selectManagerFaqList(Connection conn, PageInfo pi){
+		PreparedStatement pstmt= null;
+		ResultSet rset= null;
+		ArrayList<Faq>list = new ArrayList<>();
+		String sql= prop.getProperty("selectManagerFaqList");
+		
+		int startRow= (pi.getCurrentPage()-1)*pi.getBoardLimit()+1;
+		int endRow= startRow + pi.getBoardLimit() -1;
+		
+		
+		try {
+			pstmt= conn.prepareStatement(sql);
+			pstmt.setInt(1, startRow);
+			pstmt.setInt(2, endRow);
+			
+			rset= pstmt.executeQuery();
+			while(rset.next()) {
+				list.add(new Faq(rset.getInt("faq_no")
+								,rset.getString("question")
+								,rset.getString("answer")
+								,rset.getInt("faq_writer")
+								,rset.getString("category_name"))
+	
+						);
+			}
+			
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return list;
+		
+	}
+	
+	public int deleteFaq(Connection conn,String delNo) {
+		
+		int result =0;
+		PreparedStatement pstmt = null;
+		String sql= prop.getProperty("deleteFaq");
+		sql+= delNo +")";
+		
+		try {
+			pstmt= conn.prepareStatement(sql);
+			
+			
+			result= pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}
+		
+		return result;
+		
+		
+	}
+	
+	public int selectSearchListCount(Connection conn, String searchFaq) {
+		int listCount= 0;
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String sql= prop.getProperty("selectSearchListCount");
+		
+		try {
+			pstmt= conn.prepareStatement(sql);
+			pstmt.setString(1, searchFaq);
+			
+			rset= pstmt.executeQuery();
+			if(rset.next()) {
+				listCount=  rset.getInt("count");
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return listCount;
+		
+		
+	}
+	
+	public ArrayList<Faq> selectSearchList(Connection conn,PageInfo pi, String searchFaq){
+		
+		ArrayList<Faq>list = new ArrayList<>();
+		PreparedStatement pstmt= null;
+		ResultSet rset = null;
+		String sql= prop.getProperty("selectSearchList");
+		
+		try {
+			
+			pstmt= conn.prepareStatement(sql);
+			int startRow= (pi.getCurrentPage()-1)*pi.getBoardLimit()+1;
+			int endRow= startRow + pi.getBoardLimit() -1;
+			
+			pstmt.setString(1, searchFaq);
+			pstmt.setInt(2, startRow);
+			pstmt.setInt(3, endRow);
+			
+			rset = pstmt.executeQuery();
+			while(rset.next()) {
+				list.add(new Faq(
+						rset.getInt("FAQ_NO")
+					   ,rset.getString("QUESTION")
+					   ,rset.getString("CATEGORY_NAME")			
+						));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return list;
+		
+		
+	}
+	
+	public int insertFaq(Connection conn, Faq f) {
+		int result= 0;
+		PreparedStatement pstmt = null;
+		String sql= prop.getProperty("insertFaq");
+		
+		try {
+			pstmt= conn.prepareStatement(sql);
+			pstmt.setString(1, f.getQuestion());
+			pstmt.setString(2, f.getAnswer());
+			pstmt.setString(3, f.getBestFaq());
+			pstmt.setInt(4, f.getFaqWriter());
+			pstmt.setString(5, f.getCategoryName());
+			
+			result= pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+			
+		}
+		return result;
+		
+	}
+	
+
 
 }
