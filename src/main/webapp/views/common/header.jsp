@@ -38,7 +38,6 @@
         padding-left: 20px;
         box-sizing: border-box;
     }
-    .header-3>a{text-decoration: none;}
     .header-4{
         float:left;
         width: 30%;
@@ -53,7 +52,7 @@
         line-height: 110px;
         box-sizing: border-box;
     }
-    .header-4a>a{padding: 10px; text-decoration: none;}
+    .header-4a>a{padding: 10px;}
     .header-4btn{
         float:left;
         width: 100%;
@@ -201,19 +200,19 @@
                 </form>
             </div>										 
             <div class="header-2"><a href="<%= contextPath %>"><img src="resources/images/logo.jpg" width="100px;"></a></div>
-            <div class="header-3"><a href="<%= contextPath %>"><b class="text-primary">아이럽우유</b></a></div>
+            <div class="header-3"><a style="text-decoration:none" href="<%= contextPath %>"><b class="text-primary">아이럽우유</b></a></div>
             <div class="header-4">
                 <div class="header-4a" align="right">
                 
 					<% if(loginMember == null) { %>
 	                    <!-- 로그인 전 -->
-	                    <a href="<%= contextPath %>/loginpage.me" class="text-secondary">로그인</a>
-	                    <a href="<%= contextPath %>/enrollForm.me" class="text-secondary">회원가입</a>
-	                    <a href="<%=contextPath %>/list.sv?cpage=1" class="text-secondary">고객센터</a>
+	                    <a href="<%= contextPath %>/loginpage.me" class="text-secondary" style="text-decoration:none">로그인</a>
+	                    <a href="<%= contextPath %>/enrollForm.me" class="text-secondary" style="text-decoration:none">회원가입</a>
+	                    <a href="<%=contextPath %>/list.sv?cpage=1" class="text-secondary" style="text-decoration:none">고객센터</a>
 					<% }else { %>
 	                    <!-- 로그인 후 -->
-	                    <a href="<%= contextPath %>/logout.me" class="text-secondary">로그아웃</a>
-	                    <a href="<%=contextPath %>/list.sv?cpage=1" class="text-secondary">고객센터</a> 
+	                    <a href="<%= contextPath %>/logout.me" class="text-secondary" style="text-decoration:none">로그아웃</a>
+	                    <a href="<%=contextPath %>/list.sv?cpage=1" class="text-secondary" style="text-decoration:none">고객센터</a> 
                     <% } %>
                     
                 </div>

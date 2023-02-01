@@ -12,6 +12,7 @@
     .cart{width: 700px;}
     .sum-area{background-color: lightgray; width:700px; padding-top:20px; padding-bottom:20px;}
     .pay{text-align: right;}
+    .delIcon:hover{cursor:pointer;}
 </style>
 </head>
 <body>
@@ -54,9 +55,32 @@
 		                                    <button type="button" onclick="plusAmount();" style="width:26px" class="btn btn-secondary btn-sm">+</button>
 		                                </td>
 		                                <td style="vertical-align:middle" class="pay"><%= p.getPrice() %>&nbsp;원</td>
-		                                <td style="vertical-align:middle" align="center"><img src="resources/images/delete.png" style="width:20px"></td>
+		                                <td style="vertical-align:middle" align="center"><img class="delIcon" onclick="cartDel();" src="resources/images/delete.png" style="width:20px"></td>
 		                            </tr>
 		                            <script>
+		                            	// 상품 삭제
+		                            	function cartDel(){
+		                            		$.ajax({
+		                            			url:"<%= contextPath %>/cartDel.pr",
+		                            			data:{
+		                            				memNo:<%= loginMember.getMemberNo() %>,
+		                            				//proNo:$(window.event.target).prev().val()
+		                            			},
+		                            			type:"post",
+		                            			success:function(result){
+		                            				if(result > 0){
+		                            					location.reload();
+		                            				}else{
+		                            					alert("상품 수량 변경 실패");
+		                            				}
+		                            			},
+		                            			error:function(){
+		                            				console.log("장바구니 상품 삭제 ajax통신 실패");
+		                            			}
+		                            		});
+		                            	}
+		                            	
+		                            	// 상품 수량 +
 		                            	function plusAmount(){
 		                            		$.ajax({
 		                            			url:"<%= contextPath %>/plusAmount.pr",
@@ -79,6 +103,7 @@
 		                            		});
 		                            	}
 		                            	
+		                            	// 상품 수량 -
 		                            	function minusAmount(){
 		                            		if($(window.event.target).next().val() == 1){
 		                            			alert("상품이 이미 최소수량입니다.");
