@@ -58,7 +58,7 @@
                 <br><br>
                 <div align="right" style="width:640px;">
                 	<form action="" method="post" id="search-form">
-                        <input type="text" name = "keyword" required><button type="submit" id="search-btn" class="btn btn-primary btn-sm">검색</button>
+                        <input type="text" name = "keyword" required><button type="button" onclick="searchKeyMem();" id="search-btn" class="btn btn-primary btn-sm">검색</button>
                     </form>
                 </div>
             </div>
@@ -129,6 +129,8 @@
 					   // ArrayList => result.list  =>  [{}, {}, ..]
 					   
 					   // 스크립트문으로 작성하는것 잊지말기
+					   
+					
                     let value = "";
                     
 					   if(result.list.length == 0){
@@ -176,7 +178,7 @@
      	}
      	
 	    	
-    		$("#search-btn").click(function(){
+    		function searchKeyMem(){
     			
     			var str = $("form[id=search-form]").serialize();
     			
@@ -184,9 +186,9 @@
     				url:"<%=contextPath %>/memSearch.ma?cpage=1",
     				data : str,
     				success:function(result){
-    					
-    					console.log(result);
     					// 검색결과 리스트
+    					
+    					
     					let sval1 = "";
     					if(result.slist.length == 0){
     						sval1 += "<td colspan='10'>조회되는 회원정보가 없습니다.</td>";
@@ -202,12 +204,11 @@
                                 + "<td>" + result.slist[i].address + "</td>"
                                 + "<td>" + result.slist[i].totalpay + "</td>"
                                 + "<td>" + result.slist[i].total 
-                                +  "<button type='button' id='btn1' onclick= 'memDetail('result.slist[i].memberId', 'result.slist[i].memberGrade', result.slist[i].total , result.slist[i].memberNo);'" +  "class='btn btn-outline-secondary btn-sm' data-toggle='modal' data-target='#point-info' style='font-size:9px;'>상세</button>";
-                                +  "<button type='button' id='btn2' onclick= 'memModify('result.slist[i].memberId'); class='btn btn-outline-secondary btn-sm' data-toggle='modal' data-target='#point-change' style='font-size:9px;'>"+ 변경 + "</button>";
+                                +  "<button type='button' id='btn1' onclick= 'memDetail('result.slist[i].memberId', 'result.slist[i].memberGrade', result.slist[i].total , result.slist[i].memberNo);'" +  "class='btn btn-outline-secondary btn-sm' data-toggle='modal' data-target='#point-info' style='font-size:9px;'>" + "상세" + "</button>"
+                                +  "<button type='button' id='btn2' onclick= 'memModify('result.slist[i].memberId');' class='btn btn-outline-secondary btn-sm' data-toggle='modal' data-target='#point-change' style='font-size:9px;'>"+ "변경" + "</button>"
                                  + "</td>"
-                                 + "<td>" + 
-                                     result.slist[i].enrollDate
-                                 + "</td>"
+                                 + "<td>" 
+                                 + result.slist[i].enrollDate + "</td>"
                              + "</tr>";
     						}
     					}
@@ -218,15 +219,15 @@
     					let sval2 = "";
     					
 	                     if(result.spi.currentPage != 1){ 
-	                    	 sval2 += "<button onclick=" + "'location.href='<%=contextPath%>/memSearch.ma?cpage=result.pi.currentPage-1&keyword=str''" + ";>&lt;</button>";
+	                    	 sval2 += "<button onclick=" + "'location.href='<%=contextPath%>/memSearch.ma?cpage=result.pi.currentPage-1&keyword=str';'" + ">&lt;</button>";
                   		} 
        
 	                     for(let p=result.spi.startPage; p<=result.spi.endPage; p++){ 
-	                    	 sval2 +=" <button onclick="+"'location.href='<%=contextPath%>/memSearch.ma?cpage=p&keyword=str''" + ";>p </button>";
+	                    	 sval2 +=" <button onclick="+"'location.href='<%=contextPath%>/memSearch.ma?cpage=p&keyword=str';'" + ">"+ p +" </button>";
 	                       } 
       
                       if(result.spi.currentPage != result.spi.maxPage){
-                     	 sval2 +=" <button onclick=" + "'location.href='<%=contextPath%>/memSearch.ma?cpage=result.spi.currentPage+1&keyword=str''" + ";>&gt;</button>";
+                     	 sval2 +=" <button onclick=" + "'location.href='<%=contextPath%>/memSearch.ma?cpage=result.spi.currentPage+1&keyword=str';'" + "> &gt;</button>";
                    } 
                 $(".paging-area").html(sval2);   
     					
@@ -237,7 +238,7 @@
     				
     			});
     			
-    		})
+    		}
  	 	
     	
             	
@@ -349,26 +350,27 @@
                 
                 <form action="" method="post">
                         <input type="hidden" name="" value="">
-                        <table style="width:100%;" class="table table-borderless">
-                                <tr>
-                                    <td >아이디</td>
-                                    <td id="modifyModalId"></td>
-                                </tr>
-                                <tr>
-                                    <td>구분</td>
-                                    <td> <input type="radio" name="status" value="Y"> 적립금 지급 <input type="radio" name="status" value="N"> 적립금 차감 </td>
-                                </tr>
-                                <tr>
-                                    <td>적립금</td>
-                                    <td><input type="number"></td>
-                                </tr>
-                                <tr>
-                                    <td>사유</td>
-                                    <td><input type="text"></td>
-                                </tr>
-                                
-                        </table>
-
+                           <form action="<%=contextPath %>/memPointch.ma" method="post" id="">
+	                        <table style="width:100%;" class="table table-borderless">
+	                                <tr>
+	                                    <td >아이디</td>
+	                                    <td id="modifyModalId" name="memPointId"></td>
+	                                </tr>
+	                                <tr>
+	                                    <td>구분</td>
+	                                    <td> <input type="radio" name="status" value="Y"> 적립금 지급 <input type="radio" name="status" value="N"> 적립금 차감 </td>
+	                                </tr>
+	                                <tr>
+	                                    <td>적립금</td>
+	                                    <td><input type="number" name="memPointVal"></td>
+	                                </tr>
+	                                <tr>
+	                                    <td>사유</td>
+	                                    <td><input type="text" name="nemPointCon"></td>
+	                                </tr>
+	                                
+	                        </table>
+						  </form>
                         <br>
                         <div align="center">
                         <button type="submit" class="btn btn-outline-secondary btn-sm">확인</button> <button type="reset" class="btn btn-outline-secondary btn-sm">취소</button>
