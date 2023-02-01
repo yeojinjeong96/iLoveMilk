@@ -653,4 +653,30 @@ public class ProductDao {
 		}
 		return result;
 	}
+	
+	public ArrayList<Product> productCartList(Connection conn, int memNo){
+		ArrayList<Product> list = new ArrayList<>();
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String sql = prop.getProperty("productCartList");
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, memNo);
+			rset = pstmt.executeQuery();
+			while(rset.next()) {
+				Product p = new Product();
+				p.setProductImg(rset.getString("product_img"));
+				p.setProductName(rset.getString("product_name"));
+				p.setCapacity(rset.getInt("count"));
+				p.setPrice(rset.getInt("price"));
+				list.add(p);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		return list;
+	}
 }

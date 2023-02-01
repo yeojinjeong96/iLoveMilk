@@ -204,7 +204,7 @@ public class ProductService {
 	}
 	
 	/**
-	 * 상품 조회
+	 * 상품 리스트 조회
 	 * @author 승하
 	 * @return ArrayList
 	 */
@@ -310,6 +310,18 @@ public class ProductService {
 		}
 		close(conn);
 		return result;
+	}
+	
+	/**
+	 * 장바구니 리스트 조회
+	 * @author 승하
+	 * @return ArrayList
+	 */
+	public ArrayList<Product> productCartList(int memNo){
+		Connection conn = getConnection();
+		ArrayList<Product> list = new ProductDao().productCartList(conn, memNo);
+		close(conn);
+		return list;
 	}
 
 }

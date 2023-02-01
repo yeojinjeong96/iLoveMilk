@@ -286,4 +286,11 @@
 			 , ?
 			 )
 	</entry>
+	
+	<entry key="productCartList">
+		SELECT PRODUCT_IMG, PRODUCT_NAME || ' ' || CAPACITY || '(mL/g)' PRODUCT_NAME, COUNT, COUNT*PRICE PRICE
+		  FROM TB_CART
+		  JOIN TB_PRODUCT USING(PRODUCT_NO)
+		 WHERE MEMBER_NO = ?
+	</entry>
 </properties>

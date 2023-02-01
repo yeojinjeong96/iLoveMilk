@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ page import="java.util.ArrayList, com.milk.product.model.vo.Product" %>
+<% ArrayList<Product> list = (ArrayList<Product>)request.getAttribute("list"); %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -35,34 +37,33 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <!-- 장바구니 안에 상품이 없을 경우 -->
-                            <tr>
-                                <td colspan="6" align="center">장바구니에 담긴 상품이 없습니다.</td>
-                            </tr>
-
-                            <!-- 장바구니 안에 상품이 있을 경우 -->
-                                <!-- 반복 -->
-                            <tr>
-                                <td><input type="checkbox" checked></td>
-                                <td width="12%" align="center">사진?</td>
-                                <td width="45%">브랜드+상품명+용량?</td>
-                                <td align="center">
-                                    <button style="width:26px" class="btn btn-secondary btn-sm">+</button>
-                                    <input type="text" style="width:26px">
-                                    <button style="width:26px" class="btn btn-secondary btn-sm">-</button>
-                                </td>
-                                <td class="pay">금액?원</td>
-                                <td align="center">del?</td>
-                            </tr>
-                                <!-- 미반복 -->
-                            <tr>
-                                <td><input type="checkbox" checked></td>
-                                <td colspan="5">
-                                    <button type="submit" class="btn btn-secondary btn-sm">선택 삭제</button>
-                                    <button type="submit" class="btn btn-primary btn-sm">품절 삭제</button>
-                                </td>
-                            </tr>
-                            <!--  -->
+                            <% if(list.isEmpty()){ %>
+	                            <tr>
+	                                <td colspan="6" align="center">장바구니에 담긴 상품이 없습니다.</td>
+	                            </tr>
+                            <% }else{ %>
+                                <% for(Product p : list){ %>
+		                            <tr vertical-align="middle">
+		                                <td><input type="checkbox" checked></td>
+		                                <td width="12%" align="center"><img src="<%= p.getProductImg() %>" width="100px;"></td>
+		                                <td width="45%"><%= p.getProductName() %></td>
+		                                <td align="center">
+		                                    <button style="width:26px" class="btn btn-secondary btn-sm">-</button>
+		                                    <input type="text" style="width:26px" value="<%= p.getCapacity() %>" readonly>
+		                                    <button style="width:26px" class="btn btn-secondary btn-sm">+</button>
+		                                </td>
+		                                <td class="pay"><%= p.getPrice() %>&nbsp;원</td>
+		                                <td align="center">del?</td>
+		                            </tr>
+                                <% } %>
+	                            <tr>
+	                                <td><input type="checkbox" checked></td>
+	                                <td colspan="5">
+	                                    <button type="submit" class="btn btn-secondary btn-sm">선택 삭제</button>
+	                                    <button type="submit" class="btn btn-primary btn-sm">품절 삭제</button>
+	                                </td>
+	                            </tr>
+                            <% } %>
                         </tbody>
                     </table>
                     <br><br>
