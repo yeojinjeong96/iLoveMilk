@@ -32,6 +32,11 @@ public class ManagerMemPointChange extends HttpServlet {
 		String val = request.getParameter("memPointVal");
 		String content = request.getParameter("memPointCon");
 		
+		System.out.println(id);
+		System.out.println(status);
+		System.out.println(val);
+		System.out.println(content);
+		
 		
 	}
 

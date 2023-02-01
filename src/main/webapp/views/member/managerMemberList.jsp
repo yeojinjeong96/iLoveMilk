@@ -370,11 +370,12 @@
 	                                </tr>
 	                                
 	                        </table>
-						  </form>
+						 
                         <br>
                         <div align="center">
                         <button type="submit" class="btn btn-outline-secondary btn-sm">확인</button> <button type="reset" class="btn btn-outline-secondary btn-sm">취소</button>
                         </div>
+                         </form>
                 </form>
                 
                 
