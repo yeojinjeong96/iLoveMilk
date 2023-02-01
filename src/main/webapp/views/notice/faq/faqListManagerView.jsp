@@ -20,6 +20,9 @@
     }
     
     .faq-list{text-align: center;}
+    .faq-list tbody tr{
+        cursor: pointer;
+    }
 </style>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
@@ -60,6 +63,7 @@
                  		</td>
              
                     </tr>
+                    <tbody>
                     <%}else{ %>
                     <%for(Faq f: list){ %>
                     <tr>
@@ -69,6 +73,7 @@
                         <td><%=f.getQuestion() %></td>
                     </tr>
                        <%} }%>
+                    </tbody>
                 </table>
 
            
@@ -138,6 +143,11 @@
     			}	
     		})
     	}
+    	
+    	$(".faq-list tbody tr").click(function(){
+            location.href="<%=contextPath%>/updateForm.faq?no="+$(this).children().eq(1).text();        })
+    	
+    	
     </script>
 
 </body>

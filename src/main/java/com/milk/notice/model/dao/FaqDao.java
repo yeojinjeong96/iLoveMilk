@@ -13,7 +13,6 @@ import java.util.Properties;
 
 import com.milk.common.model.vo.PageInfo;
 import com.milk.notice.model.vo.Faq;
-import com.milk.notice.model.vo.Notice;
 
 public class FaqDao {
 	
@@ -314,6 +313,41 @@ public class FaqDao {
 			
 		}
 		return result;
+		
+	}
+	
+	public Faq selectFaq(Connection conn,int faqNo) {
+		ResultSet rset = null;
+		PreparedStatement pstmt =null;
+		Faq f = new Faq();
+		String sql= prop.getProperty("selectFaq");
+		
+		try {
+			pstmt= conn.prepareStatement(sql);
+			pstmt.setInt(1, faqNo);
+			
+			rset= pstmt.executeQuery();
+			if(rset.next()) {
+				 f= new Faq(
+						rset.getInt("FAQ_NO")
+						,rset.getString("QUESTION")
+						,rset.getString("ANSWER")
+						,rset.getString("BEST_FAQ")
+						,rset.getInt("FAQ_WRITER")
+						,rset.getString("CATEGORY_NAME")
+						
+						);
+				
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return f;
+	
 		
 	}
 	

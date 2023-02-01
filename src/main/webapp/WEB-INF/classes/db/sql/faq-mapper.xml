@@ -97,4 +97,15 @@
 		    ,?
 		    )
 	</entry>
+	<entry key="selectFaq">
+		    SELECT 
+			        FAQ_NO
+			       ,QUESTION
+			       ,ANSWER
+			       ,BEST_FAQ
+			       ,FAQ_WRITER
+			       ,CATEGORY_NAME
+			    FROM TB_FAQ
+			 WHERE FAQ_NO =?
+	</entry>
 </properties>
