@@ -317,11 +317,28 @@ public class ProductService {
 	 * @author 승하
 	 * @return ArrayList
 	 */
-	public ArrayList<Product> productCartList(int memNo){
+	public ArrayList<Product> productCartList(int memNo) {
 		Connection conn = getConnection();
 		ArrayList<Product> list = new ProductDao().productCartList(conn, memNo);
 		close(conn);
 		return list;
+	}
+	
+	/**
+	 * 장바구니 수량 변경
+	 * @author 승하
+	 * @return 성공시 1, 실패시 2
+	 */
+	public int productCartAmount(int memNo, int proNo, int amount) {
+		Connection conn = getConnection();
+		int result = new ProductDao().productCartAmount(conn, memNo, proNo, amount);
+		if(result > 0) {
+			commit(conn);
+		} else {
+			rollback(conn);
+		}
+		close(conn);
+		return result;
 	}
 
 }

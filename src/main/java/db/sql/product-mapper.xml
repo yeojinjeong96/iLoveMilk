@@ -288,9 +288,16 @@
 	</entry>
 	
 	<entry key="productCartList">
-		SELECT PRODUCT_IMG, PRODUCT_NAME || ' ' || CAPACITY || '(mL/g)' PRODUCT_NAME, COUNT, COUNT*PRICE PRICE
+		SELECT PRODUCT_NO, PRODUCT_IMG, PRODUCT_NAME || ' ' || CAPACITY || '(mL/g)' PRODUCT_NAME, COUNT, COUNT*PRICE PRICE, STOCK
 		  FROM TB_CART
 		  JOIN TB_PRODUCT USING(PRODUCT_NO)
 		 WHERE MEMBER_NO = ?
+	</entry>
+	
+	<entry key="productCartAmount">
+		UPDATE TB_CART
+		   SET COUNT = ?
+		 WHERE PRODUCT_NO = ?
+		   AND MEMBER_NO = ?
 	</entry>
 </properties>

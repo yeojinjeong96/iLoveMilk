@@ -43,55 +43,105 @@
 	                            </tr>
                             <% }else{ %>
                                 <% for(Product p : list){ %>
-		                            <tr vertical-align="middle">
-		                                <td><input type="checkbox" checked></td>
-		                                <td width="12%" align="center"><img src="<%= p.getProductImg() %>" width="100px;"></td>
-		                                <td width="45%"><%= p.getProductName() %></td>
-		                                <td align="center">
-		                                    <button style="width:26px" class="btn btn-secondary btn-sm">-</button>
+		                            <tr>
+		                                <td style="vertical-align:middle"><input type="checkbox" checked></td>
+		                                <td style="vertical-align:middle" width="12%" align="center"><img src="<%= p.getProductImg() %>" width="100px;"></td>
+		                                <td style="vertical-align:middle" width="45%"><%= p.getProductName() %></td>
+		                                <td style="vertical-align:middle" align="center">
+		                                    <button type="button" onclick="return minusAmount();" style="width:26px" class="btn btn-secondary btn-sm">-</button>
 		                                    <input type="text" style="width:26px" value="<%= p.getCapacity() %>" readonly>
-		                                    <button style="width:26px" class="btn btn-secondary btn-sm">+</button>
+		                                    <input type="hidden" name="proNo" value="<%= p.getProductNo() %>">
+		                                    <button type="button" onclick="plusAmount();" style="width:26px" class="btn btn-secondary btn-sm">+</button>
 		                                </td>
-		                                <td class="pay"><%= p.getPrice() %>&nbsp;원</td>
-		                                <td align="center">del?</td>
+		                                <td style="vertical-align:middle" class="pay"><%= p.getPrice() %>&nbsp;원</td>
+		                                <td style="vertical-align:middle" align="center"><img src="resources/images/delete.png" style="width:20px"></td>
 		                            </tr>
+		                            <script>
+		                            	function plusAmount(){
+		                            		$.ajax({
+		                            			url:"<%= contextPath %>/plusAmount.pr",
+		                            			data:{
+		                            				memNo:<%= loginMember.getMemberNo() %>,
+		                            				proNo:$(window.event.target).prev().val(),
+		                            				amount:$(window.event.target).prev().prev().val()
+		                            			},
+		                            			type:"post",
+		                            			success:function(result){
+		                            				if(result > 0){
+		                            					location.reload();
+		                            				}else{
+		                            					alert("상품 수량 변경 실패");
+		                            				}
+		                            			},
+		                            			error:function(){
+		                            				console.log("장바구니 상품 수량 변경 ajax통신 실패");
+		                            			}
+		                            		});
+		                            	}
+		                            	
+		                            	function minusAmount(){
+		                            		if($(window.event.target).next().val() == 1){
+		                            			alert("상품이 이미 최소수량입니다.");
+		                            			return false;
+		                            		}else{
+			                            		$.ajax({
+			                            			url:"<%= contextPath %>/minusAmount.pr",
+			                            			data:{
+			                            				memNo:<%= loginMember.getMemberNo() %>,
+			                            				proNo:$(window.event.target).next().next().val(),
+			                            				amount:$(window.event.target).next().val()
+			                            			},
+			                            			type:"post",
+			                            			success:function(result){
+			                            				if(result > 0){
+			                            					location.reload();
+			                            				}else{
+			                            					alert("상품 수량 변경 실패");
+			                            				}
+			                            			},
+			                            			error:function(){
+			                            				console.log("장바구니 상품 수량 변경 ajax통신 실패");
+			                            			}
+			                            		});
+		                            		}
+		                            	}
+		                            </script>
                                 <% } %>
 	                            <tr>
 	                                <td><input type="checkbox" checked></td>
 	                                <td colspan="5">
 	                                    <button type="submit" class="btn btn-secondary btn-sm">선택 삭제</button>
-	                                    <button type="submit" class="btn btn-primary btn-sm">품절 삭제</button>
+	                                    <button type="submit" class="btn btn-secondary btn-sm">품절 삭제</button>
 	                                </td>
 	                            </tr>
                             <% } %>
                         </tbody>
                     </table>
                     <br><br>
-
-                    <!-- 장바구니 안에 상품이 있을 경우 -->
-                    <div class="sum-area">
-                        <table>
-                            <tr>
-                                <td width="23%">총 <b class="">?</b> 개의 상품 금액</td>
-                                <th width="17%" style="font-size:large;" class="pay">?원</th>
-                                <th width="5%">&nbsp;&nbsp;+</th>
-                                <td width="8%">배송비</td>
-                                <th width="17%" style="font-size:large;" class="pay">2,500원</th>
-                                <th width="5%">&nbsp;&nbsp;=</th>
-                                <td width="8%">합계</td>
-                                <th width="17%" style="font-size:large;" class="pay">?원</th>
-                            </tr>
-                        </table>
-                    </div>
+                    <% if(!list.isEmpty()){ %>
+	                    <div class="sum-area">
+	                        <table>
+	                            <tr>
+	                                <td width="23%">총 <b class="">?</b> 개의 상품 금액</td>
+	                                <th width="17%" style="font-size:large;" class="pay">?원</th>
+	                                <th width="5%">&nbsp;&nbsp;+</th>
+	                                <td width="8%">배송비</td>
+	                                <th width="17%" style="font-size:large;" class="pay">2,500원</th>
+	                                <th width="5%">&nbsp;&nbsp;=</th>
+	                                <td width="8%">합계</td>
+	                                <th width="17%" style="font-size:large;" class="pay">?원</th>
+	                            </tr>
+	                        </table>
+	                    </div>
+                    <% } %>
                     <br><br>
 
                     <div>
-                        <!-- 장바구니 안에 상품이 없을 경우 -->
                         <a href="" class="btn btn-secondary">메인으로</a>
-
-                        <!-- 장바구니 안에 상품이 있을 경우 -->
-                        <button type="button" class="btn btn-secondary" onclick="">선택 상품 주문</button>
-                        <button type="submit" class="btn btn-primary">전체 상품 주문</button>
+						<% if(!list.isEmpty()){ %>
+	                        <button type="button" class="btn btn-primary" onclick="">선택 상품 주문</button>
+	                        <button type="submit" class="btn btn-primary">전체 상품 주문</button>
+                        <% } %>
                     </div>
                 </form>
             </div>

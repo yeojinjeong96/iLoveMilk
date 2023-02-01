@@ -654,7 +654,7 @@ public class ProductDao {
 		return result;
 	}
 	
-	public ArrayList<Product> productCartList(Connection conn, int memNo){
+	public ArrayList<Product> productCartList(Connection conn, int memNo) {
 		ArrayList<Product> list = new ArrayList<>();
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
@@ -665,10 +665,12 @@ public class ProductDao {
 			rset = pstmt.executeQuery();
 			while(rset.next()) {
 				Product p = new Product();
+				p.setProductNo(rset.getInt("product_no"));
 				p.setProductImg(rset.getString("product_img"));
 				p.setProductName(rset.getString("product_name"));
 				p.setCapacity(rset.getInt("count"));
 				p.setPrice(rset.getInt("price"));
+				p.setStock(rset.getInt("stock"));
 				list.add(p);
 			}
 		} catch (SQLException e) {
@@ -678,5 +680,23 @@ public class ProductDao {
 			close(pstmt);
 		}
 		return list;
+	}
+	
+	public int productCartAmount(Connection conn, int memNo, int proNo, int amount) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String sql = prop.getProperty("productCartAmount");
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, amount);
+			pstmt.setInt(2, proNo);
+			pstmt.setInt(3, memNo);
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		return result;
 	}
 }
