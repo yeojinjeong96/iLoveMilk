@@ -1,6 +1,9 @@
 package com.milk.member.controller;
 
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.sql.Date;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -10,19 +13,18 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.milk.member.model.service.MemberService;
-import com.milk.member.model.vo.Point;
 
 /**
- * Servlet implementation class ManagerMemPointChange
+ * Servlet implementation class ManagerBlackAddController
  */
-@WebServlet("/memPointCh.ma")
-public class ManagerMemPointChangeController extends HttpServlet {
+@WebServlet("/blackAdd.ma")
+public class ManagerBlackAddController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public ManagerMemPointChangeController() {
+    public ManagerBlackAddController() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -32,33 +34,23 @@ public class ManagerMemPointChangeController extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-		
-		request.setCharacterEncoding("UTF-8");
-		int no = Integer.parseInt(request.getParameter("memPointNo"));
-		String status = request.getParameter("poStatus");
-		int val = Integer.parseInt(request.getParameter("memPointVal"));
-		String content = request.getParameter("memPointCon");
+		String memId = request.getParameter("blackId");
+		String modifyDate =request.getParameter("blackDate");
 		
 		
-		Point p = new Point();
-		p.setAmount(val);
-		p.setStatus(status);
-		p.setContent(content);
-		p.setMemberNo(no);
 		
-
+		int result = new MemberService().insertBlackList(memId, modifyDate);
 		
-		int result = new MemberService().memberPointChange(p);
+		HttpSession session = request.getSession();
 		
 		if(result > 0) {
-			HttpSession session = request.getSession();
-			session.setAttribute("alertMsg", "성공적으로 회원 적립금 변경되었습니다.");
-			response.sendRedirect(request.getContextPath() + "/memList.ma?cpage=1");
+			session.setAttribute("alertMsg", "성공적으로 블랙리스트에 추가되었습니다.");
+			response.sendRedirect(request.getContextPath() + "/repList.ma?cpage=1");
 		}else {
-			request.setAttribute("errorMsg", "적립금 변경 실패");
+			request.setAttribute("errorMsg", "블랙리스트 추가 실패");
 			request.getRequestDispatcher("views/common/errorPage.jsp");
 		}
-			
+		
 		
 	}
 

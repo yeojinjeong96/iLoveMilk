@@ -35,6 +35,9 @@
         padding: 10px;
        align-content: center;
     }
+    #answer-list tbody tr{
+        cursor: pointer;
+    }
     
 </style>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
@@ -54,17 +57,21 @@
             <hr>
             <br>
             
-            <div class="select-area" align="left" >        
-                조회기간&nbsp;
-                <a href="">오늘</a>&nbsp;
-                <a href="">7일</a>&nbsp;
-                <a href="">15일</a>&nbsp;
-                <a href="">1개월</a>&nbsp;
-                <a href="">3개월</a>&nbsp;
-                <input type="date"> -
-                <input type="date">  
-     
-            </div>
+            <form action="" method="get">
+                <div class="select-area" align="left" >        
+                    조회기간&nbsp;
+                    <a href="">오늘</a>&nbsp;
+                    <a href="">7일</a>&nbsp;
+                    <a href="">15일</a>&nbsp;
+                    <a href="">1개월</a>&nbsp;
+                    <a href="">3개월</a>&nbsp;
+                    <input type="date"> -
+                    <input type="date">  
+                    &nbsp;
+                    <button type="submit" class="btn btn-sm btn-secondary">조회</button>
+                </div>
+
+            </form>
             <br>
             <div class="search-area" align="left">
                 <form action="" method="get">
@@ -73,12 +80,12 @@
                         <option value="">문의내용으로검색</option>
                     </select>
                     <input type="text">
-                    <button type="submit">검색</button>
+                    <button type="submit" class="btn btn-secondary btn-sm">검색</button>
                 </form>
             </div>
             <br>
             <table border="1" class="text-center" id="answer-list">  
-           
+           <thead>
                 <tr>
                     <th width="100">완료일</th>
                     <th width="150">카테고리</th>
@@ -86,6 +93,8 @@
                     <th width="100">작성자</th>
                     <th width="170">답변내용</th>
                 </tr>
+            
+            </thead>
                 <%if(list.isEmpty()){ %>
                 <!--데이터 없을시-->
                 <tr>
@@ -94,7 +103,9 @@
                 <!--데이터 있을시-->
                 <%}else{ %>
                  <%for (QA q :list){ %>
+            <tbody>
                 <tr>
+                    <td style="display:none;"><%=q.getqNo()%></td>
                     <td style="height: 25px; "><%=q.getAnswerDate() %></td>
                     <td>[<%=q.getfCategory() %>/<%=q.getsCategory() %>]</td>
                     <td>
@@ -110,6 +121,7 @@
                         </div>
                     </td>
                 </tr>
+            </tbody>
                 <%}} %>
             </table>
             <br>
@@ -133,6 +145,17 @@
         </div>
        
     </div>
+    <script>
+    $(function(){
+    	
+    	$("#answer-list tbody tr").click(function(){
+			location.href='<%=contextPath%>/detailM.a?no='+$(this).children().eq(0).text();
+		})
+    	
+    	
+    })
+    
+    </script>
 
 </body>
 </html>

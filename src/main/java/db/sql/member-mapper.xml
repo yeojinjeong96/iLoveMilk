@@ -321,7 +321,7 @@
 		  INTO TB_POINT
 		  (
 		    POINT_NO,
-		    COUNT,
+		    AMOUNT,
 		    STATUS,
 		    TOTAL,
 		    CONTENT,
@@ -332,12 +332,46 @@
 		    SEQ_PONO.NEXTVAL,
 		    ?,
 		    ?,
-		    NVL((SELECT SUM(COUNT)
+		    NVL((SELECT SUM(AMOUNT)
 		       FROM TB_POINT
 		      WHERE MEMBER_NO = ?), 0) + ?,
 		    ?,
 		    ? 
 		  )
+	</entry>
+	
+	<entry key="selectReportDetail">
+	   SELECT 
+		      MEMBER_ID,
+		      COUNT(*) COUNT,
+		      MEMBER_GRADE
+		 FROM TB_REPORT
+		 LEFT JOIN TB_MEMBER ON (MEMBER_NO = REPORTING_MEM_NO)
+		 WHERE MEMBER_NO = ?
+		 GROUP BY MEMBER_ID, MEMBER_GRADE
+	</entry>
+	
+	<entry key = "insertBlackList">
+	  UPDATE 
+              TB_MEMBER
+	     SET 
+		      MODIFY_DATE = TO_DATE(?, 'YY/MM/DD'),
+		      BLACK_LIST = 'Y',
+		      STATUS = 'N'
+	  WHERE MEMBER_ID = ?
+	</entry>
+	<entry key="deleteMemberReport">
+		DELETE 
+		  FROM TB_REPORT
+		 WHERE REPORT_NO = ? 
+	</entry>
+	
+	<entry key="selectBlackList">
+	  SELECT
+	         MEMBER_ID,
+	         MODIFY_DATE
+	    FROM TB_MEMBER
+	   WHERE BLACK_LIST = 'Y' 
 	</entry>
 	
 	  <entry key="UpdateProfile">

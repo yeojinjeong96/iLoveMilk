@@ -9,6 +9,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.sql.Date;
 import java.util.Properties;
 
 import com.milk.common.model.vo.PageInfo;
@@ -612,12 +613,12 @@ public Member updateCheckPwd(Connection conn, String memberId, String memberPwd)
 		
 		try {
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setInt(1, p.getPointNo());
-			pstmt.setInt(2, p.getCount());
-			pstmt.setString(3, p.getStatus());
-			pstmt.setInt(4, p.getTotal());
+			pstmt.setInt(1, p.getAmount());
+			pstmt.setString(2, p.getStatus());
+			pstmt.setInt(3, p.getMemberNo());
+			pstmt.setInt(4, p.getAmount());
 			pstmt.setString(5, p.getContent());
-			pstmt.setInt(5, p.getMemberNo());
+			pstmt.setInt(6, p.getMemberNo());
 			
 			result = pstmt.executeUpdate();
 			
@@ -629,6 +630,104 @@ public Member updateCheckPwd(Connection conn, String memberId, String memberPwd)
 		
 		return result;
 		
+	}
+	
+	public Report selectReportDetail(Connection conn, int memNo) {
+		
+		ResultSet rset = null;
+		PreparedStatement pstmt = null;
+		Report r = new Report();
+		
+		String sql = prop.getProperty("selectReportDetail");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, memNo);
+			
+			rset = pstmt.executeQuery();
+			if(rset.next()) {
+				r = new Report(
+						rset.getString("MEMBER_ID"),
+						rset.getInt("count"),
+						rset.getString("MEMBER_GRADE")
+						);
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return r;
+	}
+	
+	public int insertBlackList(Connection conn, String memId, String modifyDate) {
+		
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String sql = prop.getProperty("insertBlackList");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, modifyDate);
+			pstmt.setString(2, memId);
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		return result;
+		
+	}
+	
+	public int deleteMemberReport(Connection conn, int no) {
+		int result = 0;
+		PreparedStatement pstmt =null;
+		String sql = prop.getProperty("deleteMemberReport");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, no);
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+	
+		return result;
+	}
+	
+	public ArrayList<Member> selectBlackList(Connection conn){
+		ResultSet rset = null;
+		ArrayList<Member> list = new ArrayList<>();
+		PreparedStatement pstmt = null;
+		String sql = prop.getProperty("selectBlackList");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			rset = pstmt.executeQuery();
+			while(rset.next()) {
+				list.add(new Member(
+							rset.getString("member_id"),
+							rset.getDate("modify_date")
+						));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return list;
 	}
 	
 	public int UpdateProfile(Connection conn, Member m) {
