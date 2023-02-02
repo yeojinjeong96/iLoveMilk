@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import com.milk.common.model.vo.PageInfo;
 import com.milk.member.model.dao.MemberDao;
 import com.milk.member.model.vo.Member;
+import com.milk.member.model.vo.Order;
 import com.milk.member.model.vo.Point;
 import com.milk.member.model.vo.Report;
 import com.milk.product.model.vo.ProductLike;
@@ -133,7 +134,7 @@ public class MemberService {
 	
 	
 	/**
-	 * 회원정보변경 확인 서비스 
+	 * 회원정보삭제 서비스 
 	 */
 	
 	public int MemberDelete(String memberId, String memberPwd) {
@@ -273,8 +274,8 @@ public class MemberService {
 	}
 
 	 /**
-	    * 회원프로필 변경 서비스 
-	    */
+	  * 회원프로필 변경 서비스 
+	  */
 	   
 	   public int UpdateProfile(Member m) {
 	      Connection conn = getConnection();
@@ -290,11 +291,28 @@ public class MemberService {
 	   
 	      return result;
 	      }
-	
+	   
+	 /**
+	  * 찜한상품 조회 서비스 
+	  */
 	   public ArrayList<ProductLike> productLikeList(int memberNo){
 			Connection conn = getConnection();
 			ArrayList<ProductLike> list = new MemberDao().productLikeList(conn, memberNo);
 			close(conn);
 			return list;
 	   }
+	   
+	  /**
+		* 찜한상품 조회 서비스 
+		*/
+	   
+	   public ArrayList<Order> MyOrderList(int memberNo){
+			Connection conn = getConnection();
+			ArrayList<Order> list = new MemberDao().myOrderList(conn, memberNo);
+			close(conn);
+			
+			return list;
+		   }
+	   
+	   
 }

@@ -13,6 +13,7 @@ import java.util.Properties;
 
 import com.milk.common.model.vo.PageInfo;
 import com.milk.member.model.vo.Member;
+import com.milk.member.model.vo.Order;
 import com.milk.member.model.vo.Point;
 import com.milk.member.model.vo.Report;
 import com.milk.product.model.vo.ProductLike;
@@ -697,4 +698,41 @@ public Member updateCheckPwd(Connection conn, String memberId, String memberPwd)
 		      return list;
 		   }
 	
+	   public ArrayList<Order> myOrderList(Connection conn, int memberNo) {
+		   
+		   ResultSet rset = null;
+		   PreparedStatement pstmt = null;
+		   ArrayList<Order> list = new ArrayList<>();
+		   
+		   String sql = prop.getProperty("myOrderList");
+		   
+		   try {
+			pstmt=conn.prepareStatement(sql);
+			
+			pstmt.setInt(1,memberNo);
+			
+			rset=pstmt.executeQuery();
+			
+			while (rset.next()) {
+				
+				list.add(new Order (
+						 rset.getInt("ORDER_NO"),
+						 rset.getDate("PAYMENT_DATE"),
+						 rset.getString("PRODUCT_IMG"),
+						 rset.getString("PRODUCT_NAME"),
+						 rset.getInt("PRODUCT_COUNT"),
+						 rset.getInt("PRICE"),
+						 rset.getInt("STATUS"),
+						 rset.getInt("WAYBILL")
+						));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		return list;
+	   }
+	   
 }
