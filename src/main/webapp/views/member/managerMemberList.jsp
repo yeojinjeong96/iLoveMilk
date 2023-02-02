@@ -188,7 +188,7 @@
     				data : {
     					keyword:str,
     					cpage:page
-    				}
+    				},
     				success:function(result){
     					// 검색결과 리스트
     					
@@ -226,7 +226,7 @@
                   		} 
        
 	                     for(let p=result.spi.startPage; p<=result.spi.endPage; p++){ 
-	                    	 sval2 +=" <button onclick="+"'searchKeyMem(p);'" + ">"+ p +" </button>";
+	                    	 sval2 +=" <button onclick="+"'searchKeyMem('" + p + "');'" + ">"+ p +" </button>";
 	                       } 
       
                       if(result.spi.currentPage != result.spi.maxPage){
@@ -358,13 +358,13 @@
 	                                    <td >아이디</td>
 	                                    <td  value=""><input type="text" name="" id="modifyModalId" readonly></td>
 	                                </tr>
-	                                	                                <tr>
+	                                <tr>
 	                                    <td >회원번호</td>
 	                                    <td  value=""><input type="text" name="memPointNo" id="modifyModalNo" readonly></td>
 	                                </tr>
 	                                <tr>
 	                                    <td>구분</td>
-	                                    <td> <input type="radio" name="poStatus" value="적립"> 적립금 지급 <input type="radio" name="status" value="사용"> 적립금 차감 </td>
+	                                    <td> <input type="radio" name="poStatus" value="적립"> 적립금 지급 <input type="radio" name="poStatus" value="사용"> 적립금 차감 </td>
 	                                </tr>
 	                                <tr>
 	                                    <td>적립금</td>
