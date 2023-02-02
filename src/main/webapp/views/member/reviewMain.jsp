@@ -47,9 +47,9 @@
         
        .reviewheader{font-size: 25px; font-weight: bolder; padding-bottom: 50px;}
        .reviewinformation{font-size: 10px;}
-       .reviewTop{padding-bottom: 50px;}
+       .reviewTop{padding-bottom: 50px; margin-left: 400px; }
        #rInfoBody{font-size: 15px;}
-       .rbtn{
+       .rbtn1 {
             background: rgb(16, 108, 255);
             border: none;
             border-radius: 20px;
@@ -57,6 +57,24 @@
             height: 50px;
             font-weight: bold;
             color: white;
+            margin-right: 30px;
+            margin-bottom: 50px;
+            float: left;
+       }
+       .rbtn2 {
+            background: rgb(16, 108, 255);
+            border: none;
+            border-radius: 20px;
+            width: 200px;
+            height: 50px;
+            font-weight: bold;
+            color: white;
+            float: left;
+       }
+
+       #rbnn{
+       		color : white;
+       		text-decoration-line: none;
        }
    </style>
 </head>
@@ -92,13 +110,93 @@
             리뷰관리
             <a class="reviewinformation" href="" data-toggle="modal" data-target="#reviewinformation">리뷰운영안내</a>
         </div>
-       
        <div class="reviewTop" align="center">
-                <input type="button" class = "rbtn" style="margin-right: 30px;" value="리뷰작성" onclick="reviewMobePage('/views/member/reviewInsertList')"></input>
-                <button type="button" class = "rbtn" data-toggle="modal" data-target="#reviewList">작성한 리뷰</button>
+       		<div class="rbtn1"><br><a id="rbnn" href="<%= contextPath %>/review.me">리뷰작성</a></div>
+       		<div class="rbtn2"><br><a id="rbnn" href="<%= contextPath%>/reviewList.me">작성한리뷰</a></div>
+       			
        </div>
        
-       <div class="maincontent">
+		<div class="maincontent" align="center" >
+			 <table border="1">
+                    <tr >
+                        <td style="width: 150px; height: 150px;" align="center"> <img src="" alt=""> 사진자리 </td>
+                        <td style="width: 300px;">상품이름</td>
+                        <td style="width: 100px;" align="center">
+                            <button type="button" class = "btn btn-secondary btn-sm" data-toggle="modal" data-target="#reviewInsert">리뷰작성</button>
+                        </td>
+                        
+                        <!-- 
+                        <% //if(list.isEmpty()){ %>
+                           
+                            <tr>
+                                <td colspan="3"> 작성할 수 있는 리뷰가 없습니다.</td>
+                            </tr>
+                        <% //}else{ %>
+                           
+                            <% //for(Review : list){ %>
+                            <tr>
+                                <td style="width: 100px;"> <img src="" alt=""> 사진자리 </td>
+                                <td style="width: 300px;">상품이름</td>
+                                <td style="width: 100px;">
+                                    <button type="button" class = "btn btn-secondary btn-sm" data-toggle="modal" data-target="#reviewInsert">리뷰작성</button>
+                                </td>
+                            </tr>
+                            <%// } %>
+                        <%// } %>
+                        
+                        -->
+                        
+                    </tr>
+                </table>
+
+            </div>
+
+                   
+                   <!-- 리뷰 작성용 모달 div -->
+                       <div class="modal" id="reviewInsert">
+                           <div class="modal-dialog">
+                             <div class="modal-content">
+                         
+                               <!-- Modal Header -->
+                               <div class="modal-header">
+                                 <h4 class="modal-title">리뷰 등록하기</h4>
+                                 <button type="button" class="close" data-dismiss="modal">&times;</button>
+                               </div>
+                         
+                               <!-- Modal body -->
+                               <div class="modal-body">
+                                   <form action="" method="post">
+                                       <input type="hidden" name ="memberId" value="">
+                                      
+                                       <table border="1">
+                                           <tr>
+                                                <td style="width: 100px;"> <img src="" alt=""> 사진자리 </td>
+                                                <td style="width: 400px;">상품이름</td>
+                                           </tr>
+                                           <tr>
+                                               <th>상세리뷰</th>
+                                               <td>
+                                                    <textarea name="content" rows="10" style="resize:none" required></textarea>
+                                               </td>
+                                           </tr>
+                                           <tr>
+                                               <th>사진첨부</th>
+                                               <td><input type="file" id="reviewPhoto" required></td>
+                                           </tr>
+                                       </table>
+                                       <br>
+                                       
+                                       <button type="submit" class = "btn btn-secondary btn-sm">리뷰 등록</button>
+                                   
+                                   </form>
+                               </div>
+                         
+                             </div>
+                           </div>
+                         </div>
+        
+        
+        
         
         <script>
  
