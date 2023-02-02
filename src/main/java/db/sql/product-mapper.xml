@@ -300,4 +300,8 @@
 		 WHERE PRODUCT_NO = ?
 		   AND MEMBER_NO = ?
 	</entry>
+	
+	<entry key="productCartDelete">
+		DELETE FROM TB_CART 
+	</entry>
 </properties>

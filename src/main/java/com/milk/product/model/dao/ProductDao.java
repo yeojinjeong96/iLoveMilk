@@ -496,7 +496,7 @@ public class ProductDao {
 		String sql = prop.getProperty("deleteProduct");
 		
 		for(int i=0; i<arrpNo.length-1; i++) {
-			sql += "OR PRODUCT_NO = ?";
+			sql += "OR STATUS = 'Y' AND PRODUCT_NO = ?";
 		}
 		
 		try {
@@ -691,6 +691,24 @@ public class ProductDao {
 			pstmt.setInt(1, amount);
 			pstmt.setInt(2, proNo);
 			pstmt.setInt(3, memNo);
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		return result;
+	}
+	
+	public int productCartDelete(Connection conn, int memNo, String[] proNoArr) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String sql = prop.getProperty("productCartDelete");
+		
+		sql += "WHERE MEMBER_NO = " + memNo + " AND PRODUCT_NO IN (" + String.join(",", proNoArr) + ")";
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
 			result = pstmt.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();

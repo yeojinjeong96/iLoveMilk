@@ -98,7 +98,7 @@ public class RecipeInsertController extends HttpServlet {
 				
 			}
 			
-			System.out.println(listOrder);
+			//System.out.println(listOrder);
 			
 			int result = new RecipeService().insertRecipe(r, listIngre, listOrder);
 			

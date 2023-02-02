@@ -340,5 +340,22 @@ public class ProductService {
 		close(conn);
 		return result;
 	}
+	
+	/**
+	 * 장바구니 상품 삭제
+	 * @author 승하
+	 * @return 성공시 1, 실패시 2
+	 */
+	public int productCartDelete(int memNo, String[] proNoArr) {
+		Connection conn = getConnection();
+		int result = new ProductDao().productCartDelete(conn, memNo, proNoArr);
+		if(result > 0) {
+			commit(conn);
+		} else {
+			rollback(conn);
+		}
+		close(conn);
+		return result;
+	}
 
 }
