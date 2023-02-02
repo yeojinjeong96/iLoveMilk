@@ -17,11 +17,12 @@
         margin-top: 50px;
     
     }
-    #content-area{
+    .content-area{
 
         width: 100%;
         height: 100%;
         text-align: left;
+        padding: 10px;
     }
 
   
@@ -61,17 +62,17 @@
                 </tr>
                 <tr>
                     <td colspan="5" height="200">
-                        
-                    	<%if(at!=null) {%>
-                            <br>
-                    	  <div>
-                            <img src="<%=contextPath%>/<%=at.getFilePath()%><%=at.getChangeName()%>"  >
-                       	  </div> 
-                    	
-                          
-	         			<%} %>
-	         			<br>
-	                    <%=q.getqContent() %>
+                         <div class="content-area">
+                            
+                            <%if(at!=null) {%>
+        
+                                <img src="<%=contextPath%>/<%=at.getFilePath()%><%=at.getChangeName()%>"  >
+                                <br>
+                             <%} %>
+                             
+                            <%=q.getqContent() %>
+
+                        </div>
 	                   </td>             
                 </tr>
 
@@ -81,9 +82,9 @@
             <!--답변 미완료시-->
               <%if(q.getAnswerStatus().equals("N")){ %>
             <div align="center">
-                <a href="">삭제</a>
-                <a href="">수정</a>
-                <a href="">목록</a>
+                <a href="<%=contextPath%>/delete.q?qNo=<%=q.getqNo()%>">삭제</a>
+                <a href="<%=contextPath%>/update.q?qNo=<%=q.getqNo()%>">수정</a>
+                <a href="<%=contextPath%>/list.q?cpage=1%>">목록</a>
             </div>
             <%}else{ %>
             <!--답변완료시-->
@@ -100,7 +101,7 @@
                     </tr>
                     <tr>
                         <td colspan="2" height="200" style="align-items: left;">
-                            <div id="content-area">
+                            <div class="content-area">
                                 <%=q.getaContent()%>
                             </div>
                         </td>

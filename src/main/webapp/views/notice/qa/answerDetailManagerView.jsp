@@ -111,7 +111,7 @@
                     </tr>
                 </table>
                 <br>
-                <button type="button" >목록으로</button>
+                <button type="button" onclick="location.href='<%=contextPath %>/listM.a?cpage=1';" >목록으로</button>
 
         </div>
        
