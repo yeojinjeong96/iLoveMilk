@@ -51,7 +51,7 @@
     <div class="wrap" align="center">
         <div class="header">
             <div class="header-1"><img src="resources/images/logo.jpg" style="width: 60px;"></div>
-            <div class="header-2"><h2 class="text-primary"><b>아이럽우유 관리자</b></h2></div>
+            <div class="header-2"><h2 class="text-primary"><a href="<%= contextPath %>/main.ma" style="text-decoration: none;"><b>아이럽우유 관리자</b></a></h2></div>
             
             <% if(loginManager != null){ %>
 	            <!-- 로그인 후 -->
