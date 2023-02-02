@@ -3,7 +3,7 @@ package com.milk.member.model.vo;
 public class Point {
 	
 	private int pointNo;
-	private int count;
+	private int amount;
 	private String status;
 	private int total;
 	private String modifyDate;
@@ -13,11 +13,11 @@ public class Point {
 	
 	public Point () {}
 
-	public Point(int pointNo, int count, String status, int total, String modifyDate, String content, String orderNo,
+	public Point(int pointNo, int amount, String status, int total, String modifyDate, String content, String orderNo,
 			int memberNo) {
 		super();
 		this.pointNo = pointNo;
-		this.count = count;
+		this.amount = amount;
 		this.status = status;
 		this.total = total;
 		this.modifyDate = modifyDate;
@@ -36,12 +36,12 @@ public class Point {
 		this.pointNo = pointNo;
 	}
 
-	public int getCount() {
-		return count;
+	public int getAmount() {
+		return amount;
 	}
 
-	public void setCount(int count) {
-		this.count = count;
+	public void setAmount(int amount) {
+		this.amount = amount;
 	}
 
 	public String getStatus() {
@@ -94,7 +94,7 @@ public class Point {
 
 	@Override
 	public String toString() {
-		return "Point [pointNo=" + pointNo + ", count=" + count + ", status=" + status + ", total=" + total
+		return "Point [pointNo=" + pointNo + ", amount=" + amount + ", status=" + status + ", total=" + total
 				+ ", modifyDate=" + modifyDate + ", content=" + content + ", orderNo=" + orderNo + ", memberNo="
 				+ memberNo + "]";
 	}

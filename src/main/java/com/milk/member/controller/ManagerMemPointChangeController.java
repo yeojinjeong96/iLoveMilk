@@ -7,6 +7,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.milk.member.model.service.MemberService;
 import com.milk.member.model.vo.Point;
@@ -38,15 +39,26 @@ public class ManagerMemPointChangeController extends HttpServlet {
 		int val = Integer.parseInt(request.getParameter("memPointVal"));
 		String content = request.getParameter("memPointCon");
 		
+		
 		Point p = new Point();
-		p.setPointNo(1);
-		p.setCount(val);
+		p.setAmount(val);
 		p.setStatus(status);
 		p.setContent(content);
 		p.setMemberNo(no);
 		
+
+		
 		int result = new MemberService().memberPointChange(p);
 		
+		if(result > 0) {
+			HttpSession session = request.getSession();
+			session.setAttribute("alertMsg", "성공적으로 회원 적립금 변경되었습니다.");
+			response.sendRedirect(request.getContextPath() + "/memList.ma?cpage=1");
+		}else {
+			request.setAttribute("errorMsg", "적립금 변경 실패");
+			request.getRequestDispatcher("views/common/errorPage.jsp");
+		}
+			
 		
 	}
 

@@ -9,6 +9,8 @@ public class Report {
 	private String repDate;
 	private String repType;
 	private String memberId;
+	private String memberGrade;
+	private int count;
 	
 	public Report() {}
 
@@ -34,6 +36,16 @@ public class Report {
 		this.repDate = repDate;
 		this.repType = repType;
 		this.memberId = memberId;
+	}
+	
+	
+
+	public Report(String memberId,int count, String memberGrade ) {
+		super();
+		this.memberId = memberId;
+		this.count = count;
+		this.memberGrade = memberGrade;
+		
 	}
 
 	public int getReportNo() {
@@ -93,11 +105,30 @@ public class Report {
 	public void setMemberId(String memberId) {
 		this.memberId = memberId;
 	}
+	
+	
+
+	public String getMemberGrade() {
+		return memberGrade;
+	}
+
+	public void setMemberGrade(String memberGrade) {
+		this.memberGrade = memberGrade;
+	}
+
+	public int getCount() {
+		return count;
+	}
+
+	public void setCount(int count) {
+		this.count = count;
+	}
 
 	@Override
 	public String toString() {
 		return "Report [reportNo=" + reportNo + ", repMemNo=" + repMemNo + ", refNo=" + refNo + ", repContent="
-				+ repContent + ", repDate=" + repDate + ", repType=" + repType + ", memberId=" + memberId + "]";
+				+ repContent + ", repDate=" + repDate + ", repType=" + repType + ", memberId=" + memberId
+				+ ", memberGrade=" + memberGrade + ", count=" + count + "]";
 	}
 
 

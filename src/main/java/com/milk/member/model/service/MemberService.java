@@ -272,6 +272,19 @@ public class MemberService {
 		
 		return result;
 	}
+	
+	/**
+	 * 회원신고처리를 위한 회원정보 조회
+	 * @author 이다혜
+	 * @return Report객체
+	 */
+	public Report selectReportDetail(int memNo) {
+		Connection conn = getConnection();
+		Report r = new MemberDao().selectReportDetail(conn, memNo);
+		
+		close(conn);
+		return r;
+	}
 
 	 /**
 	  * 회원프로필 변경 서비스 
