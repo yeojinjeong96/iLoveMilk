@@ -9,6 +9,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.sql.Date;
 import java.util.Properties;
 
 import com.milk.common.model.vo.PageInfo;
@@ -660,6 +661,29 @@ public Member updateCheckPwd(Connection conn, String memberId, String memberPwd)
 		}
 		
 		return r;
+	}
+	
+	public int insertBlackList(Connection conn, String memId, String modifyDate) {
+		
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String sql = prop.getProperty("insertBlakList");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, modifyDate);
+			pstmt.setString(2, memId);
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		return result;
+		
 	}
 	
 	public int UpdateProfile(Connection conn, Member m) {

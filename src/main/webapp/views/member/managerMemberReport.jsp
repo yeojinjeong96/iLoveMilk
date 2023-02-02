@@ -297,10 +297,6 @@
                                             <td><input type="text" id="modalMemId3" name="blackId" id="modalMemNo2" readonly></td>
                                         </tr>
                                         <tr>
-                                            <td>사유</td>
-                                            <td> <input type="text" name="blackContent"></td>
-                                        </tr>
-                                        <tr>
                                             <td>날짜
                                             <td><input type="date" name="blackDate"></td>
                                         </tr>
@@ -369,14 +365,12 @@
                                         <td><input type="checkbox" name="" value=""></td>
                                         <td>번호</td>
                                         <td>아이디</td>
-                                        <td>사유</td>
                                         <td>제재일</td>
                                     </tr>
                                     <tr>
                                         <td><input type="checkbox" name="" value=""></td>
                                         <td>1</td>
                                         <td>아이디자리</td>
-                                        <td>욕설</td>
                                         <td>23-01-01 00:00</td>
                                     </tr>
 

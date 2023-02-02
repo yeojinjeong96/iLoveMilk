@@ -351,6 +351,16 @@
 		 GROUP BY MEMBER_ID, MEMBER_GRADE
 	</entry>
 	
+	<entry key = "insertBlackList">
+	  UPDATE 
+              TB_MEMBER
+	     SET 
+		      MODIFY_DATE = TO_DATE(?, 'YY/MM/DD'),
+		      BLACK_LIST = 'Y',
+		      STATUS = 'N'
+	  WHERE MEMBER_ID = ?
+	</entry>
+	
 	  <entry key="UpdateProfile">
    UPDATE TB_MEMBER
          SET MEMBER_ID = ?

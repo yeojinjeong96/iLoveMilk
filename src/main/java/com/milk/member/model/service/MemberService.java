@@ -7,6 +7,7 @@ import static com.milk.common.JDBCTemplate.rollback;
 
 import java.sql.Connection;
 import java.util.ArrayList;
+import java.sql.Date;
 
 import com.milk.common.model.vo.PageInfo;
 import com.milk.member.model.dao.MemberDao;
@@ -284,6 +285,24 @@ public class MemberService {
 		
 		close(conn);
 		return r;
+	}
+	
+	/**
+	 * 회원 블랙리스트 추가
+	 * @author 이다혜
+	 * @return result
+	 */
+	public int insertBlackList(String memId, String modifyDate) {
+		
+		Connection conn = getConnection();
+		int result = new MemberDao().insertBlackList(conn, memId, modifyDate);
+		
+		if(result > 0) {
+			commit(conn);
+		}else{
+			rollback(conn);
+		}
+		return result;
 	}
 
 	 /**
