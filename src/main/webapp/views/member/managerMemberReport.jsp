@@ -157,6 +157,7 @@
                     					alert("신고내역이 성공적으로 삭제되었습니다.");
                     				}
                     				
+                    				
                     			},error: function(){
                     				alert("통신실패");
                     			}
@@ -168,11 +169,31 @@
                     			url:"<%=contextPath%>/blackSelect.ma",
                     			success:function(result){
                     				
-                    			},error:function(){
+                    				let val = "";
                     				
+                                    if(result.length == 0){
+                                    	val += "<tr><td colspan='3'> 내역이 없습니다. </td></tr>";
+
+                                    }else{
+                                    	
+                                    	
+                                    	for(let i =0; i<result.length; i++){
+                                    		
+                                    		val += "<tr>"
+                                    			+ "<td>" + (i+1) + "</td>"
+                                    			+ "<td>" + result[i].memberId + "</td>"
+                                    			+ "<td>" + result[i].modifyDate + "</td>"
+                                    			+ "</tr>";
+                                    	}
+                                    }
+
+                    				$(".blackListBody").html(val);
+                    				
+                    			},error:function(){
+                    				alert("통신실패");
                     			}
                     			
-                    		})
+                    		});
                     	}
                     	
                     </script>
@@ -347,7 +368,7 @@
 
                                 <br><br>
 
-                                <table style="width:100%; height:100px; text-align: center;"class="table">
+                                <table style="width:100%; height:100px; text-align: center; "class="table blackTable">
                                 	<thead>
 	                                    <tr> 
 	                                        <td>no.</td>
@@ -355,12 +376,8 @@
 	                                        <td>제재일</td>
 	                                    </tr>
                                     </thead>
-                                    <tbody>
-	                                    <tr>
-	                                        <td></td>
-	                                        <td>아이디자리</td>
-	                                        <td>23-01-01 00:00</td>
-	                                    </tr>
+                                    <tbody class="blackListBody">
+
 									</tbody>
                                 </table>
 

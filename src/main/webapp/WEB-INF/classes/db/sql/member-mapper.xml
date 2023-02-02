@@ -366,6 +366,14 @@
 		 WHERE REPORT_NO = ? 
 	</entry>
 	
+	<entry key="selectBlackList">
+	  SELECT
+	         MEMBER_ID,
+	         MODIFY_DATE
+	    FROM TB_MEMBER
+	   WHERE BLACK_LIST = 'Y' 
+	</entry>
+	
 	  <entry key="UpdateProfile">
    UPDATE TB_MEMBER
          SET MEMBER_ID = ?

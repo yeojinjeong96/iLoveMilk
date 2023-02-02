@@ -711,6 +711,21 @@ public Member updateCheckPwd(Connection conn, String memberId, String memberPwd)
 		PreparedStatement pstmt = null;
 		String sql = prop.getProperty("selectBlackList");
 		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			rset = pstmt.executeQuery();
+			while(rset.next()) {
+				list.add(new Member(
+							rset.getString("member_id"),
+							rset.getDate("modify_date")
+						));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
 		
 		return list;
 	}
