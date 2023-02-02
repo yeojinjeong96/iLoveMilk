@@ -9,6 +9,7 @@ import java.sql.Connection;
 import java.util.ArrayList;
 
 import com.milk.common.model.vo.PageInfo;
+import com.milk.member.model.vo.Member;
 import com.milk.product.model.dao.ProductDao;
 import com.milk.product.model.vo.Product;
 import com.milk.product.model.vo.ProductLike;
@@ -356,6 +357,30 @@ public class ProductService {
 		}
 		close(conn);
 		return result;
+	}
+	
+	/**
+	 * 주문서 상품 리스트
+	 * @author 승하
+	 * @return ArrayList
+	 */
+	public ArrayList<Product> orderProductList(int memNo, String proNo) {
+		Connection conn = getConnection();
+		ArrayList<Product> list = new ProductDao().orderProductList(conn, memNo, proNo);
+		close(conn);
+		return list;
+	}
+	
+	/**
+	 * 주문서 회원 정보
+	 * @author 승하
+	 * @return Member
+	 */
+	public Member orderMember(int memNo) {
+		Connection conn = getConnection();
+		Member m = new ProductDao().orderMember(conn, memNo);
+		close(conn);
+		return m;
 	}
 
 }
