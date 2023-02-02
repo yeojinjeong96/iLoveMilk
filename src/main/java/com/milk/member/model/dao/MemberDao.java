@@ -667,7 +667,7 @@ public Member updateCheckPwd(Connection conn, String memberId, String memberPwd)
 		
 		int result = 0;
 		PreparedStatement pstmt = null;
-		String sql = prop.getProperty("insertBlakList");
+		String sql = prop.getProperty("insertBlackList");
 		
 		try {
 			pstmt = conn.prepareStatement(sql);

@@ -289,22 +289,22 @@
                         <!-- Modal body -->
                         <div class="modal-body">
                         
-                        <form action="<%=contextPath %>/blackAdd.ma" method="post">
+                        <form onsubmit="return confirm('해당회원을 블랙리스트에 추가하시겠습니까?');" action="<%=contextPath %>/blackAdd.ma" method="post">
                                 <input type="hidden" name="" value="">
                                 <table style="width:100%; height:100px;" >
                                         <tr>
                                             <td>아이디</td>
-                                            <td><input type="text" id="modalMemId3" name="blackId" id="modalMemNo2" readonly></td>
+                                            <td><input type="text" id="modalMemId3" name="blackId" readonly></td>
                                         </tr>
                                         <tr>
-                                            <td>날짜
+                                            <td>날짜</td>
                                             <td><input type="date" name="blackDate"></td>
                                         </tr>
                                 </table>
 
                                 <br>
                                 <div align="center">
-                                <button type="submit" class="btn btn-outline-secondary btn-sm" data-toggle="modal" data-target="#blacklist-confirm">확인</button> <button type="reset" class="btn btn-outline-secondary btn-sm"  data-dismiss="modal" >취소</button>
+                                <button type="submit" class="btn btn-outline-secondary btn-sm" >확인</button> <button type="reset" class="btn btn-outline-secondary btn-sm"  data-dismiss="modal" >취소</button>
                                 </div>
                         </form>
                         
@@ -315,28 +315,7 @@
                     </div>
                     </div>
                     
-                    <!-- 블랙리스트 확인 눌렀을때의 모달 -->
-                    <!-- The Modal -->
-                    <div class="modal" id="blacklist-confirm" >
-                        <div class="modal-dialog">
-                        <div class="modal-content modal-sm">
-                    
-                            <!-- Modal body -->
-                            <br>
-                            <div class="modal-body" style="text-align:center; font-size:13px;">
-                                해당회원을 블랙리스트에 <br>
-                                추가하시겠습니까?
-                            </div>
-                            <div align="center">
-                                <<button type="submit" class="btn btn-outline-secondary btn-sm" style=" width:100px;">확인
-                                <button type="button" class="btn btn-outline-secondary btn-sm" data-dismiss="modal" style=" width:100px;">취소</button>
-                                </div>
-                                <br>
-                        </div>
-                        </div>
-                    </div>
-
-                    
+                  
 
                     <!-- 블랙리스트 조회 모달 div -->
                     <div class="modal" id="blacklist-view">

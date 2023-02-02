@@ -44,7 +44,7 @@ public class ManagerBlackAddController extends HttpServlet {
 		HttpSession session = request.getSession();
 		
 		if(result > 0) {
-			session.setAttribute("alertMsg", "성공적으로 회원 적립금 변경되었습니다.");
+			session.setAttribute("alertMsg", "성공적으로 블랙리스트에 추가되었습니다.");
 			response.sendRedirect(request.getContextPath() + "/repList.ma?cpage=1");
 		}else {
 			request.setAttribute("errorMsg", "블랙리스트 추가 실패");
