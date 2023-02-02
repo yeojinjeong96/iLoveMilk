@@ -310,11 +310,68 @@
                            FROM TB_MEMBER M
                           LEFT JOIN TB_POINT P ON (M.MEMBER_NO = P.MEMBER_NO)
                           WHERE M.STATUS = 'Y'
-                          AND MEMBER_ID LIKE '%' || ? || '%'
+                          AND MEMBER_ID LIKE '%' ||?|| '%'
                           ORDER BY ENROLL_DATE DESC
 		           )A
 		     )  
 		  WHERE RNUM BETWEEN ? AND ? 
+	</entry>
+	<entry key="memberPointChange">
+		INSERT 
+		  INTO TB_POINT
+		  (
+		    POINT_NO,
+		    AMOUNT,
+		    STATUS,
+		    TOTAL,
+		    CONTENT,
+		    MEMBER_NO
+		  ) 
+		  VALUES
+		  (
+		    SEQ_PONO.NEXTVAL,
+		    ?,
+		    ?,
+		    NVL((SELECT SUM(AMOUNT)
+		       FROM TB_POINT
+		      WHERE MEMBER_NO = ?), 0) + ?,
+		    ?,
+		    ? 
+		  )
+	</entry>
+	
+	<entry key="selectReportDetail">
+	   SELECT 
+		      MEMBER_ID,
+		      COUNT(*) COUNT,
+		      MEMBER_GRADE
+		 FROM TB_REPORT
+		 LEFT JOIN TB_MEMBER ON (MEMBER_NO = REPORTING_MEM_NO)
+		 WHERE MEMBER_NO = ?
+		 GROUP BY MEMBER_ID, MEMBER_GRADE
+	</entry>
+	
+	<entry key = "insertBlackList">
+	  UPDATE 
+              TB_MEMBER
+	     SET 
+		      MODIFY_DATE = TO_DATE(?, 'YY/MM/DD'),
+		      BLACK_LIST = 'Y',
+		      STATUS = 'N'
+	  WHERE MEMBER_ID = ?
+	</entry>
+	<entry key="deleteMemberReport">
+		DELETE 
+		  FROM TB_REPORT
+		 WHERE REPORT_NO = ? 
+	</entry>
+	
+	<entry key="selectBlackList">
+	  SELECT
+	         MEMBER_ID,
+	         MODIFY_DATE
+	    FROM TB_MEMBER
+	   WHERE BLACK_LIST = 'Y' 
 	</entry>
 	
 	  <entry key="UpdateProfile">
@@ -333,7 +390,7 @@
         
    </entry>
    
-      <entry key="productLikeList">
+   <entry key="productLikeList">
      SELECT 
               LI.PRODUCT_NO
            , LI.MEMBER_NO
@@ -346,4 +403,43 @@
         WHERE MEMBER_NO = ?
    
    </entry>
+   
+   <entry key="myOrderList">
+	   SELECT 
+		       ORDER_NO
+		    , (
+		        SELECT PAYMENT_DATE
+		          FROM TB_PAYMENT
+		         WHERE ORDER_NO = ORD.ORDER_NO 
+		       ) "PAYMENT_DATE" 
+		    , (
+		         SELECT PRODUCT_IMG
+		           FROM TB_ORDERDETAIL
+		           JOIN TB_PRODUCT USING(PRODUCT_NO)
+		          WHERE ORDER_NO = ORD.ORDER_NO
+		            AND ROWNUM = 1
+		        ) "PRODUCT_IMG" 
+		     , (
+		         SELECT PRODUCT_NAME
+		           FROM TB_ORDERDETAIL
+		           JOIN TB_PRODUCT USING(PRODUCT_NO)
+		          WHERE ORDER_NO = ORD.ORDER_NO
+		            AND ROWNUM = 1
+		        ) "PRODUCT_NAME"
+		     , (
+		         SELECT COUNT(*)
+		           FROM TB_ORDERDETAIL
+		          WHERE ORDER_NO = ORD.ORDER_NO
+		       ) "PRODUCT_COUNT"
+		    , (
+		        SELECT PRICE
+		          FROM TB_PAYMENT
+		         WHERE ORDER_NO = ORD.ORDER_NO 
+		       ) "PRICE"
+		     , STATUS
+		     , WAYBILL
+		 FROM TB_ORDER ORD
+		WHERE MEMBER_NO =  ?
+   </entry>
+   
 </properties>

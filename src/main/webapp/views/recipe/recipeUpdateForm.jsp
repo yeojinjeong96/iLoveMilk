@@ -141,6 +141,7 @@
                             <img id="titleImg" src="<%= contextPath %>/<%= r.getMainImg() %>" width="170px" height="230px" style="border-radius: 5px;">
                             <br>
                             <label for="file1" class="upload-btn" style="margin-top: 15px;">
+                            <input type="hidden" name="mainFile" value="<%= r.getMainImg() %>">
                                 <input type="file" id="file1" name="file1" onchange="loadImg(this, 1);">
                                 <span>대표 이미지 등록</span>
                             </label>
@@ -171,17 +172,18 @@
                         </tr>
                     </thead>
                     <tbody>
+                    <% int num = 1; %>
                     <% for(RecipeIngre ri : listI) { %>
                     <input type="hidden" name="ingreNo" value="<%= ri.getIngreNo() %>">
                         <tr>
                             <td width="220px" style="padding-left: 10px;">
                                 <br>
                                 <input type="hidden" name="ingreNo" value="<%= ri.getIngreNo() %>">
-                                <input type="text" name="ingre-name1" size="20" style="margin-bottom: 20px;" placeholder="예) 우유" value="<%= ri.getIngreName() %>" required>
+                                <input type="text" name="ingre-name<%= num %>" size="20" style="margin-bottom: 20px;" placeholder="예) 우유" value="<%= ri.getIngreName() %>" required>
                             </td>
                             <td colspan="2" width="220px">
                                 <br>
-                                <input type="text" name="ingre-amount1" size="20" style="margin-bottom: 20px;" placeholder="예) 300ml" value="<%= ri.getIngreAmount() %>" required>
+                                <input type="text" name="ingre-amount<%= num++ %>" size="20" style="margin-bottom: 20px;" placeholder="예) 300ml" value="<%= ri.getIngreAmount() %>" required>
                             </td>
                             <td width="260px">
                                 <button type="button" class="delete btn btn-dark btn-sm" onclick="remove(this); renumber();">x</button>
@@ -214,21 +216,22 @@
                         </tr>
                     </thead>
                     <tbody>
+                    <% int num2 = 1; %>
                     <% for(RecipeOrder ro : listO) { %>
-                    <input type="hidden" name="orderNo" value="<%= ro.getRecipeOrderNo() %>">
                         <tr>
                             <td width="70px" align="center">
-                                <div id="num1" >step <%= ro.getRecipeOrder() %></div>
+                                <div id="num<%= num2 %>" >step <%= ro.getRecipeOrder() %></div>
                             </td>
                             <td width="375px">
                                 <br>
                                 <input type="hidden" name="orderNo" value="<%= ro.getRecipeOrderNo() %>">
-                                <textarea name="order1" placeholder="예) 얼음틀에 콜드브루 커피 300ml를 부어 냉동실에 꽁꽁 얼려요" required><%= ro.getRecipeExplain() %></textarea>
+                                <textarea name="order<%= num2 %>" placeholder="예) 얼음틀에 콜드브루 커피 300ml를 부어 냉동실에 꽁꽁 얼려요" required><%= ro.getRecipeExplain() %></textarea>
                             </td>
                             <td width="200px" style="padding-right: 10px;">
                                 <br>
-                                <input type="file" name="file2" onchange="loadImg(this, 2);" style="display: none;">
-                                <img id="contentImg1" width="200px" height="100px" src="<%= contextPath %>/<%= ro.getRecipeImg() %>" onclick="clickFile(2);">
+                                <input type="hidden" name="orderFile<%= num2 %>" value="<%= ro.getRecipeImg() %>">
+                                <input type="file" name="file<%= (num2)+1 %>" onchange="loadImg(this, <%= (num2)+1 %>);" style="display: none;">
+                                <img id="contentImg<%= num2 %>" width="200px" height="100px" src="<%= contextPath %>/<%= ro.getRecipeImg() %>" onclick="clickFile(<%= num2++ +1 %>);">
                             </td>
                             <td style="padding-right: 10px;">
                                 <button type='button' class='delete btn btn-dark btn-sm orderRemove' onclick='remove(this); renumber();'>x</button>

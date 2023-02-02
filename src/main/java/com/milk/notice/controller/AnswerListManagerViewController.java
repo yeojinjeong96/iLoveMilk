@@ -17,13 +17,13 @@ import com.milk.notice.model.vo.QA;
  * Servlet implementation class AnswerListManagerView
  */
 @WebServlet("/listM.a")
-public class AnswerListManagerView extends HttpServlet {
+public class AnswerListManagerViewController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public AnswerListManagerView() {
+    public AnswerListManagerViewController() {
         super();
         // TODO Auto-generated constructor stub
     }

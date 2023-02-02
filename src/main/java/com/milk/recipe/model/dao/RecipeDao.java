@@ -18,6 +18,7 @@ import com.milk.recipe.model.vo.Recipe;
 import com.milk.recipe.model.vo.RecipeIngre;
 import com.milk.recipe.model.vo.RecipeOrder;
 import com.milk.recipe.model.vo.Reply;
+import com.milk.recipe.model.vo.Report;
 
 public class RecipeDao {
 	
@@ -569,23 +570,19 @@ public class RecipeDao {
 		try {
 			
 			for(RecipeIngre listI : listIngre) {
-				
 				pstmt = conn.prepareStatement(sql);
-				pstmt.setString(1, listI.getIngreName());
-				pstmt.setString(2, listI.getIngreAmount());
-				pstmt.setInt(3, listI.getIngreNo());
-				pstmt.setInt(4, listI.getRecipeNo());
+				pstmt.setInt(1, listI.getRecipeNo());
+				pstmt.setString(2, listI.getIngreName());
+				pstmt.setString(3, listI.getIngreAmount());
 				
 				result = pstmt.executeUpdate();
 			}
-			
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
 			close(pstmt);
 		}
-		
 		
 		return result;
 		
@@ -600,14 +597,13 @@ public class RecipeDao {
 		
 		try {
 			
+	
 			for(RecipeOrder listO : listOrder) {
-				
 				pstmt = conn.prepareStatement(sql);
-				pstmt.setInt(1, listO.getRecipeOrder());
-				pstmt.setString(2, listO.getRecipeExplain());
-				pstmt.setString(3, listO.getRecipeImg());
-				pstmt.setInt(4, listO.getRecipeOrderNo());
-				pstmt.setInt(5, listO.getRecipeNo());
+				pstmt.setInt(1, listO.getRecipeNo());
+				pstmt.setInt(2, listO.getRecipeOrder());
+				pstmt.setString(3, listO.getRecipeExplain());
+				pstmt.setString(4, listO.getRecipeImg());
 			
 				result = pstmt.executeUpdate();
 				
@@ -740,14 +736,14 @@ public class RecipeDao {
 			
 			while(rset.next()) {
 				
-				list.add(new Recipe(rset.getInt("RECIPE_NO"),
-									rset.getString("RECIPE_TITLE"),
+				list.add(new Recipe(rset.getString("RECIPE_TITLE"),
 									rset.getString("MEMBER_ID"),
+									rset.getInt("RECIPE_NO"),
 									rset.getString("ENROLL_DATE")));
 						   		   
 			}
 			
-			System.out.println(list);
+			// System.out.println(list);
 			
 			
 		} catch (SQLException e) {
@@ -758,5 +754,248 @@ public class RecipeDao {
 		}
 		
 		return list;
+	}
+	
+	
+	public ArrayList<Report> selectRecipeReportDelListM(Connection conn, PageInfo pi){
+		ArrayList<Report> list = new ArrayList<>();
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		String sql = prop.getProperty("selectRecipeReportDelListM");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			int startRow = (pi.getCurrentPage() - 1) * pi.getBoardLimit() + 1;
+			int endRow = startRow + pi.getBoardLimit() - 1;
+			
+			
+			pstmt.setInt(1, startRow);
+			pstmt.setInt(2, endRow);
+		
+			
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				
+				list.add(new Report(rset.getInt("REPORT_NO"),
+									rset.getInt("REF_NO"),
+									rset.getString("REPORT_CONTENT"),
+									rset.getString("MEMBER_ID"),
+									rset.getString("RECIPE_TITLE"),
+									rset.getString("REPORT_DATE")));
+						   		   
+			}
+			
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return list;
+	}
+	
+	
+	public ArrayList<Recipe> selectRecipeListRestorationM(Connection conn, PageInfo pi){
+		ArrayList<Recipe> list = new ArrayList<>();
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		String sql = prop.getProperty("selectRecipeListRestorationM");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			int startRow = (pi.getCurrentPage() - 1) * pi.getBoardLimit() + 1;
+			int endRow = startRow + pi.getBoardLimit() - 1;
+			
+			
+			pstmt.setInt(1, startRow);
+			pstmt.setInt(2, endRow);
+		
+			
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				
+				list.add(new Recipe(rset.getString("RECIPE_TITLE"),
+									rset.getString("MEMBER_ID"),
+									rset.getInt("RECIPE_NO"),
+									rset.getString("ENROLL_DATE")));
+						   		   
+			}
+			
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return list;
+	}
+	
+	
+	public int insertRecipeM(Connection conn, Recipe r) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		
+		String sql = prop.getProperty("insertRecipeM");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, r.getRecipeWriter());
+			pstmt.setString(2, r.getRecipeTitle());
+			pstmt.setString(3, r.getRecipeIntro());
+			pstmt.setString(4, r.getMainImg());
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		return result;
+		
+	}
+	
+	
+	public ArrayList<Recipe> selectRecipeListUpDelM(Connection conn, PageInfo pi){
+		ArrayList<Recipe> list = new ArrayList<>();
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		String sql = prop.getProperty("selectRecipeListUpDelM");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			int startRow = (pi.getCurrentPage() - 1) * pi.getBoardLimit() + 1;
+			int endRow = startRow + pi.getBoardLimit() - 1;
+			
+			
+			pstmt.setInt(1, startRow);
+			pstmt.setInt(2, endRow);
+		
+			
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				
+				list.add(new Recipe(rset.getString("RECIPE_TITLE"),
+									rset.getString("MANAGER_ID"),
+									rset.getInt("RECIPE_NO"),
+									rset.getString("ENROLL_DATE")));
+						   		   
+			}
+			
+		
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return list;
+	}
+	
+	
+	public int selectDelRecipeM(Connection conn, String deleteRe) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		
+		String sql= prop.getProperty("selectDelRecipeM");
+		
+		sql += deleteRe + ")";
+		
+		// System.out.println(deleteRe);
+		
+		try {
+			pstmt= conn.prepareStatement(sql);
+			
+			result= pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}
+		
+		return result;
+	}
+	
+	
+	public int selectRestoreRecipeM(Connection conn, String restoreRe) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		
+		String sql= prop.getProperty("selectRestoreRecipeM");
+		
+		sql += restoreRe + ")";
+		
+		// System.out.println(deleteRe);
+		
+		try {
+			pstmt= conn.prepareStatement(sql);
+			
+			result= pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}
+		
+		return result;
+	}
+	
+	
+	public int deleteRecipeIngreList(Connection conn, Recipe r) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		
+		String sql = prop.getProperty("deleteRecipeIngreList");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, r.getRecipeNo());
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		return result;
+	}
+	
+	public int deleteRecipeOrderList(Connection conn, Recipe r) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		
+		String sql = prop.getProperty("deleteRecipeOrderList");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, r.getRecipeNo());
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		return result;
 	}
 }

@@ -9,10 +9,12 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.sql.Date;
 import java.util.Properties;
 
 import com.milk.common.model.vo.PageInfo;
 import com.milk.member.model.vo.Member;
+import com.milk.member.model.vo.Order;
 import com.milk.member.model.vo.Point;
 import com.milk.member.model.vo.Report;
 import com.milk.product.model.vo.ProductLike;
@@ -603,6 +605,131 @@ public Member updateCheckPwd(Connection conn, String memberId, String memberPwd)
 		return list;
 	}
 	
+	public int memberPointChange(Connection conn, Point p) {
+		
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String sql = prop.getProperty("memberPointChange");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, p.getAmount());
+			pstmt.setString(2, p.getStatus());
+			pstmt.setInt(3, p.getMemberNo());
+			pstmt.setInt(4, p.getAmount());
+			pstmt.setString(5, p.getContent());
+			pstmt.setInt(6, p.getMemberNo());
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		return result;
+		
+	}
+	
+	public Report selectReportDetail(Connection conn, int memNo) {
+		
+		ResultSet rset = null;
+		PreparedStatement pstmt = null;
+		Report r = new Report();
+		
+		String sql = prop.getProperty("selectReportDetail");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, memNo);
+			
+			rset = pstmt.executeQuery();
+			if(rset.next()) {
+				r = new Report(
+						rset.getString("MEMBER_ID"),
+						rset.getInt("count"),
+						rset.getString("MEMBER_GRADE")
+						);
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return r;
+	}
+	
+	public int insertBlackList(Connection conn, String memId, String modifyDate) {
+		
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String sql = prop.getProperty("insertBlackList");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, modifyDate);
+			pstmt.setString(2, memId);
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		return result;
+		
+	}
+	
+	public int deleteMemberReport(Connection conn, int no) {
+		int result = 0;
+		PreparedStatement pstmt =null;
+		String sql = prop.getProperty("deleteMemberReport");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, no);
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+	
+		return result;
+	}
+	
+	public ArrayList<Member> selectBlackList(Connection conn){
+		ResultSet rset = null;
+		ArrayList<Member> list = new ArrayList<>();
+		PreparedStatement pstmt = null;
+		String sql = prop.getProperty("selectBlackList");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			rset = pstmt.executeQuery();
+			while(rset.next()) {
+				list.add(new Member(
+							rset.getString("member_id"),
+							rset.getDate("modify_date")
+						));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return list;
+	}
+	
 	public int UpdateProfile(Connection conn, Member m) {
 		
 		int result = 0;
@@ -670,4 +797,41 @@ public Member updateCheckPwd(Connection conn, String memberId, String memberPwd)
 		      return list;
 		   }
 	
+	   public ArrayList<Order> myOrderList(Connection conn, int memberNo) {
+		   
+		   ResultSet rset = null;
+		   PreparedStatement pstmt = null;
+		   ArrayList<Order> list = new ArrayList<>();
+		   
+		   String sql = prop.getProperty("myOrderList");
+		   
+		   try {
+			pstmt=conn.prepareStatement(sql);
+			
+			pstmt.setInt(1,memberNo);
+			
+			rset=pstmt.executeQuery();
+			
+			while (rset.next()) {
+				
+				list.add(new Order (
+						 rset.getInt("ORDER_NO"),
+						 rset.getDate("PAYMENT_DATE"),
+						 rset.getString("PRODUCT_IMG"),
+						 rset.getString("PRODUCT_NAME"),
+						 rset.getInt("PRODUCT_COUNT"),
+						 rset.getInt("PRICE"),
+						 rset.getInt("STATUS"),
+						 rset.getInt("WAYBILL")
+						));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		return list;
+	   }
+	   
 }

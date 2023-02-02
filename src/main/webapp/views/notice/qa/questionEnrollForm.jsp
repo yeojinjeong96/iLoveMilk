@@ -77,8 +77,8 @@
                     
                 </table>
                 <br>
-                <a href="">목록으로</a>
-                <button type="submit" onclick="return cateNeed();">작성하기</button>
+                <a href="<%=contextPath %>/list.qa?cpage=1" class="btn btn-sm btn-secondary">목록으로</a>
+                <button type="submit" onclick="return cateNeed();" class="btn btn-sm btn-secondary">작성하기</button>
             </form>
         </div>
     </div>

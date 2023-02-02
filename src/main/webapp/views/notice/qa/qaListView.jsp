@@ -52,10 +52,10 @@
                     <a href="">7일</a>&nbsp;
                     <a href="">15일</a>&nbsp;
                     <a href="">1개월</a>&nbsp;
-                    <a href="">3개월</a>
+                    <a href="">3개월</a>&nbsp;
                     <input type="date"> -
-                    <input type="date">       
-
+                    <input type="date"> &nbsp;      
+					<button type="submit">조회</button>
                   </form>
             </div>
             <br>

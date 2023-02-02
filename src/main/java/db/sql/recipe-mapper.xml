@@ -255,6 +255,7 @@
 		 WHERE RECIPE_NO = ?
 	</entry>
 	
+	<!-- 
 	<entry key="updateRecipeIngreList">
 		UPDATE
 			   TB_RECIPE_INGRE
@@ -273,6 +274,7 @@
 		 WHERE RECIPE_ORDER_NO = ?
 		   AND RECIPE_NO = ?
 	</entry>
+	-->
 	
 	<entry key="deleteRecipe">
 		UPDATE TB_RECIPE
@@ -357,7 +359,51 @@
 	 -->
 	 
 	<entry key="selectRecipeListDeleteM">
-	SELECT *
+		SELECT *
+			  FROM (
+			        SELECT ROWNUM RNUM, A.*
+			          FROM (
+			                SELECT
+	                               RECIPE_TITLE
+	                             , MEMBER_ID
+	                             , RECIPE_NO
+	                             , TO_CHAR(R.ENROLL_DATE, 'YYYY-MM-DD') "ENROLL_DATE"
+			                  FROM TB_RECIPE R
+	                          JOIN TB_MEMBER M ON (RECIPE_WRITER = MEMBER_NO)
+			                 WHERE DELETE_STATUS = 'N'
+			                   AND RECIPE_TYPE = 2
+			                 ORDER
+			                    BY ENROLL_DATE DESC
+			                ) "A"
+		        	)
+ 		 WHERE RNUM BETWEEN ? AND ?
+	</entry>
+	
+	<entry key="selectRecipeReportDelListM">
+		SELECT *
+		  FROM (
+		        SELECT ROWNUM RNUM, A.*
+		          FROM (
+		                SELECT
+		                	   REPORT_NO
+                             , REF_NO
+                             , REPORT_CONTENT
+                             , MEMBER_ID
+                             , RECIPE_TITLE
+                             , TO_CHAR(REPORT_DATE, 'YYYY-MM-DD') "REPORT_DATE"
+		                  FROM TB_REPORT
+                          JOIN TB_RECIPE ON (RECIPE_NO = REF_NO)
+                          JOIN TB_MEMBER ON (MEMBER_NO = REPORTING_MEM_NO)
+                         WHERE REPORT_TYPE = 1
+		                 ORDER
+		                    BY REPORT_DATE DESC
+		                ) "A"
+	        	)
+ 		 WHERE RNUM BETWEEN ? AND ?
+	</entry>
+	
+	<entry key="selectRecipeListRestorationM">
+		SELECT *
 		  FROM (
 		        SELECT ROWNUM RNUM, A.*
 		          FROM (
@@ -367,12 +413,120 @@
                              , MEMBER_ID
                              , TO_CHAR(R.ENROLL_DATE, 'YYYY-MM-DD') "ENROLL_DATE"
 		                  FROM TB_RECIPE R
-                          JOIN TB_MEMBER M ON (RECIPE_WRITER = MEMBER_NO)
+                          JOIN TB_MEMBER ON (RECIPE_WRITER = MEMBER_NO)
+                         WHERE DELETE_STATUS = 'Y'
+                           AND RECIPE_TYPE = 2
 		                 ORDER
 		                    BY RECIPE_NO DESC
 		                ) "A"
 	        	)
  		 WHERE RNUM BETWEEN ? AND ?
+	</entry>
+	
+	<entry key="insertRecipeM">
+		INSERT
+		  INTO TB_RECIPE
+		  (
+		    RECIPE_NO
+		  , RECIPE_TYPE
+		  , RECIPE_WRITER
+		  , RECIPE_TITLE
+		  , RECIPE_INTRO
+		  , MAIN_IMG
+		  )
+		  VALUES
+		  (
+		    SEQ_RNO.NEXTVAL
+		  , 1
+		  , ?
+		  , ?
+		  , ?
+		  , ?
+		  )
+	</entry>
+	
+	
+	<entry key="selectRecipeListUpDelM">
+		SELECT *
+			  FROM (
+			        SELECT ROWNUM RNUM, A.*
+			          FROM (
+			                SELECT
+	                               RECIPE_TITLE
+	                             , MANAGER_ID
+	                             , RECIPE_NO
+	                             , TO_CHAR(R.ENROLL_DATE, 'YYYY-MM-DD') "ENROLL_DATE"
+			                  FROM TB_RECIPE R
+	                          JOIN TB_MANAGER M ON (RECIPE_WRITER = MANAGER_NO)
+                             WHERE DELETE_STATUS = 'N'
+			                 ORDER
+			                    BY ENROLL_DATE DESC
+			                ) "A"
+		        	)
+	 		 WHERE RNUM BETWEEN ? AND ?
+	</entry>
+	
+	<entry key="selectDelRecipeM">
+		UPDATE TB_RECIPE
+		   SET DELETE_STATUS = 'Y'
+		 WHERE RECIPE_NO IN (
+	</entry>
+	
+	<entry key="selectRestoreRecipeM">
+		UPDATE TB_RECIPE
+		   SET DELETE_STATUS = 'N'
+		 WHERE RECIPE_NO IN (
+	</entry>
+	
+	<entry key="deleteRecipeIngreList">
+		DELETE
+		  FROM TB_RECIPE_INGRE
+		 WHERE RECIPE_NO = ?
+	</entry>
+	
+	<entry key="deleteRecipeOrderList">
+		DELETE
+		  FROM TB_RECIPE_ORDER
+		 WHERE RECIPE_NO = ?
+	</entry>
+	
+	
+	<entry key="updateRecipeIngreList">
+		INSERT
+		  INTO TB_RECIPE_INGRE
+		  (
+		    INGRE_NO
+		  , RECIPE_NO
+		  , INGRE_NAME
+		  , INGRE_AMOUNT
+		  )
+		  VALUES
+		  (
+		    SEQ_INO.NEXTVAL
+		  , ?
+		  , ?
+		  , ?
+		  )
+	</entry>
+	
+	<entry key="updateRecipeOrderList">
+		INSERT
+		  INTO TB_RECIPE_ORDER
+		  (
+		    RECIPE_ORDER_NO
+		  , RECIPE_NO
+		  , RECIPE_ORDER
+		  , RECIPE_EXPLN
+		  , RECIPE_IMG
+		  )
+		  VALUES
+		  (
+		    SEQ_RONO.NEXTVAL
+		  , ?
+		  , ?
+		  , ?
+		  , ?
+		  )
 	</entry>
 
 </properties>

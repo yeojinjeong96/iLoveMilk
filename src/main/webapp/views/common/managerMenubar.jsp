@@ -47,7 +47,7 @@
                 </div><br>
                 <div>
                     <div class="text-primary menu">레시피관리</div>
-                    <a href="<%= request.getContextPath() %>/inUpDe.re?cpage=1">레시피등록/수정/삭제</a><br>
+                    <a href="<%= request.getContextPath() %>/enrollFormM.re?cpage=1">레시피등록/수정/삭제</a><br>
                     <a href="<%= request.getContextPath() %>/recipeDeleteListM.re?cpage=1">게시글관리</a><br>
                     <a href="<%= request.getContextPath() %>/replyM.re?cpage=1">댓글관리</a>
                 </div><br>

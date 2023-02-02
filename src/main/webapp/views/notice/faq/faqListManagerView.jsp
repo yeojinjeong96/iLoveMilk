@@ -22,6 +22,7 @@
     .faq-list{text-align: center;}
     .faq-list tbody tr{
         cursor: pointer;
+        
     }
 </style>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
@@ -50,12 +51,14 @@
                 <br>
                 
                 <table border="1" class="faq-list">
-                    <tr>
+                   <thead>
+                    <tr onclick="event.cancelBubble=true">
                         <th width="30">선택</th>
                         <th width="100">글번호</th>
                         <th width="200">카테고리</th>
                         <th width="350">질문</th>
                     </tr>
+                    </thead>
                     <%if (list.isEmpty()){ %>
                     <tr>
                  		<td colspan="4">

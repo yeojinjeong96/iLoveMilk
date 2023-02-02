@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.Properties;
 
 import com.milk.common.model.vo.PageInfo;
+import com.milk.member.model.vo.Member;
 import com.milk.product.model.vo.Product;
 import com.milk.product.model.vo.ProductLike;
 import com.milk.product.model.vo.Review;
@@ -496,7 +497,7 @@ public class ProductDao {
 		String sql = prop.getProperty("deleteProduct");
 		
 		for(int i=0; i<arrpNo.length-1; i++) {
-			sql += "OR PRODUCT_NO = ?";
+			sql += "OR STATUS = 'Y' AND PRODUCT_NO = ?";
 		}
 		
 		try {
@@ -668,7 +669,7 @@ public class ProductDao {
 				p.setProductNo(rset.getInt("product_no"));
 				p.setProductImg(rset.getString("product_img"));
 				p.setProductName(rset.getString("product_name"));
-				p.setCapacity(rset.getInt("count"));
+				p.setCapacity(rset.getInt("count")); // 상품갯수
 				p.setPrice(rset.getInt("price"));
 				p.setStock(rset.getInt("stock"));
 				list.add(p);
@@ -698,5 +699,75 @@ public class ProductDao {
 			close(pstmt);
 		}
 		return result;
+	}
+	
+	public int productCartDelete(Connection conn, int memNo, String[] proNoArr) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String sql = prop.getProperty("productCartDelete");
+		sql += "WHERE MEMBER_NO = " + memNo + " AND PRODUCT_NO IN (" + String.join(",", proNoArr) + ")";
+		try {
+			pstmt = conn.prepareStatement(sql);
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		return result;
+	}
+	
+	public ArrayList<Product> orderProductList(Connection conn, int memNo, String proNo) {
+		ArrayList<Product> list = new ArrayList<>();
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String sql = prop.getProperty("orderProductList");
+		sql += memNo + " AND PRODUCT_NO IN (" + proNo + ")";
+		try {
+			pstmt = conn.prepareStatement(sql);
+			rset = pstmt.executeQuery();
+			while(rset.next()) {
+				Product p = new Product();
+				p.setProductNo(rset.getInt("product_no"));
+				p.setProductImg(rset.getString("product_img"));
+				p.setProductName(rset.getString("product_name"));
+				p.setCapacity(rset.getInt("count")); // 상품갯수
+				p.setPrice(rset.getInt("price"));
+				p.setStock(rset.getInt("stock"));
+				list.add(p);
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		return list;
+	}
+	
+	public Member orderMember(Connection conn, int memNo) {
+		Member m = null;
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String sql = prop.getProperty("orderMember");
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, memNo);
+			rset = pstmt.executeQuery();
+			if(rset.next()) {
+				m = new Member();
+				m.setMemberName(rset.getString("member_name"));
+				m.setPhone(rset.getString("phone"));
+				m.setEmail(rset.getString("email"));
+				m.setMemberNo(rset.getInt("total")); // 총 적립금
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		return m;
 	}
 }

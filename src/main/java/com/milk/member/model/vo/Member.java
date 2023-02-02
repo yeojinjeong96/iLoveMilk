@@ -93,6 +93,14 @@ public class Member {
 		this.memberName = memberName;
 	}
 	
+	
+	
+	public Member(String memberId, Date modifyDate) {
+		super();
+		this.memberId = memberId;
+		this.modifyDate = modifyDate;
+	}
+
 	public Member(int memberNo, String memberId, String memberPwd, String memberName, String phone, String email,
 		         String addressNumber, String address, String addressDetail, String profile) {
 		      super();

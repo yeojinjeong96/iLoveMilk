@@ -300,4 +300,23 @@
 		 WHERE PRODUCT_NO = ?
 		   AND MEMBER_NO = ?
 	</entry>
+	
+	<entry key="productCartDelete">
+		DELETE FROM TB_CART 
+	</entry>
+	
+	<entry key="orderProductList">
+		SELECT PRODUCT_NO, PRODUCT_IMG, PRODUCT_NAME || ' ' || CAPACITY || '(mL/g)' PRODUCT_NAME, COUNT, COUNT*PRICE PRICE, STOCK
+		  FROM TB_CART
+		  JOIN TB_PRODUCT USING(PRODUCT_NO)
+		 WHERE MEMBER_NO = 
+	</entry>
+	
+	<entry key="orderMember">
+		SELECT MEMBER_NAME, PHONE, EMAIL, TOTAL
+		  FROM TB_MEMBER
+		  LEFT
+		  JOIN TB_POINT USING(MEMBER_NO)
+		 WHERE MEMBER_NO = ?
+	</entry>
 </properties>

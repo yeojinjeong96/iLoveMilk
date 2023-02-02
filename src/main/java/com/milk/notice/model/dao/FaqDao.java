@@ -69,6 +69,7 @@ public class FaqDao {
 		}
 		sql+="order by faq_no desc) E) WHERE RNUM BETWEEN ? AND ? ";
 		
+		
 		try {
 			pstmt= conn.prepareStatement(sql);
 			pstmt.setInt(1, startRow);

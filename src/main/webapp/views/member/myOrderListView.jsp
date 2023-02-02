@@ -1,5 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@page import= "java.util.ArrayList, com.milk.member.model.vo.Order" %>
+<%
+	ArrayList<Order> list = (ArrayList<Order>)request.getAttribute("list");
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -67,19 +71,6 @@
    
    <%@ include file="../common/header.jsp" %>
    
-    <%
-    	String memberId = loginMember.getMemberId();
-		int memberNo = loginMember.getMemberNo();
-		String memberPwd = loginMember.getMemberPwd();
-		String profile = loginMember.getProfile();
-		String memberName = loginMember.getMemberName();
-    	String phone = loginMember.getPhone() == null ? "" : loginMember.getPhone(); 
-    	String email = loginMember.getEmail();
-    	String addressNumber = loginMember.getAddressNumber() == null ? "" : loginMember.getAddressNumber();
-    	String address = loginMember.getAddress() == null ? "" : loginMember.getAddress();
-    	String addressDetail = loginMember.getAddressDetail() == null ? "" : loginMember.getAddressDetail();
-    	%>
-   
    
    <div class="outer">
 
@@ -122,43 +113,110 @@
         </div>
        
        <div class="maincontent">
-       
-       <div class="order-list">
-            <h2>주문목록 / 배송조회 내역 총 X 건</h2>
-            <table id="list" border="1px solid gray;">
-                <tr>
-                    <th width="15%">날짜<br>주문번호</th>
-                    <th width="61%">상품정보</th>
-                    <th width="12%">주문상태</th>
-                    <th width="12%">확인</th>
-                </tr>
-                <tr>
-                    <td align="center">2022 - 00 - 00 <br> 00000000</td>
-                    <td>
-                        <table id="information">
-                            <tr>
-                                <th rowspan="4">이미지</th>
-                                <td>착한목장 무항생제 우유 44팩</td>
-                            </tr>
-                            <tr>
-                                <td>10000원 / 개</td>
-                            </tr>
-                            <tr>
-                                <td>&nbsp;</td>
-                            </tr>
-                            <tr>
-                                <td>&nbsp; </td>
-                            </tr>
-                        </table>
-                       
-                    </td>
-                    <td align="center">결제완료<br>상품준비중</td>
-                    <td align="center">대기</td>
-                </tr>
-            </table>
-            
-        </div>
-       
+       	
+       		<form action="" class="myorder">
+		       <div class="order-list" style="padding:30px 30px 30px 0px;">
+		           <div style="height:500px; overflow-y: auto;">
+			            
+			            <table id="list" border="1px solid gray;">
+			                <div id="ohead">
+			                	<tr>
+				                    <th width="15%">날짜<br>주문번호</th>
+				                    <th width="50%">상품정보</th>
+				                    <th width="10%">총 금액</th>
+				                    <th width="12%">주문상태</th>
+				                    <th width="12%">확인</th>
+			                	</tr>
+			                </div>
+			                <div id="obody">
+			                	<% if(list.isEmpty()){ %>
+				                	<div class="thumbnail" align="left">
+									조회된 목록이 없습니다.
+									</div>
+				                <% }else { %>
+				                	<% for(Order o : list){ %>
+				                		<tr>
+						                    <td align="center"><%=o.getPaymentDate() %> <br> <%=o.getOrderNo() %></td>
+						                    <td>
+						                    	<table >
+						                    		<tr>
+						                    			<td>
+						                    				<div name="productImg" style="width:100px; height:100px;  float: left; magin:auto;"> 
+						                    					<img src="<%=o.getProductImg() %>" width="100%" height="100%"> 
+						                    				</div>
+							                    			<div style="float: left; padding-top:35px"> <a data-toggle="modal" data-target="#orderdetail"><%=o.getProductName() %> 외 <%= (o.getProductCount())-1%>건</a>  </div>
+						                    			</td>
+						                    		</tr>
+						                    
+						                    	</table>
+						                    	
+						                    </td>
+						                    <td align="center"><%=o.getPrice() %>원</td>
+						                    <td align="center">결제완료<br>상품준비중</td>
+						                    <td align="center">운송장 번호</td>
+						                </tr>
+				                	
+				                	<% } %>
+				                
+				                <% } %>
+			                 
+			                </div>
+			                
+			            </table>
+		            </div>
+		        </div>
+		        
+       		</form>
+               
+                <!-- 주문 상세페이지 모달 div -->
+                 <div class="modal" id="orderdetail">
+                    <div class="modal-dialog">
+                      <div class="modal-content">
+                  
+                        <!-- Modal Header -->
+                        <div class="modal-header">
+                          <h4 class="modal-title">주문 상세</h4>
+                          <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        </div>
+                  
+                        <!-- Modal body -->
+                        <div class="modal-body">
+                            <table id="list" border="1px solid gray;">
+                                <div id="ohead">
+                                    <tr>
+                                        <th width="15%">상품 사진 </th>
+                                        <th width="50%">상품이름</th>
+                                        <th width="10%">상품가격</th>
+                                        <th width="12%">구매갯수</th>
+                                    </tr>
+                                </div>
+                                <div id="obody">
+                                    <!-- <% for(Order o : list){ %> -->
+                                        <tr>
+                                            <td> 상품사진 </td>
+                                            <td>상품이름</td>
+                                            <td align="center">000원</td>
+                                            <td align="center">000개</td>
+                                        </tr>
+				                	<!-- <% } %> -->
+                                           
+                                
+                                </div>
+                            </table>
+                            <div id="ounder" style="float: right;"" >
+                                   
+                                총 000 원 
+                    
+                            </div>
+
+                        </div>
+                  
+                      </div>
+                    </div>
+                  </div>
+               
+               
+               
                
 		</div>
 	</div>
