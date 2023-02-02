@@ -119,7 +119,7 @@
 
 	<div class="outer" align="center">
         <br>
-        <a href="<%= contextPath %>/updateM.re?no<%= r.getRecipeNo() %>" class="btn btn-secondary btn-sm" width="700px" style="margin-left: 650px">수정</a>
+        <a href="<%= contextPath %>/updateFormM.re?no=<%= r.getRecipeNo() %>" class="btn btn-secondary btn-sm" width="700px" style="margin-left: 650px">수정</a>
         
         <br><br>
         <table class="detail-area"> 

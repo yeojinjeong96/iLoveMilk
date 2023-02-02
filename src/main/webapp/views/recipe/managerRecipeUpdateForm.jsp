@@ -107,7 +107,8 @@
 </head>
 <body>
 
-	<%@ include file = "../common/header.jsp" %>
+	<%@include file="/views/common/managerHeader.jsp" %>
+	<%@include file="/views/common/managerMenubar.jsp" %>
 	
 	<div class="outer" align="center">
         <br>
@@ -123,10 +124,10 @@
                 </tr>
             </table>
 
-            <div style="border-bottom: 3px solid gray; width: 700px; margin-top: -15px;"></div>
+            <div style="border-bottom: 3px solid gray; width: 700px; margin-top: -15px; margin-left: 200px"></div>
             <br>
 
-        <form action="<%= contextPath %>/update.re" method="post" enctype="multipart/form-data">
+        <form action="<%= contextPath %>/updateM.re" method="post" enctype="multipart/form-data">
 			<input type="hidden" name="no" value="<%= r.getRecipeNo() %>">
             <div class="enroll-area">
                 <table>
@@ -202,7 +203,7 @@
                 </table>
                 <br>
                 
-                <table id="addOrder">
+                <table id="addOrder" width="700px" style="margin-left: 200px">
                     <thead>
                         <tr>
                             <td colspan="4">
@@ -250,7 +251,7 @@
                 </table>
                 <br>
 
-                <table style="font-size: 14px;">
+                <table style="font-size: 14px; margin-left: 200px;" width="700px">
                     <tr>
                         <td width="350px" align="center" style="padding: 10px;">
                             <button type="reset" class="btn btn-secondary btn-sm" data-target="#reset" data-toggle="modal" class="btn btn-outline-primary">취소</button>
@@ -478,7 +479,6 @@
         
     </div>
     
-    <%@ include file = "../common/footer.jsp" %>
 
 </body>
 </html>
