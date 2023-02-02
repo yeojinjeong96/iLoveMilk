@@ -58,7 +58,7 @@
                 <br><br>
                 <div align="right" style="width:640px;">
                 	<form action="" method="post" id="search-form">
-                        <input type="text" name = "keyword" required><button type="button" onclick="searchKeyMem();" id="search-btn" class="btn btn-primary btn-sm">검색</button>
+                        <input type="text" name = "keyword" id="keyInput" required><button type="button" onclick="searchKeyMem(1);" id="search-btn" class="btn btn-primary btn-sm">검색</button>
                     </form>
                 </div>
             </div>
@@ -96,7 +96,7 @@
                                 <td><%=m.getTotalpay() %></td>
                                 <td><%=m.getTotal() %>
                                     <button type="button" id="btn1" onclick="memDetail('<%=m.getMemberId() %>', '<%=m.getMemberGrade() %>', <%=m.getTotal() %>, <%=m.getMemberNo() %>);" class="btn btn-outline-secondary btn-sm" data-toggle="modal" data-target="#point-info" style="font-size:9px;">상세</button>
-                                    <button type="button" id="btn2" onclick="memModify('<%=m.getMemberId() %>');" class="btn btn-outline-secondary btn-sm" data-toggle="modal" data-target="#point-change" style="font-size:9px;">변경</button>
+                                    <button type="button" id="btn2" onclick="memModify('<%=m.getMemberId() %>', <%=m.getMemberNo() %>);" class="btn btn-outline-secondary btn-sm" data-toggle="modal" data-target="#point-change" style="font-size:9px;">변경</button>
                                 </td>
                                 <td>
                                     <%=m.getEnrollDate() %>
@@ -173,21 +173,24 @@
 				
 			}
      	
-     	function memModify(a){
-     		$("#modifyModalId").text(a);
+     	function memModify(a, b){
+     		$("#modifyModalId").val(a);
+     		$("#modifyModalNo").val(b);
      	}
      	
 	    	
-    		function searchKeyMem(){
+    		function searchKeyMem(page){
     			
-    			var str = $("form[id=search-form]").serialize();
+    			var str = $("#keyInput").val(); // 키워드
     			
     			$.ajax({
-    				url:"<%=contextPath %>/memSearch.ma?cpage=1",
-    				data : str,
+    				url:"<%=contextPath %>/memSearch.ma",
+    				data : {
+    					keyword:str,
+    					cpage:page
+    				}
     				success:function(result){
     					// 검색결과 리스트
-    					
     					
     					let sval1 = "";
     					if(result.slist.length == 0){
@@ -205,7 +208,7 @@
                                 + "<td>" + result.slist[i].totalpay + "</td>"
                                 + "<td>" + result.slist[i].total 
                                 +  "<button type='button' id='btn1' onclick= 'memDetail('result.slist[i].memberId', 'result.slist[i].memberGrade', result.slist[i].total , result.slist[i].memberNo);'" +  "class='btn btn-outline-secondary btn-sm' data-toggle='modal' data-target='#point-info' style='font-size:9px;'>" + "상세" + "</button>"
-                                +  "<button type='button' id='btn2' onclick= 'memModify('result.slist[i].memberId');' class='btn btn-outline-secondary btn-sm' data-toggle='modal' data-target='#point-change' style='font-size:9px;'>"+ "변경" + "</button>"
+                                +  "<button type='button' id='btn2' onclick= 'memModify('result.slist[i].memberId', result.slist[i].memberNo);' class='btn btn-outline-secondary btn-sm' data-toggle='modal' data-target='#point-change' style='font-size:9px;'>"+ "변경" + "</button>"
                                  + "</td>"
                                  + "<td>" 
                                  + result.slist[i].enrollDate + "</td>"
@@ -219,15 +222,15 @@
     					let sval2 = "";
     					
 	                     if(result.spi.currentPage != 1){ 
-	                    	 sval2 += "<button onclick=" + "'location.href='<%=contextPath%>/memSearch.ma?cpage=result.pi.currentPage-1&keyword=str';'" + ">&lt;</button>";
+	                    	 sval2 += "<button onclick=" + "'searchKeyMem(result.pi.currentPage-1);'" + ">&lt;</button>";
                   		} 
        
 	                     for(let p=result.spi.startPage; p<=result.spi.endPage; p++){ 
-	                    	 sval2 +=" <button onclick="+"'location.href='<%=contextPath%>/memSearch.ma?cpage=p&keyword=str';'" + ">"+ p +" </button>";
+	                    	 sval2 +=" <button onclick="+"'searchKeyMem(p);'" + ">"+ p +" </button>";
 	                       } 
       
                       if(result.spi.currentPage != result.spi.maxPage){
-                     	 sval2 +=" <button onclick=" + "'location.href='<%=contextPath%>/memSearch.ma?cpage=result.spi.currentPage+1&keyword=str';'" + "> &gt;</button>";
+                     	 sval2 +=" <button onclick=" + "'searchKeyMem(result.spi.currentPage+1);'" + "> &gt;</button>";
                    } 
                 $(".paging-area").html(sval2);   
     					
@@ -239,8 +242,7 @@
     			});
     			
     		}
- 	 	
-    	
+    		
             	
    		 </script>
             
@@ -284,7 +286,7 @@
                         <table  class="table table-borderless" style="width:100%;">
                                 <tr>
                                     <td>아이디</td>
-                                    <td id="detailModalId"></td>
+                                    <td id="detailModalId" ></td>
                                 </tr>
                                 <tr>
                                     <td>등급</td>
@@ -348,17 +350,21 @@
                 <!-- Modal body -->
                 <div class="modal-body">
                 
-                <form action="" method="post">
+                <form action="<%=contextPath %>/memPointCh.ma" method="post">
                         <input type="hidden" name="" value="">
-                           <form action="<%=contextPath %>/memPointCh.ma" method="post" id="">
+                       
 	                        <table style="width:100%;" class="table table-borderless">
 	                                <tr>
 	                                    <td >아이디</td>
-	                                    <td id="modifyModalId" name="memPointId"></td>
+	                                    <td  value=""><input type="text" name="" id="modifyModalId" readonly></td>
+	                                </tr>
+	                                	                                <tr>
+	                                    <td >회원번호</td>
+	                                    <td  value=""><input type="text" name="memPointNo" id="modifyModalNo" readonly></td>
 	                                </tr>
 	                                <tr>
 	                                    <td>구분</td>
-	                                    <td> <input type="radio" name="poStatus" value="Y"> 적립금 지급 <input type="radio" name="status" value="N"> 적립금 차감 </td>
+	                                    <td> <input type="radio" name="poStatus" value="적립"> 적립금 지급 <input type="radio" name="status" value="사용"> 적립금 차감 </td>
 	                                </tr>
 	                                <tr>
 	                                    <td>적립금</td>
@@ -375,7 +381,7 @@
                         <div align="center">
                         <button type="submit" class="btn btn-outline-secondary btn-sm">확인</button> <button type="reset" class="btn btn-outline-secondary btn-sm">취소</button>
                         </div>
-                         </form>
+                         
                 </form>
                 
                 

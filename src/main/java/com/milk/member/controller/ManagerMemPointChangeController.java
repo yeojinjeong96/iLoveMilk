@@ -1,23 +1,27 @@
 package com.milk.member.controller;
 
 import java.io.IOException;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.milk.member.model.service.MemberService;
+import com.milk.member.model.vo.Point;
+
 /**
  * Servlet implementation class ManagerMemPointChange
  */
 @WebServlet("/memPointCh.ma")
-public class ManagerMemPointChange extends HttpServlet {
+public class ManagerMemPointChangeController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public ManagerMemPointChange() {
+    public ManagerMemPointChangeController() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -27,15 +31,21 @@ public class ManagerMemPointChange extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-		String id = request.getParameter("memPointId");
+		
+		request.setCharacterEncoding("UTF-8");
+		int no = Integer.parseInt(request.getParameter("memPointNo"));
 		String status = request.getParameter("poStatus");
-		String val = request.getParameter("memPointVal");
+		int val = Integer.parseInt(request.getParameter("memPointVal"));
 		String content = request.getParameter("memPointCon");
 		
-		System.out.println(id);
-		System.out.println(status);
-		System.out.println(val);
-		System.out.println(content);
+		Point p = new Point();
+		p.setPointNo(1);
+		p.setCount(val);
+		p.setStatus(status);
+		p.setContent(content);
+		p.setMemberNo(no);
+		
+		int result = new MemberService().memberPointChange(p);
 		
 		
 	}

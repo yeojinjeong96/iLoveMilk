@@ -316,6 +316,29 @@
 		     )  
 		  WHERE RNUM BETWEEN ? AND ? 
 	</entry>
+	<entry key="memberPointChange">
+		INSERT 
+		  INTO TB_POINT
+		  (
+		    POINT_NO,
+		    COUNT,
+		    STATUS,
+		    TOTAL,
+		    CONTENT,
+		    MEMBER_NO
+		  ) 
+		  VALUES
+		  (
+		    SEQ_PONO.NEXTVAL,
+		    ?,
+		    ?,
+		    NVL((SELECT SUM(COUNT)
+		       FROM TB_POINT
+		      WHERE MEMBER_NO = ?), 0) + ?,
+		    ?,
+		    ? 
+		  )
+	</entry>
 	
 	  <entry key="UpdateProfile">
    UPDATE TB_MEMBER
