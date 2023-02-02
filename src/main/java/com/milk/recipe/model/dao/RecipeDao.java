@@ -570,23 +570,19 @@ public class RecipeDao {
 		try {
 			
 			for(RecipeIngre listI : listIngre) {
-				
 				pstmt = conn.prepareStatement(sql);
-				pstmt.setString(1, listI.getIngreName());
-				pstmt.setString(2, listI.getIngreAmount());
-				pstmt.setInt(3, listI.getIngreNo());
-				pstmt.setInt(4, listI.getRecipeNo());
+				pstmt.setInt(1, listI.getRecipeNo());
+				pstmt.setString(2, listI.getIngreName());
+				pstmt.setString(3, listI.getIngreAmount());
 				
 				result = pstmt.executeUpdate();
 			}
-			
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
 			close(pstmt);
 		}
-		
 		
 		return result;
 		
@@ -601,14 +597,13 @@ public class RecipeDao {
 		
 		try {
 			
+	
 			for(RecipeOrder listO : listOrder) {
-				
 				pstmt = conn.prepareStatement(sql);
-				pstmt.setInt(1, listO.getRecipeOrder());
-				pstmt.setString(2, listO.getRecipeExplain());
-				pstmt.setString(3, listO.getRecipeImg());
-				pstmt.setInt(4, listO.getRecipeOrderNo());
-				pstmt.setInt(5, listO.getRecipeNo());
+				pstmt.setInt(1, listO.getRecipeNo());
+				pstmt.setInt(2, listO.getRecipeOrder());
+				pstmt.setString(3, listO.getRecipeExplain());
+				pstmt.setString(4, listO.getRecipeImg());
 			
 				result = pstmt.executeUpdate();
 				
@@ -955,6 +950,49 @@ public class RecipeDao {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}finally {
+			close(pstmt);
+		}
+		
+		return result;
+	}
+	
+	
+	public int deleteRecipeIngreList(Connection conn, Recipe r) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		
+		String sql = prop.getProperty("deleteRecipeIngreList");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, r.getRecipeNo());
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		return result;
+	}
+	
+	public int deleteRecipeOrderList(Connection conn, Recipe r) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		
+		String sql = prop.getProperty("deleteRecipeOrderList");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, r.getRecipeNo());
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
 			close(pstmt);
 		}
 		

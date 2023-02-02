@@ -192,12 +192,22 @@ public class RecipeService {
 		
 		int result1 = new RecipeDao().updateRecipe(conn, r);
 		
-		int result2 = new RecipeDao().updateRecipeIngreList(conn, listIngre);
+		int result2 = new RecipeDao().deleteRecipeIngreList(conn, r);
+		int result3 = new RecipeDao().deleteRecipeOrderList(conn, r);
 		
-		int result3 = new RecipeDao().updateRecipeOrderList(conn, listOrder);
+		//System.out.println("삭제 재료 수 : " + result2);
+		//System.out.println("삭제 순서 수 : " + result3);
 		
+		//System.out.println("리스트에 담긴 재료 수 : " + listIngre.size());
+		//System.out.println("리스트에 담긴 순서 수 : " + listOrder.size());
 		
-		if(result1 > 0 && result2 > 0 && result3 > 0) {
+		int result4 = new RecipeDao().updateRecipeIngreList(conn, listIngre);
+		int result5 = new RecipeDao().updateRecipeOrderList(conn, listOrder);
+		
+		//System.out.println("추가 재료 수 : " + result4);
+		//System.out.println("추가 순서 수 : " + result5);
+		
+		if(result1 > 0 && result2 > 0 && result3 > 0 && result4 > 0 && result5 > 0) {
 			commit(conn);
 		}else {
 			rollback(conn);
@@ -206,7 +216,7 @@ public class RecipeService {
 		close(conn);
 		
 		
-		return result1 * result2 * result3;
+		return result1 * result2 * result3 * result4 * result5;
 	}
 	
 	
@@ -265,6 +275,7 @@ public class RecipeService {
 		return list;
 	}
 	
+	
 	public ArrayList<Recipe> selectRecipeListRestorationM(PageInfo pi){
 		Connection conn = getConnection();
 		
@@ -273,6 +284,7 @@ public class RecipeService {
 		close(conn);
 		return list;
 	}
+	
 	
 	public int insertRecipeM(Recipe r, ArrayList<RecipeIngre> listIngre, ArrayList<RecipeOrder> listOrder) {
 		Connection conn = getConnection();
@@ -338,5 +350,7 @@ public class RecipeService {
 		close(conn);
 		return result;
 	}
+	
+	
 	
 }

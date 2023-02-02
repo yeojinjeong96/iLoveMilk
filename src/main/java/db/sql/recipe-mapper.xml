@@ -255,6 +255,7 @@
 		 WHERE RECIPE_NO = ?
 	</entry>
 	
+	<!-- 
 	<entry key="updateRecipeIngreList">
 		UPDATE
 			   TB_RECIPE_INGRE
@@ -273,6 +274,7 @@
 		 WHERE RECIPE_ORDER_NO = ?
 		   AND RECIPE_NO = ?
 	</entry>
+	-->
 	
 	<entry key="deleteRecipe">
 		UPDATE TB_RECIPE
@@ -474,6 +476,57 @@
 		UPDATE TB_RECIPE
 		   SET DELETE_STATUS = 'N'
 		 WHERE RECIPE_NO IN (
+	</entry>
+	
+	<entry key="deleteRecipeIngreList">
+		DELETE
+		  FROM TB_RECIPE_INGRE
+		 WHERE RECIPE_NO = ?
+	</entry>
+	
+	<entry key="deleteRecipeOrderList">
+		DELETE
+		  FROM TB_RECIPE_ORDER
+		 WHERE RECIPE_NO = ?
+	</entry>
+	
+	
+	<entry key="updateRecipeIngreList">
+		INSERT
+		  INTO TB_RECIPE_INGRE
+		  (
+		    INGRE_NO
+		  , RECIPE_NO
+		  , INGRE_NAME
+		  , INGRE_AMOUNT
+		  )
+		  VALUES
+		  (
+		    SEQ_INO.NEXTVAL
+		  , ?
+		  , ?
+		  , ?
+		  )
+	</entry>
+	
+	<entry key="updateRecipeOrderList">
+		INSERT
+		  INTO TB_RECIPE_ORDER
+		  (
+		    RECIPE_ORDER_NO
+		  , RECIPE_NO
+		  , RECIPE_ORDER
+		  , RECIPE_EXPLN
+		  , RECIPE_IMG
+		  )
+		  VALUES
+		  (
+		    SEQ_RONO.NEXTVAL
+		  , ?
+		  , ?
+		  , ?
+		  , ?
+		  )
 	</entry>
 
 </properties>

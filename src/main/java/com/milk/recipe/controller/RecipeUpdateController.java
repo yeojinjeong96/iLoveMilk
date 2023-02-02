@@ -50,20 +50,32 @@ public class RecipeUpdateController extends HttpServlet {
 			int recipeNo = Integer.parseInt(multiRequest.getParameter("no"));
 			String title = multiRequest.getParameter("title");
 			String content = multiRequest.getParameter("content");
-			String mainImg = "resources/recipe_upfiles/" + multiRequest.getFilesystemName("file1");
+			
+			String mainImg = multiRequest.getParameter("mainFile");
+			String changeImg = "resources/recipe_upfiles/" + multiRequest.getFilesystemName("file1");
+			
+			System.out.println(mainImg);
+			System.out.println(changeImg);
 			
 			Recipe r = new Recipe();
-			
-			
-		
 			r.setRecipeNo(recipeNo);
 			r.setRecipeTitle(title);
 			r.setRecipeIntro(content);
-			r.setMainImg(mainImg);
+			
+			if(multiRequest.getFilesystemName("file1") == null) {
+				r.setMainImg(mainImg);
+			}else {
+				r.setMainImg(changeImg);
+			}
+			
+			/*
+			if(changeImg == null) {
+				r.setMainImg(mainImg);
+			}
+			 */
 			
 			
 			ArrayList<RecipeIngre> listIngre = new ArrayList<>();
-			
 			
 			for(int i=1 ; i<=10 ; i++) {
 				
@@ -82,7 +94,6 @@ public class RecipeUpdateController extends HttpServlet {
 			
 					listIngre.add(listI);
 					
-					// System.out.println(listIngre);
 					
 				}
 			
@@ -91,23 +102,35 @@ public class RecipeUpdateController extends HttpServlet {
 			
 			ArrayList<RecipeOrder> listOrder = new ArrayList<>();
 			
-			
-			for(int lo=1 ; lo<=10 ; lo++) {
-				String orderExp = multiRequest.getParameter("order" + lo);
+			//int num2 = 1;
+			for(int lo=2 ; lo<=11 ; lo++) {
+				String orderExp = multiRequest.getParameter("order" + (lo-1));
 				int recipeNoO = Integer.parseInt(multiRequest.getParameter("no"));
 				int orderNo = Integer.parseInt(multiRequest.getParameter("orderNo"));
 				
+				String orderImg = multiRequest.getParameter("orderFile" + (lo-1));
+				String changeOrderImg = "resources/recipe_upfiles/" + multiRequest.getFilesystemName("file" + lo);
+				
+			
 				if(orderExp != null) {
 					RecipeOrder listO = new RecipeOrder();
 					listO.setRecipeExplain(orderExp);
 					listO.setRecipeNo(recipeNoO);
 					listO.setRecipeOrderNo(orderNo);
-					listO.setRecipeOrder(lo);
+					listO.setRecipeOrder(lo-1);
 					
-					String orderFile = "resources/recipe_upfiles/" + multiRequest.getFilesystemName("file" + (lo+1));
-					listO.setRecipeImg(orderFile);
+					if(multiRequest.getFilesystemName("file" + lo) != null) {
+						listO.setRecipeImg(changeOrderImg);
+					}else {
+						listO.setRecipeImg(orderImg);
+					}
 					
+					
+					// String orderFile = "resources/recipe_upfiles/" + multiRequest.getFilesystemName("file" + lo);
+					// listO.setRecipeImg(orderFile);
+				
 					listOrder.add(listO);
+					
 				}
 				
 			}
