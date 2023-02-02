@@ -91,7 +91,7 @@
                                 <td><%=r.getMemberId() %></td>
                                 <td>
                                 	<button type="button" onclick="memReport1(<%=r.getRepMemNo()%>);" class="btn btn-outline-secondary btn-sm" data-toggle="modal" data-target="#report-mngm">관리</button>
-                                    <button type="button" class="btn btn-outline-secondary btn-sm" data-toggle="modal" data-target="#report-delete">삭제</button>
+                                    <button type="button" class="btn btn-outline-secondary btn-sm" onclick="deleteReport(<%=r.getReportNo() %>);">삭제</button>
                                 </td>
                                 </tr>
 	                            <%} %>
@@ -101,7 +101,7 @@
                     </div>
                     <div id="mem-3">
                         <div align="right" style="width:700px">
-                            <button type="button" class="btn btn-outline-secondary btn-sm" data-toggle="modal" data-target="#blacklist-view">블랙리스트조회</button>
+                            <button type="button" onclick="selectBlackList();" class="btn btn-outline-secondary btn-sm" data-toggle="modal" data-target="#blacklist-view">블랙리스트조회</button>
                         </div> 
                         <div class="paging-area">
                             <!-- 내가 보고있는 페이지가 1번 페이지가 아닐때에만 나타내기 -->
@@ -126,8 +126,6 @@
                     	// 신고된 회원의 신고 상세내역
                     	function memReport1(memNo){
                     		
-                    		
-                    		
                     		$.ajax({
                     			url: "<%=contextPath%>/memRepma.ma",
                     			data:{memNo:memNo},
@@ -148,28 +146,38 @@
                     		});
                     		
                     	}
+                    	// 신고내역 삭제
+                    	function deleteReport(repNo){
+                    		$.ajax({
+                    			url: "<%=contextPath%>/repDelete.ma",
+                    			data:{repNo : repNo},
+                    			success:function(result){
+                    				
+                    				if(result){
+                    					alert("신고내역이 성공적으로 삭제되었습니다.");
+                    				}
+                    				
+                    			},error: function(){
+                    				alert("통신실패");
+                    			}
+                    		})
+                    	}
+                    	// 블랙리스트 조회
+                    	function selectBlackList(){
+                    		$.ajax({
+                    			url:"<%=contextPath%>/blackSelect.ma",
+                    			success:function(result){
+                    				
+                    			},error:function(){
+                    				
+                    			}
+                    			
+                    		})
+                    	}
                     	
                     </script>
 
-                    <!-- 신고내역 삭제 눌렀을때의 모달 -->
-                    <!-- The Modal -->
-                    <div class="modal" id="report-delete"  >
-                        <div class="modal-dialog">
-                        <div class="modal-content modal-sm">
-                    
-                            <!-- Modal body -->
-                            <br>
-                            <div class="modal-body" style="text-align:center; font-size:13px;">
-                                해당 신고내역을 삭제하시겠습니까?
-                            </div>
-                            <div align="center">
-                                <button type="button" class="btn btn-outline-secondary btn-sm" data-dismiss="modal" style=" width:100px;">확인</button>
-                                <button type="button" class="btn btn-outline-secondary btn-sm" data-dismiss="modal" style=" width:100px;">취소</button>
-                                </div>
-                                <br>
-                        </div>
-                        </div>
-                    </div>
+
 
 
                     <!-- 신고회원관리 모달 div -->
@@ -340,46 +348,34 @@
                                 <br><br>
 
                                 <table style="width:100%; height:100px; text-align: center;"class="table">
-                                    <tr>
-                                        <td><input type="checkbox" name="" value=""></td>
-                                        <td>번호</td>
-                                        <td>아이디</td>
-                                        <td>제재일</td>
-                                    </tr>
-                                    <tr>
-                                        <td><input type="checkbox" name="" value=""></td>
-                                        <td>1</td>
-                                        <td>아이디자리</td>
-                                        <td>23-01-01 00:00</td>
-                                    </tr>
-
+                                	<thead>
+	                                    <tr> 
+	                                        <td>no.</td>
+	                                        <td>아이디</td>
+	                                        <td>제재일</td>
+	                                    </tr>
+                                    </thead>
+                                    <tbody>
+	                                    <tr>
+	                                        <td></td>
+	                                        <td>아이디자리</td>
+	                                        <td>23-01-01 00:00</td>
+	                                    </tr>
+									</tbody>
                                 </table>
-                                <!--
-                                <div class="paging-area">
-                                    내가 보고있는 페이지가 1번 페이지가 아닐때에만 나타내기 
-                                    
-                                                <% if(pi.getCurrentPage() != 1){ %>
-                                                    <button onclick="location.href='<%=contextPath%>/list.bo?cpage=<%=pi.getCurrentPage()-1%>';">&lt;</button>
-                                                <% } %>
-                                    
-                                                <% for(int p=pi.getStartPage(); p<=pi.getEndPage(); p++){ %>
-                                                    <button onclick="location.href='<%=contextPath%>/list.bo?cpage=<%=p%>';"><%= p %></button>
-                                                <% } %>-->
-                                    <!--  내가 보고있는 페이지가 마지막 페이지가 아닐 때에만 나타내기 
-                                    
-                                                <% if(pi.getCurrentPage() != pi.getMaxPage()){ %>
-                                                    <button onclick="location.href='<%=contextPath%>/list.bo?cpage=<%=pi.getCurrentPage()+1%>';">&gt;</button>
-                                                <% } %>-->
+
                                 </div>
 
                         </form>
-                        
                         
                     </div>
                     
                  </div>
              </div>
         </div>
+        
+        
+        
     </div>
 </body>
 </html>

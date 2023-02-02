@@ -469,7 +469,7 @@
 								
 								var con = confirm(" 찜목록추가되었습니다. 해당페이지로 이동하시겠습니까?");
 								if(con){
-									location.href="<%=contextPath%>/mypage.me";
+									location.href="<%=contextPath%>/plike.me";
 								}
 	                         }
 	                       

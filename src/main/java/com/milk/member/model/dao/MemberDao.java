@@ -686,6 +686,35 @@ public Member updateCheckPwd(Connection conn, String memberId, String memberPwd)
 		
 	}
 	
+	public int deleteMemberReport(Connection conn, int no) {
+		int result = 0;
+		PreparedStatement pstmt =null;
+		String sql = prop.getProperty("deleteMemberReport");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, no);
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+	
+		return result;
+	}
+	
+	public ArrayList<Member> selectBlackList(Connection conn){
+		ResultSet rset = null;
+		ArrayList<Member> list = new ArrayList<>();
+		PreparedStatement pstmt = null;
+		String sql = prop.getProperty("selectBlackList");
+		
+		
+		return list;
+	}
+	
 	public int UpdateProfile(Connection conn, Member m) {
 		
 		int result = 0;

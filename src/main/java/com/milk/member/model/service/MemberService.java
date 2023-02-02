@@ -304,6 +304,36 @@ public class MemberService {
 		}
 		return result;
 	}
+	
+	
+	/**
+	 * 회원 신고내역 삭제
+	 * @author 이다혜
+ 	 * @return result
+	 */
+	public int deleteMemberReport(int no) {
+		Connection conn = getConnection();
+		int result = new MemberDao().deleteMemberReport(conn, no);
+		
+		if(result > 0) {
+			commit(conn);
+		}else {
+			rollback(conn);
+		}
+		return result;
+	}
+	
+	/** 블랙리스트인 회원 전체 조회
+	 * @author 이다혜
+	 * @return list
+	 */
+	public ArrayList<Member> selectBlackList(){
+		Connection conn = getConnection();
+		ArrayList<Member> list = new MemberDao().selectBlackList(conn);
+		
+		close(conn);
+		return list;
+	}
 
 	 /**
 	  * 회원프로필 변경 서비스 

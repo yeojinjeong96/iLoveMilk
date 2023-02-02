@@ -360,6 +360,11 @@
 		      STATUS = 'N'
 	  WHERE MEMBER_ID = ?
 	</entry>
+	<entry key="deleteMemberReport">
+		DELETE 
+		  FROM TB_REPORT
+		 WHERE REPORT_NO = ? 
+	</entry>
 	
 	  <entry key="UpdateProfile">
    UPDATE TB_MEMBER

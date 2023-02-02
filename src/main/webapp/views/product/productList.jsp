@@ -286,7 +286,10 @@
 			                   success:function(result){
 			                      	
 			                	   if(result > 0){
-										console.log("성공");
+										var con = confirm(" 찜목록추가되었습니다. 해당페이지로 이동하시겠습니까?");
+										if(con){
+										location.href="<%=contextPath%>/plike.me";
+										}
 			                         }
 			                       
 			                    },
