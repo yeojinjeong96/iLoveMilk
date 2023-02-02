@@ -333,7 +333,7 @@
         
    </entry>
    
-      <entry key="productLikeList">
+   <entry key="productLikeList">
      SELECT 
               LI.PRODUCT_NO
            , LI.MEMBER_NO
@@ -346,4 +346,43 @@
         WHERE MEMBER_NO = ?
    
    </entry>
+   
+   <entry key="myOrderList">
+	   SELECT 
+		       ORDER_NO
+		    , (
+		        SELECT PAYMENT_DATE
+		          FROM TB_PAYMENT
+		         WHERE ORDER_NO = ORD.ORDER_NO 
+		       ) "PAYMENT_DATE" 
+		    , (
+		         SELECT PRODUCT_IMG
+		           FROM TB_ORDERDETAIL
+		           JOIN TB_PRODUCT USING(PRODUCT_NO)
+		          WHERE ORDER_NO = ORD.ORDER_NO
+		            AND ROWNUM = 1
+		        ) "PRODUCT_IMG" 
+		     , (
+		         SELECT PRODUCT_NAME
+		           FROM TB_ORDERDETAIL
+		           JOIN TB_PRODUCT USING(PRODUCT_NO)
+		          WHERE ORDER_NO = ORD.ORDER_NO
+		            AND ROWNUM = 1
+		        ) "PRODUCT_NAME"
+		     , (
+		         SELECT COUNT(*)
+		           FROM TB_ORDERDETAIL
+		          WHERE ORDER_NO = ORD.ORDER_NO
+		       ) "PRODUCT_COUNT"
+		    , (
+		        SELECT PRICE
+		          FROM TB_PAYMENT
+		         WHERE ORDER_NO = ORD.ORDER_NO 
+		       ) "PRICE"
+		     , STATUS
+		     , WAYBILL
+		 FROM TB_ORDER ORD
+		WHERE MEMBER_NO =  ?
+   </entry>
+   
 </properties>
