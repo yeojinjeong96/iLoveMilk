@@ -8,12 +8,10 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import org.apache.tomcat.util.http.fileupload.servlet.ServletFileUpload;
 
 import com.milk.common.MyFileRenamePolicy;
-import com.milk.member.model.vo.Member;
 import com.milk.recipe.model.service.RecipeService;
 import com.milk.recipe.model.vo.Recipe;
 import com.milk.recipe.model.vo.RecipeIngre;
@@ -21,16 +19,16 @@ import com.milk.recipe.model.vo.RecipeOrder;
 import com.oreilly.servlet.MultipartRequest;
 
 /**
- * Servlet implementation class RecipeUpdateController
+ * Servlet implementation class RecipeUpdateManagerController
  */
-@WebServlet("/update.re")
-public class RecipeUpdateController extends HttpServlet {
+@WebServlet("/updateM.re")
+public class RecipeUpdateManagerController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public RecipeUpdateController() {
+    public RecipeUpdateManagerController() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -54,8 +52,8 @@ public class RecipeUpdateController extends HttpServlet {
 			String mainImg = multiRequest.getParameter("mainFile");
 			String changeImg = "resources/recipe_upfiles/" + multiRequest.getFilesystemName("file1");
 			
-			//System.out.println(mainImg);
-			//System.out.println(changeImg);
+			System.out.println(mainImg);
+			System.out.println(changeImg);
 			
 			Recipe r = new Recipe();
 			r.setRecipeNo(recipeNo);
@@ -67,12 +65,6 @@ public class RecipeUpdateController extends HttpServlet {
 			}else {
 				r.setMainImg(changeImg);
 			}
-			
-			/*
-			if(changeImg == null) {
-				r.setMainImg(mainImg);
-			}
-			 */
 			
 			
 			ArrayList<RecipeIngre> listIngre = new ArrayList<>();
@@ -102,7 +94,7 @@ public class RecipeUpdateController extends HttpServlet {
 			
 			ArrayList<RecipeOrder> listOrder = new ArrayList<>();
 			
-			//int num2 = 1;
+		
 			for(int lo=2 ; lo<=11 ; lo++) {
 				String orderExp = multiRequest.getParameter("order" + (lo-1));
 				int recipeNoO = Integer.parseInt(multiRequest.getParameter("no"));
@@ -125,9 +117,6 @@ public class RecipeUpdateController extends HttpServlet {
 						listO.setRecipeImg(orderImg);
 					}
 					
-					
-					// String orderFile = "resources/recipe_upfiles/" + multiRequest.getFilesystemName("file" + lo);
-					// listO.setRecipeImg(orderFile);
 				
 					listOrder.add(listO);
 					
@@ -139,7 +128,7 @@ public class RecipeUpdateController extends HttpServlet {
 			
 			if(result > 0) {
 				request.getSession().setAttribute("alertMsg", "레시피 수정에 성공했습니다.");
-				response.sendRedirect(request.getContextPath() + "/detail.re?no=" + r.getRecipeNo());
+				response.sendRedirect(request.getContextPath() + "/detailM.re?no=" + r.getRecipeNo());
 			}else {
 				
 			}
