@@ -52,6 +52,7 @@
             </div>
             <br>
             <table border="1" id="q-list">
+            	<thead>
                 <tr>
                     <th width="50">No.</th>
                     <th width="100">작성자ID</th>
@@ -59,6 +60,7 @@
                     <th width="200">문의제목</th>
                     <th width="200">문의내용</th>
                 </tr>
+                </thead>
                 <%if(list.isEmpty()){ %>
                 <tr>
                     <td colspan="5">미답변 문의가 없습니다.</td>

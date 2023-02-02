@@ -356,7 +356,6 @@
         
    </entry>
    
-      <entry key="productLikeList">
    <entry key="productLikeList">
      SELECT 
               LI.PRODUCT_NO

@@ -1,5 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ page import = "com.milk.notice.model.vo.QA, com.milk.notice.model.vo.Attachment" %>
+<% 
+	QA q= (QA)request.getAttribute("q");
+	Attachment at = (Attachment)request.getAttribute("at");
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -16,7 +21,17 @@
     }
     .a a{text-decoration: none;
     color:black}
+    .content-area{
+        text-align: left;
+        height: 100%;
+        padding: 10px;
 
+    }
+    .outer-1{
+        width: 800px;
+        box-sizing: border-box;
+        float: left;
+    }
 </style>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
@@ -26,7 +41,9 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
 </head>
 <body>
-    <div class="outer" align="center">
+	<%@include file="/views/common/managerHeader.jsp" %>
+	<%@include file="/views/common/managerMenubar.jsp" %>
+    <div class="outer-1" align="center">
         <br>
         <div style="width:700px">
             <h2 align="left">답변 완료 목록 조회 </h2>
@@ -36,22 +53,26 @@
             <table  width="700px" border="1" class="text-center">
                 <tr>
                     <th>제목</th>
-                    <td>제목내용!!~~~~</td>
+                    <td><%=q.getqTitle() %></td>
                     <th>작성자명</th>
-                    <td>정여진</td>
+                    <td><%=q.getMemberName()%></td>
                 </tr>
                 <tr>
                     <th>카테고리</th>
-                    <td>[고객불만/제품/품질불만]</td>
+                    <td>[<%=q.getfCategory() %>/<%=q.getsCategory()%>]</td>
                     <th>작성일자</th>
-                    <td>2022.02.02 00:00:00</td>
+                    <td><%=q.getEnrollDate()%></td>
                     
                 </tr>
                 <tr>
-                    <th>문의내용</th>
+                    <th colspan="4">문의내용</th>
                 </tr>
-                <tr height="300px">
-                    <td colspan="4">문의내용!</td>
+                <tr >
+                    <td colspan="4" height="300px">
+                    	<div class="content-area">
+                            <%=q.getqContent()%>
+                        </div>
+                    </td>
                 </tr>
             </table>
             <br>
@@ -61,26 +82,36 @@
                 <table  width="700px" border="1" class="text-center">
                     <tr>
                         <th>제목</th>
-                        <td>제목내용!!~~~~</td>
+                        <td><%=q.getaTitle() %></td>
                         <th>작성자</th>
-                        <td>정여진</td>
+                        <td><%=q.getManagerName() %></td>
                     </tr>
                     <tr>
                         <th>카테고리</th>
-                        <td>[고객불만/제품/품질불만]</td>
+                        <td>[<%=q.getfCategory() %>/<%=q.getsCategory()%>]</td>
                         <th>작성일자</th>
-                        <td>2022.02.02 00:00:00</td>
+                        <td><%=q.getAnswerDate() %></td>
                         
                     </tr>
                     <tr>
-                        <th>답변 내용</th>
+                        <th colspan="4">답변 내용</th>
                     </tr>
-                    <tr height="300px">
-                        <td colspan="4">문의내용!</td>
+                    <tr >
+                        <td colspan="4" height="300px">
+                        	<div class="content-area">
+                                <%if(at!=null) {%>
+                                    <br>
+                                  <div>
+                                    <img src="<%=contextPath%>/<%=at.getFilePath()%><%=at.getChangeName()%>" >
+                                  </div> 
+                                  <%} %>
+                            <%=q.getaContent()%>
+                        	</div>
+                        </td>
                     </tr>
                 </table>
                 <br>
-                <button type="button">목록으로</button>
+                <button type="button" >목록으로</button>
 
         </div>
        
