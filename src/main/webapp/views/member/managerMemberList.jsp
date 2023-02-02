@@ -58,7 +58,7 @@
                 <br><br>
                 <div align="right" style="width:640px;">
                 	<form action="" method="post" id="search-form">
-                        <input type="text" name = "keyword" id="keyInput" required><button type="button" onclick="searchKeyMem();" id="search-btn" class="btn btn-primary btn-sm">검색</button>
+                        <input type="text" name = "keyword" id="keyInput" required><button type="button" onclick="searchKeyMem(1);" id="search-btn" class="btn btn-primary btn-sm">검색</button>
                     </form>
                 </div>
             </div>
@@ -179,13 +179,16 @@
      	}
      	
 	    	
-    		function searchKeyMem(){
+    		function searchKeyMem(page){
     			
-    			var str = $("form[id=search-form]").serialize();
+    			var str = $("#keyInput").val(); // 키워드
     			
     			$.ajax({
-    				url:"<%=contextPath %>/memSearch.ma?cpage=1",
-    				data : str,
+    				url:"<%=contextPath %>/memSearch.ma",
+    				data : {
+    					keyword:str,
+    					cpage:page
+    				}
     				success:function(result){
     					// 검색결과 리스트
     					
@@ -219,15 +222,15 @@
     					let sval2 = "";
     					
 	                     if(result.spi.currentPage != 1){ 
-	                    	 sval2 += "<button onclick=" + "'location.href='<%=contextPath%>/memSearch.ma?cpage=result.pi.currentPage-1&keyword=str';'" + ">&lt;</button>";
+	                    	 sval2 += "<button onclick=" + "'searchKeyMem(result.pi.currentPage-1);'" + ">&lt;</button>";
                   		} 
        
 	                     for(let p=result.spi.startPage; p<=result.spi.endPage; p++){ 
-	                    	 sval2 +=" <button onclick="+"'location.href='<%=contextPath%>/memSearch.ma?cpage=p&keyword=str';'" + ">"+ p +" </button>";
+	                    	 sval2 +=" <button onclick="+"'searchKeyMem(p);'" + ">"+ p +" </button>";
 	                       } 
       
                       if(result.spi.currentPage != result.spi.maxPage){
-                     	 sval2 +=" <button onclick=" + "'location.href='<%=contextPath%>/memSearch.ma?cpage=result.spi.currentPage+1&keyword=str';'" + "> &gt;</button>";
+                     	 sval2 +=" <button onclick=" + "'searchKeyMem(result.spi.currentPage+1);'" + "> &gt;</button>";
                    } 
                 $(".paging-area").html(sval2);   
     					
@@ -361,7 +364,7 @@
 	                                </tr>
 	                                <tr>
 	                                    <td>구분</td>
-	                                    <td> <input type="radio" name="poStatus" value="Y"> 적립금 지급 <input type="radio" name="status" value="N"> 적립금 차감 </td>
+	                                    <td> <input type="radio" name="poStatus" value="적립"> 적립금 지급 <input type="radio" name="status" value="사용"> 적립금 차감 </td>
 	                                </tr>
 	                                <tr>
 	                                    <td>적립금</td>

@@ -316,6 +316,27 @@
 		     )  
 		  WHERE RNUM BETWEEN ? AND ? 
 	</entry>
+	<entry key="">
+	 INSERT 
+	   INTO TB_POINT
+	   (
+	    POINT_NO,
+	    COUNT,
+	    STATUS,
+	    TOTAL,
+	    CONTENT,
+	    MEMBER_NO
+	   )
+	   VALUES
+	   (
+	    ?,
+	    ?,
+	    ?,
+	    ?,
+	    ?,
+	    ?
+	   )
+	</entry>
 	
 	  <entry key="UpdateProfile">
    UPDATE TB_MEMBER

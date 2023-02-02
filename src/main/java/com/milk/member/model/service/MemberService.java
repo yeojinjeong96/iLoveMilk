@@ -240,6 +240,11 @@ public class MemberService {
 		return listCount;
 	}
 	
+	/**
+	 * 회원 아이디 검색결과
+	 * @author 이다헤
+	 * @return list
+	 */
 	public ArrayList<Member> selectSearchMemberList (PageInfo pi, String keyword){
 		Connection conn = getConnection();
 		ArrayList<Member> list = new MemberDao().selectSearchMemberList(conn, pi, keyword);
@@ -247,6 +252,25 @@ public class MemberService {
 		return list;
 	}
 	
+	
+	/**
+	 * 회원 포인트 적립액 변경
+	 * @author 이다혜
+	 * @return int result
+	 */
+	public int memberPointChange(Point p) {
+		Connection conn = getConnection();
+		int result = new MemberDao().memberPointChange(conn, p);
+		
+		if(result > 0) {
+			commit(conn);
+		}else {
+			rollback(conn);
+		}
+		close(conn);
+		
+		return result;
+	}
 
 	 /**
 	    * 회원프로필 변경 서비스 

@@ -45,7 +45,7 @@ public class ManagerMemPointChangeController extends HttpServlet {
 		p.setContent(content);
 		p.setMemberNo(no);
 		
-		//int result = new MemberService().memberPointChange(p);
+		int result = new MemberService().memberPointChange(p);
 		
 		
 	}

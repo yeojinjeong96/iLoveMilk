@@ -603,6 +603,33 @@ public Member updateCheckPwd(Connection conn, String memberId, String memberPwd)
 		return list;
 	}
 	
+	public int memberPointChange(Connection conn, Point p) {
+		
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String sql = prop.getProperty("memberPointChange");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, p.getPointNo());
+			pstmt.setInt(2, p.getCount());
+			pstmt.setString(3, p.getStatus());
+			pstmt.setInt(4, p.getTotal());
+			pstmt.setString(5, p.getContent());
+			pstmt.setInt(5, p.getMemberNo());
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		return result;
+		
+	}
+	
 	public int UpdateProfile(Connection conn, Member m) {
 		
 		int result = 0;
