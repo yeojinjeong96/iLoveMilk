@@ -332,4 +332,18 @@
        WHERE MEMBER_NO = ?
         
    </entry>
+   
+      <entry key="productLikeList">
+     SELECT 
+              LI.PRODUCT_NO
+           , LI.MEMBER_NO
+           , P_LIKE_DATE
+           , PRODUCT_IMG
+           , PRICE
+            , PRODUCT_NAME
+        FROM TB_PRODUCT_LIKE LI 
+        JOIN TB_PRODUCT PR ON LI.PRODUCT_NO = PR.PRODUCT_NO
+        WHERE MEMBER_NO = ?
+   
+   </entry>
 </properties>
