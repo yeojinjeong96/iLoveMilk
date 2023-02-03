@@ -46,7 +46,7 @@ public class Reply {
 
 
 	public Reply(int replyNo, String memberNo, String replyContent, String reportStatus, String recipeTItle,
-			String reportContent, int refNo) {
+			String reportContent) {
 		super();
 		this.replyNo = replyNo;
 		this.memberNo = memberNo;
@@ -54,7 +54,6 @@ public class Reply {
 		this.reportStatus = reportStatus;
 		this.recipeTItle = recipeTItle;
 		this.reportContent = reportContent;
-		this.refNo = refNo;
 	}
 
 
