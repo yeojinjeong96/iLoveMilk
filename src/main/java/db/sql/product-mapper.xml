@@ -356,4 +356,53 @@
 		  JOIN TB_POINT USING(MEMBER_NO)
 		 WHERE MEMBER_NO = ?
 	</entry>
+	
+	<entry key="orderInsert">
+		INSERT
+		  INTO TB_ORDER
+		  (
+		    ORDER_NO
+		  , MEMBER_NO
+		  , ORDER_NAME
+		  , ORDER_PHONE
+		  , ORDER_EMAIL
+		  , ADDRESS_NAME
+		  , ADDRESS
+		  , ADDRESS_TEL
+		  , USE_POINT
+		  )
+		  VALUES
+		  (
+		    SEQ_ONO.NEXTVAL || '-' || TO_CHAR(SYSDATE, 'YYYYMMDD') ORDER_NO
+		  , ?
+		  , ?
+		  , ?
+		  , ?
+		  , ?
+		  , ?
+		  , ?
+		  , ?
+		  )
+	</entry>
+	
+	<entry key="orderDetailInsert">
+		INSERT
+		  INTO TB_ORDERDETAIL
+		  (
+		    DORDER_NO
+		  , ORDER_NO
+		  , PRODUCT_NO
+		  , COUNT
+		  )
+		  VALUES
+		  (
+		    SEQ_DONO.NEXTVAL
+		  , SEQ_ONO.CURRVAL || '-' || TO_CHAR(SYSDATE, 'YYYYMMDD') ORDER_NO
+		  , ?
+		  , ?
+		  )
+	</entry>
+	
+	<entry key="paymentInsert"></entry>
+	
 </properties>
