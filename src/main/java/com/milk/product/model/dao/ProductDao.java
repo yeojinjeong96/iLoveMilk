@@ -487,7 +487,7 @@ public class ProductDao {
 			rset = pstmt.executeQuery();
 			while(rset.next()) {
 				list.add(new Order(
-                        rset.getInt("P.ORDER_NO"),
+                        rset.getInt("ORDER_NO"),
                         rset.getDate("PAYMENT_DATE"),
                         rset.getInt("PRICE"),
                         rset.getString("MEMBER_ID")
