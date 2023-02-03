@@ -12,6 +12,8 @@ public class Order {
 	private int price;
 	private int status;
 	private int waybill;
+	private String memberId;
+	private int productNo;
 	
 	public Order() {}
 
@@ -26,6 +28,31 @@ public class Order {
 		this.price = price;
 		this.status = status;
 		this.waybill = waybill;
+	}
+	
+	
+
+	public Order(int orderNo, Date paymentDate, int price, String memberId) {
+		super();
+		this.orderNo = orderNo;
+		this.paymentDate = paymentDate;
+		this.price = price;
+		this.memberId = memberId;
+	}
+	
+	
+
+	public Order(int orderNo, Date paymentDate, String productImg, String productName, int productCount, int price,
+			String memberId, int productNo) {
+		super();
+		this.orderNo = orderNo;
+		this.paymentDate = paymentDate;
+		this.productImg = productImg;
+		this.productName = productName;
+		this.productCount = productCount;
+		this.price = price;
+		this.memberId = memberId;
+		this.productNo = productNo;
 	}
 
 	public int getOrderNo() {
@@ -91,14 +118,33 @@ public class Order {
 	public void setWaybill(int waybill) {
 		this.waybill = waybill;
 	}
+	
+	
+
+	public String getMemberId() {
+		return memberId;
+	}
+
+	public void setMemberId(String memberId) {
+		this.memberId = memberId;
+	}
+
+	public int getProductNo() {
+		return productNo;
+	}
+
+	public void setProductNo(int productNo) {
+		this.productNo = productNo;
+	}
 
 	@Override
 	public String toString() {
 		return "Order [orderNo=" + orderNo + ", paymentDate=" + paymentDate + ", productImg=" + productImg
 				+ ", productName=" + productName + ", productCount=" + productCount + ", price=" + price + ", status="
-				+ status + ", waybill=" + waybill + "]";
-	};
-	
+				+ status + ", waybill=" + waybill + ", memberId=" + memberId + ", productNo=" + productNo + "]";
+	}
+
+
 	
 	
 

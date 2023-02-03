@@ -158,7 +158,36 @@
 		                     , PRODUCT_IMG
 						   FROM TB_PRODUCT B
 				 		  WHERE B.STATUS = 'Y'
+		                ) A
+		        )
+		  WHERE RNUM BETWEEN ? AND ? 				 		  
 				  
+	</entry>
+	
+	<entry key="countPurchaseList">
+	 SELECT 
+	        COUNT(*) COUNT
+	   FROM TB_PAYMENT  
+	</entry>
+	
+	<entry key="selectPurchaseList">
+		SELECT *
+		  FROM (
+		        SELECT ROWNUM RNUM, A.*
+		          FROM (
+                             SELECT
+                                   P.ORDER_NO,
+                                   P.PAYMENT_DATE,
+                                   P.PRICE,
+                                   M.MEMBER_ID
+                             FROM TB_PAYMENT P
+                             JOIN TB_ORDERDETAIL OD ON (OD.ORDER_NO = P.ORDER_NO)
+                             JOIN TB_ORDER O ON (O.ORDER_NO = OD.ORDER_NO)
+                             JOIN TB_MEMBER M ON (M.MEMBER_NO = O.MEMBER_NO)
+                            GROUP BY P.ORDER_NO, P.PRICE, P.PAYMENT_DATE, M.MEMBER_ID
+		                ) A
+		        )
+		  WHERE RNUM BETWEEN ? AND ?
 	</entry>
 	
 	
@@ -199,6 +228,11 @@
 		 WHERE STATUS = 'Y'
 	</entry>
 	
+	<entry key="selectPurchaseList">
+		SELECT *
+				
+	</entry>
+	
 	<entry key ="selectAllList">
 		SELECT *
 		  FROM (
@@ -212,6 +246,9 @@
 		                     , BRAND
 		                  FROM TB_PRODUCT B
 		                 WHERE STATUS = 'Y'
+		                ) A
+		        )
+		  WHERE RNUM BETWEEN ? AND ? 		                 
 	</entry>
 	
 	<entry key="productDetail">

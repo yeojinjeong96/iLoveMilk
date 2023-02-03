@@ -13,6 +13,7 @@ import java.util.Properties;
 
 import com.milk.common.model.vo.PageInfo;
 import com.milk.member.model.vo.Member;
+import com.milk.member.model.vo.Order;
 import com.milk.product.model.vo.Product;
 import com.milk.product.model.vo.ProductLike;
 import com.milk.product.model.vo.Review;
@@ -439,6 +440,68 @@ public class ProductDao {
 			close(rset);
 			close(pstmt);
 		}
+		return list;
+	}
+	
+	public int countPurchaseList(Connection conn) {
+		int listCount = 0;
+		ResultSet rset = null;
+		PreparedStatement pstmt = null;
+		String sql = prop.getProperty("countPurchaseList");	
+		
+		try {
+			pstmt= conn.prepareStatement(sql);
+			rset = pstmt.executeQuery();
+			if(rset.next()) {
+				listCount = rset.getInt("count");
+			}
+			
+			System.out.println(listCount);
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return listCount;
+	}
+	
+	public ArrayList<Order> selectPurchaseList(Connection conn, PageInfo pi){
+		ResultSet rset  = null;
+		ArrayList<Order> list = new ArrayList<>();
+		PreparedStatement pstmt = null;
+		String sql = prop.getProperty("selectPurchaseList");
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			int startRow = (pi.getCurrentPage() -1) * pi.getBoardLimit() + 1;
+			int endRow = startRow + pi.getBoardLimit() -1;
+			
+			pstmt.setInt(1, startRow);
+			pstmt.setInt(2, endRow);
+			
+			rset = pstmt.executeQuery();
+			while(rset.next()) {
+				list.add(new Order(
+                        rset.getInt("P.ORDER_NO"),
+                        rset.getDate("PAYMENT_DATE"),
+                        rset.getInt("PRICE"),
+                        rset.getString("MEMBER_ID")
+						));
+			}
+			
+
+			
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
 		return list;
 	}
 	

@@ -39,8 +39,8 @@
                 </div><br>
                 <div>
                     <div class="text-primary menu">주문관리</div>
-                    <a href="">구매내역조회</a><br>
-                    <a href="">배송관리</a>
+                    <a href="<%= request.getContextPath() %>//purchaseList.ma?cpage=1">구매내역조회</a><br>
+                    <a href="<%= request.getContextPath() %>//orderList.ma?cpage=1">배송관리</a>
                 </div><br>
                 <div>
                     <a href="" class="text-primary menu">리뷰관리</a>

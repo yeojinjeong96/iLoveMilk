@@ -1,12 +1,19 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    
+<%@page import = "java.util.ArrayList, com.milk.member.model.vo.Order, com.milk.common.model.vo.PageInfo"%>    
+<%
+	ArrayList<Order> list = (ArrayList<Order>)request.getAttribute("list");
+	PageInfo pi = (PageInfo)request.getAttribute("pi"); 
+%>    
+    
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
     <style>
-     div{border:1px solid red;} 
+    
     .purchase-wrap{
         width:800px;
         margin:auto;
@@ -71,44 +78,52 @@
             </div>
             <div id="purchase-2">
                 <table class="purchase-list table" style="width:100%; font-size:13px; text-align:center;">
-                    <tr>
-                        <td>번호</td>
-                        <td>주문번호</td>
-                        <td>상품명</td>
-                        <td>수량</td>
-                        <td>결제일자</td>
-                        <td>구매자 아이디</td>
-                        <td>결제금액</td>
-                        <td>상세</td>
-                    </tr>
+                	<thead>
+	                    <tr>
+	                        <td>번호</td>
+	                        <td>주문번호</td>
+	                        <td>결제일자</td>
+	                        <td>구매자 아이디</td>
+	                        <td>결제금액</td>
+	                        <td>상세</td>
+	                    </tr>
+                    </thead>
                     <!-- 더블클릭 시 결제내역 상세 보이도록 한다 -->
-                    <tr>
-                        <td>1</td>
-                        <td>20230101-1234567</td>
-                        <td>건국우유</td>
-                        <td>1</td>
-                        <td>23-01-01</td>
-                        <td>아이디자리</td>
-                        <td>3,500</td>
-                        <td><button type="button" class="btn btn-outline-secondary btn-sm" data-toggle="modal" data-target="#purchase-info">상세보기</button></td>
-                    </tr>
+                    <tbody>
+                    	<%if(list.isEmpty()){ %>
+                    		<tr>
+                    			<td colspan="6"> 조회된 데이터가 없습니다. </td>
+                    		</tr>
+                    	<%}else{ %>
+                    		<%for(int i = 0; i < list.size(); i++){ %>
+			                    <tr>
+			                        <td></td>
+			                        <td><%=list.get(i).getOrderNo() %></td>
+			                        <td><%=list.get(i).getPaymentDate()%></td>
+			                        <td><%=list.get(i).getMemberId() %></td>
+			                        <td><%=list.get(i).getPrice() %></td>
+			                        <td><button type="button" class="btn btn-outline-secondary btn-sm" data-toggle="modal" data-target="#purchase-info">상세보기</button></td>
+			                    </tr>
+		                    <%} %>
+	                    <%} %>                    
+                    </tbody>
                 </table>
             </div>
             <div id="purchase-3">  
                 <div class="paging-area">
-                    <!-- 내가 보고있는 페이지가 1번 페이지가 아닐때에만 나타내기 
+                    <!-- 내가 보고있는 페이지가 1번 페이지가 아닐때에만 나타내기 -->
                     
                                 <% if(pi.getCurrentPage() != 1){ %>
-                                    <button onclick="location.href='<%=contextPath%>/list.bo?cpage=<%=pi.getCurrentPage()-1%>';">&lt;</button>
+                                    <button onclick="location.href='<%=contextPath%>/purchaseList.ma?cpage=<%=pi.getCurrentPage()-1%>';">&lt;</button>
                                 <% } %>
                     
                                 <% for(int p=pi.getStartPage(); p<=pi.getEndPage(); p++){ %>
-                                    <button onclick="location.href='<%=contextPath%>/list.bo?cpage=<%=p%>';"><%= p %></button>
-                                <% } %>-->
-                    <!--  내가 보고있는 페이지가 마지막 페이지가 아닐 때에만 나타내기 
+                                    <button onclick="location.href='<%=contextPath%>/purchaseList.ma?cpage=<%=p%>';"><%= p %></button>
+                                <% } %>
+                    <!--  내가 보고있는 페이지가 마지막 페이지가 아닐 때에만 나타내기 -->
                     
-                                <% if(pi.getCurrentPage() != pi.getMaxPage()){ %>-->
-                                    <button onclick="location.href='<%=contextPath%>/list.bo?cpage=<%=pi.getCurrentPage()+1%>';">&gt;</button>
+                                <% if(pi.getCurrentPage() != pi.getMaxPage()){ %>
+                                    <button onclick="location.href='<%=contextPath%>/purchaseList.ma?cpage=<%=pi.getCurrentPage()+1%>';">&gt;</button>
                                 <% } %>
                 </div>
                 
@@ -133,7 +148,7 @@
                         <input type="hidden" name="" value="">
                         <table style="width:100%;">
                                 <tr>
-                                    <td rowspan="7" width="200px;"> <img src="img/milk.jpg" alt="" width="180px;" height="200px;"> </td>
+                                    <td rowspan="7" width="200px;"> <img src="" alt="" width="180px;" height="200px;"> </td>
                                     <td>주문번호</td>
                                     <td>20230101-1234567</td>
                                 </tr>

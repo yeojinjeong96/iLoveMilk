@@ -10,6 +10,7 @@ import java.util.ArrayList;
 
 import com.milk.common.model.vo.PageInfo;
 import com.milk.member.model.vo.Member;
+import com.milk.member.model.vo.Order;
 import com.milk.product.model.dao.ProductDao;
 import com.milk.product.model.vo.Product;
 import com.milk.product.model.vo.ProductLike;
@@ -187,6 +188,30 @@ public class ProductService {
 		Connection conn = getConnection();
 		ArrayList<Product> list = new ProductDao().selectReSearchList(conn, pi, keyword, keyOption);
 		
+		close(conn);
+		return list;
+	}
+	
+	/**
+	 * 관리자페이지 전체 구매내역조회 페이징 카운트
+	 * @author 이다혜
+	 * @return listCount
+	 */
+	public int countPurchaseList() {
+		Connection conn = getConnection();
+		int listCount = new ProductDao().countPurchaseList(conn);
+		close(conn);
+		return listCount;
+	}
+	
+	/**
+	 * 관리자페이지 전체 구매내역조회
+	 * @author 이다혜
+	 * @return list
+	 */
+	public ArrayList<Order> selectPurchaseList(PageInfo pi){
+		Connection conn = getConnection();
+		ArrayList<Order> list = new ProductDao().selectPurchaseList(conn, pi);
 		close(conn);
 		return list;
 	}
