@@ -3,6 +3,10 @@
 <%@page import= "java.util.ArrayList, com.milk.member.model.vo.Order" %>
 <%
 	ArrayList<Order> list = (ArrayList<Order>)request.getAttribute("list");
+
+ArrayList<Order> list2 = (ArrayList<Order>)request.getAttribute("list2"); 
+
+	
 %>
 <!DOCTYPE html>
 <html>
@@ -144,7 +148,7 @@
 						                    				<div name="productImg" style="width:100px; height:100px;  float: left; magin:auto;"> 
 						                    					<img src="<%=o.getProductImg() %>" width="100%" height="100%"> 
 						                    				</div>
-							                    			<div style="float: left; padding-top:35px"> <a data-toggle="modal" data-target="#orderdetail"><%=o.getProductName() %> 외 <%= (o.getProductCount())-1%>건</a>  </div>
+							                    			<div style="float: left; padding-top:35px"> <a href="<%=contextPath %>/orderD.me?orderNo=<%=o.getOrderNo() %>"data-toggle="modal" data-target="#orderdetail"><%=o.getProductName() %> 외 <%= (o.getProductCount())-1%>건</a>  </div>
 						                    			</td>
 						                    		</tr>
 						                    
@@ -181,28 +185,23 @@
                   
                         <!-- Modal body -->
                         <div class="modal-body">
-                            <table id="list" border="1px solid gray;">
-                                <div id="ohead">
-                                    <tr>
-                                        <th width="15%">상품 사진 </th>
-                                        <th width="50%">상품이름</th>
-                                        <th width="10%">상품가격</th>
-                                        <th width="12%">구매갯수</th>
-                                    </tr>
-                                </div>
-                                <div id="obody">
-                                    <!-- <% for(Order o : list){ %> -->
-                                        <tr>
-                                            <td> 상품사진 </td>
-                                            <td>상품이름</td>
-                                            <td align="center">000원</td>
-                                            <td align="center">000개</td>
-                                        </tr>
-				                	<!-- <% } %> -->
-                                           
-                                
-                                </div>
-                            </table>
+                        	
+                             <form action="" method="post">
+                             	<input type="hidden" name = orderNo value="">
+	                            <table id="list" border="1px solid gray;">
+	                                <div id="ohead">
+	                                    <tr>
+	                                        <th width="15%">상품사진</th>
+	                                        <th width="50%">상품이름</th>
+	                                        <th width="10%">상품가격</th>
+	                                        <th width="12%">구매갯수</th>
+	                                    </tr>
+	                                </div>
+	                                <div id="obody">
+	                                	
+	                                </div>
+	                            </table>
+	                        </form>
                             <div id="ounder" style="float: right;"" >
                                    
                                 총 000 원 

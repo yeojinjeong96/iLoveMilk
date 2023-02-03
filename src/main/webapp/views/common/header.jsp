@@ -1,9 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8" import="com.milk.member.model.vo.Member" %>
+    pageEncoding="UTF-8" import="com.milk.member.model.vo.Member, com.milk.member.model.vo.Order" %>
 <% 
 	String contextPath = request.getContextPath();
 	Member loginMember = (Member)session.getAttribute("loginMember");
 	String alertMsg = (String)session.getAttribute("alertMsg");
+	Order OrderList = (Order)session.getAttribute("OrderList");
 %>
 <!DOCTYPE html>
 <html>
