@@ -1,7 +1,6 @@
 package com.milk.product.controller;
 
 import java.io.IOException;
-import java.util.ArrayList;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -14,16 +13,16 @@ import com.milk.member.model.vo.Order;
 import com.milk.product.model.service.ProductService;
 
 /**
- * Servlet implementation class ManagerPurchaseDetailController
+ * Servlet implementation class ManagerOrderDetailController
  */
-@WebServlet("/purchaseDetail.ma")
-public class ManagerPurchaseDetailController extends HttpServlet {
+@WebServlet("/orderDetail.ma")
+public class ManagerOrderDetailController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public ManagerPurchaseDetailController() {
+    public ManagerOrderDetailController() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -32,11 +31,11 @@ public class ManagerPurchaseDetailController extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
-		int no = Integer.parseInt(request.getParameter("oNo"));
-		ArrayList<Order> list = new ProductService().selectPurchaseDetailList(no);
+
+		int no = Integer.parseInt(request.getParameter("ono"));
+		Order o = new ProductService().selectOrderDetail(no);
 		response.setContentType("application/json; charset=UTF-8");
-		new Gson().toJson(list, response.getWriter());
+		new Gson().toJson(o, response.getWriter());
 	}
 
 	/**

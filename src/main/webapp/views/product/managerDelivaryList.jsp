@@ -1,5 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ page import="java.util.ArrayList, com.milk.member.model.vo.Order, com.milk.common.model.vo.PageInfo" %>    
+<%
+	ArrayList<Order> list = (ArrayList<Order>)request.getAttribute("list");
+	PageInfo pi = (PageInfo)request.getAttribute("pi");
+%>    
     <!DOCTYPE html>
     <html lang="en">
     <head>
@@ -8,9 +13,8 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Document</title>
         <style>
-        /* 안가져감 */
-        div{border:1px solid red;}
-    
+
+
         .delivery-wrap{
             width:800px;
             padding-left:50px;
@@ -72,54 +76,77 @@
                         
                     </div>
                 </div>
-                <div id="delivery-2">
+               
+                <div id="delivery-2"> <br>
                     <table class=" table purchase-list" style="width:100%; font-size:13px; text-align:center;">
-                        <tr>
-                            <td>번호</td>
-                            <td>주문번호</td>
-                            <td>주문일자</td>
-                            <td>회원아이디</td>
-                            <td>배송상태</td>
-                            <td>주소</td>
-                            <td>운송장</td>
-                        </tr>
-                        <!-- 더블클릭 시 결제내역 상세 보이도록 한다 -->
-                        <tr>
-                            <td>1</td>
-                            <td>20230101-1234567</td>
-                            <td>23-01-01</td>
-                            <td>회원아이디자리</td>
-                            <td>배송전</td>
-                            <td>서울시 금천구...</td>
-                            <td>
-                                <!-- 조건문 사용해서 운송장 완료하면 버튼비활성화시키기 -->
-                                <button type="button" class="btn btn-outline-secondary btn-sm" data-toggle="modal" data-target="#delivery-info">대기</button>
-                            </td>
-                        </tr>
+                    	<thead>
+	                        <tr>
+	                            <td>번호</td>
+	                            <td>주문번호</td>
+	                            <td>주문일자</td>
+	                            <td>회원아이디</td>
+	                            <td>배송상태</td>
+	                            <td>주소</td>
+	                            <td>운송장</td>
+	                        </tr>
+                        </thead>
+                         <tbody>
+                        <%if(list.isEmpty()) {%>
+                        	<tr colspan="7"> 조회된 데이터가 없습니다. </tr>
+                        <%}else{ %>
+                       		<%for(Order o : list){ %>
+		                        <tr>
+		                            <td></td>
+		                            <td><%=o.getOrderNo() %></td>
+		                            <td><%=o.getPaymentDate() %></td>
+		                            <td><%=o.getMemberId() %></td>
+		                            <td>
+		                            	<%if(o.getStatus() == 1){ %>
+		                            		상품준비중
+		                            	<%}else if(o.getStatus() == 2){ %>
+		                            		배송중
+		                            	<%}else if(o.getStatus() == 3){ %>
+		                            		배송완료
+		                            	<%} %>
+		                            </td>
+		                            <td><%=o.getAddress() %></td>
+		                            <td>
+		                                <!-- 조건문 사용해서 운송장 완료하면 버튼비활성화시키기 -->
+		                                <%if(o.getWaybill() == 0) {%>
+		                                	<button type="button" onclick="issWaybill(<%=o.getOrderNo() %>)" id="getWbtn" class="btn btn-outline-secondary btn-sm" data-toggle="modal" data-target="#delivery-info" style="font-size:10px;">대기</button>
+		                                <%}else{ %>
+		                                	<button type="button" id="getWbtn" class="btn btn-outline-secondary btn-sm" data-toggle="modal" data-target="#delivery-info" disabled="disabled" style="font-size:10px;">완료</button>
+		                                <%} %>
+		                            </td>
+		                        </tr>
+	                        	<%} %>
+	                  		<%} %>
+                        </tbody>
                     </table>
                 </div>
+                
+               
+                
                 <div id="delivery-3">  
                     <div class="paging-area">
-                        <!-- 내가 보고있는 페이지가 1번 페이지가 아닐때에만 나타내기 
                         
                                     <% if(pi.getCurrentPage() != 1){ %>
-                                        <button onclick="location.href='<%=contextPath%>/list.bo?cpage=<%=pi.getCurrentPage()-1%>';">&lt;</button>
+                                        <button onclick="location.href='<%=contextPath%>/orderList.ma?cpage=<%=pi.getCurrentPage()-1%>';">&lt;</button>
                                     <% } %>
                         
                                     <% for(int p=pi.getStartPage(); p<=pi.getEndPage(); p++){ %>
-                                        <button onclick="location.href='<%=contextPath%>/list.bo?cpage=<%=p%>';"><%= p %></button>
-                                    <% } %>-->
-                        <!--  내가 보고있는 페이지가 마지막 페이지가 아닐 때에만 나타내기 
-                        
-                                    <% if(pi.getCurrentPage() != pi.getMaxPage()){ %>-->
-                                        <button onclick="location.href='<%=contextPath%>/list.bo?cpage=<%=pi.getCurrentPage()+1%>';">&gt;</button>
+                                        <button onclick="location.href='<%=contextPath%>/orderList.ma?cpage=<%=p%>';"><%= p %></button>
                                     <% } %>
+              
+                                    <% if(pi.getCurrentPage() != pi.getMaxPage()){ %>
+                                        <button onclick="location.href='<%=contextPath%>/orderList.ma?cpage=<%=pi.getCurrentPage()+1%>';">&gt;</button>
+                                    <%} %>    
                     </div>
                     
                 </div>
         
         
-                <!-- 신고회원관리 모달 div -->
+                <!-- 운송장관리 모달 div -->
                 <div class="modal" id="delivery-info">
                     <div class="modal-dialog">
                     <div class="modal-content">
@@ -138,23 +165,23 @@
                             <table style="width:100%;">
                                     <tr>
                                         <td>주문번호</td>
-                                        <td>20230101-1234567</td>
+                                        <td id = "wayOrderNo"></td>
                                     </tr>
                                     <tr>
                                         <td>주문일자</td>
-                                        <td>23-01-01 00:00:00</td>
+                                        <td id="wayOrderDate">23-01-01 00:00:00</td>
                                     </tr>
                                     <tr>
                                         <td>구매자명</td>
-                                        <td>구매자이름자리</td>
+                                        <td id="wayOrderName">구매자이름자리</td>
                                     </tr>
                                     <tr>
                                         <td>받는사람</td>
-                                        <td>받는사람이름자리</td>
+                                        <td id="wayOrderName">받는사람이름자리</td>
                                     </tr>
                                     <tr>
                                         <td>주소</td>
-                                        <td>서울시 금천구 ..</td>
+                                        <td id="wayAddress">서울시 금천구 ..</td>
                                     </tr>
                                     <tr>
                                         <td>택배사</td>
@@ -180,7 +207,29 @@
                     </div>
                 </div>
                 </div>
-        
+        		
+        		<script>
+        		
+        			function issWaybill(ono){
+        				
+        				$.ajax({
+        					url : "<%=contextPath%>/orderDetail.ma",
+        					data: {ono:ono},
+        					success:function(result){
+        						
+        						if(result){
+        							alert("성공");
+        							console.log(result);
+        						}
+        						
+        					}, error:function(){
+        						alert("통신실패");
+        					}
+        				})
+        				
+        			}
+        		</script>
+        		
             </div>
         </div>    
     </body>

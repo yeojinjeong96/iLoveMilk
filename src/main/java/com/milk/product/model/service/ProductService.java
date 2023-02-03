@@ -216,6 +216,54 @@ public class ProductService {
 		return list;
 	}
 	
+	/**
+	 * 구매내역 상세조회
+	 * @author 이다혜
+	 * @return list
+	 */
+	public ArrayList<Order> selectPurchaseDetailList(int no){
+		Connection conn = getConnection();
+		ArrayList<Order> list = new ProductDao().selectPurchaseDetailList(conn, no);
+		close(conn);
+		return list;
+	}
+	
+	/**
+	 * 주문목록 페이징을 위한 카운트
+	 * @author 이다혜
+	 * @return listCount
+	 */
+	public int countOrderList() {
+		Connection conn = getConnection();
+		int listCount = new ProductDao().countOrderList(conn);
+		close(conn);
+		return listCount;
+	}
+	
+	/**
+	 * 전체 주문목록 조회
+	 * @author 이다혜
+	 * @return list
+	 */
+	public ArrayList<Order> selectOrderList(PageInfo pi){
+		Connection conn = getConnection();
+		ArrayList<Order> list = new ProductDao().selectOrderList(conn, pi);
+		close(conn);
+		return list;
+	}
+	
+	/**
+	 * 운송장발급창 주문상세조회
+	 * @author 이다혜
+	 * @return Order
+	 */
+	public Order selectOrderDetail(int no) {
+		Connection conn = getConnection();
+		Order o = new ProductDao().selectOrderDetail(conn, no);
+		close(conn);
+		return o;
+	}
+	
 	
 	/**
 	 * 상품 갯수 조회

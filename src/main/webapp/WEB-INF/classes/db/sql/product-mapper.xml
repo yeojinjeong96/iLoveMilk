@@ -194,6 +194,80 @@
 			  WHERE RNUM BETWEEN ? AND ?
 	</entry>
 	
+	<entry key="selectPurchaseDetailList">
+	 SELECT 
+	        P.ORDER_NO,
+	        P.PAYMENT_DATE,
+	        PR.PRODUCT_IMG,
+	        PR.PRODUCT_NAME,
+	        OD.COUNT,
+	        ((PR.PRICE)* OD.COUNT)PRICE,
+	        M.MEMBER_ID,
+	        OD.PRODUCT_NO
+	   FROM TB_PAYMENT P
+	   JOIN TB_ORDERDETAIL OD ON (OD.ORDER_NO = P.ORDER_NO)
+	   JOIN TB_PRODUCT PR ON (PR.PRODUCT_NO = OD.PRODUCT_NO)
+	   JOIN TB_ORDER O ON (O.ORDER_NO = OD.ORDER_NO)
+	   JOIN TB_MEMBER M ON (M.MEMBER_NO = O.MEMBER_NO)
+	   WHERE ORDER_NO = ?
+	</entry>
+	
+	<entry key="countOrderList">
+		SELECT 
+				COUNT(*)COUNT
+		  FROM TB_ORDER	
+	</entry>
+	
+	<entry key="selectOrderList">
+SELECT *
+          FROM (
+                SELECT ROWNUM RNUM, A.*
+                  FROM (
+    
+                        SELECT 
+		                        O.ORDER_NO,
+		                        O.STATUS, 
+		                        NVL(WAYBILL, 0)WAYBILL,
+		                        MEMBER_ID,    
+		                        O.MEMBER_NO,
+		                        ORDER_NAME,
+		                        ORDER_PHONE,
+		                        ORDER_EMAIL,
+		                        ADDRESS_NAME,
+		                        O.ADDRESS,
+		                        ADDRESS_TEL,
+		                        USE_POINT,
+		                        NVL(COURIER, '미지정')COURIER,
+		                        PAYMENT_DATE
+	                       FROM TB_ORDER O
+	                       JOIN TB_MEMBER M ON (M.MEMBER_NO = O.MEMBER_NO)
+	                       JOIN TB_PAYMENT P ON (P.ORDER_NO = O.ORDER_NO)
+                       ) A
+               )
+         WHERE RNUM BETWEEN ? AND ?
+	</entry>
+	<entry key = "selectOrderDetail">
+          SELECT
+ 		                        O.ORDER_NO,
+		                        O.STATUS, 
+		                        NVL(WAYBILL, 0)WAYBILL,
+		                        MEMBER_ID,    
+		                        O.MEMBER_NO,
+		                        ORDER_NAME,
+		                        ORDER_PHONE,
+		                        ORDER_EMAIL,
+		                        ADDRESS_NAME,
+		                        O.ADDRESS,
+		                        ADDRESS_TEL,
+		                        USE_POINT,
+		                        NVL(COURIER, '미지정')COURIER,
+		                        PAYMENT_DATE,
+                                MEMBER_NAME
+	                       FROM TB_ORDER O
+	                       JOIN TB_MEMBER M ON (M.MEMBER_NO = O.MEMBER_NO)
+	                       JOIN TB_PAYMENT P ON (P.ORDER_NO = O.ORDER_NO) 
+                           WHERE O.ORDER_NO = ?	
+	</entry>
 	
 	<entry key="insertProduct">
 	INSERT
@@ -374,7 +448,7 @@
 		  )
 		  VALUES
 		  (
-		    SEQ_ONO.NEXTVAL || '-' || TO_CHAR(SYSDATE, 'YYYYMMDD') ORDER_NO
+		    TO_CHAR(SYSDATE, 'YYYYMMDD') || '-' || LPAD(SEQ_ONO.NEXTVAL, 5, '0')
 		  , ?
 		  , ?
 		  , ?
@@ -398,7 +472,7 @@
 		  VALUES
 		  (
 		    SEQ_DONO.NEXTVAL
-		  , SEQ_ONO.CURRVAL || '-' || TO_CHAR(SYSDATE, 'YYYYMMDD') ORDER_NO
+		  , TO_CHAR(SYSDATE, 'YYYYMMDD') || '-' || LPAD(SEQ_ONO.CURRVAL, 5, '0')
 		  , ?
 		  , ?
 		  )
