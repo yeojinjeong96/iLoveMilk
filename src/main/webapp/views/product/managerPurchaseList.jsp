@@ -76,6 +76,7 @@
                     <input type="text" name = "searchReport" ><button type="submit"  style="border:none">검색</button>
                 </div>
             </div>
+            <br>
             <div id="purchase-2">
                 <table class="purchase-list table" style="width:100%; font-size:13px; text-align:center;">
                 	<thead>
@@ -97,12 +98,12 @@
                     	<%}else{ %>
                     		<%for(int i = 0; i < list.size(); i++){ %>
 			                    <tr>
-			                        <td></td>
+			                        <td><%=i+1 %></td>
 			                        <td><%=list.get(i).getOrderNo() %></td>
 			                        <td><%=list.get(i).getPaymentDate()%></td>
 			                        <td><%=list.get(i).getMemberId() %></td>
 			                        <td><%=list.get(i).getPrice() %></td>
-			                        <td><button type="button" class="btn btn-outline-secondary btn-sm" data-toggle="modal" data-target="#purchase-info">상세보기</button></td>
+			                        <td><button type="button" class="btn btn-outline-secondary btn-sm" onclick="purchaseDetail(<%=list.get(i).getOrderNo() %>);" data-toggle="modal" data-target="#purchase-info">상세보기</button></td>
 			                    </tr>
 		                    <%} %>
 	                    <%} %>                    
@@ -128,7 +129,22 @@
                 </div>
                 
             </div>
-
+			
+			
+         <script>
+	        function purchaseDetail(oNo){
+	           
+	           $.ajax({
+	              url:"<%=contextPath%>/purchaseDetail.ma",
+	              data:{oNo:oNo},
+	              success: function(){
+	                 
+	              }, error: function(){
+	                 
+	              }
+	           });
+	        }
+      </script>   
 
             <!-- 구매 상세관리 모달 div -->
             <div class="modal" id="purchase-info">
@@ -147,6 +163,8 @@
                 <form action="" method="post">
                         <input type="hidden" name="" value="">
                         <table style="width:100%;">
+                        	<tbody>
+                        		
                                 <tr>
                                     <td rowspan="7" width="200px;"> <img src="" alt="" width="180px;" height="200px;"> </td>
                                     <td>주문번호</td>
@@ -176,7 +194,7 @@
                                     <td>결제금액</td>
                                     <td><b>결제금액자리</b></td>
                                 </tr>
-                                
+                            </tbody>  
                         </table>
 
                         <br>
@@ -192,10 +210,8 @@
             </div>
             </div>
 
-
-
-
         </div>
-    </div>    
-</body>
+    </div> 
+
+	</body>
 </html>
