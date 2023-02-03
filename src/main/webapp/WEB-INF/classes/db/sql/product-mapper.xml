@@ -45,13 +45,15 @@
 	<entry key="selectRecentProductList">
 	
         SELECT 	
-        		   PRODUCT_NO	    
+        		   PRODUCT_NO
+        		, BRAND	   	    
                , PRODUCT_NAME
 	            , PRICE
 	            , PRODUCT_IMG
           FROM (
                 SELECT 
-                		PRODUCT_NO	
+                		PRODUCT_NO
+                		, BRAND	   	
              	   	   , PRODUCT_NAME
                      , PRICE
                      , PRODUCT_IMG
@@ -155,14 +157,13 @@
 		          FROM (
 		                SELECT
 		                	   PRODUCT_NO
+		                	 , BRAND
 		                     , PRODUCT_NAME
 		                     , PRICE
 		                     , PRODUCT_IMG
 						   FROM TB_PRODUCT B
 				 		  WHERE B.STATUS = 'Y'
-		                ) A
-		        )
-		  WHERE RNUM BETWEEN ? AND ? 				 		  
+			 		  
 				  
 	</entry>
 	

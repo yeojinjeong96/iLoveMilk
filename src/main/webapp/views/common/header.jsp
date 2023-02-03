@@ -310,7 +310,7 @@
 </div>
 
 	<script>
-		$('.btn dropdown-toggle').dropdown();
+	//	$('.btn dropdown-toggle').dropdown();
 	</script>
 
 </body>

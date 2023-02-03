@@ -213,7 +213,8 @@
 	                <img src="<%= contextPath%>/<%=p.getProductImg() %>" alt="" width="200" height="200">
 	                
 	                <div>
-                            <%=p.getProductName() %>
+                           <b style=font-size:13px;><%=p.getBrand() %></b> <br>
+                           <%=p.getProductName() %>
                         <br>
 	                    <%=p.getPrice() %> 원
 	                </div>
