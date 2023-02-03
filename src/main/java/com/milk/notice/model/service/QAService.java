@@ -1,6 +1,6 @@
 package com.milk.notice.model.service;
 
-import static com.milk.common.JDBCTemplate.close;
+import static com.milk.common.JDBCTemplate.*;
 import static com.milk.common.JDBCTemplate.commit;
 import static com.milk.common.JDBCTemplate.getConnection;
 import static com.milk.common.JDBCTemplate.rollback;
@@ -91,20 +91,20 @@ public class QAService {
 		return result;
 	}
 	
-	public int selectAnswerListCount() {
+	public int selectAnswerListCount(int date) {
 		
 		Connection conn = getConnection();
 		
-		int result = new QADao().selectAnswerListCount(conn);
+		int result = new QADao().selectAnswerListCount(conn,date);
 		close(conn);
 		return result;
 	}
 	
-	public ArrayList<QA> selectAnswerList(PageInfo pi){
+	public ArrayList<QA> selectAnswerList(PageInfo pi,int date){
 		
 		Connection conn= getConnection();
 		
-		ArrayList<QA>list= new QADao().selectAnswerList(conn, pi);
+		ArrayList<QA>list= new QADao().selectAnswerList(conn, pi,date);
 		
 		close(conn);
 		return list;
@@ -121,6 +121,35 @@ public class QAService {
 		}
 		
 		return result;
+	}
+	
+	public int updateQuestion(QA q, Attachment at) {
+		
+		Connection conn= getConnection();
+		int result1 = new QADao().updateQuestion(conn, q);
+		
+		int result2 = 1;
+	
+		if(at!=null) {
+			
+			if(at.getFileNo()!=0) {
+				result2= new QADao().updateAttachment(conn, at);
+			}else {
+				result2= new QADao().insertNewAttachment(conn, at);
+			}
+
+		}	
+	
+		
+		
+		if(result1*result2>0) {
+			commit(conn);
+		}else {
+			rollback(conn);
+		}
+		
+		close(conn);
+		return result1*result2;
 	}
 	
 }

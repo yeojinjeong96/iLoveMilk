@@ -1,4 +1,4 @@
-package com.milk.product.controller;
+package com.milk.member.controller;
 
 import java.io.IOException;
 import javax.servlet.ServletException;
@@ -8,16 +8,16 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * Servlet implementation class ProductOrderController
+ * Servlet implementation class ReviewUpdateController
  */
-@WebServlet("/order.pr")
-public class ProductOrderController extends HttpServlet {
+@WebServlet("/ReviewUpdate.me")
+public class ReviewUpdateController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public ProductOrderController() {
+    public ReviewUpdateController() {
         super();
         // TODO Auto-generated constructor stub
     }

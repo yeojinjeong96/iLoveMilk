@@ -46,8 +46,10 @@
             <div align="right" style="width:640px">
                 
                 <select name="select-qa" onchange="orderQA();">
+                	<option value="">--선택--</option>
+                     <option value="asc">오래된순</option>
                     <option value="desc">최신순</option>
-                    <option value="asc">오래된순</option>
+                   
                 </select>
             </div>
             <br>
@@ -102,7 +104,7 @@
             </div>
             
             <div align="right" style="width:600px" class="a">
-                <a href="<%=contextPath %>/listM.a?cpage=1">> 답변 목록 조회</a>
+                <a href="<%=contextPath %>/listM.a?cpage=1&date=0">> 답변 목록 조회</a>
                  <br><br>
             </div>
         </div>
@@ -121,6 +123,7 @@
 			
 			$.ajax({
 				url:"<%=contextPath%>/listM.qa?cpage=1",
+				type:"get",
 				data:{value:value},
 				success:function(){
 					location.reload();

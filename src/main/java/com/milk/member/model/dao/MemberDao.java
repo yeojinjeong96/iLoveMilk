@@ -17,6 +17,7 @@ import com.milk.member.model.vo.Member;
 import com.milk.member.model.vo.Order;
 import com.milk.member.model.vo.Point;
 import com.milk.member.model.vo.Report;
+import com.milk.member.model.vo.Review;
 import com.milk.product.model.vo.ProductLike;
 
 
@@ -452,7 +453,7 @@ public Member updateCheckPwd(Connection conn, String memberId, String memberPwd)
 			while(rset.next()) {
 				list.add(new Point(
 							rset.getInt("POINT_NO"),
-							rset.getInt("count"),
+							rset.getInt("AMOUNT"),
 							rset.getString("status"),
 							rset.getInt("total"),
 							rset.getString("MODIFY_DATE"),
@@ -832,6 +833,42 @@ public Member updateCheckPwd(Connection conn, String memberId, String memberPwd)
 			close(pstmt);
 		}
 		return list;
+	   }
+	   
+	   public ArrayList<Review> ReviewListY(Connection conn, int memberNo) {
+		   
+		   ResultSet rset = null;
+		   PreparedStatement pstmt = null;
+		   ArrayList<Review> list = new ArrayList<>();
+		   
+		   String sql = prop.getProperty("ReviewListY");
+		   
+		   try {
+			pstmt=conn.prepareStatement(sql);
+			pstmt.setInt(1, memberNo);
+			rset=pstmt.executeQuery();
+			
+			while(rset.next()) {
+				list.add(new Review(
+						 rset.getInt("REVIEW_NO"),
+						 rset.getString("REVIEW_CONTENT1"),
+						 rset.getString("REVIEW_CONTENT"),
+						 rset.getInt("STAR"),
+						 rset.getDate("R_ENROLL_DATE"),
+						 rset.getDate("R_MODIFY_DATE"),
+						 rset.getString("PRODUCT_NAME"),
+						 rset.getString("PRODUCT_IMG")
+						)); 
+			}
+			
+			
+			} catch (SQLException e) {
+				e.printStackTrace();
+			} finally {
+				close(rset);
+				close(pstmt);
+			}
+			 return list;  
 	   }
 	   
 }

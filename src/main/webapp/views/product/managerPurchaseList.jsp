@@ -133,21 +133,59 @@
 			
          <script>
 	        function purchaseDetail(oNo){
-	           
-	           $.ajax({
-	              url:"<%=contextPath%>/purchaseDetail.ma",
-	              data:{oNo:oNo},
-	              success: function(){
-	                 
-	              }, error: function(){
-	                 
-	              }
-	           });
-	        }
-      </script>   
+		           
+		           $.ajax({
+		              url:"<%=contextPath%>/purchaseDetail.ma",
+		              data:{oNo:oNo},
+		              success: function(list){
+
+		                 
+		                 let val = "";
+		                 
+		             		if(list.length == 0){
+		             			val += "<td colspan='7'> 리스트가 비어있습니다. </td>";
+		             		}else{
+		             			for(var i = 0; i < list.length; i++){
+		             				val += "<br><tr>"
+			             					+ "<td rowspan='6' width='200px;'><img src='" + <%= contextPath%>/+ list[i].productImg + "' alt='' width='180px;' height='200px;'></td>"
+				             					+ "<td width='100px;'>주문번호</td>"
+				             					+ "<td>" + list[i].orderNo + "</td>"
+			             					+ "</tr>"
+			             					+ "<tr>"
+				             					+ "<td>주문일시</td>"
+				             					+ "<td colspan='2'>"+ list[i].paymentDate +"</td>"
+			             					+ "</tr>"
+			             					+ " <tr>"
+				             					+ "<td>제품명</td>"
+				             					+ "<td colspan='2'>"+ list[i].productName + "</td>"
+			             					+ "</tr>"
+				             					+ "<td>제품번호</td>"
+				             					+ "<td colspan='2'>" + list[i].productNo +"</td>"
+			             					+ "</tr>" 
+			             					+ " <tr>" 
+				             					+ "<td>주문수량</td>"
+				             					+ "<td colspan='2'>"+ list[i].productCount +"</td>"
+			             					+ "</tr>" 
+			             					+ "<tr>"
+				             					+ "<td>결제금액</td>"
+				             					+ "<td colspan='2'><b>"+ list[i].price +"원</b></td>"
+			             					+ "</tr><br>";
+		             			}
+		             		}
+		             		
+		             		$(".purchaDetail1").html(val);
+
+		                 
+		              }, error: function(){
+		                 alert("통신에러");
+		              }
+		           });
+		        }
+         
+         </script>   
 
             <!-- 구매 상세관리 모달 div -->
-            <div class="modal" id="purchase-info">
+            <div class="modal modal-xl" id="purchase-info">
                 <div class="modal-dialog">
                 <div class="modal-content">
                 
@@ -158,42 +196,13 @@
                 </div>
             
                 <!-- Modal body -->
-                <div class="modal-body">
+                <div class="modal-body modal-xl">
                 
                 <form action="" method="post">
                         <input type="hidden" name="" value="">
-                        <table style="width:100%;">
-                        	<tbody>
+                        <table style="width:100%; height:100%;">
+                        	<tbody class="purchaDetail1">
                         		
-                                <tr>
-                                    <td rowspan="7" width="200px;"> <img src="" alt="" width="180px;" height="200px;"> </td>
-                                    <td>주문번호</td>
-                                    <td>20230101-1234567</td>
-                                </tr>
-                                <tr>
-                                    <td>주문일시</td>
-                                    <td>23-01-01 00:00:00</td>
-                                </tr>
-                                <tr>
-                                    <td>구매자아이디</td>
-                                    <td>아이디자리</td>
-                                </tr>
-                                <tr>
-                                    <td>제품명</td>
-                                    <td>제품명자리</td>
-                                </tr>
-                                <tr>
-                                    <td>제품번호</td>
-                                    <td>번호자리</td>
-                                </tr>
-                                <tr>
-                                    <td>주문수량</td>
-                                    <td>주문수량자리</td>
-                                </tr>
-                                <tr>
-                                    <td>결제금액</td>
-                                    <td><b>결제금액자리</b></td>
-                                </tr>
                             </tbody>  
                         </table>
 

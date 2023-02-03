@@ -35,7 +35,7 @@
 
 	.maincontent{
 		width: 77%;
-		height: 300px;
+		height: 1300px;
 		
 		float: left;
 	}
@@ -91,7 +91,7 @@
                             
                             <%if(at!=null) {%>
         
-                                <img src="<%=contextPath%>/<%=at.getFilePath()%><%=at.getChangeName()%>"  >
+                                <img src="<%=contextPath%>/<%=at.getFilePath()%><%=at.getChangeName()%>" width="300px" height="300px"   >
                                 <br>
                              <%} %>
                              

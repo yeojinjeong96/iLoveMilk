@@ -269,7 +269,7 @@ public class QADao {
 		
 	}
 	
-	public int selectAnswerListCount(Connection conn) {
+	public int selectAnswerListCount(Connection conn,int date) {
 		int listCount =0;
 		ResultSet rset= null;
 		PreparedStatement pstmt= null;
@@ -277,6 +277,12 @@ public class QADao {
 		
 		try {
 			pstmt = conn.prepareStatement(sql);
+
+			if(date == 0) {
+				pstmt.setInt(1, 0);
+			}else {
+				pstmt.setInt(1, date);
+			}
 	
 			rset= pstmt.executeQuery();
 			
@@ -292,20 +298,29 @@ public class QADao {
 		return listCount;
 	}
 	
-	public ArrayList<QA> selectAnswerList(Connection conn, PageInfo pi){
+	public ArrayList<QA> selectAnswerList(Connection conn, PageInfo pi,int date){
 		
 		ArrayList<QA>list = new ArrayList<>();
 		ResultSet rset= null;
 		PreparedStatement pstmt= null;
 		String sql= prop.getProperty("selectAnswerList");
 		
+	
+		
+		
 		try {
 			pstmt= conn.prepareStatement(sql);
 			int startRow= (pi.getCurrentPage()-1)*pi.getBoardLimit()+1;
 			int endRow= startRow + pi.getBoardLimit() -1;
 			
-			pstmt.setInt(1, startRow);
-			pstmt.setInt(2, endRow);
+			if(date == 0) {
+				pstmt.setInt(1, 0);
+			}else {
+				pstmt.setInt(1, date);
+			}
+			
+			pstmt.setInt(2, startRow);
+			pstmt.setInt(3, endRow);
 			
 			rset= pstmt.executeQuery();
 			while(rset.next()) {
@@ -351,5 +366,71 @@ public class QADao {
 		return result;
 		
 	}
+	
+	public int updateQuestion(Connection conn, QA q) {
+		
+		int result= 0;
+		PreparedStatement pstmt= null;
+		String sql= prop.getProperty("updateQuestion");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, q.getqTitle());
+			pstmt.setString(2, q.getqContent());
+			pstmt.setInt(3, q.getqNo());
+			
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}
+		return result;
+		
+		
+	}
+	
+	public int updateAttachment(Connection conn, Attachment at) {
+		
+		int result= 0;
+		PreparedStatement pstmt= null;
+		String sql= prop.getProperty("updateAttachment");
+		
+		try {
+			pstmt= conn.prepareStatement(sql);
+			pstmt.setString(1, at.getChangeName());
+			pstmt.setString(2, at.getFilePath());
+			pstmt.setInt(3, at.getFileNo());
+			result= pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}
+		return result;
+	}
+	
+	public int insertNewAttachment(Connection conn, Attachment at) {
+		int result= 0;
+		PreparedStatement pstmt= null;
+		String sql= prop.getProperty("insertNewAttachment");
+		
+		try {
+			pstmt= conn.prepareStatement(sql);
+			pstmt.setInt(1, at.getRefNo());
+			pstmt.setString(2, at.getChangeName());
+			pstmt.setString(3, at.getFilePath());
+			
+			result = pstmt.executeUpdate();
+					
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}
+		return result;
+	}
+
 
 }

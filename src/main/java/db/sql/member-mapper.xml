@@ -228,7 +228,7 @@
 		          FROM (                            
                         SELECT 
                                 POINT_NO,
-                                COUNT,
+                                AMOUNT,
                                 STATUS,
                                 TOTAL,
                                 MODIFY_DATE,
@@ -440,6 +440,22 @@
 		     , WAYBILL
 		 FROM TB_ORDER ORD
 		WHERE MEMBER_NO =  ?
+   </entry>
+   
+   <entry key="ReviewListY">
+   		SELECT 
+	       REVIEW_NO
+	     ,  SUBSTR(REVIEW_CONTENT, 1, 15) "REVIEW_CONTENT1" 
+	     , REVIEW_CONTENT
+	     , STAR
+	     , R_ENROLL_DATE
+	     , R_MODIFY_DATE
+	     , PRODUCT_NAME
+	     , PRODUCT_IMG
+	  FROM TB_REVIEW RE
+	  JOIN TB_PRODUCT PRO ON PRO.PRODUCT_NO = RE.PRODUCT_NO
+	 WHERE MEMBER_NO = ?
+	   AND R_STATUS= 'Y' 
    </entry>
    
 </properties>

@@ -1,28 +1,30 @@
-package com.milk.notice.controller;
+package com.milk.member.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
-import com.milk.notice.model.service.QAService;
-import com.milk.notice.model.vo.Attachment;
-import com.milk.notice.model.vo.QA;
+import com.milk.member.model.service.MemberService;
+import com.milk.member.model.vo.Member;
+import com.milk.member.model.vo.Order;
 
 /**
- * Servlet implementation class QuestionUpdateForm
+ * Servlet implementation class MyOrderDetailPageController
  */
-@WebServlet("/updateForm.qa")
-public class QuestionUpdateForm extends HttpServlet {
+@WebServlet("/orderD.me")
+public class MyOrderDetailPageController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public QuestionUpdateForm() {
+    public MyOrderDetailPageController() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -32,14 +34,13 @@ public class QuestionUpdateForm extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		int qNo = Integer.parseInt(request.getParameter("qNo"));
+		int orderNo = Integer.parseInt(request.getParameter("orderNo"));
+		
+		ArrayList<Order> list2 = new MemberService().MyOrderDetailList(orderNo);
+		System.out.println(list2);
 		
 		
-		QA q= new QAService().selectQA(qNo);
-		Attachment at = new QAService().selectAttachment(qNo);
-		request.setAttribute("q", q);
-		request.setAttribute("at", at);
-		request.getRequestDispatcher("views/notice/qa/questionUpdateForm.jsp").forward(request, response);
+		//request.getRequestDispatcher("views/member/myOrderListView.jsp").forward(request, response);
 	}
 
 	/**

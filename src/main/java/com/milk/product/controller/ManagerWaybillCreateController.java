@@ -1,4 +1,4 @@
-package com.milk.notice.controller;
+package com.milk.product.controller;
 
 import java.io.IOException;
 
@@ -8,21 +8,19 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.milk.notice.model.service.QAService;
-import com.milk.notice.model.vo.Attachment;
-import com.milk.notice.model.vo.QA;
+import com.milk.product.model.service.ProductService;
 
 /**
- * Servlet implementation class QuestionUpdateForm
+ * Servlet implementation class ManagerWaybillCreateController
  */
-@WebServlet("/updateForm.qa")
-public class QuestionUpdateForm extends HttpServlet {
+@WebServlet("/orderWaybill.ma")
+public class ManagerWaybillCreateController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public QuestionUpdateForm() {
+    public ManagerWaybillCreateController() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -31,15 +29,14 @@ public class QuestionUpdateForm extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+		int no = Integer.parseInt(request.getParameter("wayOrderNo"));
+		String courier = request.getParameter("courier");
+		int waybill = Integer.parseInt(request.getParameter("waybill"));
 		
-		int qNo = Integer.parseInt(request.getParameter("qNo"));
+		int result = new ProductService().createWaybill(no, courier, waybill);
 		
-		
-		QA q= new QAService().selectQA(qNo);
-		Attachment at = new QAService().selectAttachment(qNo);
-		request.setAttribute("q", q);
-		request.setAttribute("at", at);
-		request.getRequestDispatcher("views/notice/qa/questionUpdateForm.jsp").forward(request, response);
+		response.getWriter();
 	}
 
 	/**

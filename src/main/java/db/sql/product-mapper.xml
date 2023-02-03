@@ -17,6 +17,7 @@
 		          FROM (
 		                SELECT
 		                	   PRODUCT_NO
+		                	 , BRAND   
 		                     , PRODUCT_NAME
 		                     , PRICE
 		                     , PRODUCT_IMG
@@ -44,13 +45,15 @@
 	<entry key="selectRecentProductList">
 	
         SELECT 	
-        		   PRODUCT_NO	    
+        		   PRODUCT_NO
+        		, BRAND	   	    
                , PRODUCT_NAME
 	            , PRICE
 	            , PRODUCT_IMG
           FROM (
                 SELECT 
-                		PRODUCT_NO	
+                		PRODUCT_NO
+                		, BRAND	   	
              	   	   , PRODUCT_NAME
                      , PRICE
                      , PRODUCT_IMG
@@ -124,6 +127,7 @@
 		          FROM (
 		                SELECT
 		                	   PRODUCT_NO
+		                	 , BRAND  
 		                     , PRODUCT_NAME
 		                     , PRICE
 		                     , PRODUCT_IMG
@@ -153,14 +157,13 @@
 		          FROM (
 		                SELECT
 		                	   PRODUCT_NO
+		                	 , BRAND
 		                     , PRODUCT_NAME
 		                     , PRICE
 		                     , PRODUCT_IMG
 						   FROM TB_PRODUCT B
 				 		  WHERE B.STATUS = 'Y'
-		                ) A
-		        )
-		  WHERE RNUM BETWEEN ? AND ? 				 		  
+			 		  
 				  
 	</entry>
 	
@@ -189,11 +192,96 @@
 			  FROM TB_PAYMENT P
 			  JOIN TB_ORDERDETAIL OD ON (OD.ORDER_NO = P.ORDER_NO)
 			  GROUP BY P.ORDER_NO, P.PRICE, P.PAYMENT_DATE, P.PAYMENT_NO
+			  ORDER BY PAYMENT_DATE DESC
 			                ) A
 			        )
 			  WHERE RNUM BETWEEN ? AND ?
 	</entry>
 	
+	<entry key="selectPurchaseDetailList">
+	 SELECT 
+	        P.ORDER_NO,
+	        P.PAYMENT_DATE,
+	        PR.PRODUCT_IMG,
+	        PR.PRODUCT_NAME,
+	        OD.COUNT,
+	        ((PR.PRICE)* OD.COUNT)PRICE,
+	        M.MEMBER_ID,
+	        OD.PRODUCT_NO
+	   FROM TB_PAYMENT P
+	   JOIN TB_ORDERDETAIL OD ON (OD.ORDER_NO = P.ORDER_NO)
+	   JOIN TB_PRODUCT PR ON (PR.PRODUCT_NO = OD.PRODUCT_NO)
+	   JOIN TB_ORDER O ON (O.ORDER_NO = OD.ORDER_NO)
+	   JOIN TB_MEMBER M ON (M.MEMBER_NO = O.MEMBER_NO)
+	   WHERE ORDER_NO = ?
+	</entry>
+	
+	<entry key="countOrderList">
+		SELECT 
+				COUNT(*)COUNT
+		  FROM TB_ORDER	
+	</entry>
+	
+	<entry key="selectOrderList">
+	SELECT *
+	          FROM (
+	                SELECT ROWNUM RNUM, A.*
+	                  FROM (
+	    
+	                        SELECT 
+			                        O.ORDER_NO,
+			                        O.STATUS, 
+			                        NVL(WAYBILL, 0)WAYBILL,
+			                        MEMBER_ID,    
+			                        O.MEMBER_NO,
+			                        ORDER_NAME,
+			                        ORDER_PHONE,
+			                        ORDER_EMAIL,
+			                        ADDRESS_NAME,
+			                        O.ADDRESS,
+			                        ADDRESS_TEL,
+			                        USE_POINT,
+			                        NVL(COURIER, '미지정')COURIER,
+			                        PAYMENT_DATE
+		                       FROM TB_ORDER O
+		                       JOIN TB_MEMBER M ON (M.MEMBER_NO = O.MEMBER_NO)
+		                       JOIN TB_PAYMENT P ON (P.ORDER_NO = O.ORDER_NO)
+		                       ORDER BY PAYMENT_DATE DESC
+	                       ) A
+	               )
+	         WHERE RNUM BETWEEN ? AND ?
+	</entry>
+	<entry key = "selectOrderDetail">
+          SELECT
+ 		                        O.ORDER_NO,
+		                        O.STATUS, 
+		                        NVL(WAYBILL, 0)WAYBILL,
+		                        MEMBER_ID,    
+		                        O.MEMBER_NO,
+		                        ORDER_NAME,
+		                        ORDER_PHONE,
+		                        ORDER_EMAIL,
+		                        ADDRESS_NAME,
+		                        O.ADDRESS,
+		                        ADDRESS_TEL,
+		                        USE_POINT,
+		                        NVL(COURIER, '미지정')COURIER,
+		                        PAYMENT_DATE,
+                                MEMBER_NAME
+	                       FROM TB_ORDER O
+	                       JOIN TB_MEMBER M ON (M.MEMBER_NO = O.MEMBER_NO)
+	                       JOIN TB_PAYMENT P ON (P.ORDER_NO = O.ORDER_NO) 
+                           WHERE O.ORDER_NO = ?	
+	</entry>
+	<entry key="createWaybill">
+	UPDATE 
+	      TB_ORDER
+	  SET 
+		    COURIER = ?,
+		    WAYBILL = ?
+	  
+	  WHERE ORDER_NO = ?	
+	</entry>
 	
 	<entry key="insertProduct">
 	INSERT
@@ -247,9 +335,6 @@
 		                     , BRAND
 		                  FROM TB_PRODUCT B
 		                 WHERE STATUS = 'Y'
-		                ) A
-		        )
-		  WHERE RNUM BETWEEN ? AND ? 		                 
 	</entry>
 	
 	<entry key="productDetail">
@@ -374,7 +459,7 @@
 		  )
 		  VALUES
 		  (
-		    SEQ_ONO.NEXTVAL || '-' || TO_CHAR(SYSDATE, 'YYYYMMDD') ORDER_NO
+		    TO_CHAR(SYSDATE, 'YYYYMMDD') || '-' || LPAD(SEQ_ONO.NEXTVAL, 5, '0')
 		  , ?
 		  , ?
 		  , ?
@@ -398,12 +483,70 @@
 		  VALUES
 		  (
 		    SEQ_DONO.NEXTVAL
-		  , SEQ_ONO.CURRVAL || '-' || TO_CHAR(SYSDATE, 'YYYYMMDD') ORDER_NO
+		  , ?
 		  , ?
 		  , ?
 		  )
 	</entry>
 	
-	<entry key="paymentInsert"></entry>
+	<entry key="paymentInsert">
+		INSERT
+		  INTO TB_PAYMENT
+		  (
+		    PAYMENT_NO
+		  , ORDER_NO
+		  , PRICE
+		  )
+		  VALUES
+		  (
+		    SEQ_PAYNO.NEXTVAL
+		  , ?
+		  , ?
+		  )
+	</entry>
+	
+	<entry key="selectMemberGrade">
+		SELECT MEMBER_GRADE
+		  FROM TB_MEMBER
+		 WHERE MEMBER_NO = ?
+	</entry>
+	
+	<entry key="pointInsert">
+		INSERT
+		  INTO TB_POINT
+		  (
+		    POINT_NO
+		  , AMOUNT
+		  , STATUS
+		  , TOTAL
+		  , CONTENT
+		  , ORDER_NO
+		  , MEMBER_NO
+		  )
+		  VALUES
+		  (
+		    SEQ_PONO.NEXTVAL
+		  , ?
+		  , '적립'
+		  , NVL((SELECT SUM(AMOUNT)
+             	   FROM TB_POINT
+            	  WHERE MEMBER_NO = ?), 0) + ?
+		  , '상품 구매로 인한 적립'
+		  , ?
+		  , ?
+		  )
+	</entry>
+	
+	<entry key="selectOrderNo">
+		SELECT ORDER_NO
+		  FROM (
+		         SELECT ROWNUM, ORDER_NO
+				   FROM TB_ORDER
+				  WHERE MEMBER_NO = ?
+		          ORDER
+		             BY ORDER_NO DESC
+		       )
+		 WHERE ROWNUM = 1
+	</entry>
 	
 </properties>

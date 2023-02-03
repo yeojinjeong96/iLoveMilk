@@ -15,6 +15,7 @@ import com.milk.member.model.vo.Member;
 import com.milk.member.model.vo.Order;
 import com.milk.member.model.vo.Point;
 import com.milk.member.model.vo.Report;
+import com.milk.member.model.vo.Review;
 import com.milk.product.model.vo.ProductLike;
 
 
@@ -376,5 +377,16 @@ public class MemberService {
 			return list;
 		   }
 	   
+	   /**
+		*  작성한 리뷰 조회 서비스 
+		*/  
+	   
+	   public ArrayList<Review> ReviewListY(int memberNo) {
+		   Connection conn = getConnection();
+		   ArrayList<Review> list = new MemberDao().ReviewListY(conn, memberNo);
+		   close(conn);
+		   return list;
+	   }
+	  
 	   
 }

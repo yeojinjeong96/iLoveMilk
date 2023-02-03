@@ -77,7 +77,18 @@ public class Product {
 		this.price = price;
 		this.productImg = productImg;
 	}
+	
+	
 
+
+	public Product(int productNo,  String brand,String productName, int price, String productImg) {
+		super();
+		this.productNo = productNo;
+		this.brand = brand;
+		this.productName = productName;
+		this.price = price;
+		this.productImg = productImg;
+	}
 
 	public int getProductNo() {
 		return productNo;

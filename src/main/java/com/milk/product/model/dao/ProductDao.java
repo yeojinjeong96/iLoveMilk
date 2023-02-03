@@ -14,7 +14,6 @@ import java.util.Properties;
 import com.milk.common.model.vo.PageInfo;
 import com.milk.member.model.vo.Member;
 import com.milk.member.model.vo.Order;
-import com.milk.product.model.vo.OrderDetail;
 import com.milk.product.model.vo.OrderInfo;
 import com.milk.product.model.vo.Product;
 import com.milk.product.model.vo.ProductLike;
@@ -87,6 +86,7 @@ public class ProductDao {
 			while(rset.next()) {
 				list.add(new Product(
 						rset.getInt("product_no"),
+						rset.getString("BRAND"),
 						rset.getString("product_name"),
 						rset.getInt("price"),
 						rset.getString("product_img")
@@ -153,6 +153,7 @@ public class ProductDao {
 			while(rset.next()) {
 				list.add(new Product(
 						rset.getInt("product_no"),
+						rset.getString("BRAND"),
 						rset.getString("product_name"),
 						rset.getInt("price"),
 						rset.getString("product_img")
@@ -333,6 +334,7 @@ public class ProductDao {
 			while(rset.next()) {
 				list.add(new Product(
 						rset.getInt("product_no"),
+						rset.getString("BRAND"),
 						rset.getString("product_name"),
 						rset.getInt("price"),
 						rset.getString("product_img")
@@ -429,6 +431,7 @@ public class ProductDao {
 			while(rset.next()) {
 				list.add(new Product(
 						rset.getInt("product_no"),
+						rset.getString("BRAND"),
 						rset.getString("product_name"),
 						rset.getInt("price"),
 						rset.getString("product_img")	
@@ -458,7 +461,7 @@ public class ProductDao {
 				listCount = rset.getInt("count");
 			}
 			
-			System.out.println(listCount);
+			
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -493,10 +496,7 @@ public class ProductDao {
                         rset.getString("MEMBER_ID")
 						));
 			}
-			
 
-			
-			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
@@ -507,6 +507,154 @@ public class ProductDao {
 		return list;
 	}
 	
+	public ArrayList<Order> selectPurchaseDetailList(Connection conn, int no){
+		ArrayList<Order> list = new ArrayList<>();
+		ResultSet rset = null;
+		PreparedStatement pstmt = null;
+		String sql = prop.getProperty("selectPurchaseDetailList");
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, no);
+			rset = pstmt.executeQuery();
+			while(rset.next()) {
+				list.add(new Order(
+							rset.getInt("order_no"),
+							rset.getDate("payment_date"),
+							rset.getString("product_img"),
+							rset.getString("product_name"),
+							rset.getInt("count"),
+							rset.getInt("price"),
+							rset.getString("member_id"),
+							rset.getInt("product_no")
+						));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return list;
+	}
+	
+	public int countOrderList(Connection conn) {
+		ResultSet rset = null;
+		int listCount = 0;
+		PreparedStatement pstmt = null;
+		String sql = prop.getProperty("countOrderList");
+		try {
+			pstmt = conn.prepareStatement(sql);
+			rset = pstmt.executeQuery();
+			if(rset.next()) {
+				listCount = rset.getInt("count");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return listCount;
+	}
+	
+	public ArrayList<Order> selectOrderList(Connection conn, PageInfo pi){
+		ArrayList<Order> list  = new ArrayList<>();
+		ResultSet rset = null;
+		PreparedStatement pstmt = null;
+		String sql = prop.getProperty("selectOrderList");
+		try {
+			pstmt = conn.prepareStatement(sql);
+			int startRow = (pi.getCurrentPage() -1) * pi.getBoardLimit() + 1;
+			int endRow = startRow + pi.getBoardLimit() -1;
+			pstmt.setInt(1, startRow);
+			pstmt.setInt(2, endRow);
+			rset = pstmt.executeQuery();
+			while(rset.next()) {
+				list.add(new Order(
+							rset.getInt("ORDER_NO"),
+							rset.getInt("STATUS"),
+							rset.getInt("WAYBILL"),
+							rset.getString("MEMBER_ID"),
+							rset.getInt("MEMBER_NO"),
+							rset.getString("ORDER_NAME"),
+							rset.getString("ORDER_PHONE"),
+							rset.getString("ORDER_EMAIL"),
+							rset.getString("ADDRESS_NAME"),
+							rset.getString("ADDRESS"),
+							rset.getString("ADDRESS_TEL"),
+							rset.getInt("USE_POINT"),
+							rset.getString("COURIER"),
+							rset.getDate("PAYMENT_DATE")
+						));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+				
+		return list;
+	}
+	
+	public Order selectOrderDetail(Connection conn, int no) {
+		Order o = new Order();
+		ResultSet rset = null;
+		PreparedStatement pstmt = null;
+		String sql = prop.getProperty("selectOrderDetail");
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, no);
+			rset = pstmt.executeQuery();
+			if(rset.next()) {
+				o = new Order(
+						rset.getInt("ORDER_NO"),
+						rset.getInt("STATUS"),
+						rset.getInt("WAYBILL"),
+						rset.getString("MEMBER_ID"),
+						rset.getInt("MEMBER_NO"),
+						rset.getString("ORDER_NAME"),
+						rset.getString("ORDER_PHONE"),
+						rset.getString("ORDER_EMAIL"),
+						rset.getString("ADDRESS_NAME"),
+						rset.getString("ADDRESS"),
+						rset.getString("ADDRESS_TEL"),
+						rset.getInt("USE_POINT"),
+						rset.getString("COURIER"),
+						rset.getDate("PAYMENT_DATE"),
+						rset.getString("member_name")
+						);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return o;
+	}
+	
+	
+	public int createWaybill(Connection conn,int no, String courier, int waybill) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String sql = prop.getProperty("createWaybill");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, courier);
+			pstmt.setInt(2, waybill);
+			pstmt.setInt(3, no);
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}
+		return result;
+	}
 	
 	public int insertProduct(Connection conn, Product p) {
 		int result = 0;
@@ -647,7 +795,7 @@ public class ProductDao {
 			int startRow = (pi.getCurrentPage() - 1) * pi.getBoardLimit() + 1;
 			int endRow = startRow + pi.getBoardLimit() - 1;
 			
-			pstmt.setInt(1,startRow);
+			pstmt.setInt(1, startRow);
 			pstmt.setInt(2, endRow);
 			
 			rset = pstmt.executeQuery();
@@ -859,16 +1007,17 @@ public class ProductDao {
 		return result;
 	}
 	
-	public int orderDetailInsert(Connection conn, ArrayList<OrderDetail> odList) {
+	public int orderDetailInsert(Connection conn, ArrayList<Product> list) {
 		int result = 0;
 		PreparedStatement pstmt = null;
 		String sql = prop.getProperty("orderDetailInsert");
 		try {
-			for(OrderDetail od : odList) {
+			for(Product p : list) {
 				pstmt = conn.prepareStatement(sql);
-				pstmt.setInt(1, od.getProductNo());
-				pstmt.setInt(2, od.getCount());
-				//result = pstmt.executeUpdate();
+				pstmt.setString(1, p.getProductName());
+				pstmt.setInt(2, p.getProductNo());
+				pstmt.setInt(3, p.getStock()); // 갯수
+				result = pstmt.executeUpdate();
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -876,5 +1025,84 @@ public class ProductDao {
 			close(pstmt);
 		}
 		return result;
+	}
+	
+	public int paymentInsert(Connection conn, String orderNo, int price) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String sql = prop.getProperty("paymentInsert");
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, orderNo);
+			pstmt.setInt(2, price);
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		return result;
+	}
+	
+	public String selectMemberGrade(Connection conn, int memNo) {
+		String memGrade = null;
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String sql = prop.getProperty("selectMemberGrade");
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, memNo);
+			rset = pstmt.executeQuery();
+			if(rset.next()) {
+				memGrade = rset.getString("member_grade");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		return memGrade;
+	}
+	
+	public int pointInsert(Connection conn, int point, int memNo, String orderNo) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String sql = prop.getProperty("pointInsert");
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, point);
+			pstmt.setInt(2, memNo);
+			pstmt.setInt(3, point);
+			pstmt.setString(4, orderNo);
+			pstmt.setInt(5, memNo);
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		return result;
+	}
+	
+	public String selectOrderNo(Connection conn, int memNo) {
+		String orderNo = null;
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String sql = prop.getProperty("selectOrderNo");
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, memNo);
+			rset = pstmt.executeQuery();
+			if(rset.next()) {
+				orderNo = rset.getString("order_no");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		return orderNo;
 	}
 }
