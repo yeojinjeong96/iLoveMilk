@@ -37,7 +37,7 @@
                 주문하실 상품명과 수량을 꼭 확인해주세요.
                 <br><br><br>
                 
-                <form action="" method="post">
+                <form action="<%= contextPath %>/completePay.pr" method="post">
                     <h4><b>주문 상세 내역</b></h4>
                     <br>
                     <table class="info table">
@@ -51,6 +51,8 @@
                         <tbody>
                             <% for(Product p : list){ %>
 	                            <tr>
+	                            	<input type="hidden" name="proNo" val="<%= p.getProductNo() %>">
+		                            <input type="hidden" name="count" val="<%= p.getCapacity() %>">
 	                                <td style="vertical-align:middle" width="12%" align="center"><img src="<%= p.getProductImg() %>" width="100px;"></td>
 		                            <td style="vertical-align:middle" width="45%"><%= p.getProductName() %></td>
 	                                <td style="vertical-align:middle" align="center"><%= p.getCapacity() %>개</td>
@@ -82,16 +84,16 @@
                     <table class="info opt table table-hover">
                         <tr>
                             <th width="30%"><span>*</span> 이름&nbsp;</th>
-                            <td width="70%"><input type="text" required id="memName"></td>
+                            <td width="70%"><input type="text" required id="memName" name="orderName"></td>
                         </tr>
                         <tr>
                             <th><span>*</span> 전화번호&nbsp;</th>
-                            <td><input type="text" placeholder=" - 포함 입력" required id="memPhone"></td>
+                            <td><input type="text" placeholder=" - 포함 입력" required id="memPhone" name="orderPhone"></td>
                         </tr>
                         <tr>
                             <th><span>*</span> 이메일&nbsp;</th>
                             <td>
-                                <input type="email" required id="memEmail">
+                                <input type="email" required id="memEmail" name="orderEmail">
                             </td>
                         </tr>
                     </table>
@@ -102,7 +104,7 @@
                     <table class="info opt table table-hover">
                         <tr>
                             <th width="30%"><span>*</span> 받으실 분&nbsp;</th>
-                            <td width="70%"><input type="text" required id="receiveName"></td>
+                            <td width="70%"><input type="text" required id="receiveName" name="addressName"></td>
                         </tr>
                         <tr>
                             <th><span>*</span> 받으실 곳&nbsp;</th>
@@ -111,12 +113,12 @@
 								<input type="button" onclick="sample6_execDaumPostcode()" value="우편번호"><br>
                                 <input type="text"  id="sample6_address" placeholder="주소" style="width:250px" name="address" required><br>
 	                    		<input type="text" id="sample6_detailAddress" name="addressDetail" placeholder="상세주소" style="width:150px">
-                            	<input type="text" id="sample6_extraAddress" placeholder="참고항목" style="width:100px">
+                            	<input type="text" id="sample6_extraAddress" placeholder="참고항목" style="width:100px" name="addressPlus">
                             </td>
                         </tr>
                         <tr>
                             <th><span>*</span> 전화번호&nbsp;</th>
-                            <td><input type="text" placeholder=" - 포함 입력" required id="receivePhone"></td>
+                            <td><input type="text" placeholder=" - 포함 입력" required id="receivePhone" name="addressTel"></td>
                         </tr>
                     </table>
                     <br><br><br>
@@ -135,7 +137,7 @@
                         </tr>
                         <tr>
                             <th>사용할 적립금&nbsp;</th>
-                            <td class="pay"><input type="number" style="width:80px" id="usePoint" onchange="usePointChange();">&nbsp;p</td>
+                            <td class="pay"><input type="number" style="width:80px" id="usePoint" onchange="usePointChange();" name="usePoint">&nbsp;p</td>
                             <td>&nbsp;<input type="checkbox" id="useAll" onclick="useAllPoint();"><label for="useAll">&nbsp;전액 사용하기</label> (보유 적립금: <b><%= m.getMemberNo() %></b> p)</td>
                         </tr>
                         <tr>
@@ -155,6 +157,7 @@
                     <div class="sum-area">
                         <table class="info">
                             <tr>
+                            	<input type="hidden" name="price" id="priceInput">
                                 <th width="40%" class="pay">최종 결제 금액&nbsp;</th>
                                 <th width="20%" class="pay" style="font-size:large;" id="finPrice"></th>
                                 <td width="40%" style="font-size:large;"><b>원</b></td>
@@ -213,6 +216,7 @@
 		$(function(){
 			$("#finalPrice").text(<%= price %> + 2500);
 			$("#finPrice").text(<%= price %> + 2500);
+			$("#priceInput").attr("value", <%= price %> + 2500);
 		});
 	
 		// 사용할 적립금 최대 최소 지정
@@ -229,6 +233,7 @@
 			// 최종 결제 금액 (적립금 사용 후)
 			$("#finalPrice").text(<%= price %> + 2500 - $("#usePoint").val());
 			$("#finPrice").text(<%= price %> + 2500 - $("#usePoint").val());
+			$("#priceInput").attr("value", <%= price %> + 2500);
 		}
 	
 		// 전액 사용하기
@@ -241,6 +246,7 @@
 			// 최종 결제 금액 (적립금 사용 후)
 			$("#finalPrice").text(<%= price %> + 2500 - $("#usePoint").val());
 			$("#finPrice").text(<%= price %> + 2500 - $("#usePoint").val());
+			$("#priceInput").attr("value", <%= price %> + 2500);
 		}
 	
 		// 주문자 정보와 동일

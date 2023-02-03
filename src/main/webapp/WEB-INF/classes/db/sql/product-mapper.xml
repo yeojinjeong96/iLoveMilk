@@ -475,6 +475,50 @@ SELECT *
 		  )
 	</entry>
 	
-	<entry key="paymentInsert"></entry>
+	<entry key="paymentInsert">
+		INSERT
+		  INTO TB_PAYMENT
+		  (
+		    PAYMENT_NO
+		  , ORDER_NO
+		  , PRICE
+		  )
+		  VALUES
+		  (
+		    SEQ_PAYNO.NEXTVAL
+		  , SEQ_ONO.CURRVAL
+		  , ?
+		  )
+	</entry>
+	
+	<entry key="selectMemberGrade">
+		
+	</entry>
+	
+	<entry key="pointInsert">
+		INSERT
+		  INTO TB_POINT
+		  (
+		    POINT_NO
+		  , COUNT
+		  , STATUS
+		  , TOTAL
+		  , CONTENT
+		  , ORDER_NO
+		  , MEMBER_NO
+		  )
+		  VALUES
+		  {
+		    SEQ_PONO.NEXTVAL
+		  , ?
+		  , '적립'
+		  , NVL((SELECT SUM(AMOUNT)
+             	   FROM TB_POINT
+            	  WHERE MEMBER_NO = ?), 0) + ?
+		  , '상품 구매로 인한 적립'
+		  , TO_CHAR(SYSDATE, 'YYYYMMDD') || '-' || LPAD(SEQ_ONO.CURRVAL, 5, '0')
+		  , ?
+		  )
+	</entry>
 	
 </properties>
