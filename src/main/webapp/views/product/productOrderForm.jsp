@@ -51,8 +51,8 @@
                         <tbody>
                             <% for(Product p : list){ %>
 	                            <tr>
-	                            	<input type="hidden" name="proNo" val="<%= p.getProductNo() %>">
-		                            <input type="hidden" name="count" val="<%= p.getCapacity() %>">
+	                            	<input type="hidden" name="proNo" value="<%= p.getProductNo() %>">
+		                            <input type="hidden" name="count" value="<%= p.getCapacity() %>">
 	                                <td style="vertical-align:middle" width="12%" align="center"><img src="<%= p.getProductImg() %>" width="100px;"></td>
 		                            <td style="vertical-align:middle" width="45%"><%= p.getProductName() %></td>
 	                                <td style="vertical-align:middle" align="center"><%= p.getCapacity() %>개</td>
@@ -204,7 +204,7 @@
 			   $("#memEmail").val() != "" &&
 			   $("#receiveName").val() != "" &&
 			   $("#sample6-postcode").val() != "" &&
-			   $("#sample6-address").val() != "" &&
+			   $("#sample6_address").val() != "" &&
 			   $("#receivePhone").val() != ""){
 				$("#payment").attr("disabled", false);
 			}else{
@@ -325,17 +325,15 @@
 		}
 
 		<!-- iamport.payment.js -->
-		let no = 10;
 		// 페이지에 가맹점 식별코드를 이용하여 IMP 객체를 초기화
 	    var IMP = window.IMP; // 생략 가능
 	    IMP.init("imp11183531"); // 예: imp00000000
 	    function requestPay() {
-	    	no = no + 1;
-        	// IMP.request_pay(param, callback) 결제창 호출
+	    	// IMP.request_pay(param, callback) 결제창 호출
 	        IMP.request_pay({ // param
 	        	pg: "html5_inicis",
                 pay_method: "card",
-                merchant_uid: no,
+                merchant_uid: <%= Math.random()*10000+1 %>,
                 name: "<%= list.get(0).getProductName() %> 외 " + "<%= list.size() - 1 %>",
                 amount: $("#finPrice").text(),
                 buyer_email: $("#memEmail").val(),

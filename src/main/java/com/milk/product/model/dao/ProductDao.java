@@ -14,6 +14,7 @@ import java.util.Properties;
 import com.milk.common.model.vo.PageInfo;
 import com.milk.member.model.vo.Member;
 import com.milk.member.model.vo.Order;
+import com.milk.product.model.vo.OrderInfo;
 import com.milk.product.model.vo.Product;
 import com.milk.product.model.vo.ProductLike;
 import com.milk.product.model.vo.Review;
@@ -982,7 +983,7 @@ public class ProductDao {
 		}
 		return m;
 	}
-	/*
+	
 	public int orderInsert(Connection conn, OrderInfo o) {
 		int result = 0;
 		PreparedStatement pstmt = null;
@@ -1006,16 +1007,17 @@ public class ProductDao {
 		return result;
 	}
 	
-	public int orderDetailInsert(Connection conn, ArrayList<OrderDetail> odList) {
+	public int orderDetailInsert(Connection conn, ArrayList<Product> list) {
 		int result = 0;
 		PreparedStatement pstmt = null;
 		String sql = prop.getProperty("orderDetailInsert");
 		try {
-			for(OrderDetail od : odList) {
+			for(Product p : list) {
 				pstmt = conn.prepareStatement(sql);
-				pstmt.setInt(1, od.getProductNo());
-				pstmt.setInt(2, od.getCount());
-				//result = pstmt.executeUpdate();
+				pstmt.setString(1, p.getProductName());
+				pstmt.setInt(2, p.getProductNo());
+				pstmt.setInt(3, p.getStock()); // 갯수
+				result = pstmt.executeUpdate();
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -1024,5 +1026,83 @@ public class ProductDao {
 		}
 		return result;
 	}
-	*/
+	
+	public int paymentInsert(Connection conn, String orderNo, int price) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String sql = prop.getProperty("paymentInsert");
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, orderNo);
+			pstmt.setInt(2, price);
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		return result;
+	}
+	
+	public String selectMemberGrade(Connection conn, int memNo) {
+		String memGrade = null;
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String sql = prop.getProperty("selectMemberGrade");
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, memNo);
+			rset = pstmt.executeQuery();
+			if(rset.next()) {
+				memGrade = rset.getString("member_grade");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		return memGrade;
+	}
+	
+	public int pointInsert(Connection conn, int point, int memNo, String orderNo) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String sql = prop.getProperty("pointInsert");
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, point);
+			pstmt.setInt(2, memNo);
+			pstmt.setInt(3, point);
+			pstmt.setString(4, orderNo);
+			pstmt.setInt(5, memNo);
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		return result;
+	}
+	
+	public String selectOrderNo(Connection conn, int memNo) {
+		String orderNo = null;
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String sql = prop.getProperty("selectOrderNo");
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, memNo);
+			rset = pstmt.executeQuery();
+			if(rset.next()) {
+				orderNo = rset.getString("order_no");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		return orderNo;
+	}
 }

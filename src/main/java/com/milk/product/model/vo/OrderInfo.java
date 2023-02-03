@@ -34,6 +34,19 @@ public class OrderInfo {
 		this.waybill = waybill;
 	}
 
+	public OrderInfo(int memberNo, String orderName, String orderPhone, String orderEmail, String addressName,
+			String address, String addressTel, int usePoint) {
+		super();
+		this.memberNo = memberNo;
+		this.orderName = orderName;
+		this.orderPhone = orderPhone;
+		this.orderEmail = orderEmail;
+		this.addressName = addressName;
+		this.address = address;
+		this.addressTel = addressTel;
+		this.usePoint = usePoint;
+	}
+
 	public String getOrderNo() {
 		return orderNo;
 	}

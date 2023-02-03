@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<% String orderNo = (String)request.getAttribute("orderNo"); %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -29,7 +30,7 @@
                             <td><h4><b>주문 / 결제가 정상적으로 완료되었습니다.</b></h4></td>
                         </tr>
                         <tr>
-                            <td>주문번호 ???????? - ???????</td>
+                            <td>주문번호 <%= orderNo %></td>
                         </tr>
                         <tr>
                             <td><b class="text-primary">아이럽우유</b> 를 이용해주셔서 감사합니다.<br><br></td>
@@ -39,8 +40,8 @@
                 <br><br>
                 
                 <div>
-                    <button type="button" class="btn btn-secondary" onclick="">메인으로</button>
-                    <button type="submit" class="btn btn-primary">주문 내역 확인</button>
+                    <a type="button" class="btn btn-secondary" href="<%= contextPath %>">메인으로</a>
+                    <a type="submit" class="btn btn-primary" href="<%= contextPath %>/myorder.me">주문 내역 확인</a>
                 </div>
             </div>
         </div>

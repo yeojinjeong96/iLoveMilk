@@ -12,6 +12,7 @@ import com.milk.common.model.vo.PageInfo;
 import com.milk.member.model.vo.Member;
 import com.milk.member.model.vo.Order;
 import com.milk.product.model.dao.ProductDao;
+import com.milk.product.model.vo.OrderInfo;
 import com.milk.product.model.vo.Product;
 import com.milk.product.model.vo.ProductLike;
 import com.milk.product.model.vo.Review;
@@ -470,6 +471,98 @@ public class ProductService {
 		Member m = new ProductDao().orderMember(conn, memNo);
 		close(conn);
 		return m;
+	}
+	
+	/**
+	 * 주문 테이블 insert
+	 * @author 승하
+	 * @return 성공시 1, 실패시 2
+	 */
+	public int orderInsert(OrderInfo o) {
+		Connection conn = getConnection();
+		int result = new ProductDao().orderInsert(conn, o);
+		if(result > 0) {
+			commit(conn);
+		} else {
+			rollback(conn);
+		}
+		close(conn);
+		return result;
+	}
+	
+	/**
+	 * 주문 상세 테이블 insert
+	 * @author 승하
+	 * @return 성공시 1, 실패시 2
+	 */
+	public int orderDetailInsert(ArrayList<Product> list) {
+		Connection conn = getConnection();
+		int result = new ProductDao().orderDetailInsert(conn, list);
+		if(result > 0) {
+			commit(conn);
+		} else {
+			rollback(conn);
+		}
+		close(conn);
+		return result;
+	}
+	
+	/**
+	 * 결제 테이블 insert
+	 * @author 승하
+	 * @return 성공시 1, 실패시 2
+	 */
+	public int paymentInsert(String orderNo, int price) {
+		Connection conn = getConnection();
+		int result = new ProductDao().paymentInsert(conn, orderNo, price);
+		if(result > 0) {
+			commit(conn);
+		} else {
+			rollback(conn);
+		}
+		close(conn);
+		return result;
+	}
+	
+	/**
+	 * 회원등급 가져오기
+	 * @author 승하
+	 * @return 회원등급
+	 */
+	public String selectMemberGrade(int memNo) {
+		Connection conn = getConnection();
+		String memGrade = new ProductDao().selectMemberGrade(conn, memNo);
+		close(conn);
+		return memGrade;
+	}
+	
+	/**
+	 * 회원등급별 적립금 insert
+	 * @author 승하
+	 * @return 성공시 1, 실패시 2
+	 */
+	public int pointInsert(int point, int memNo, String orderNo) {
+		Connection conn = getConnection();
+		int result = new ProductDao().pointInsert(conn, point, memNo, orderNo);
+		if(result > 0) {
+			commit(conn);
+		} else {
+			rollback(conn);
+		}
+		close(conn);
+		return result;
+	}
+	
+	/**
+	 * 주문번호 가져오기
+	 * @author 승하
+	 * @return 주문번호
+	 */
+	public String selectOrderNo(int memNo) {
+		Connection conn = getConnection();
+		String orderNo = new ProductDao().selectOrderNo(conn, memNo);
+		close(conn);
+		return orderNo;
 	}
 
 }

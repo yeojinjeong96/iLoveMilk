@@ -483,7 +483,7 @@
 		  VALUES
 		  (
 		    SEQ_DONO.NEXTVAL
-		  , TO_CHAR(SYSDATE, 'YYYYMMDD') || '-' || LPAD(SEQ_ONO.CURRVAL, 5, '0')
+		  , ?
 		  , ?
 		  , ?
 		  )
@@ -500,13 +500,15 @@
 		  VALUES
 		  (
 		    SEQ_PAYNO.NEXTVAL
-		  , SEQ_ONO.CURRVAL
+		  , ?
 		  , ?
 		  )
 	</entry>
 	
 	<entry key="selectMemberGrade">
-		
+		SELECT MEMBER_GRADE
+		  FROM TB_MEMBER
+		 WHERE MEMBER_NO = ?
 	</entry>
 	
 	<entry key="pointInsert">
@@ -514,7 +516,7 @@
 		  INTO TB_POINT
 		  (
 		    POINT_NO
-		  , COUNT
+		  , AMOUNT
 		  , STATUS
 		  , TOTAL
 		  , CONTENT
@@ -522,7 +524,7 @@
 		  , MEMBER_NO
 		  )
 		  VALUES
-		  {
+		  (
 		    SEQ_PONO.NEXTVAL
 		  , ?
 		  , '적립'
@@ -530,9 +532,21 @@
              	   FROM TB_POINT
             	  WHERE MEMBER_NO = ?), 0) + ?
 		  , '상품 구매로 인한 적립'
-		  , TO_CHAR(SYSDATE, 'YYYYMMDD') || '-' || LPAD(SEQ_ONO.CURRVAL, 5, '0')
+		  , ?
 		  , ?
 		  )
+	</entry>
+	
+	<entry key="selectOrderNo">
+		SELECT ORDER_NO
+		  FROM (
+		         SELECT ROWNUM, ORDER_NO
+				   FROM TB_ORDER
+				  WHERE MEMBER_NO = ?
+		          ORDER
+		             BY ORDER_NO DESC
+		       )
+		 WHERE ROWNUM = 1
 	</entry>
 	
 </properties>
