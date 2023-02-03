@@ -24,8 +24,6 @@
         .nav{
             margin-left: 10px;
             margin-top: 10px;
-           
-            height: 600px;
             width: 200px;
         }
     </style>

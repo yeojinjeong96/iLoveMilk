@@ -769,7 +769,7 @@ public class ProductDao {
 			int startRow = (pi.getCurrentPage() - 1) * pi.getBoardLimit() + 1;
 			int endRow = startRow + pi.getBoardLimit() - 1;
 			
-			pstmt.setInt(1,startRow);
+			pstmt.setInt(1, startRow);
 			pstmt.setInt(2, endRow);
 			
 			rset = pstmt.executeQuery();

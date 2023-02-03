@@ -12,19 +12,19 @@ import javax.servlet.http.HttpSession;
 
 import com.milk.member.model.service.MemberService;
 import com.milk.member.model.vo.Member;
-import com.milk.member.model.vo.Review;
+import com.milk.member.model.vo.Order;
 
 /**
- * Servlet implementation class ReviewPageController
+ * Servlet implementation class MyOrderDetailPageController
  */
-@WebServlet("/reviewList.me")
-public class ReviewListPageController extends HttpServlet {
+@WebServlet("/orderD.me")
+public class MyOrderDetailPageController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public ReviewListPageController() {
+    public MyOrderDetailPageController() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -34,15 +34,13 @@ public class ReviewListPageController extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		HttpSession session = request.getSession();
-		int memberNo = ((Member)session.getAttribute("loginMember")).getMemberNo();
+		int orderNo = Integer.parseInt(request.getParameter("orderNo"));
 		
-		ArrayList<Review> list = new MemberService().ReviewListY(memberNo);
-		request.setAttribute("list", list);
-		
+		ArrayList<Order> list2 = new MemberService().MyOrderDetailList(orderNo);
+		System.out.println(list2);
 		
 		
-		request.getRequestDispatcher("views/member/reviewList.jsp").forward(request, response);
+		//request.getRequestDispatcher("views/member/myOrderListView.jsp").forward(request, response);
 	}
 
 	/**

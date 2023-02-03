@@ -24,6 +24,7 @@ public class Order {
 	private int usePoint;
 	private String courier;
 	private String memberName;
+	private int count;
 	
 	
 	
@@ -109,6 +110,15 @@ public class Order {
 		this.paymentDate = paymentDate;
 		this.memberName = memberName;
 	}
+	
+	public Order(int orderNo, String productImg, String productName, int price, int count) {
+	      super();
+	      this.orderNo = orderNo;
+	      this.productImg = productImg;
+	      this.productName = productName;
+	      this.price = price;
+	      this.count = count;
+	   }
 
 	public int getOrderNo() {
 		return orderNo;
@@ -266,7 +276,13 @@ public class Order {
 		this.courier = courier;
 	}
 	
-	
+	public int getCount() {
+	    return count;
+	}
+
+	public void setCount(int count) {
+	    this.count = count;
+	}
 
 	public String getMemberName() {
 		return memberName;
@@ -283,9 +299,11 @@ public class Order {
 				+ status + ", waybill=" + waybill + ", memberId=" + memberId + ", productNo=" + productNo
 				+ ", memberNo=" + memberNo + ", orderName=" + orderName + ", orderPhone=" + orderPhone + ", orderEmail="
 				+ orderEmail + ", addressName=" + addressName + ", address=" + address + ", addressTel=" + addressTel
-				+ ", usePoint=" + usePoint + ", courier=" + courier + ", memberName=" + memberName + "]";
+				+ ", usePoint=" + usePoint + ", courier=" + courier + ", memberName=" + memberName + ", count=" + count
+				+ "]";
 	}
 
+	
 
 	
 
