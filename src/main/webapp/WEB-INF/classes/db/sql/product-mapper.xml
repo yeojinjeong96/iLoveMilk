@@ -448,7 +448,7 @@ SELECT *
 		  )
 		  VALUES
 		  (
-	//	    SEQ_ONO.NEXTVAL || '-' || TO_CHAR(SYSDATE, 'YYYYMMDD')
+		    TO_CHAR(SYSDATE, 'YYYYMMDD') || '-' || LPAD(SEQ_ONO.NEXTVAL, 5, '0')
 		  , ?
 		  , ?
 		  , ?
@@ -472,7 +472,7 @@ SELECT *
 		  VALUES
 		  (
 		    SEQ_DONO.NEXTVAL
-	//	  , SEQ_ONO.CURRVAL || '-' || TO_CHAR(SYSDATE, 'YYYYMMDD')
+		  , TO_CHAR(SYSDATE, 'YYYYMMDD') || '-' || LPAD(SEQ_ONO.CURRVAL, 5, '0')
 		  , ?
 		  , ?
 		  )
