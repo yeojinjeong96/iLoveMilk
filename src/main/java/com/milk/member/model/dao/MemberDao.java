@@ -452,7 +452,7 @@ public Member updateCheckPwd(Connection conn, String memberId, String memberPwd)
 			while(rset.next()) {
 				list.add(new Point(
 							rset.getInt("POINT_NO"),
-							rset.getInt("count"),
+							rset.getInt("AMOUNT"),
 							rset.getString("status"),
 							rset.getInt("total"),
 							rset.getString("MODIFY_DATE"),
