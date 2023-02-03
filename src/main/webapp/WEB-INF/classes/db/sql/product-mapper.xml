@@ -374,7 +374,7 @@
 		  )
 		  VALUES
 		  (
-		    SEQ_ONO.NEXTVAL || '-' || TO_CHAR(SYSDATE, 'YYYYMMDD') ORDER_NO
+	//	    SEQ_ONO.NEXTVAL || '-' || TO_CHAR(SYSDATE, 'YYYYMMDD')
 		  , ?
 		  , ?
 		  , ?
@@ -398,7 +398,7 @@
 		  VALUES
 		  (
 		    SEQ_DONO.NEXTVAL
-		  , SEQ_ONO.CURRVAL || '-' || TO_CHAR(SYSDATE, 'YYYYMMDD') ORDER_NO
+	//	  , SEQ_ONO.CURRVAL || '-' || TO_CHAR(SYSDATE, 'YYYYMMDD')
 		  , ?
 		  , ?
 		  )

@@ -14,8 +14,6 @@ import java.util.Properties;
 import com.milk.common.model.vo.PageInfo;
 import com.milk.member.model.vo.Member;
 import com.milk.member.model.vo.Order;
-import com.milk.product.model.vo.OrderDetail;
-import com.milk.product.model.vo.OrderInfo;
 import com.milk.product.model.vo.Product;
 import com.milk.product.model.vo.ProductLike;
 import com.milk.product.model.vo.Review;
@@ -835,7 +833,7 @@ public class ProductDao {
 		}
 		return m;
 	}
-	
+	/*
 	public int orderInsert(Connection conn, OrderInfo o) {
 		int result = 0;
 		PreparedStatement pstmt = null;
@@ -877,4 +875,5 @@ public class ProductDao {
 		}
 		return result;
 	}
+	*/
 }
