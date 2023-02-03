@@ -577,7 +577,8 @@ public class ProductDao {
 							rset.getString("ADDRESS"),
 							rset.getString("ADDRESS_TEL"),
 							rset.getInt("USE_POINT"),
-							rset.getString("COURIER")
+							rset.getString("COURIER"),
+							rset.getDate("PAYMENT_DATE")
 						));
 			}
 		} catch (SQLException e) {
@@ -588,6 +589,44 @@ public class ProductDao {
 		}
 				
 		return list;
+	}
+	
+	public Order selectOrderDetail(Connection conn, int no) {
+		Order o = new Order();
+		ResultSet rset = null;
+		PreparedStatement pstmt = null;
+		String sql = prop.getProperty("selectOrderDetail");
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, no);
+			rset = pstmt.executeQuery();
+			if(rset.next()) {
+				o = new Order(
+						rset.getInt("ORDER_NO"),
+						rset.getInt("STATUS"),
+						rset.getInt("WAYBILL"),
+						rset.getString("MEMBER_ID"),
+						rset.getInt("MEMBER_NO"),
+						rset.getString("ORDER_NAME"),
+						rset.getString("ORDER_PHONE"),
+						rset.getString("ORDER_EMAIL"),
+						rset.getString("ADDRESS_NAME"),
+						rset.getString("ADDRESS"),
+						rset.getString("ADDRESS_TEL"),
+						rset.getInt("USE_POINT"),
+						rset.getString("COURIER"),
+						rset.getDate("PAYMENT_DATE"),
+						rset.getString("member_name")
+						);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return o;
 	}
 	
 	

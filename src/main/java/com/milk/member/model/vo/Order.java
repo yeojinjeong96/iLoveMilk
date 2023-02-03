@@ -23,6 +23,7 @@ public class Order {
 	private String addressTel;
 	private int usePoint;
 	private String courier;
+	private String memberName;
 	
 	
 	
@@ -70,7 +71,7 @@ public class Order {
 
 	public Order(int orderNo, int status, int waybill, String memberId, int memberNo, String orderName,
 			String orderPhone, String orderEmail, String addressName, String address, String addressTel, int usePoint,
-			String courier) {
+			String courier, Date paymentDate) {
 		super();
 		this.orderNo = orderNo;
 		this.status = status;
@@ -85,6 +86,28 @@ public class Order {
 		this.addressTel = addressTel;
 		this.usePoint = usePoint;
 		this.courier = courier;
+		this.paymentDate = paymentDate;
+	}
+	
+	public Order(int orderNo, int status, int waybill, String memberId, int memberNo, String orderName,
+			String orderPhone, String orderEmail, String addressName, String address, String addressTel, int usePoint,
+			String courier, Date paymentDate, String memberName) {
+		super();
+		this.orderNo = orderNo;
+		this.status = status;
+		this.waybill = waybill;
+		this.memberId = memberId;
+		this.memberNo = memberNo;
+		this.orderName = orderName;
+		this.orderPhone = orderPhone;
+		this.orderEmail = orderEmail;
+		this.addressName = addressName;
+		this.address = address;
+		this.addressTel = addressTel;
+		this.usePoint = usePoint;
+		this.courier = courier;
+		this.paymentDate = paymentDate;
+		this.memberName = memberName;
 	}
 
 	public int getOrderNo() {
@@ -242,6 +265,16 @@ public class Order {
 	public void setCourier(String courier) {
 		this.courier = courier;
 	}
+	
+	
+
+	public String getMemberName() {
+		return memberName;
+	}
+
+	public void setMemberName(String memberName) {
+		this.memberName = memberName;
+	}
 
 	@Override
 	public String toString() {
@@ -250,8 +283,11 @@ public class Order {
 				+ status + ", waybill=" + waybill + ", memberId=" + memberId + ", productNo=" + productNo
 				+ ", memberNo=" + memberNo + ", orderName=" + orderName + ", orderPhone=" + orderPhone + ", orderEmail="
 				+ orderEmail + ", addressName=" + addressName + ", address=" + address + ", addressTel=" + addressTel
-				+ ", usePoint=" + usePoint + ", courier=" + courier + "]";
+				+ ", usePoint=" + usePoint + ", courier=" + courier + ", memberName=" + memberName + "]";
 	}
+
+
+	
 
 
 

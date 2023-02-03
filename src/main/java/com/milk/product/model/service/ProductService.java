@@ -252,6 +252,18 @@ public class ProductService {
 		return list;
 	}
 	
+	/**
+	 * 운송장발급창 주문상세조회
+	 * @author 이다혜
+	 * @return Order
+	 */
+	public Order selectOrderDetail(int no) {
+		Connection conn = getConnection();
+		Order o = new ProductDao().selectOrderDetail(conn, no);
+		close(conn);
+		return o;
+	}
+	
 	
 	/**
 	 * 상품 갯수 조회
