@@ -149,4 +149,40 @@
 		    FROM TB_QA
 		WHERE Q_NO = ?
 	</entry>
+	<entry key="updateQuestion">
+		UPDATE 
+		    TB_QA
+		    SET Q_TITLE = ?
+		    ,Q_CONTENT = ?
+		    ,ENROLL_DATE =SYSDATE
+		WHERE Q_NO = ?
+	</entry>
+	<entry key="insertNewAttachment">
+		INSERT 
+		    INTO TB_ATTACHMENT
+		    (
+		    FILE_NO
+		   ,REF_NO
+		   ,CHANGE_NAME
+		   ,FILE_PATH
+		   ,FILE_TYPE
+		    )
+		    VALUES
+		    (
+		    SEQ_ATNO.NEXTVAL
+		   ,?
+		   ,?
+		   ,?
+		   ,4
+		    )
+	</entry>
+	<entry key="updateAttachment">
+		UPDATE
+		       ATTACHMENT
+		   SET ORIGIN_NAME = ?
+		     , CHANGE_NAME = ?
+		     , FILE_PATH = ?
+		 WHERE FILE_NO = ?
+	</entry>
+	
 </properties>

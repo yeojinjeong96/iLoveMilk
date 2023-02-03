@@ -1,6 +1,6 @@
 package com.milk.notice.model.service;
 
-import static com.milk.common.JDBCTemplate.close;
+import static com.milk.common.JDBCTemplate.*;
 import static com.milk.common.JDBCTemplate.commit;
 import static com.milk.common.JDBCTemplate.getConnection;
 import static com.milk.common.JDBCTemplate.rollback;
@@ -121,6 +121,36 @@ public class QAService {
 		}
 		
 		return result;
+	}
+	
+	public int updateQuestion(QA q, Attachment at) {
+		
+		Connection conn= getConnection();
+		int result1 = new QADao().updateQuestion(conn, q);
+		
+		int result2 = 1;
+		if(result1>0) {
+			 result2 = new QADao().updateAttachment(conn, at);
+		}
+		if(at!=null) {
+			
+			if(at.getFileNo()!=0) {
+				result2= new QADao().updateAttachment(conn, at);
+			}else {
+				result2= new QADao().insertNewAttachment(conn, at);
+			}
+
+		}	
+	
+		
+		
+		if(result1*result2>0) {
+			commit(conn);
+		}else {
+			rollback(conn);
+		}
+		
+		return result1*result2;
 	}
 	
 }

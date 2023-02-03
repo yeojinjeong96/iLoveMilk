@@ -39,6 +39,10 @@
             <br>
             <form action="<%=contextPath%>/update.qa" method="post" enctype="multipart/form-data">
             	<input type="hidden" name="memberNo" value="<%=m.getMemberNo()%>">
+            	<input type="hidden" name="qNo" value="<%=q.getqNo()%>">
+            	<%if (at!=null){ %>
+            	<input type="hidden" name="fileNo" value="<%=at.getFileNo()%>">
+            	<%} %>
                 <table border="1" class="qa-form">
                     <tr>
                         <th width="150" class="text-center">* 말머리</th>
@@ -74,8 +78,12 @@
                         <th class="text-center">첨부파일</th>
                         <%if(at!=null){ %>
                         <%=at.getChangeName() %>
+                    	
                         <%} %>
-                        <td><input type="file" name="upfile"></td>
+                           
+                        <td><input type="file" name="upfile">
+                        	
+                        </td>
                     </tr>
                     <tr>
                         <th class="text-center">* 내용</th>
@@ -85,17 +93,22 @@
                 </table>
                 <br>
                 <a href="" class="btn btn-sm btn-secondary">목록으로</a>
-                <button type="submit" onclick="return cateNeed();" class="btn btn-sm btn-secondary">작성하기</button>
+                <button type="submit" onclick="return cateNeed();" class="btn btn-sm btn-secondary">수정하기</button>
+        
             </form>
+            
         </div>
     </div>
     <script>
+    	
+    	
    		 function cateNeed(){
 			if($("#fCate").val() == "- 1차 카테고리 -" || $("#sCate").val() == "- 2차 카테고리 -"){
 				alert("카테고리를 입력하세요.");
 				return false;
 		}
    		 }
+    	
     	function scCateShow(){
     		
 			$(".ti0").prop("selected", true);
@@ -125,7 +138,7 @@
     		
     	}
     		
-  
+    	
     
     </script>
     <%@include file="/views/common/footer.jsp" %>

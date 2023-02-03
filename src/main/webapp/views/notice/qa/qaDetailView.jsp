@@ -83,7 +83,7 @@
               <%if(q.getAnswerStatus().equals("N")){ %>
             <div align="center">
                 <a href="<%=contextPath%>/delete.q?qNo=<%=q.getqNo()%>">삭제</a>
-                <a href="<%=contextPath%>/update.q?qNo=<%=q.getqNo()%>">수정</a>
+                <a href="<%=contextPath%>/updateForm.qa?qNo=<%=q.getqNo()%>">수정</a>
                 <a href="<%=contextPath%>/list.q?cpage=1%>">목록</a>
             </div>
             <%}else{ %>

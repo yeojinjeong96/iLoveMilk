@@ -38,6 +38,7 @@ public class QuestionUpdateForm extends HttpServlet {
 		QA q= new QAService().selectQA(qNo);
 		Attachment at = new QAService().selectAttachment(qNo);
 		request.setAttribute("q", q);
+		request.setAttribute("at", at);
 		request.getRequestDispatcher("views/notice/qa/questionUpdateForm.jsp").forward(request, response);
 	}
 

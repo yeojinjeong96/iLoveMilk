@@ -35,7 +35,7 @@
 
 	.maincontent{
 		width: 77%;
-		height: 300px;
+		height: 1300px;
 		
 		float: left;
 	}
