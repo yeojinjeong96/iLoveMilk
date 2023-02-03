@@ -3,6 +3,7 @@
 <%@ page import="java.util.ArrayList, com.milk.recipe.model.vo.*" %>
 <%
 	Recipe r = (Recipe)request.getAttribute("r");
+	ArrayList<Reply> listR = (ArrayList<Reply>)request.getAttribute("listR");
 	ArrayList<RecipeIngre> listI = (ArrayList<RecipeIngre>)request.getAttribute("listI");
 	ArrayList<RecipeOrder> listO = (ArrayList<RecipeOrder>)request.getAttribute("listO");
 %>
@@ -114,6 +115,7 @@
     }
 
 </style>
+
 </head>
 <body>
 
@@ -222,17 +224,23 @@
             <tr>
                 <td>
                     <div id="like" align="left">
-                        <button type="submit" id="btn-buy" data-target="#like-btn" data-toggle="modal" style="background: none; border: 0; color: red;">♡</button>
+                        <i class="bi-heart like-btn" style="font-size:1rem; color: red; cursor: pointer;" onclick="memberLike(<%= r.getRecipeNo() %>);"></i>
                         좋아요
                         0
                     </div>
                 </td>
                 <td>
-                	<% if(loginMember != null) { %>
+                	<% if(loginMember != null && loginMember.getMemberId().equals(r.getRecipeWriter())) { %>
                     <!-- 로그인한 회원만 보이도록 -->
-                    <div id="report" align="right">
-                        신고
-                    </div>
+                    
+                    <% } %>
+                    
+                    <% if(loginMember != null && !loginMember.getMemberId().equals(r.getRecipeWriter())) { %>
+                    	<form action="" method="post">
+	                    	<div id="report" align="right">
+	                        	<button type="button" data-toggle="modal" data-target="#report-view" style="border:none; background:none;">신고</button>
+	                    	</div>
+                    	</form>
                     <% } %>
                 </td>
             </tr>
@@ -259,7 +267,7 @@
 
         <table class="reply-area" align="center">
             <tbody>
-            
+           
             </tbody>
         </table>
        	<div style="border-bottom: 3px solid gray; width: 700px;"></div>
@@ -283,6 +291,9 @@
 		
 		
 		<script>
+		
+			
+		   	// 댓글
 			$(function(){
 				selectReplyList();
 			})
@@ -331,7 +342,7 @@
         							   +	"</td>"
         							   +	"<td width='70px' height='1'>" + list[i].memberNo + "</td>"
         							   +	"<td width='160px'>" + list[i].enrollDate + "</td>"
-        							   +	"<td width=''>신고</td>"
+        							   +	"<td width=''><button type='button' data-toggle='modal' data-target='#report-reply-view' style='border:none; background:none;'>신고</button></td>"
         							   + "</tr>"
         							   + "<tr>"
         							   +	"<td colspan='3' style='vertical-align: top'>"
@@ -347,33 +358,11 @@
 				})
 			}
 			
+			
 		</script>
 		
 		
-        <!-- The Modal -->
-        <div class="modal" id="like-btn">
-            <div class="modal-dialog">
-            <div class="modal-content modal-sm">
         
-                <!-- Modal body -->
-                <br>
-                <div class="modal-body" style="text-align:center; font-size:13px;">
-                    로그인이 필요한 기능입니다. <br>
-                    로그인을 해주세요.
-                </div>
-                <div align="center">
-                    <button type="button" class="btn btn-outline-secondary btn-sm" data-dismiss="modal" style=" width:100px;">확인</button>
-                    </div>
-                    <br>
-            </div>
-            </div>
-        </div>
-
-
-
-	
-		
-
          <!-- 이미지 미리보기 스크립트 -->
          <script>
             function clickFile(num){
@@ -399,9 +388,139 @@
                         }
                     }
                 }
+                
         </script>
+        
+        
+        <!-- 신고 모달 div -->
+        <div class="modal" id="report-view" align="center">
+        	<div class="modal-sm">
+        		<div class="modal-content">
+                       
+		        <!-- Modal Header -->
+		        <div class="modal-header">
+		        	<h3 class="modal-title">신고 사유 선택</h4>
+		        </div>
+                   
+        			<!-- Modal body -->
+			        <div class="modal-body">
+			        	<form action="<%= contextPath %>/report.re" method="post">
+			        	<input type="hidden" name="no" value="<%= r.getRecipeNo() %>">
+				            <table>
+				            	<tr>
+				            		<td>
+				            			<input type="radio" name="selectReport" id="radio1" value="광고성 게시물" checked>
+					        			<label for="radio1">광고성 게시물</label>
+				            		</td>
+				            	</tr>
+				            	<tr>
+				            		<td>
+				            			<input type="radio" name="selectReport" value="도배 및 중복 게시물" id="radio2">
+					        			<label for="radio2">도배 및 중복 게시물</label>
+				            		</td>
+				            	</tr>
+				            	<tr>
+				            		<td>
+				            			<input type="radio" name="selectReport" value="욕설/비방" id="radio3">
+					        			<label for="radio3">욕설/비방</label>
+				            		</td>
+				            	</tr>
+				            	<tr>
+				            		<td>
+				            			<input type="radio" name="selectReport" value="외설적인 게시물" id="radio4">
+					        			<label for="radio4">외설적인 게시물</label>
+				            		</td>
+				            	</tr>
+				            	<tr>
+				            		<td>
+				            			<input type="radio" name="selectReport" value="기타" id="radio5">
+					        			<label for="radio5">기타</label>
+				            		</td>
+				            	</tr>
+				            	<tr>
+				            		<td>
+				            			<textarea name="etc" placeholder="신고 내용을 입력해주세요." style="resize:none;"></textarea>
+				            		</td>
+				            	</tr>
+				            </table>
+				            <br>
+				            <input type="submit" value="신고하기">
 
+				        </form>
+                       
+        			</div>   
+            	</div>
+        	</div>
+    	</div>
+    	
+    	
+    	<!-- 신고-댓글 모달 div -->
+        <div class="modal" id="report-reply-view" align="center">
+        	<div class="modal-sm">
+        		<div class="modal-content">
+                       
+		        <!-- Modal Header -->
+		        <div class="modal-header">
+		        	<h3 class="modal-title">신고 사유 선택</h4>
+		        </div>
+                   
+        			<!-- Modal body -->
+			        <div class="modal-body">
+			        	<form action="<%= contextPath %>/reportReply.re" method="post">
+			        	<input type="hidden" name="no" value="<%= r.getRecipeNo() %>">
+				            <table>
+				            	<tr>
+				            		<td>
+				            			<input type="radio" name="selectReport" id="radio1" value="광고성 댓글" checked>
+					        			<label for="radio1">광고성 댓글</label>
+				            		</td>
+				            	</tr>
+				            	<tr>
+				            		<td>
+				            			<input type="radio" name="selectReport" value="도배 및 중복 댓글" id="radio2">
+					        			<label for="radio2">도배 및 중복 댓글</label>
+				            		</td>
+				            	</tr>
+				            	<tr>
+				            		<td>
+				            			<input type="radio" name="selectReport" value="욕설/비방" id="radio3">
+					        			<label for="radio3">욕설/비방</label>
+				            		</td>
+				            	</tr>
+				            	<tr>
+				            		<td>
+				            			<input type="radio" name="selectReport" value="외설적인 댓글" id="radio4">
+					        			<label for="radio4">외설적인 댓글</label>
+				            		</td>
+				            	</tr>
+				            	<tr>
+				            		<td>
+				            			<input type="radio" name="selectReport" value="기타" id="radio5">
+					        			<label for="radio5">기타</label>
+				            		</td>
+				            	</tr>
+				            	<tr>
+				            		<td>
+				            			<textarea name="etc" placeholder="신고 내용을 입력해주세요." style="resize:none;"></textarea>
+				            		</td>
+				            	</tr>
+				            </table>
+				            <br>
+				            <input type="submit" value="신고하기">
+				            
+				            <% for(Reply re : listR) { %>
+			        		<input type="hidden" name="rNo" value="<%= re.getReplyNo() %>">
+			        		<% } %>
+
+				        </form>
+                       
+        			</div>   
+            	</div>
+        	</div>
+    	</div>
+    	
     </div>
+    
     
     <%@ include file = "../common/footer.jsp" %>
 

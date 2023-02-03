@@ -195,7 +195,7 @@
 		  )
 	</entry>
 	
-	
+	<!-- 
 	<entry key="insertReplyAttachment">
 		INSERT 
 		  INTO TB_ATTACHMENT
@@ -215,6 +215,7 @@
 		  , 1
 		  )
 	</entry>
+	-->
 	
 	<entry key="selectReplyList">
 		SELECT
@@ -314,14 +315,14 @@
                                RE.REPORT_STATUS
                              , RE.REPLY_NO
                              , RP.REPORT_CONTENT
-                             , MEMBER_ID
-                             , RECIPE_TITLE
-                             , RE.REF_NO
+                             , RP.REPORTING_MEM_NO
+                             , R.RECIPE_TITLE
                              , RE.REPLY_CONTENT
 		                  FROM TB_REPLY RE
                           JOIN TB_MEMBER USING (MEMBER_NO)
-                          JOIN TB_RECIPE R ON (REF_NO = R.RECIPE_NO)
-                          LEFT JOIN TB_REPORT RP ON (RP.REPORTING_MEM_NO = RE.REF_NO)
+                          JOIN TB_RECIPE R ON (RE.REF_NO = R.RECIPE_NO)
+                     LEFT JOIN TB_REPORT RP ON (RP.REF_NO = RE.REF_NO)
+                         WHERE RE.DELETE_STATUS = 'N'
 		                 ORDER
 		                    BY REPLY_NO DESC
 		                ) "A"
@@ -395,6 +396,7 @@
                           JOIN TB_RECIPE ON (RECIPE_NO = REF_NO)
                           JOIN TB_MEMBER ON (MEMBER_NO = REPORTING_MEM_NO)
                          WHERE REPORT_TYPE = 1
+                           AND DELETE_STATUS = 'N'
 		                 ORDER
 		                    BY REPORT_DATE DESC
 		                ) "A"
@@ -527,6 +529,59 @@
 		  , ?
 		  , ?
 		  )
+	</entry>
+	
+	
+	<entry key="insertReport">
+		INSERT
+		  INTO TB_REPORT
+		  (
+		    REPORT_NO
+		  , REPORTING_MEM_NO
+		  , REF_NO
+		  , REPORT_CONTENT
+		  , REPORT_DATE
+		  , REPORT_TYPE
+		  )
+		  VALUES
+		  (
+		    SEQ_REPNO.NEXTVAL
+		  , ?
+		  , ?
+		  , ?
+		  , SYSDATE
+		  ,	1
+		  )
+	</entry>
+	
+	
+	<entry key="insertReportReply">
+		INSERT
+		  INTO TB_REPORT
+		  (
+		    REPORT_NO
+		  , REPORTING_MEM_NO
+		  , REF_NO
+		  , REPORT_CONTENT
+		  , REPORT_DATE
+		  , REPORT_TYPE
+		  )
+		  VALUES
+		  (
+		    SEQ_REPNO.NEXTVAL
+		  , ?
+		  , ?
+		  , ?
+		  , SYSDATE
+		  ,	2
+		  )
+	</entry>
+	
+	<entry key="updateReply">
+		UPDATE
+			   TB_REPLY
+		   SET REPORT_STATUS = 'Y'
+		 WHERE REF_NO = ?
 	</entry>
 
 </properties>

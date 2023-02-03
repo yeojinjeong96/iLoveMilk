@@ -998,4 +998,110 @@ public class RecipeDao {
 		
 		return result;
 	}
+	
+	
+	public int insertReport(Connection conn, Report r) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		
+		String sql = prop.getProperty("insertReport");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, r.getReportingMemberNo());
+			pstmt.setInt(2, r.getRefNo());
+			pstmt.setString(3, r.getReportContent());
+			
+			result = pstmt.executeUpdate();
+					
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		return result;
+	}
+	
+	public int insertReportReply(Connection conn, Report r) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		
+		String sql = prop.getProperty("insertReportReply");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, r.getReportingMemberNo());
+			pstmt.setInt(2, r.getRefNo());
+			pstmt.setString(3, r.getReportContent());
+			
+			result = pstmt.executeUpdate();
+					
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		return result;
+	}
+	
+	public int updateReply(Connection conn, Reply re) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		
+		String sql = prop.getProperty("updateReply");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, re.getRefNo());
+			//pstmt.setInt(2, re.getRefNo());
+			
+			result = pstmt.executeUpdate();
+					
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		return result;
+	}
+	
+	public ArrayList<Reply> selectReply(Connection conn, int recipeNo){
+		ArrayList<Reply> list = new ArrayList<>();
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		String sql = prop.getProperty("selectReplyList");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, recipeNo);
+		
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				list.add(new Reply(rset.getInt("REPLY_NO"),
+						   		   rset.getString("MEMBER_ID"),
+						   		   rset.getString("REPLY_CONTENT"),
+						   		   rset.getString("REPORT_STATUS"), 		   
+						   		   rset.getString("RECIPE_TITLE"),
+						   		   rset.getString("REPORT_CONTENT"),
+						   		   rset.getInt("REF_NO")
+						   		   ));
+						   		   
+			}
+			
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return list;
+		
+	}
 }

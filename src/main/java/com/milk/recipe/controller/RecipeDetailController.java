@@ -13,6 +13,7 @@ import com.milk.recipe.model.service.RecipeService;
 import com.milk.recipe.model.vo.Recipe;
 import com.milk.recipe.model.vo.RecipeIngre;
 import com.milk.recipe.model.vo.RecipeOrder;
+import com.milk.recipe.model.vo.Reply;
 
 /**
  * Servlet implementation class RecipeDetailController
@@ -42,11 +43,12 @@ public class RecipeDetailController extends HttpServlet {
 			Recipe r = new RecipeService().selectRecipe(recipeNo);
 			ArrayList<RecipeIngre> listI = new RecipeService().selectRecipeIngreList(recipeNo);
 			ArrayList<RecipeOrder> listO = new RecipeService().selectRecipeOrderList(recipeNo);
-		
+			ArrayList<Reply> listR = new RecipeService().selectReply(recipeNo);
 			
 			request.setAttribute("r", r);
 			request.setAttribute("listI", listI);
 			request.setAttribute("listO", listO);
+			request.setAttribute("listR", listR);
 			
 			request.getRequestDispatcher("views/recipe/recipeDetailView.jsp").forward(request, response);
 			
