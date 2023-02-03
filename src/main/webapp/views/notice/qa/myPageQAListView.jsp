@@ -69,21 +69,8 @@
 			<h4 align="left">나의 1:1 문의 </h4>
             <hr>
             <br>
-            <div class="select-area" align="left">  
-            	      
-                  <form action="">
-                    조회기간&nbsp;
-                    <a href="">오늘</a>&nbsp;
-                    <a href="">7일</a>&nbsp;
-                    <a href="">15일</a>&nbsp;
-                    <a href="">1개월</a>&nbsp;
-                    <a href="">3개월</a>&nbsp;
-                    <input type="date"> -
-                    <input type="date"> &nbsp;      
-                    <button type="submit">조회</button>
-                  </form>
-            </div>
-            <br>
+            
+       
             <table align="center" border="1" id="qa-list" class="text-center table">
                 <tr>
                     <th width="100" height="30">문의날짜</th>

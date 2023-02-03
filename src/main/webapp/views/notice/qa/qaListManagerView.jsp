@@ -119,6 +119,13 @@
 		function orderQA(){
 			const value = $("select[name=select-qa] option").val();
 			
+			$.ajax({
+				url:"<%=contextPath%>/listM.qa?cpage=1",
+				data:{value:value},
+				success:function(){
+					location.reload();
+				}
+			})
 			
 			
 		}
