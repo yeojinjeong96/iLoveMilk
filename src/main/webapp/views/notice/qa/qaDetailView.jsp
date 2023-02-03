@@ -66,7 +66,7 @@
                             
                             <%if(at!=null) {%>
         
-                                <img src="<%=contextPath%>/<%=at.getFilePath()%><%=at.getChangeName()%>"  >
+                                <img src="<%=contextPath%>/<%=at.getFilePath()%><%=at.getChangeName()%>" width="300px" height="300px"  >
                                 <br>
                              <%} %>
                              
@@ -84,7 +84,7 @@
             <div align="center">
                 <a href="<%=contextPath%>/delete.q?qNo=<%=q.getqNo()%>">삭제</a>
                 <a href="<%=contextPath%>/updateForm.qa?qNo=<%=q.getqNo()%>">수정</a>
-                <a href="<%=contextPath%>/list.q?cpage=1%>">목록</a>
+                <a href="<%=contextPath%>/list.qa?cpage=1">목록</a>
             </div>
             <%}else{ %>
             <!--답변완료시-->

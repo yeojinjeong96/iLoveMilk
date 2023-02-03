@@ -6,41 +6,42 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <style>
- 	.outer{
-		width: 1000px; 
 	
-		height: 1000px;
-		box-sizing: border-box; 
-		margin:auto;
-	}
-	.mainmenubar{
-		width: 23%;
-		 
-		 float: left;
-		 height: 100%;
-		 
-	}
-	
-	.mainmember{
-		float: left;
-		width: 77%;
-		
-		height: 20%;
-	}
+ .outer{
+       width: 1000px; 
+   
+       height: 1000px;
+       box-sizing: border-box; 
+       margin:auto;
+   }
+   .mainmenubar{
+       width: 23%;
+        
+        float: left;
+        height: 100%;
+        
+   }
+   
+   .mainmember{
+       float: left;
+       width: 77%;
+       
+       height: 20%;
+   }
 
-	.maincontent{
-		width: 77%;
-		height: 300px;
-		
-		float: left;
-	}
- 
- 
+   .maincontent{
+       width: 77%;
+       height: 300px;
+       
+       float: left;
+   }
+
  
  	<!-- content  -->
         .outer_up{
             width: 700px;
-            height: 500px;
+            height:1000px
+           
            
         }
         
@@ -70,6 +71,7 @@
 	
 	
 	<%@ include file="../common/header.jsp" %>
+	
 	
 	<div class="outer">
 
@@ -112,57 +114,52 @@
 		        </div>
 		        
 		        <div class="point-list">
-	            <table id="pointlist" border="1px solid gray;">
-	                <tr>
-	                    <th width="15%">날짜</th>
-	                    <th width="10%">구분</th>
-	                    <th width="45%">상세내역</th>
-	                    <th width="15%">발급금액</th>
-	                    <th width="15%">사용금액</th>
-	                </tr>
-	                <tr>
-	                    <td>2022 - 00 - 00 </td>
-	                    <td>
-	                       사용
-	                    </td>
-	                    <td>상세내역</td>
-	                    <td>500</td>
-	                    <td>-1000</td>
-	                </tr>
-	                <tr>
-	                    <td>2022 - 00 - 00 </td>
-	                    <td>
-	                       사용
-	                    </td>
-	                    <td>상세내역</td>
-	                    <td>500</td>
-	                    <td>-1000</td>
-	                </tr>
-	                <tr>
-	                    <td>2022 - 00 - 00 </td>
-	                    <td>
-	                       사용
-	                    </td>
-	                    <td>상세내역</td>
-	                    <td>500</td>
-	                    <td>-1000</td>
-	                </tr>
-	            </table>
-			</div>
+		            <table id="pointlist" border="1px solid gray;">
+		                <tr>
+		                    <th width="15%">날짜</th>
+		                    <th width="10%">구분</th>
+		                    <th width="45%">상세내역</th>
+		                    <th width="15%">발급금액</th>
+		                    <th width="15%">사용금액</th>
+		                </tr>
+		                <tr>
+		                    <td>2022 - 00 - 00 </td>
+		                    <td>
+		                       사용
+		                    </td>
+		                    <td>상세내역</td>
+		                    <td>500</td>
+		                    <td>-1000</td>
+		                </tr>
+		                <tr>
+		                    <td>2022 - 00 - 00 </td>
+		                    <td>
+		                       사용
+		                    </td>
+		                    <td>상세내역</td>
+		                    <td>500</td>
+		                    <td>-1000</td>
+		                </tr>
+		                <tr>
+		                    <td>2022 - 00 - 00 </td>
+		                    <td>
+		                       사용
+		                    </td>
+		                    <td>상세내역</td>
+		                    <td>500</td>
+		                    <td>-1000</td>
+		                </tr>
+		            </table>
+				</div>
 			
-			                
-
-			              
-					
-			    	</div>
+		</div>
 				
 			</div>
-			
+			 
 		</div>
 	
 	
-	<%@ include file="../common/footer.jsp" %> 	 
-
+	<%@ include file="../common/footer.jsp" %>
 
 </body>
 </html>

@@ -91,20 +91,20 @@ public class QAService {
 		return result;
 	}
 	
-	public int selectAnswerListCount() {
+	public int selectAnswerListCount(int date) {
 		
 		Connection conn = getConnection();
 		
-		int result = new QADao().selectAnswerListCount(conn);
+		int result = new QADao().selectAnswerListCount(conn,date);
 		close(conn);
 		return result;
 	}
 	
-	public ArrayList<QA> selectAnswerList(PageInfo pi){
+	public ArrayList<QA> selectAnswerList(PageInfo pi,int date){
 		
 		Connection conn= getConnection();
 		
-		ArrayList<QA>list= new QADao().selectAnswerList(conn, pi);
+		ArrayList<QA>list= new QADao().selectAnswerList(conn, pi,date);
 		
 		close(conn);
 		return list;
@@ -129,9 +129,7 @@ public class QAService {
 		int result1 = new QADao().updateQuestion(conn, q);
 		
 		int result2 = 1;
-		if(result1>0) {
-			 result2 = new QADao().updateAttachment(conn, at);
-		}
+	
 		if(at!=null) {
 			
 			if(at.getFileNo()!=0) {
@@ -150,6 +148,7 @@ public class QAService {
 			rollback(conn);
 		}
 		
+		close(conn);
 		return result1*result2;
 	}
 	

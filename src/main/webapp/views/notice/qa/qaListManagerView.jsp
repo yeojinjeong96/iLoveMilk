@@ -104,7 +104,7 @@
             </div>
             
             <div align="right" style="width:600px" class="a">
-                <a href="<%=contextPath %>/listM.a?cpage=1">> 답변 목록 조회</a>
+                <a href="<%=contextPath %>/listM.a?cpage=1&date=0">> 답변 목록 조회</a>
                  <br><br>
             </div>
         </div>

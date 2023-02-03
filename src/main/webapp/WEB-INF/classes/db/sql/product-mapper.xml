@@ -325,9 +325,6 @@
 		                     , BRAND
 		                  FROM TB_PRODUCT B
 		                 WHERE STATUS = 'Y'
-		                ) A
-		        )
-		  WHERE RNUM BETWEEN ? AND ? 		                 
 	</entry>
 	
 	<entry key="productDetail">
