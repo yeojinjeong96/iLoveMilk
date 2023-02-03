@@ -107,11 +107,11 @@
                         <tr>
                             <th><span>*</span> 받으실 곳&nbsp;</th>
                             <td>
-                                <input type="text"  id="sample6_postcode" style="width:150px" name="addressNumber" placeholder="우편번호">
+                                <input type="text"  id="sample6_postcode" style="width:150px" name="addressNumber" placeholder="우편번호" required>
 								<input type="button" onclick="sample6_execDaumPostcode()" value="우편번호"><br>
-                                <input type="text"  id="sample6_address" placeholder="주소" style="width:250px" name="address"><br>
-	                    		<input type="text" id="sample6_extraAddress" placeholder="참고항목" style="width:100px">
-                               	<input type="text" id="sample6_detailAddress" name="addressDetail" placeholder="상세주소" style="width:150px">
+                                <input type="text"  id="sample6_address" placeholder="주소" style="width:250px" name="address" required><br>
+	                    		<input type="text" id="sample6_detailAddress" name="addressDetail" placeholder="상세주소" style="width:150px">
+                            	<input type="text" id="sample6_extraAddress" placeholder="참고항목" style="width:100px">
                             </td>
                         </tr>
                         <tr>
@@ -193,9 +193,16 @@
 			$("#submitBtn").click();
 		}
 		
-		// 주문내역확인 동의시에만 결제하기 버튼 활성화
+		// 필수입력항목 입력 후 주문내역확인 동의시에만 결제하기 버튼 활성화
 		function paymentNeed(){
-			if($("#payNeed").is(":checked")){
+			if($("#payNeed").is(":checked") &&
+			   $("#memName").val() != "" &&
+			   $("#memPhone").val() != "" &&
+			   $("#memEmail").val() != "" &&
+			   $("#receiveName").val() != "" &&
+			   $("#sample6-postcode").val() != "" &&
+			   $("#sample6-address").val() != "" &&
+			   $("#receivePhone").val() != ""){
 				$("#payment").attr("disabled", false);
 			}else{
 				$("#payment").attr("disabled", true);
@@ -312,12 +319,13 @@
 		}
 
 		<!-- iamport.payment.js -->
-		let no = 3;
+		let no = 10;
 		// 페이지에 가맹점 식별코드를 이용하여 IMP 객체를 초기화
 	    var IMP = window.IMP; // 생략 가능
 	    IMP.init("imp11183531"); // 예: imp00000000
 	    function requestPay() {
-	    	// IMP.request_pay(param, callback) 결제창 호출
+	    	no = no + 1;
+        	// IMP.request_pay(param, callback) 결제창 호출
 	        IMP.request_pay({ // param
 	        	pg: "html5_inicis",
                 pay_method: "card",
@@ -329,7 +337,6 @@
 	            buyer_tel: $("#memPhone").val()
             }, function (rsp) { // callback
                 if (rsp.success) {
-                	no = no + 1;
                 	completePay();
 	            } else {
 	            	alert("결제 실패");
