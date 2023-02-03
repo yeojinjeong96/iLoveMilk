@@ -14,6 +14,8 @@ import java.util.Properties;
 import com.milk.common.model.vo.PageInfo;
 import com.milk.member.model.vo.Member;
 import com.milk.member.model.vo.Order;
+import com.milk.product.model.vo.OrderDetail;
+import com.milk.product.model.vo.OrderInfo;
 import com.milk.product.model.vo.Product;
 import com.milk.product.model.vo.ProductLike;
 import com.milk.product.model.vo.Review;
@@ -917,5 +919,47 @@ public class ProductDao {
 			close(pstmt);
 		}
 		return m;
+	}
+	
+	public int orderInsert(Connection conn, OrderInfo o) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String sql = prop.getProperty("orderInsert");
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, o.getMemberNo());
+			pstmt.setString(2, o.getOrderName());
+			pstmt.setString(3, o.getOrderPhone());
+			pstmt.setString(4, o.getOrderEmail());
+			pstmt.setString(5, o.getAddressName());
+			pstmt.setString(6, o.getAddress());
+			pstmt.setString(7, o.getAddressTel());
+			pstmt.setInt(8, o.getUsePoint());
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		return result;
+	}
+	
+	public int orderDetailInsert(Connection conn, ArrayList<OrderDetail> odList) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String sql = prop.getProperty("orderDetailInsert");
+		try {
+			for(OrderDetail od : odList) {
+				pstmt = conn.prepareStatement(sql);
+				pstmt.setInt(1, od.getProductNo());
+				pstmt.setInt(2, od.getCount());
+				//result = pstmt.executeUpdate();
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		return result;
 	}
 }

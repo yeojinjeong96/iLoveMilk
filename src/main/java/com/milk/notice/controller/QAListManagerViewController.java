@@ -66,7 +66,7 @@ public class QAListManagerViewController extends HttpServlet {
 			 value= request.getParameter("value");
 		}
 		
-		
+		System.out.println(value);
 		ArrayList<QA>list = new QAService().selectIncompletedList(pi,value);
 		request.setAttribute("list",list);
 		request.setAttribute("pi", pi);

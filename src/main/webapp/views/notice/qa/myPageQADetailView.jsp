@@ -139,8 +139,9 @@
             </div>
             <%} %>
          </div>  
+       
 	</div>
-	
-
+	<br clear="both">
+<%@ include file="/views/common/footer.jsp" %> 	 
 </body>
 </html>

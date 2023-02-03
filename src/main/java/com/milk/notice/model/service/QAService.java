@@ -33,7 +33,7 @@ public class QAService {
 		return result1*result2;
 	}
 	
-	public ArrayList<QA> selectQuestionList(PageInfo pi,int memberNo){
+	public ArrayList<QA> selectQuestionList(PageInfo pi,int memberNo ){
 		
 		Connection conn= getConnection();
 		

@@ -54,6 +54,8 @@ public class FaqListViewController extends HttpServlet {
 			endPage = maxPage;
 		}
 		
+		
+		
 		PageInfo pi = new PageInfo(listCount,currentPage, pageLimit, boardLimit,maxPage,startPage,endPage);
 		
 		ArrayList<Faq>list= new FaqService().selectFaqList(pi,category);

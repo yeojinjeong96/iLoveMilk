@@ -28,6 +28,14 @@
         width: 100px;
    		 white-space: nowrap ;
         text-overflow: ellipsis;   }
+    .select-area button{
+        outline: 0;
+        border: 0;
+        background-color: transparent;
+    }
+    .select-area , .date-picker{
+        display: inline-block;
+    }
 </style>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
@@ -41,23 +49,10 @@
     <div class="outer" align="center">
         <br>
         <div style="width:700px">
-            <h2 align="left">1:1문의하기 </h2>
+            <h2 align="left">나의 1:1 문의</h2>
             <hr>
             <br>
-            <div class="select-area" align="left">  
-            	      
-                  <form action="">
-                    조회기간&nbsp;
-                    <a href="">오늘</a>&nbsp;
-                    <a href="">7일</a>&nbsp;
-                    <a href="">15일</a>&nbsp;
-                    <a href="">1개월</a>&nbsp;
-                    <a href="">3개월</a>&nbsp;
-                    <input type="date"> -
-                    <input type="date"> &nbsp;      
-					<button type="submit">조회</button>
-                  </form>
-            </div>
+
             <br>
             <table align="center" border="1" id="qa-list">
                 <tr>
@@ -113,6 +108,8 @@
 			$("#qa-list tbody tr").click(function(){
 				location.href='<%=contextPath%>/detail.qa?no='+$(this).children().eq(0).text();
 			})
+
+           
 		})
 	</script>
 	<%@include file="/views/common/footer.jsp" %>
