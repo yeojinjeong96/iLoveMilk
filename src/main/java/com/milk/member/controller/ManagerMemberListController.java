@@ -39,7 +39,7 @@ public class ManagerMemberListController extends HttpServlet {
 		int boardLimit = 10;
 		int maxPage = (int)Math.ceil((double)listCount / boardLimit);
 		int startPage = (currentPage -1)/ pageLimit * pageLimit +1;
-		int endPage = startPage + pageLimit -1;
+		int endPage = startPage + pageLimit - 1 > maxPage ? maxPage : startPage + pageLimit - 1;
 		if(endPage > maxPage) {
 			endPage = maxPage;
 		}

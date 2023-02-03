@@ -102,18 +102,6 @@
 
 
     </style>
-    <!-- 좋아요버튼 -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.0/font/bootstrap-icons.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-
-
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
-    <!-- Latest compiled and minified CSS -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
-    <!-- Popper JS -->
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
-    <!-- Latest compiled JavaScript -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
  
 </head>
 <body>
@@ -131,7 +119,7 @@
             	<form action="<%=contextPath %>/reSearch.pro?cpage=1" method="post" id="search-form">
 	                <select name="keyOption" id="">
 	                	<option value="productName">상품명</option>
-	                    <option value="brand">회사명</option>
+	                    <option value="brand">브랜드명</option>
 	                    
 	                </select>
 	                <input type="text" name = "keyword" style="width:200px;" maxlength="30" required>
@@ -171,7 +159,8 @@
 	                <img src="<%= contextPath%>/<%=p.getProductImg() %>" alt="" width="200" height="200">
 	                
 	                <div>
-                            <%=p.getProductName() %>
+                            <b style=font-size:13px;><%=p.getBrand() %></b> <br>
+                             <%=p.getProductName() %>
                         <br>
 	                    <%=p.getPrice() %> 원
 	                </div>

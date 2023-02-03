@@ -123,7 +123,7 @@
 					url:"<%=contextPath%>/memPoint.ma?",
 				   data: {memNo:d, ppage:1}
 				   ,success:function(result){
-					  // console.log(result); 
+					 
 					   
 					   // PageInfo => result.pi  =>   {}
 					   // ArrayList => result.list  =>  [{}, {}, ..]
@@ -149,16 +149,19 @@
                    
                    
 	                    let value2 = "";
+	                    
+	                    
+	                    
 	                     if(result.pi.currentPage != 1){ 
-	                        	   value2 += "<button onclick=" + "'location.href='<%=contextPath%>/memPoint.ma?ppage=result.pi.currentPage-1&memNo=d''" + ";>&lt;</button>";
+	                        	   value2 += "<button onclick='location.href='" + "<%=contextPath%>/memPoint.ma?ppage=result.pi.currentPage-1&memNo=d " + "';'>&lt;</button>";
 	                     		} 
 	          
 	                     for(let p=result.pi.startPage; p<=result.pi.endPage; p++){ 
-	                    	 value2+=" <button onclick="+"'location.href='<%=contextPath%>/memPoint.ma?ppage=p&memNo=d''" + ";> p </button>";
+	                    	 value2+=" <button onclick='location.href='" + "<%=contextPath%>/memPoint.ma?ppage=p&memNo=d" + "';'> " +  p + "</button>";
 	                       } 
 	         
 	                       if(result.pi.currentPage != result.pi.maxPage){
-	                    	   value2+=" <button onclick=" + "'location.href='<%=contextPath%>/memPoint.ma?ppage=result.pi.currentPage+1&memNo=d''"+ ";>&gt;</button>";
+	                    	   value2+=" <button onclick='location.href='" + "<%=contextPath%>/memPoint.ma?ppage=result.pi.currentPage+1&memNo=d" + "';'>&gt;</button>";
 	                      } 
 	                   $(".paging-area2").html(value2);    
                    
@@ -173,10 +176,7 @@
 				
 			}
      	
-     	function memModify(a, b){
-     		$("#modifyModalId").val(a);
-     		$("#modifyModalNo").val(b);
-     	}
+
      	
 	    	
     		function searchKeyMem(page){
@@ -207,8 +207,8 @@
                                 + "<td>" + result.slist[i].address + "</td>"
                                 + "<td>" + result.slist[i].totalpay + "</td>"
                                 + "<td>" + result.slist[i].total 
-                                +  "<button type='button' id='btn1' onclick= 'memDetail('result.slist[i].memberId', 'result.slist[i].memberGrade', result.slist[i].total , result.slist[i].memberNo);'" +  "class='btn btn-outline-secondary btn-sm' data-toggle='modal' data-target='#point-info' style='font-size:9px;'>" + "상세" + "</button>"
-                                +  "<button type='button' id='btn2' onclick= 'memModify('result.slist[i].memberId', result.slist[i].memberNo);' class='btn btn-outline-secondary btn-sm' data-toggle='modal' data-target='#point-change' style='font-size:9px;'>"+ "변경" + "</button>"
+                                +  "<button type='button' id='btn1' onclick= 'memDetail('" + result.slist[i].memberId + "', '" + result.slist[i].memberGrade+ "'," + result.slist[i].total +","+ result.slist[i].memberNo + ");' class='btn btn-outline-secondary btn-sm' data-toggle='modal' data-target='#point-info' style='font-size:9px;'> 상세 </button>"
+                                +  "<button type='button' id='btn2' onclick= 'memModify(" + result.slist[i].memberId + "', " + result.slist[i].memberNo+ ");' class='btn btn-outline-secondary btn-sm' data-toggle='modal' data-target='#point-change' style='font-size:9px;'>변경</button>"
                                  + "</td>"
                                  + "<td>" 
                                  + result.slist[i].enrollDate + "</td>"
@@ -222,15 +222,15 @@
     					let sval2 = "";
     					
 	                     if(result.spi.currentPage != 1){ 
-	                    	 sval2 += "<button onclick=" + "'searchKeyMem(result.pi.currentPage-1);'" + ">&lt;</button>";
+	                    	 sval2 += "<button onclick='searchKeyMem(" + (result.spi.currentPage-1) + ");'>&lt;</button>";
                   		} 
        
 	                     for(let p=result.spi.startPage; p<=result.spi.endPage; p++){ 
-	                    	 sval2 +=" <button onclick="+"'searchKeyMem('" + p + "');'" + ">"+ p +" </button>";
+	                    	 sval2 +=" <button onclick='searchKeyMem(" + p + ");'>"+ p +" </button>";
 	                       } 
       
                       if(result.spi.currentPage != result.spi.maxPage){
-                     	 sval2 +=" <button onclick=" + "'searchKeyMem(result.spi.currentPage+1);'" + "> &gt;</button>";
+                     	 sval2 +=" <button onclick='searchKeyMem("+ (result.spi.currentPage+1) + ");'> &gt;</button>";
                    } 
                 $(".paging-area").html(sval2);   
     					
@@ -243,7 +243,11 @@
     			
     		}
     		
-            	
+    		
+        function memModify(a, b){
+     		$("#modifyModalId").val(a);
+     		$("#modifyModalNo").val(b);
+     	}	
    		 </script>
             
             <div id="mem-3">
@@ -356,11 +360,11 @@
 	                        <table style="width:100%;" class="table table-borderless">
 	                                <tr>
 	                                    <td >아이디</td>
-	                                    <td  value=""><input type="text" name="" id="modifyModalId" readonly></td>
+	                                    <td><input type="text" name="" id="modifyModalId" readonly></td>
 	                                </tr>
 	                                <tr>
 	                                    <td >회원번호</td>
-	                                    <td  value=""><input type="text" name="memPointNo" id="modifyModalNo" readonly></td>
+	                                    <td><input type="text" name="memPointNo" id="modifyModalNo" readonly></td>
 	                                </tr>
 	                                <tr>
 	                                    <td>구분</td>

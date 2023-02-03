@@ -228,7 +228,7 @@
 		          FROM (                            
                         SELECT 
                                 POINT_NO,
-                                COUNT,
+                                AMOUNT,
                                 STATUS,
                                 TOTAL,
                                 MODIFY_DATE,

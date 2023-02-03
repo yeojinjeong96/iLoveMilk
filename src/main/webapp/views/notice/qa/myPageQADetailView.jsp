@@ -91,7 +91,7 @@
                             
                             <%if(at!=null) {%>
         
-                                <img src="<%=contextPath%>/<%=at.getFilePath()%><%=at.getChangeName()%>"  >
+                                <img src="<%=contextPath%>/<%=at.getFilePath()%><%=at.getChangeName()%>" width="300px" height="300px"   >
                                 <br>
                              <%} %>
                              

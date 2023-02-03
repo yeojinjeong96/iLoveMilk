@@ -160,28 +160,28 @@
                     <!-- Modal body -->
                     <div class="modal-body">
                     
-                    <form action="" method="post">
+                    <form action="<%=contextPath %>/orderWaybill.ma" method="post">
                             <input type="hidden" name="" value="">
-                            <table style="width:100%;">
+                            <table class="table" style="width:100%;">
                                     <tr>
                                         <td>주문번호</td>
-                                        <td id = "wayOrderNo"></td>
+                                        <td ><input type="text" id = "wayOrderNo" name="OrderNo" readonly></td>
                                     </tr>
                                     <tr>
                                         <td>주문일자</td>
-                                        <td id="wayOrderDate">23-01-01 00:00:00</td>
+                                        <td id="wayOrderDate"></td>
                                     </tr>
                                     <tr>
                                         <td>구매자명</td>
-                                        <td id="wayOrderName">구매자이름자리</td>
+                                        <td id="wayMemberName"></td>
                                     </tr>
                                     <tr>
                                         <td>받는사람</td>
-                                        <td id="wayOrderName">받는사람이름자리</td>
+                                        <td id="wayOrderName"></td>
                                     </tr>
                                     <tr>
                                         <td>주소</td>
-                                        <td id="wayAddress">서울시 금천구 ..</td>
+                                        <td id="wayAddress"></td>
                                     </tr>
                                     <tr>
                                         <td>택배사</td>
@@ -217,10 +217,13 @@
         					data: {ono:ono},
         					success:function(result){
         						
-        						if(result){
-        							alert("성공");
-        							console.log(result);
-        						}
+        						console.log(result);
+        						
+								$("#wayOrderNo").val(result.orderNo);
+								$("#wayOrderDate").text(result.paymentDate);
+								$("#wayMemberName").text(result.memberName);
+								$("#wayOrderName").text(result.orderName);
+								$("#wayAddress").text(result.address);
         						
         					}, error:function(){
         						alert("통신실패");

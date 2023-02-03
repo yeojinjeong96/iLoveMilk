@@ -264,6 +264,22 @@ public class ProductService {
 		return o;
 	}
 	
+	/**
+	 * 운송장발급
+	 * @author 이다혜
+	 * @return result
+	 */
+	public int createWaybill(int no, String courier, int waybill) {
+		Connection conn = getConnection();
+		int result = new ProductDao().createWaybill(conn,no, courier, waybill);
+		if(result > 0) {
+			commit(conn);
+		}else {
+			rollback(conn);
+		}
+		return result;
+	}
+	
 	
 	/**
 	 * 상품 갯수 조회

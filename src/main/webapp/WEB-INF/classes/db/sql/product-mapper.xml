@@ -17,6 +17,7 @@
 		          FROM (
 		                SELECT
 		                	   PRODUCT_NO
+		                	 , BRAND   
 		                     , PRODUCT_NAME
 		                     , PRICE
 		                     , PRODUCT_IMG
@@ -44,13 +45,15 @@
 	<entry key="selectRecentProductList">
 	
         SELECT 	
-        		   PRODUCT_NO	    
+        		   PRODUCT_NO
+        		, BRAND	   	    
                , PRODUCT_NAME
 	            , PRICE
 	            , PRODUCT_IMG
           FROM (
                 SELECT 
-                		PRODUCT_NO	
+                		PRODUCT_NO
+                		, BRAND	   	
              	   	   , PRODUCT_NAME
                      , PRICE
                      , PRODUCT_IMG
@@ -124,6 +127,7 @@
 		          FROM (
 		                SELECT
 		                	   PRODUCT_NO
+		                	 , BRAND  
 		                     , PRODUCT_NAME
 		                     , PRICE
 		                     , PRODUCT_IMG
@@ -153,14 +157,13 @@
 		          FROM (
 		                SELECT
 		                	   PRODUCT_NO
+		                	 , BRAND
 		                     , PRODUCT_NAME
 		                     , PRICE
 		                     , PRODUCT_IMG
 						   FROM TB_PRODUCT B
 				 		  WHERE B.STATUS = 'Y'
-		                ) A
-		        )
-		  WHERE RNUM BETWEEN ? AND ? 				 		  
+			 		  
 				  
 	</entry>
 	
@@ -189,6 +192,7 @@
 			  FROM TB_PAYMENT P
 			  JOIN TB_ORDERDETAIL OD ON (OD.ORDER_NO = P.ORDER_NO)
 			  GROUP BY P.ORDER_NO, P.PRICE, P.PAYMENT_DATE, P.PAYMENT_NO
+			  ORDER BY PAYMENT_DATE DESC
 			                ) A
 			        )
 			  WHERE RNUM BETWEEN ? AND ?
@@ -219,32 +223,33 @@
 	</entry>
 	
 	<entry key="selectOrderList">
-SELECT *
-          FROM (
-                SELECT ROWNUM RNUM, A.*
-                  FROM (
-    
-                        SELECT 
-		                        O.ORDER_NO,
-		                        O.STATUS, 
-		                        NVL(WAYBILL, 0)WAYBILL,
-		                        MEMBER_ID,    
-		                        O.MEMBER_NO,
-		                        ORDER_NAME,
-		                        ORDER_PHONE,
-		                        ORDER_EMAIL,
-		                        ADDRESS_NAME,
-		                        O.ADDRESS,
-		                        ADDRESS_TEL,
-		                        USE_POINT,
-		                        NVL(COURIER, '미지정')COURIER,
-		                        PAYMENT_DATE
-	                       FROM TB_ORDER O
-	                       JOIN TB_MEMBER M ON (M.MEMBER_NO = O.MEMBER_NO)
-	                       JOIN TB_PAYMENT P ON (P.ORDER_NO = O.ORDER_NO)
-                       ) A
-               )
-         WHERE RNUM BETWEEN ? AND ?
+	SELECT *
+	          FROM (
+	                SELECT ROWNUM RNUM, A.*
+	                  FROM (
+	    
+	                        SELECT 
+			                        O.ORDER_NO,
+			                        O.STATUS, 
+			                        NVL(WAYBILL, 0)WAYBILL,
+			                        MEMBER_ID,    
+			                        O.MEMBER_NO,
+			                        ORDER_NAME,
+			                        ORDER_PHONE,
+			                        ORDER_EMAIL,
+			                        ADDRESS_NAME,
+			                        O.ADDRESS,
+			                        ADDRESS_TEL,
+			                        USE_POINT,
+			                        NVL(COURIER, '미지정')COURIER,
+			                        PAYMENT_DATE
+		                       FROM TB_ORDER O
+		                       JOIN TB_MEMBER M ON (M.MEMBER_NO = O.MEMBER_NO)
+		                       JOIN TB_PAYMENT P ON (P.ORDER_NO = O.ORDER_NO)
+		                       ORDER BY PAYMENT_DATE DESC
+	                       ) A
+	               )
+	         WHERE RNUM BETWEEN ? AND ?
 	</entry>
 	<entry key = "selectOrderDetail">
           SELECT
@@ -267,6 +272,15 @@ SELECT *
 	                       JOIN TB_MEMBER M ON (M.MEMBER_NO = O.MEMBER_NO)
 	                       JOIN TB_PAYMENT P ON (P.ORDER_NO = O.ORDER_NO) 
                            WHERE O.ORDER_NO = ?	
+	</entry>
+	<entry key="createWaybill">
+	UPDATE 
+	      TB_ORDER
+	  SET 
+		    COURIER = ?,
+		    WAYBILL = ?
+	  
+	  WHERE ORDER_NO = ?	
 	</entry>
 	
 	<entry key="insertProduct">

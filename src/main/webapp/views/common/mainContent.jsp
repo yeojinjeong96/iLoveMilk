@@ -83,15 +83,6 @@
     }
 
     </style>
-      <meta name="viewport" content="width=device-width, initial-scale=1">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
-    <!-- Latest compiled and minified CSS -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
-    <!-- Popper JS -->
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
-    <!-- Latest compiled JavaScript -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
 </head>
 <body>
@@ -171,9 +162,10 @@
 	           			              + "<a href='"+ '<%=contextPath %>/proDetail.pro?pno='+ recentList[i].productNo +"' style='color:rgb(113, 113, 113); text-decoration:none;'>"
 	           			              + "<img src='" + recentList[i].productImg + "' alt='' width='200' height='200'>"
 	           			            + "<p>"
+	           			         + "<b style='font-size:13px;'>"+ recentList[i].brand +"</b> <br>"
 	           			            + recentList[i].productName + "<br>"
 	           			            + recentList[i].price
-	           			            + "</p>"
+	           			            + "원</p>"
 	           			            + "</a>"
 	           			       	    + "</div>"
 	           			        

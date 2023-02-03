@@ -85,6 +85,7 @@ public class ProductDao {
 			while(rset.next()) {
 				list.add(new Product(
 						rset.getInt("product_no"),
+						rset.getString("BRAND"),
 						rset.getString("product_name"),
 						rset.getInt("price"),
 						rset.getString("product_img")
@@ -151,6 +152,7 @@ public class ProductDao {
 			while(rset.next()) {
 				list.add(new Product(
 						rset.getInt("product_no"),
+						rset.getString("BRAND"),
 						rset.getString("product_name"),
 						rset.getInt("price"),
 						rset.getString("product_img")
@@ -331,6 +333,7 @@ public class ProductDao {
 			while(rset.next()) {
 				list.add(new Product(
 						rset.getInt("product_no"),
+						rset.getString("BRAND"),
 						rset.getString("product_name"),
 						rset.getInt("price"),
 						rset.getString("product_img")
@@ -427,6 +430,7 @@ public class ProductDao {
 			while(rset.next()) {
 				list.add(new Product(
 						rset.getInt("product_no"),
+						rset.getString("BRAND"),
 						rset.getString("product_name"),
 						rset.getInt("price"),
 						rset.getString("product_img")	
@@ -629,6 +633,27 @@ public class ProductDao {
 		return o;
 	}
 	
+	
+	public int createWaybill(Connection conn,int no, String courier, int waybill) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String sql = prop.getProperty("createWaybill");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, courier);
+			pstmt.setInt(2, waybill);
+			pstmt.setInt(3, no);
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}
+		return result;
+	}
 	
 	public int insertProduct(Connection conn, Product p) {
 		int result = 0;

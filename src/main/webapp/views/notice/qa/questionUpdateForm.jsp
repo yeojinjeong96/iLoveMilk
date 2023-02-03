@@ -76,12 +76,13 @@
                     </tr>
                     <tr>
                         <th class="text-center">첨부파일</th>
+                      
+                        <td>
                         <%if(at!=null){ %>
                         <%=at.getChangeName() %>
                     	
                         <%} %>
-                           
-                        <td><input type="file" name="upfile">
+                        <input type="file" name="upfile">
                         	
                         </td>
                     </tr>
