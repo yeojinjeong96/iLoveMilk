@@ -1,5 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ page import="java.util.ArrayList, com.milk.member.model.vo.Order, com.milk.common.model.vo.PageInfo" %>    
+<%
+	ArrayList<Order> list = (ArrayList<Order>)request.getAttribute("list");
+	PageInfo pi = (PageInfo)request.getAttribute("pi");
+%>    
     <!DOCTYPE html>
     <html lang="en">
     <head>

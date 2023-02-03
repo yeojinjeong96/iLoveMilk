@@ -456,7 +456,7 @@ public class ProductDao {
 				listCount = rset.getInt("count");
 			}
 			
-			System.out.println(listCount);
+			
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -491,10 +491,7 @@ public class ProductDao {
                         rset.getString("MEMBER_ID")
 						));
 			}
-			
 
-			
-			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
@@ -502,6 +499,94 @@ public class ProductDao {
 			close(pstmt);
 		}
 		
+		return list;
+	}
+	
+	public ArrayList<Order> selectPurchaseDetailList(Connection conn, int no){
+		ArrayList<Order> list = new ArrayList<>();
+		ResultSet rset = null;
+		PreparedStatement pstmt = null;
+		String sql = prop.getProperty("selectPurchaseDetailList");
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, no);
+			rset = pstmt.executeQuery();
+			while(rset.next()) {
+				list.add(new Order(
+							rset.getInt("order_no"),
+							rset.getDate("payment_date"),
+							rset.getString("product_img"),
+							rset.getString("product_name"),
+							rset.getInt("count"),
+							rset.getInt("price"),
+							rset.getString("member_id"),
+							rset.getInt("product_no")
+						));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return list;
+	}
+	
+	public int countOrderList(Connection conn) {
+		ResultSet rset = null;
+		int listCount = 0;
+		PreparedStatement pstmt = null;
+		String sql = prop.getProperty("countOrderList");
+		try {
+			pstmt = conn.prepareStatement(sql);
+			rset = pstmt.executeQuery();
+			if(rset.next()) {
+				listCount = rset.getInt("count");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return listCount;
+	}
+	
+	public ArrayList<Order> selectOrderList(Connection conn, PageInfo pi){
+		ArrayList<Order> list  = new ArrayList<>();
+		ResultSet rset = null;
+		PreparedStatement pstmt = null;
+		String sql = prop.getProperty("selectOrderList");
+		try {
+			pstmt = conn.prepareStatement(sql);
+			int startRow = (pi.getCurrentPage() -1) * pi.getBoardLimit() + 1;
+			int endRow = startRow + pi.getBoardLimit() -1;
+			pstmt.setInt(1, startRow);
+			pstmt.setInt(2, endRow);
+			rset = pstmt.executeQuery();
+			while(rset.next()) {
+				list.add(new Order(
+							rset.getInt("ORDER_NO"),
+							rset.getInt("STATUS"),
+							rset.getInt("WAYBILL"),
+							rset.getString("MEMBER_ID"),
+							rset.getInt("MEMBER_NO"),
+							rset.getString("ORDER_NAME"),
+							rset.getString("ORDER_PHONE"),
+							rset.getString("ORDER_EMAIL"),
+							rset.getString("ADDRESS_NAME"),
+							rset.getString("ADDRESS"),
+							rset.getString("ADDRESS_TEL"),
+							rset.getInt("USE_POINT"),
+							rset.getString("COURIER")
+						));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+				
 		return list;
 	}
 	
