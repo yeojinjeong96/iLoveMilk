@@ -25,9 +25,6 @@
     .agree{width:490px;}
     .star{color: red;}
 </style>
-<!-- 주소 api  -->
-<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
-
 </head>
 <body>
     <%@ include file="../common/header.jsp" %>
@@ -179,38 +176,23 @@
                     <div>
                         <button type="button" class="btn btn-secondary" onclick="location.href='<%= contextPath %>/cart.pr'">이전으로</button>
                         <button type="button" class="btn btn-primary" id="payment" onclick="requestPay();" disabled>결제하기</button>
+                        <button type="submit" id="submitBtn" style="display:none"></button>
                     </div>
                 </form>
             </div>
         </div>
     </div>
-<!-- iamport.payment.js -->
-<script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.1.8.js"></script>
+    
+    <!-- 주소 api  -->
+	<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+	<!-- iamport.payment.js -->
+	<script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.1.8.js"></script>
 	<script>
-		<!-- iamport.payment.js -->
-		// 페이지에 가맹점 식별코드를 이용하여 IMP 객체를 초기화
-	    var IMP = window.IMP; // 생략 가능
-	    IMP.init("imp11183531"); // 예: imp00000000
-	    function requestPay() {
-	    	// IMP.request_pay(param, callback) 결제창 호출
-	        IMP.request_pay({ // param
-	        	pg: "html5_inicis", // 하나의 아임포트계정으로 여러 PG를 사용할 때 구분자
-	            pay_method: "card", // 결제수단
-	            merchant_uid: "ORD20180131-0000011", // 가맹점에서 생성/관리하는 고유 주문번호
-	            name: "노르웨이 회전 의자", // 주문명
-	            amount: 64900, // 결제할 금액
-	            buyer_email: "gildong@gmail.com",
-	            buyer_name: "홍길동",
-	            buyer_tel: "010-4242-4242",
-	        }, function (rsp) { // callback
-	            if (rsp.success) {
-	                // 결제 성공 시 로직,
-	            } else {
-	                // 결제 실패 시 로직,
-	            }
-	        });
-	    }
-	
+		// 결제 완료 후 submit
+		function completePay(){
+			$("#submitBtn").click();
+		}
+		
 		// 주문내역확인 동의시에만 결제하기 버튼 활성화
 		function paymentNeed(){
 			if($("#payNeed").is(":checked")){
@@ -328,6 +310,32 @@
 	        	}
 	    	}).open();
 		}
+
+		<!-- iamport.payment.js -->
+		let no = 3;
+		// 페이지에 가맹점 식별코드를 이용하여 IMP 객체를 초기화
+	    var IMP = window.IMP; // 생략 가능
+	    IMP.init("imp11183531"); // 예: imp00000000
+	    function requestPay() {
+	    	// IMP.request_pay(param, callback) 결제창 호출
+	        IMP.request_pay({ // param
+	        	pg: "html5_inicis",
+                pay_method: "card",
+                merchant_uid: no,
+                name: "<%= list.get(0).getProductName() %> 외 " + "<%= list.size() - 1 %>",
+                amount: $("#finPrice").text(),
+                buyer_email: $("#memEmail").val(),
+	            buyer_name: $("#memName").val(),
+	            buyer_tel: $("#memPhone").val()
+            }, function (rsp) { // callback
+                if (rsp.success) {
+                	no = no + 1;
+                	completePay();
+	            } else {
+	            	alert("결제 실패");
+	            }
+	        });
+	    }
 	</script>
                    	
     <%@ include file="../common/footer.jsp" %>
