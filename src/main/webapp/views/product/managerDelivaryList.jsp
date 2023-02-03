@@ -77,32 +77,55 @@
                         
                     </div>
                 </div>
-                <div id="delivery-2">
+               
+                <div id="delivery-2"> <br>
                     <table class=" table purchase-list" style="width:100%; font-size:13px; text-align:center;">
-                        <tr>
-                            <td>번호</td>
-                            <td>주문번호</td>
-                            <td>주문일자</td>
-                            <td>회원아이디</td>
-                            <td>배송상태</td>
-                            <td>주소</td>
-                            <td>운송장</td>
-                        </tr>
-                        <!-- 더블클릭 시 결제내역 상세 보이도록 한다 -->
-                        <tr>
-                            <td>1</td>
-                            <td>20230101-1234567</td>
-                            <td>23-01-01</td>
-                            <td>회원아이디자리</td>
-                            <td>배송전</td>
-                            <td>서울시 금천구...</td>
-                            <td>
-                                <!-- 조건문 사용해서 운송장 완료하면 버튼비활성화시키기 -->
-                                <button type="button" class="btn btn-outline-secondary btn-sm" data-toggle="modal" data-target="#delivery-info">대기</button>
-                            </td>
-                        </tr>
+                    	<thead>
+	                        <tr>
+	                            <td>번호</td>
+	                            <td>주문번호</td>
+	                            <td>주문일자</td>
+	                            <td>회원아이디</td>
+	                            <td>배송상태</td>
+	                            <td>주소</td>
+	                            <td>운송장</td>
+	                        </tr>
+                        </thead>
+                         <tbody>
+                        <%if(list.isEmpty()) {%>
+                        	<tr colspan="7"> 조회된 데이터가 없습니다. </tr>
+                        <%}else{ %>
+                       		<%for(Order o : list){ %>
+		                        <tr>
+		                            <td></td>
+		                            <td><%=o.getOrderNo() %></td>
+		                            <td><%=o.getPaymentDate() %></td>
+		                            <td><%=o.getMemberId() %></td>
+		                            <td>
+		                            	<%if(o.getStatus() == 1){ %>
+		                            		상품준비중
+		                            	<%}else if(o.getStatus() == 2){ %>
+		                            		배송중
+		                            	<%}else if(o.getStatus() == 3){ %>
+		                            		배송완료
+		                            	<%} %>
+		                            </td>
+		                            <td><%=o.getAddress() %></td>
+		                            <td>
+		                                <!-- 조건문 사용해서 운송장 완료하면 버튼비활성화시키기 -->
+		                                <%if(o.getWaybill() != 0) %>
+		                                	<button type="button" id="getWbtn" class="btn btn-outline-secondary btn-sm" data-toggle="modal" data-target="#delivery-info">대기</button>
+		                                <%} %>
+		                            </td>
+		                        </tr>
+	                        <%} %>
+	                  		
+                        </tbody>
                     </table>
                 </div>
+                
+               
+                
                 <div id="delivery-3">  
                     <div class="paging-area">
                         <!-- 내가 보고있는 페이지가 1번 페이지가 아닐때에만 나타내기 
