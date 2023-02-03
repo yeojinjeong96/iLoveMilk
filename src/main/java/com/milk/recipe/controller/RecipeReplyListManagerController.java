@@ -63,6 +63,7 @@ public class RecipeReplyListManagerController extends HttpServlet {
 		request.setAttribute("list", list);
 		
 		request.getRequestDispatcher("views/recipe/managerRecipeReply.jsp").forward(request, response);
+		
 	
 	}
 

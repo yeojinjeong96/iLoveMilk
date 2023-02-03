@@ -335,6 +335,21 @@ public class RecipeService {
 		return result;
 	}
 	
+	public int selectDelReplyM(String deleteRe) {
+		Connection conn = getConnection();
+		
+		int result = new RecipeDao().selectDelReplyM(conn, deleteRe);
+		
+		if(result > 0) {
+			commit(conn);
+		}else {
+			rollback(conn);
+		}
+		
+		close(conn);
+		return result;
+	}
+	
 	
 	public int selectRestoreRecipeM(String restoreRe) {
 		Connection conn = getConnection();
@@ -352,5 +367,48 @@ public class RecipeService {
 	}
 	
 	
+	public int insertReport(Report r) {
+		
+		Connection conn = getConnection();
+		
+		
+		int result = new RecipeDao().insertReport(conn, r);
+		
+		if(result > 0) {
+			commit(conn);
+		}else {
+			rollback(conn);
+		}
+		
+		close(conn);
+		return result;
+	}
+	
+	public int insertReportReply(Report r, Reply re) {
+		
+		Connection conn = getConnection();
+		
+		
+		int result1 = new RecipeDao().insertReportReply(conn, r);
+		int result2 = new RecipeDao().updateReply(conn, re);
+		
+		if(result1 > 0 && result2 > 0) {
+			commit(conn);
+		}else {
+			rollback(conn);
+		}
+		
+		close(conn);
+		return result1 * result2;
+	}
+	
+	public ArrayList<Reply> selectReply(int recipeNo){
+		Connection conn = getConnection();
+		
+		ArrayList<Reply> list = new RecipeDao().selectReplyList(conn, recipeNo);
+		
+		close(conn);
+		return list;
+	}
 	
 }

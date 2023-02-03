@@ -8,26 +8,22 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.tomcat.util.http.fileupload.servlet.ServletFileUpload;
-
-import com.milk.common.MyFileRenamePolicy;
 import com.milk.member.model.vo.Member;
 import com.milk.recipe.model.service.RecipeService;
-import com.milk.recipe.model.vo.Attachment;
 import com.milk.recipe.model.vo.Reply;
-import com.oreilly.servlet.MultipartRequest;
+import com.milk.recipe.model.vo.Report;
 
 /**
- * Servlet implementation class AjaxReplyInsertController
+ * Servlet implementation class RecipeReportController
  */
-@WebServlet("/reinsert.re")
-public class AjaxReplyInsertController extends HttpServlet {
+@WebServlet("/reportReply.re")
+public class RecipeReportReplyController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public AjaxReplyInsertController() {
+    public RecipeReportReplyController() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -39,22 +35,43 @@ public class AjaxReplyInsertController extends HttpServlet {
 		
 		request.setCharacterEncoding("UTF-8");
 		
-		String replyContent = request.getParameter("content");
 		int recipeNo = Integer.parseInt(request.getParameter("no"));
 		int memberNo = ((Member)request.getSession().getAttribute("loginMember")).getMemberNo();
-	
-		Reply r = new Reply();
-		r.setReplyContent(replyContent);
+		
+		int replyNo = Integer.parseInt(request.getParameter("rNo"));
+		
+		String reportContent = request.getParameter("selectReport");
+		String reportEtcContent = request.getParameter("etc");
+		
+		// System.out.println(reportContent);
+		// System.out.println(reportEtcContent);
+		
+		Report r = new Report();
 		r.setRefNo(recipeNo);
-		r.setMemberNo(String.valueOf(memberNo));
+		r.setReportingMemberNo(String.valueOf(memberNo));
+		
+		if(reportContent.contains("기타")) {
+			r.setReportContent(reportEtcContent);
+		}else {
+			r.setReportContent(reportContent);
+		}
+		
+		Reply re = new Reply();
+		re.setReplyNo(replyNo);
+		re.setRefNo(recipeNo);
+		
+		System.out.println(replyNo);
+		
+		int result = new RecipeService().insertReportReply(r, re);
+		
+		
+		if(result > 0) {
+			request.getSession().setAttribute("alertMsg", "해당 댓글이 신고되었습니다.");
+			response.sendRedirect(request.getContextPath() + "/detail.re?no=" + r.getRefNo());
+		}else {
 			
-
-		int result = new RecipeService().insertReply(r);
+		}
 		
-		
-		
-		response.getWriter().print(result);
-			
 	}
 
 	/**

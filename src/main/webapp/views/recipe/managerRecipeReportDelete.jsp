@@ -37,6 +37,11 @@
     #delete{
         width: 700px;
     }
+    
+    .list-area tbody a{
+    	text-decoration: none;
+    	color: black;
+    }
 
 </style>
 </head>
@@ -71,7 +76,7 @@
                 <tr height="30px">
                     <th width="20px">
                         <div class="custom-control custom-checkbox">
-                            <input type="checkbox" name="" class="custom-control-input" id="customCheck">
+                            <input type="checkbox" name="allCheck" class="custom-control-input allCheck" id="customCheck" onclick="allChecked(this)">
                             <label class="custom-control-label" for="customCheck"></label>
                         </div>
                     </th>
@@ -85,7 +90,7 @@
             <tbody>
             <% for(Report r : list) { %>
                 <tr height="30px">
-                    <td><input type="checkbox"></td>
+                    <td><input type="checkbox" class="check" name="check" onclick="checkClicked()" value="<%= r.getRefNo() %>"></td>
                     <td><%= r.getRefNo() %></td>
                     <td><%= r.getReportContent() %></td>
                     <td><%= r.getReportingMemberNo() %></td>
@@ -99,10 +104,67 @@
         <table id="delete">
             <tr>
                 <td align="right" style="padding: 5px 5px;">
-                    <a href="" class="btn btn-danger btn-sm">삭제</a>
+                    <a class="btn btn-danger btn-sm" onclick="recipeDelete();">삭제</a>
                 </td>
             </tr>
         </table>
+        
+        <script>
+        	function allChecked(target){
+        		if($(target).is(":checked")){
+        			$(".check").prop("checked", true);
+        		}else{
+        			$(".check").prop("checked", false);
+        		}
+        	}
+        	
+        	function checkClicked(){
+        		//체크박스 전체개수
+        		var allCount = $("input:checkbox[name=check]").length;
+        		
+        		//체크된 체크박스 전체개수
+        		var checkedCount = $("input:checkbox[name=check]:checked").length;
+        		
+        		//체크박스 전체개수와 체크된 체크박스 전체개수가 같으면 체크박스 전체 체크
+        		if(allCount == checkedCount){
+        			$(".check").prop("checked", true);
+        		}else{ //같지않으면 전체 체크박스 해제
+        			$(".allCheck").prop("checked", false);
+        		}
+        		
+        	}
+        	
+        	function recipeDelete(){
+        		var recipeArray = [];
+        		
+        		$("input:checkbox[name=check]:checked").each(function(){
+        			recipeArray.push($(this).val());
+        		});
+        		
+        		// console.log(recipeArray);
+        		
+        		if(recipeArray == ""){
+        			alert("삭제할 항목을 선택해주세요.");
+        			return false;
+        		}
+        		
+        		var confirmAlert = confirm("정말로 삭제하시겠습니까?");
+
+        		if(confirmAlert){
+        			
+        			$.ajax({
+        		       url:"<%= contextPath %>/selectDelete.re",
+        		       data:{recipeArray:recipeArray},
+        		       type:"post",
+        		       traditional:true,
+        		       success:function(result) {
+        					alert("해당글이 정상적으로 삭제되었습니다.");
+        					location.reload();
+        		       }
+        		   })	
+        		}
+        	}
+        </script>
 
         <div class="paging-area">
             <% if(pi.getCurrentPage() != 1) { %>
