@@ -84,9 +84,17 @@ public class ProductCompletePaymentController extends HttpServlet {
 		}
 		// 회원등급별 적립금 insert
 		int result4 = new ProductService().pointInsert(point, memNo, orderNo);
+
+		// 구매상품 장바구니에서 삭제
+		int result5 = new ProductService().productCartDelete(memNo, proNo);
 		
-		request.setAttribute("orderNo", orderNo);
-		request.getRequestDispatcher("views/product/productCompletePayment.jsp").forward(request, response);
+		if(result1 * result2 * result3 * result4 * result5 > 0) {
+			request.setAttribute("orderNo", orderNo);
+			request.getRequestDispatcher("views/product/productCompletePayment.jsp").forward(request, response);
+		} else {
+			request.getSession().setAttribute("alertMsg", "결제 값 등록 실패");
+			response.sendRedirect(request.getContextPath() + "/orderForm.pr");
+		}
 	}
 
 	/**
