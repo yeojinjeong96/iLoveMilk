@@ -7,17 +7,19 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.milk.product.model.service.ProductService;
+
 /**
- * Servlet implementation class ProductOrderController
+ * Servlet implementation class ProductCartMinusAmountController
  */
-@WebServlet("/order.pr")
-public class ProductOrderController extends HttpServlet {
+@WebServlet("/minusAmount.pr")
+public class AjaxProductCartMinusAmountController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public ProductOrderController() {
+    public AjaxProductCartMinusAmountController() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -26,8 +28,12 @@ public class ProductOrderController extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+		int memNo = Integer.parseInt(request.getParameter("memNo"));
+		int proNo = Integer.parseInt(request.getParameter("proNo"));
+		int amount = Integer.parseInt(request.getParameter("amount")) - 1;
+		int result = new ProductService().productCartAmount(memNo, proNo, amount);
+		
+		response.getWriter().print(result);
 	}
 
 	/**

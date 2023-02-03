@@ -112,8 +112,8 @@
                                 <input type="text"  id="sample6_postcode" style="width:150px" name="addressNumber" placeholder="우편번호">
 								<input type="button" onclick="sample6_execDaumPostcode()" value="우편번호"><br>
                                 <input type="text"  id="sample6_address" placeholder="주소" style="width:250px" name="address"><br>
-                               	<input type="text" id="sample6_detailAddress" name="addressDetail" placeholder="상세주소" style="width:150px">
 	                    		<input type="text" id="sample6_extraAddress" placeholder="참고항목" style="width:100px">
+                               	<input type="text" id="sample6_detailAddress" name="addressDetail" placeholder="상세주소" style="width:150px">
                             </td>
                         </tr>
                         <tr>

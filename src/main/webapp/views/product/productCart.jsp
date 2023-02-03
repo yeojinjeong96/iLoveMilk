@@ -116,7 +116,7 @@
 	        		$(".checkedbox:checked").each(function(){
 	        			proNo.push($(this).parent().parent().find(".proNumber").val());
 	        		});
-	        		location.href = "<%= contextPath %>/order.pr?proNo=" + proNo;
+	        		location.href = "<%= contextPath %>/orderForm.pr?proNo=" + proNo;
     			}
     		}
     	}
@@ -137,7 +137,7 @@
 	    		$(".checkedbox:checked").each(function(){
 	    			proNo.push($(this).parent().parent().find(".proNumber").val());
 	    		});
-	    		location.href = "<%= contextPath %>/order.pr?proNo=" + proNo;
+	    		location.href = "<%= contextPath %>/orderForm.pr?proNo=" + proNo;
 			}
     	}
     

@@ -11,16 +11,16 @@ import javax.servlet.http.HttpServletResponse;
 import com.milk.product.model.service.ProductService;
 
 /**
- * Servlet implementation class ProductDeleteController
+ * Servlet implementation class ProductCartDeleteController
  */
-@WebServlet("/delete.pr")
-public class ProductDeleteController extends HttpServlet {
+@WebServlet("/cartDel.pr")
+public class AjaxProductCartDeleteController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public ProductDeleteController() {
+    public AjaxProductCartDeleteController() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -29,20 +29,9 @@ public class ProductDeleteController extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		request.setCharacterEncoding("UTF-8");
-		String proNo = request.getParameter("proNo");
-		proNo = proNo.substring(0, proNo.length()-1);
-		
-		String[] arrNo = proNo.split(",");
-		
-		int[] arrpNo = new int[arrNo.length];
-		for(int i=0; i<arrNo.length; i++) {
-			arrpNo[i] = Integer.parseInt(arrNo[i]);
-		}
-		
-		int result = new ProductService().deleteProduct(arrpNo);
-		
-		response.setContentType("text/html; charset=utf-8");
+		int memNo = Integer.parseInt(request.getParameter("memNo"));
+		String[] proNoArr = request.getParameterValues("proNo");
+		int result = new ProductService().productCartDelete(memNo, proNoArr);
 		response.getWriter().print(result);
 	}
 
