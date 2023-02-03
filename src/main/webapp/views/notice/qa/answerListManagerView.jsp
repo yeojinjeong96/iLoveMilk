@@ -38,7 +38,11 @@
     #answer-list tbody tr{
         cursor: pointer;
     }
-    
+    .select-area button{
+        border: 0;
+        outline: 0;
+        background-color: transparent;
+    }
 </style>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
@@ -57,14 +61,14 @@
             <hr>
             <br>
             
-            <form action="" method="get">
+            <form action="<%=contextPath%>/listM.a?cpage=1" method="get">
                 <div class="select-area" align="left" >        
                     조회기간&nbsp;
-                    <a href="">오늘</a>&nbsp;
-                    <a href="">7일</a>&nbsp;
-                    <a href="">15일</a>&nbsp;
-                    <a href="">1개월</a>&nbsp;
-                    <a href="">3개월</a>&nbsp;
+                    <button type="button" value="0">오늘</button>&nbsp;
+                    <button type="button" value="7">7일</button>&nbsp;
+                    <button type="button" value="15">15일</button>&nbsp;
+                    <button type="button" value="30">1개월</button>&nbsp;
+                    <button type="button" value="90">3개월</button>&nbsp;
                     <input type="date"> -
                     <input type="date">  
                     &nbsp;
@@ -152,7 +156,9 @@
 			location.href='<%=contextPath%>/detailM.a?no='+$(this).children().eq(0).text();
 		})
     	
-    	
+    	$(".select-area button").click(function(){
+    		location.href='<%=contextPath%>/listM.a?cpage=1&date='+$(this).val();
+    	})
     })
     
     </script>

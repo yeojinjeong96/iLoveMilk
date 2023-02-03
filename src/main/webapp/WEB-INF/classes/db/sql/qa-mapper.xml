@@ -122,6 +122,8 @@
 	    COUNT(*) COUNT
 	    FROM TB_QA
 	    WHERE ANSWER_STATUS = 'Y'
+	    and to_char(answer_date,'YY/MM/DD') between  to_char(sysdate-?,'YY/MM/DD')
+                      and  to_char(sysdate,'YY/MM/DD')
 	</entry>
 	<entry key="selectAnswerList">
 		  SELECT * FROM
@@ -140,9 +142,11 @@
 	                JOIN TB_MANAGER ON (MANAGER_NO = A_WRITER)
                     WHERE Q.STATUS= 'Y'
                     AND ANSWER_STATUS = 'Y'
-                    
+                    and to_char(answer_date,'YY/MM/DD') between  to_char(sysdate-?,'YY/MM/DD')
+                      and  to_char(sysdate,'YY/MM/DD')
 	                ORDER BY ANSWER_DATE DESC
 	                  )E) WHERE RNUM BETWEEN ? AND ?
+	                  
 	</entry>
 	<entry key="deleteQuestion">
 		DELETE 
@@ -178,9 +182,8 @@
 	</entry>
 	<entry key="updateAttachment">
 		UPDATE
-		       ATTACHMENT
-		   SET ORIGIN_NAME = ?
-		     , CHANGE_NAME = ?
+		       TB_ATTACHMENT
+		   SET  CHANGE_NAME = ?
 		     , FILE_PATH = ?
 		 WHERE FILE_NO = ?
 	</entry>

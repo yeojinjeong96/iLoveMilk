@@ -39,7 +39,7 @@ public class QuestionUpdateController extends HttpServlet {
 
 		if(ServletFileUpload.isMultipartContent(request)) {
 			
-			int maxSize= 10*30*1024;
+			int maxSize= 10*100*1024;
 			String savePath= request.getSession().getServletContext().getRealPath("/resources/question_upfiles/");
 			
 			MultipartRequest multiRequest = new MultipartRequest(request,savePath,maxSize,"UTF-8",new MyFileRenamePolicy());
@@ -51,7 +51,7 @@ public class QuestionUpdateController extends HttpServlet {
 			String sCate = multiRequest.getParameter("sCate");
 			int qNo=Integer.parseInt(multiRequest.getParameter("qNo"));
 		
-			System.out.println(qNo);
+		
 			QA q = new QA();
 			q.setqNo(qNo);
 			q.setqTitle(qTitle);
@@ -66,15 +66,16 @@ public class QuestionUpdateController extends HttpServlet {
 				at= new Attachment();
 				at.setChangeName(multiRequest.getFilesystemName("upfile"));
 				at.setFilePath("resources/question_upfiles/");
+
+				if(multiRequest.getParameter("fileNo") != null) {
 				
-			}
-			
-			if(multiRequest.getParameter("fileNo") != null) {
-			
-				at.setFileNo(Integer.parseInt(multiRequest.getParameter("fileNo")));
-			}else { 
+					at.setFileNo(Integer.parseInt(multiRequest.getParameter("fileNo")));
+				}else { 
+					
+					at.setRefNo(qNo);
+				}
 				
-				at.setRefNo(qNo);
+				
 			}
 			
 			int result= new QAService().updateQuestion(q,at);
