@@ -165,7 +165,7 @@
                             <table class="table" style="width:100%;">
                                     <tr>
                                         <td>주문번호</td>
-                                        <td ><input type="text" id = "wayOrderNo" name="OrderNo" placeholder="내용을 입력해주세요"></td>
+                                        <td ><input type="text" id = "wayOrderNo" name="OrderNo" readonly></td>
                                     </tr>
                                     <tr>
                                         <td>주문일자</td>
@@ -219,7 +219,7 @@
         						
         						console.log(result);
         						
-								$("#wayOrderNo").text(result.orderNo);
+								$("#wayOrderNo").val(result.orderNo);
 								$("#wayOrderDate").text(result.paymentDate);
 								$("#wayMemberName").text(result.memberName);
 								$("#wayOrderName").text(result.orderName);

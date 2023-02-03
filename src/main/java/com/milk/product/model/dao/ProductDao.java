@@ -637,13 +637,20 @@ public class ProductDao {
 	public int createWaybill(Connection conn,int no, String courier, int waybill) {
 		int result = 0;
 		PreparedStatement pstmt = null;
-		String sql = prop.getProperty("");
+		String sql = prop.getProperty("createWaybill");
 		
 		try {
 			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, courier);
+			pstmt.setInt(2, waybill);
+			pstmt.setInt(3, no);
+			
+			result = pstmt.executeUpdate();
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
+		}finally {
+			close(pstmt);
 		}
 		return result;
 	}

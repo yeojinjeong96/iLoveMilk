@@ -273,6 +273,15 @@
 	                       JOIN TB_PAYMENT P ON (P.ORDER_NO = O.ORDER_NO) 
                            WHERE O.ORDER_NO = ?	
 	</entry>
+	<entry key="createWaybill">
+	UPDATE 
+	      TB_ORDER
+	  SET 
+		    COURIER = ?,
+		    WAYBILL = ?
+	  
+	  WHERE ORDER_NO = ?	
+	</entry>
 	
 	<entry key="insertProduct">
 	INSERT
