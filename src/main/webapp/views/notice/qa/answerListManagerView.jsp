@@ -83,7 +83,7 @@
                         <option value="">회원아이디로검색</option>
                         <option value="">문의내용으로검색</option>
                     </select>
-                    <input type="text">
+                    <input type="text" name="search">
                     <button type="submit" class="btn btn-secondary btn-sm">검색</button>
                 </form>
             </div>
