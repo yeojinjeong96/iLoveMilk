@@ -33,6 +33,7 @@ public class ManagerPurchaseDetailController extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
+		request.setCharacterEncoding("UTF-8");
 		String no = request.getParameter("oNo");
 		ArrayList<Order> list = new ProductService().selectPurchaseDetailList(no);
 		response.setContentType("application/json; charset=UTF-8");

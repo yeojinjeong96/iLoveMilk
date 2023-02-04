@@ -32,6 +32,7 @@ public class ManagerOrderDetailController extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
+		request.setCharacterEncoding("UTF-8");
 		String no = request.getParameter("ono");
 		Order o = new ProductService().selectOrderDetail(no);
 		response.setContentType("application/json; charset=UTF-8");
