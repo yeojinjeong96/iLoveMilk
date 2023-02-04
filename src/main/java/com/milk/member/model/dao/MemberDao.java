@@ -731,6 +731,33 @@ public Member updateCheckPwd(Connection conn, String memberId, String memberPwd)
 		return list;
 	}
 	
+
+	
+	public ArrayList<Member> selectUpMember(Connection conn){
+		ArrayList<Member> list = new ArrayList<>();
+		ResultSet rset = null;
+		PreparedStatement pstmt = null;
+		String sql = prop.getProperty("selectUpMember");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			rset = pstmt.executeQuery();
+			while(rset.next()) {
+				list.add(new Member(
+							rset.getInt("MEMBER_NO"),
+							rset.getString("MEMBER_ID"),
+							rset.getString("MEMBER_NAME"),
+							rset.getString("MEMBER_GRADE"),
+							rset.getInt("TOTALPAY")
+						));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return list;
+	}	
+	
 	public int upgradeMem(Connection conn, int no) {
 		int result = 0;
 		PreparedStatement pstmt = null;
@@ -751,15 +778,6 @@ public Member updateCheckPwd(Connection conn, String memberId, String memberPwd)
 			close(pstmt);
 		}
 		return result;
-	}
-	
-	public ArrayList<Member> selectUpMember(Connection conn){
-		ArrayList<Member> list = new ArrayList<>();
-		ResultSet rset = null;
-		PreparedStatement pstmt = null;
-		String sql = prop.getProperty("selectUpMember");
-		
-		return list;
 	}
 	
 	public String upgradeResult(Connection conn, int no) {

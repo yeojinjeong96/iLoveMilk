@@ -392,16 +392,63 @@
 		  FROM TB_REPORT
 		 WHERE REPORT_NO = ? 
 	</entry>
-	
 	<entry key="selectBlackList">
 	  SELECT
 	         MEMBER_ID,
 	         MODIFY_DATE
 	    FROM TB_MEMBER
 	   WHERE BLACK_LIST = 'Y' 
+	</entry>	
+	
+	<entry key = "selectUpMember">
+	
+         SELECT
+                 M.MEMBER_NO,
+                 MEMBER_ID,
+                MEMBER_NAME,
+                 MEMBER_GRADE,
+                 (
+                SELECT SUM(PRICE)
+                   FROM TB_ORDER
+                   JOIN TB_PAYMENT USING(ORDER_NO)
+                  WHERE MEMBER_NO = M.MEMBER_NO
+                 )TOTALPAY
+            FROM TB_MEMBER M
+           WHERE M.STATUS = 'Y'
+             AND 500000 <![CDATA[<=]]> (
+                                SELECT SUM(PRICE)
+                                     FROM TB_PAYMENT
+                                     JOIN TB_ORDER USING(ORDER_NO)
+                                    WHERE MEMBER_NO = M.MEMBER_NO
+                           )
+             AND  MEMBER_GRADE NOT LIKE '%'||'VIP'||'%'    
+            OR 300000 <![CDATA[<=]]> (
+                                SELECT SUM(PRICE)
+                                     FROM TB_PAYMENT
+                                     JOIN TB_ORDER USING(ORDER_NO)
+                                    WHERE MEMBER_NO = M.MEMBER_NO
+                           )
+             AND  MEMBER_GRADE NOT LIKE '%'||'GOLD'||'%'     
+            OR 100000 <![CDATA[<=]]> (
+                                SELECT SUM(PRICE)
+                                     FROM TB_PAYMENT
+                                     JOIN TB_ORDER USING(ORDER_NO)
+                                    WHERE MEMBER_NO = M.MEMBER_NO
+                           )
+             AND  MEMBER_GRADE NOT LIKE '%'||'SILVER'||'%'     
+            OR 100000 <![CDATA[>]]> (
+                                SELECT SUM(PRICE)
+                                     FROM TB_PAYMENT
+                                     JOIN TB_ORDER USING(ORDER_NO)
+                                    WHERE MEMBER_NO = M.MEMBER_NO
+                           )
+             AND  MEMBER_GRADE NOT LIKE '%'||'GREEN'||'%'   
+	
 	</entry>
 	
-	<entry key ="upgradeNem">
+
+	
+	<entry key ="upgradeMem">
 		 UPDATE 
 	        TB_MEMBER M
 	   SET  MEMBER_GRADE = 

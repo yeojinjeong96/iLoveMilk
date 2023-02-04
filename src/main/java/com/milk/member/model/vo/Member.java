@@ -100,6 +100,17 @@ public class Member {
 		this.memberId = memberId;
 		this.modifyDate = modifyDate;
 	}
+	
+	
+
+	public Member(int memberNo, String memberId, String memberName, String memberGrade, int totalpay) {
+		super();
+		this.memberNo = memberNo;
+		this.memberId = memberId;
+		this.memberName = memberName;
+		this.memberGrade = memberGrade;
+		this.totalpay = totalpay;
+	}
 
 	public Member(int memberNo, String memberId, String memberPwd, String memberName, String phone, String email,
 		         String addressNumber, String address, String addressDetail, String profile) {

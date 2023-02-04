@@ -3,6 +3,7 @@
 <%@ page import="java.util.ArrayList, com.milk.member.model.vo.Member, com.milk.common.model.vo.PageInfo" %>    
 <% 
 	ArrayList<Member> list = (ArrayList<Member>)request.getAttribute("list");
+ArrayList<Member> ulist = (ArrayList<Member>)request.getAttribute("ulist");
 	PageInfo pi = (PageInfo)request.getAttribute("pi");
 %>    
 <!DOCTYPE html>
@@ -11,7 +12,7 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
     <style>
-        div{border:1px solid red;}
+       
     .mem-wrap{
         width:800px;
         padding-left:50px;
@@ -444,7 +445,7 @@
                                     <td colspan="6">등급변경대상 회원이 없습니다.</td>
                                 </tr>
                             <%}else{ %>
-                                <%for(Member m : list){ %>
+                                <%for(Member m : ulist){ %>
                                     <tr>
                                         <td><%=m.getMemberNo() %></td>
                                         <td><%=m.getMemberId() %></td>
@@ -465,8 +466,8 @@
                     function memUpgrade(mNo){
 
 						$.ajax({
-							url : "<%=contextPath%>/upGrade.ma"
-							data : {mNo:mNo}
+							url : "<%=contextPath%>/upGrade.ma",
+							data : {mNo:mNo},
 							success : function(a){
 								
 								if(a.result > 0){
