@@ -315,14 +315,15 @@
                                RE.REPORT_STATUS
                              , RE.REPLY_NO
                              , RP.REPORT_CONTENT
-                             , RP.REPORTING_MEM_NO
+                             , MEMBER_ID
                              , R.RECIPE_TITLE
                              , RE.REPLY_CONTENT
 		                  FROM TB_REPLY RE
                           JOIN TB_MEMBER USING (MEMBER_NO)
                           JOIN TB_RECIPE R ON (RE.REF_NO = R.RECIPE_NO)
-                     LEFT JOIN TB_REPORT RP ON (RP.REF_NO = RE.REF_NO)
+                     LEFT JOIN TB_REPORT RP ON (RP.REF_NO = R.RECIPE_NO)
                          WHERE RE.DELETE_STATUS = 'N'
+                           AND RP.REPORT_TYPE = 2
 		                 ORDER
 		                    BY REPLY_NO DESC
 		                ) "A"
@@ -472,6 +473,12 @@
 		UPDATE TB_RECIPE
 		   SET DELETE_STATUS = 'Y'
 		 WHERE RECIPE_NO IN (
+	</entry>
+	
+	<entry key="selectDelReplyM">
+		UPDATE TB_REPLY
+		   SET DELETE_STATUS = 'Y'
+		 WHERE REPLY_NO IN (
 	</entry>
 	
 	<entry key="selectRestoreRecipeM">

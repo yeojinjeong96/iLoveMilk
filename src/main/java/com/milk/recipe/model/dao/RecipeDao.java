@@ -696,8 +696,7 @@ public class RecipeDao {
 						   		   rset.getString("REPLY_CONTENT"),
 						   		   rset.getString("REPORT_STATUS"), 		   
 						   		   rset.getString("RECIPE_TITLE"),
-						   		   rset.getString("REPORT_CONTENT"),
-						   		   rset.getInt("REF_NO")
+						   		   rset.getString("REPORT_CONTENT")
 						   		   ));
 						   		   
 			}
@@ -932,6 +931,29 @@ public class RecipeDao {
 		return result;
 	}
 	
+	public int selectDelReplyM(Connection conn, String deleteRe) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		
+		String sql= prop.getProperty("selectDelReplyM");
+		
+		sql += deleteRe + ")";
+		
+		// System.out.println(deleteRe);
+		
+		try {
+			pstmt= conn.prepareStatement(sql);
+			
+			result= pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}
+		
+		return result;
+	}
+	
 	
 	public int selectRestoreRecipeM(Connection conn, String restoreRe) {
 		int result = 0;
@@ -1087,8 +1109,7 @@ public class RecipeDao {
 						   		   rset.getString("REPLY_CONTENT"),
 						   		   rset.getString("REPORT_STATUS"), 		   
 						   		   rset.getString("RECIPE_TITLE"),
-						   		   rset.getString("REPORT_CONTENT"),
-						   		   rset.getInt("REF_NO")
+						   		   rset.getString("REPORT_CONTENT")
 						   		   ));
 						   		   
 			}

@@ -1,4 +1,4 @@
-package com.milk.product.controller;
+package com.milk.recipe.controller;
 
 import java.io.IOException;
 
@@ -8,21 +8,20 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.google.gson.Gson;
-import com.milk.member.model.vo.Order;
-import com.milk.product.model.service.ProductService;
+import com.milk.notice.model.service.NoticeService;
+import com.milk.recipe.model.service.RecipeService;
 
 /**
- * Servlet implementation class ManagerOrderDetailController
+ * Servlet implementation class RecipeDeleteController
  */
-@WebServlet("/orderDetail.ma")
-public class ManagerOrderDetailController extends HttpServlet {
+@WebServlet("/selectDeleteReply.re")
+public class AjaxSelectDeleteReplyController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public ManagerOrderDetailController() {
+    public AjaxSelectDeleteReplyController() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -31,12 +30,19 @@ public class ManagerOrderDetailController extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
+		
 		request.setCharacterEncoding("UTF-8");
-		String no = request.getParameter("ono");
-		Order o = new ProductService().selectOrderDetail(no);
-		response.setContentType("application/json; charset=UTF-8");
-		new Gson().toJson(o, response.getWriter());
+		
+		String[] replyArray = request.getParameterValues("replyArray");
+		
+		String deleteRe = "";
+		deleteRe = String.join(",", replyArray);
+		
+		int result = new RecipeService().selectDelReplyM(deleteRe);
+		
+		response.getWriter().print(result);
+		
+
 	}
 
 	/**

@@ -335,6 +335,21 @@ public class RecipeService {
 		return result;
 	}
 	
+	public int selectDelReplyM(String deleteRe) {
+		Connection conn = getConnection();
+		
+		int result = new RecipeDao().selectDelReplyM(conn, deleteRe);
+		
+		if(result > 0) {
+			commit(conn);
+		}else {
+			rollback(conn);
+		}
+		
+		close(conn);
+		return result;
+	}
+	
 	
 	public int selectRestoreRecipeM(String restoreRe) {
 		Connection conn = getConnection();

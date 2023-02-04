@@ -69,7 +69,7 @@
             <div align="right" style="width:700px">
                 <br>
                 <select name="search-option" id="search-option" style="width:100px; font-size: 13px;">
-                    <option value="구매자아이디">구매자아이디</option>
+                    <option value="구매아이디">구매아이디</option>
                     <option value="상품명">상품명</option>
                     <option value="주문번호">주문번호</option>
                 </select>
@@ -89,7 +89,7 @@
 	                        <td>상세</td>
 	                    </tr>
                     </thead>
-                    <!-- 더블클릭 시 결제내역 상세 보이도록 한다 -->
+                  
                     <tbody>
                     	<%if(list.isEmpty()){ %>
                     		<tr>
@@ -103,7 +103,7 @@
 			                        <td><%=list.get(i).getPaymentDate()%></td>
 			                        <td><%=list.get(i).getMemberId() %></td>
 			                        <td><%=list.get(i).getPrice() %></td>
-			                        <td><button type="button" class="btn btn-outline-secondary btn-sm" onclick="purchaseDetail(<%=list.get(i).getOrderNo() %>);" data-toggle="modal" data-target="#purchase-info">상세보기</button></td>
+			                        <td><button type="button" class="btn btn-outline-secondary btn-sm" onclick="purchaseDetail('<%=list.get(i).getOrderNo() %>');" data-toggle="modal" data-target="#purchase-info">상세보기</button></td>
 			                    </tr>
 		                    <%} %>
 	                    <%} %>                    

@@ -113,7 +113,7 @@
 		                            <td>
 		                                <!-- 조건문 사용해서 운송장 완료하면 버튼비활성화시키기 -->
 		                                <%if(o.getWaybill() == 0) {%>
-		                                	<button type="button" onclick="issWaybill(<%=o.getOrderNo() %>)" id="getWbtn" class="btn btn-outline-secondary btn-sm" data-toggle="modal" data-target="#delivery-info" style="font-size:10px;">대기</button>
+		                                	<button type="button" onclick="issWaybill('<%=o.getOrderNo() %>')" id="getWbtn" class="btn btn-outline-secondary btn-sm" data-toggle="modal" data-target="#delivery-info" style="font-size:10px;">대기</button>
 		                                <%}else{ %>
 		                                	<button type="button" id="getWbtn" class="btn btn-outline-secondary btn-sm" data-toggle="modal" data-target="#delivery-info" disabled="disabled" style="font-size:10px;">완료</button>
 		                                <%} %>
@@ -217,7 +217,7 @@
         					data: {ono:ono},
         					success:function(result){
         						
-        						console.log(result);
+        						
         						
 								$("#wayOrderNo").val(result.orderNo);
 								$("#wayOrderDate").text(result.paymentDate);

@@ -490,7 +490,7 @@ public class ProductDao {
 			rset = pstmt.executeQuery();
 			while(rset.next()) {
 				list.add(new Order(
-                        rset.getInt("ORDER_NO"),
+                        rset.getString("ORDER_NO"),
                         rset.getDate("PAYMENT_DATE"),
                         rset.getInt("PRICE"),
                         rset.getString("MEMBER_ID")
@@ -507,18 +507,18 @@ public class ProductDao {
 		return list;
 	}
 	
-	public ArrayList<Order> selectPurchaseDetailList(Connection conn, int no){
+	public ArrayList<Order> selectPurchaseDetailList(Connection conn, String no){
 		ArrayList<Order> list = new ArrayList<>();
 		ResultSet rset = null;
 		PreparedStatement pstmt = null;
 		String sql = prop.getProperty("selectPurchaseDetailList");
 		try {
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setInt(1, no);
+			pstmt.setString(1, no);
 			rset = pstmt.executeQuery();
 			while(rset.next()) {
 				list.add(new Order(
-							rset.getInt("order_no"),
+							rset.getString("order_no"),
 							rset.getDate("payment_date"),
 							rset.getString("product_img"),
 							rset.getString("product_name"),
@@ -570,7 +570,7 @@ public class ProductDao {
 			rset = pstmt.executeQuery();
 			while(rset.next()) {
 				list.add(new Order(
-							rset.getInt("ORDER_NO"),
+							rset.getString("ORDER_NO"),
 							rset.getInt("STATUS"),
 							rset.getInt("WAYBILL"),
 							rset.getString("MEMBER_ID"),
@@ -596,18 +596,18 @@ public class ProductDao {
 		return list;
 	}
 	
-	public Order selectOrderDetail(Connection conn, int no) {
+	public Order selectOrderDetail(Connection conn, String no) {
 		Order o = new Order();
 		ResultSet rset = null;
 		PreparedStatement pstmt = null;
 		String sql = prop.getProperty("selectOrderDetail");
 		try {
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setInt(1, no);
+			pstmt.setString(1, no);
 			rset = pstmt.executeQuery();
 			if(rset.next()) {
 				o = new Order(
-						rset.getInt("ORDER_NO"),
+						rset.getString("ORDER_NO"),
 						rset.getInt("STATUS"),
 						rset.getInt("WAYBILL"),
 						rset.getString("MEMBER_ID"),
@@ -635,7 +635,7 @@ public class ProductDao {
 	}
 	
 	
-	public int createWaybill(Connection conn,int no, String courier, int waybill) {
+	public int createWaybill(Connection conn, String no, String courier, int waybill) {
 		int result = 0;
 		PreparedStatement pstmt = null;
 		String sql = prop.getProperty("createWaybill");
@@ -644,7 +644,7 @@ public class ProductDao {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, courier);
 			pstmt.setInt(2, waybill);
-			pstmt.setInt(3, no);
+			pstmt.setString(3, no);
 			
 			result = pstmt.executeUpdate();
 			

@@ -30,7 +30,8 @@ public class ManagerWaybillCreateController extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-		int no = Integer.parseInt(request.getParameter("wayOrderNo"));
+		request.setCharacterEncoding("UTF-8");
+		String no = request.getParameter("wayOrderNo");
 		String courier = request.getParameter("courier");
 		int waybill = Integer.parseInt(request.getParameter("waybill"));
 		

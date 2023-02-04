@@ -1,28 +1,23 @@
 package com.milk.product.controller;
 
 import java.io.IOException;
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.google.gson.Gson;
-import com.milk.member.model.vo.Order;
-import com.milk.product.model.service.ProductService;
-
 /**
- * Servlet implementation class ManagerOrderDetailController
+ * Servlet implementation class AjaxProductStockListController
  */
-@WebServlet("/orderDetail.ma")
-public class ManagerOrderDetailController extends HttpServlet {
+@WebServlet("/AjaxProductStockListController")
+public class AjaxProductStockListController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public ManagerOrderDetailController() {
+    public AjaxProductStockListController() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -31,12 +26,8 @@ public class ManagerOrderDetailController extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
-		request.setCharacterEncoding("UTF-8");
-		String no = request.getParameter("ono");
-		Order o = new ProductService().selectOrderDetail(no);
-		response.setContentType("application/json; charset=UTF-8");
-		new Gson().toJson(o, response.getWriter());
+		// TODO Auto-generated method stub
+		response.getWriter().append("Served at: ").append(request.getContextPath());
 	}
 
 	/**

@@ -33,10 +33,11 @@ public class ManagerPurchaseListController extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
+		
 		int currentPage =  Integer.parseInt(request.getParameter("cpage"));
 		int listCount = new ProductService().countPurchaseList();
 		int pageLimit = 10;
-		int boardLimit = 10;
+		int boardLimit = 5;
 		int maxPage = (int)Math.ceil((double)listCount/ boardLimit);
 		int startPage = (currentPage -1 )/ pageLimit * pageLimit + 1;
 		int endPage = startPage + pageLimit -1;
@@ -47,6 +48,7 @@ public class ManagerPurchaseListController extends HttpServlet {
 
 		PageInfo pi = new PageInfo(listCount, currentPage, pageLimit, boardLimit, maxPage, startPage, endPage);
 		ArrayList<Order> list = new ProductService().selectPurchaseList(pi);
+		
 		
 		
 		request.setAttribute("list", list);

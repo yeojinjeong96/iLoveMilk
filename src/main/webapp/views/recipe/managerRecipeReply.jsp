@@ -111,9 +111,9 @@
                 <tr height="30px">
                     <th width="20px">
                         <div class="custom-control custom-checkbox">
-                            <input type="checkbox" name="" class="custom-control-input" id="customCheck">
-                            <label class="custom-control-label" for="customCheck"></label>
-                        </div>
+	                    	<input type="checkbox" name="allCheck" class="custom-control-input allCheck" id="customCheck" onclick="allChecked(this)">
+	                    	<label class="custom-control-label" for="customCheck"></label>
+	                    </div>
                     </th>
                     <th width="70px">신고 여부</th>
                     <th width="80px">댓글번호</th>
@@ -127,7 +127,7 @@
             	<% for(Reply r : list) { %>
                 <tr height="30px">
                     <td>
-                    <input type="checkbox">
+	                    <input type="checkbox" class="check" name="check" onclick="checkClicked()" value="<%= r.getReplyNo() %>">
                     </td>
                     <td><%= r.getReportStatus() %></td>
                     <td><%= r.getReplyNo() %></td>
@@ -143,10 +143,67 @@
         <table id="delete">
             <tr>
                 <td align="right" style="padding: 5px 5px;">
-                    <a href="" class="btn btn-danger btn-sm">삭제</a>
+                    <a href="" class="btn btn-danger btn-sm" onclick="replyDelete();">삭제</a>
                 </td>
             </tr>
         </table>
+        
+        <script>
+        	function allChecked(target){
+        		if($(target).is(":checked")){
+        			$(".check").prop("checked", true);
+        		}else{
+        			$(".check").prop("checked", false);
+        		}
+        	}
+        	
+        	function checkClicked(){
+        		//체크박스 전체개수
+        		var allCount = $("input:checkbox[name=check]").length;
+        		
+        		//체크된 체크박스 전체개수
+        		var checkedCount = $("input:checkbox[name=check]:checked").length;
+        		
+        		//체크박스 전체개수와 체크된 체크박스 전체개수가 같으면 체크박스 전체 체크
+        		if(allCount == checkedCount){
+        			$(".check").prop("checked", true);
+        		}else{ //같지않으면 전체 체크박스 해제
+        			$(".allCheck").prop("checked", false);
+        		}
+        		
+        	}
+        	
+        	function replyDelete(){
+        		var replyArray = [];
+        		
+        		$("input:checkbox[name=check]:checked").each(function(){
+        			replyArray.push($(this).val());
+        		});
+        		
+        		// console.log(replyArray);
+        		
+        		if(replyArray == ""){
+        			alert("삭제할 항목을 선택해주세요.");
+        			return false;
+        		}
+        		
+        		var confirmAlert = confirm("정말로 삭제하시겠습니까?");
+
+        		if(confirmAlert){
+        			
+        			$.ajax({
+        		       url:"<%= contextPath %>/selectDeleteReply.re",
+        		       data:{replyArray:replyArray},
+        		       type:"post",
+        		       traditional:true,
+        		       success:function(result) {
+        					alert("해당 댓글이 정상적으로 삭제되었습니다.");
+        					location.reload();
+        		       }
+        		   })	
+        		}
+        	}
+        </script>
 
         <div class="paging-area">
             <% if(pi.getCurrentPage() != 1) { %>

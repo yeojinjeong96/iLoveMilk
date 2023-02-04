@@ -179,7 +179,7 @@
                     <div>
                         <button type="button" class="btn btn-secondary" onclick="location.href='<%= contextPath %>/cart.pr'">이전으로</button>
                         <button type="button" class="btn btn-primary" id="payment" onclick="requestPay();" disabled>결제하기</button>
-                        <button type="submit" id="submitBtn"></button>
+                        <button type="submit" id="submitBtn" style="display:none"></button>
                     </div>
                 </form>
             </div>
