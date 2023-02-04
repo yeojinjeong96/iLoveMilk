@@ -4,6 +4,8 @@
 <%
 	ArrayList<Recipe> list = (ArrayList<Recipe>)request.getAttribute("list");
 	PageInfo pi = (PageInfo)request.getAttribute("pi");
+	String keyword = (String)request.getAttribute("keyword");
+    int listCount = (int)(request.getAttribute("listCount"));
 %>
 <!DOCTYPE html>
 <html>
@@ -75,7 +77,15 @@
         <h2 align="center">추천 레시피</h2>
         <br>
        
-        
+        <!-- 검색했을 경우에만 보여지도록 -->
+        <div class="searchResult">
+            "<b><%= keyword %></b>" 에 대한 검색 결과
+            <br>
+
+            총 <b><%= listCount %></b>개의 레시피가 있습니다.
+        </div>
+
+
         <div class="order" align="right">
             <button type="button" class="btn btn-secondary btn-sm">최신순</button>
             <button type="button" class="btn btn-secondary btn-sm">좋아요순</button>
@@ -109,15 +119,15 @@
 			<br><br>
             <div class="paging-area">
             <% if(pi.getCurrentPage() != 1) { %>
-                <button onclick="location.href='<%= contextPath %>/listR.re?cpage=<%= pi.getCurrentPage()-1 %>';">&lt;</button>
+                <button onclick="location.href='<%= contextPath %>/searchR.re?cpage=<%= pi.getCurrentPage()-1 %>&keyword=<%=keyword%>';">&lt;</button>
             <% } %>
             
             <% for(int p=pi.getStartPage() ; p<=pi.getEndPage() ; p++) { %>
-                <button onclick="location.href='<%= contextPath %>/listR.re?cpage=<%= p %>';"><%= p %></button>
+                <button onclick="location.href='<%= contextPath %>/searchR.re?cpage=<%= p %>&keyword=<%=keyword%>';"><%= p %></button>
             <% } %>
                
              <% if(pi.getCurrentPage() != pi.getMaxPage()) { %>
-                <button onclick="location.href='<%= contextPath %>/listR.re?cpage=<%= pi.getCurrentPage()+1 %>';">&gt;</button>
+                <button onclick="location.href='<%= contextPath %>/searchR.re?cpage=<%= pi.getCurrentPage()+1 %>&keyword=<%=keyword%>';">&gt;</button>
              <% } %>
             </div>
             <br><br>

@@ -462,6 +462,7 @@
 			                  FROM TB_RECIPE R
 	                          JOIN TB_MANAGER M ON (RECIPE_WRITER = MANAGER_NO)
                              WHERE DELETE_STATUS = 'N'
+                               AND RECIPE_TYPE = 1
 			                 ORDER
 			                    BY ENROLL_DATE DESC
 			                ) "A"
@@ -590,5 +591,78 @@
 		   SET REPORT_STATUS = 'Y'
 		 WHERE REF_NO = ?
 	</entry>
+	
+	
+	<entry key="selectSearchListCount">
+		SELECT
+		       COUNT(*) COUNT
+		        
+	</entry>
+	
+	<entry key = "selectSearchRecipeList">
+		SELECT *
+		  FROM (
+		        SELECT ROWNUM RNUM, A.*
+		          FROM (
+		                SELECT
+		                       RECIPE_NO
+		                     , RECIPE_TITLE
+		                     , MEMBER_ID
+		                     , COUNT
+		                     , TO_CHAR(R.ENROLL_DATE, 'YYYY-MM-DD') "ENROLL_DATE"
+		                     , MAIN_IMG
+		                  FROM TB_RECIPE R
+		                  JOIN TB_MEMBER ON (RECIPE_WRITER = MEMBER_NO)
+		                  
+	</entry>
+	
+	
+	<entry key = "selectSearchRecipeListUpDelM">
+		SELECT *
+		  FROM (
+		        SELECT ROWNUM RNUM, A.*
+		          FROM (
+		                SELECT
+	                           RECIPE_TITLE
+	                         , MANAGER_ID
+	                         , RECIPE_NO
+	                         , TO_CHAR(R.ENROLL_DATE, 'YYYY-MM-DD') "ENROLL_DATE"
+			              FROM TB_RECIPE R
+		                  JOIN TB_MANAGER M ON (RECIPE_WRITER = MANAGER_NO)
+		                  
+	</entry>
+	
+	
+	<entry key = "selectSearchRecipeListDelM">
+		SELECT *
+		  FROM (
+		        SELECT ROWNUM RNUM, A.*
+		          FROM (
+		                SELECT
+	                           RECIPE_TITLE
+	                         , MEMBER_ID
+	                         , RECIPE_NO
+	                         , TO_CHAR(R.ENROLL_DATE, 'YYYY-MM-DD') "ENROLL_DATE"
+			              FROM TB_RECIPE R
+		                  JOIN TB_MEMBER M ON (RECIPE_WRITER = MEMBER_NO)
+		                  
+	</entry>
+	
+	
+	<entry key = "selectSearchRecipeListRestoreM">
+		SELECT *
+		  FROM (
+		        SELECT ROWNUM RNUM, A.*
+		          FROM (
+		                SELECT
+	                           RECIPE_NO
+                             , RECIPE_TITLE
+                             , MEMBER_ID
+                             , TO_CHAR(R.ENROLL_DATE, 'YYYY-MM-DD') "ENROLL_DATE"
+			              FROM TB_RECIPE R
+		                  JOIN TB_MEMBER M ON (RECIPE_WRITER = MEMBER_NO)
+		                  
+	</entry>
+	
 
 </properties>

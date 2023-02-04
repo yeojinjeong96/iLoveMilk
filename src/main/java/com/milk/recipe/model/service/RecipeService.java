@@ -9,6 +9,7 @@ import java.sql.Connection;
 import java.util.ArrayList;
 
 import com.milk.common.model.vo.PageInfo;
+import com.milk.product.model.dao.ProductDao;
 import com.milk.recipe.model.dao.RecipeDao;
 import com.milk.recipe.model.vo.Recipe;
 import com.milk.recipe.model.vo.RecipeIngre;
@@ -411,4 +412,99 @@ public class RecipeService {
 		return list;
 	}
 	
+	public int selectSearchListCount(String keyword, String select) {
+		Connection conn = getConnection();
+		
+		int listCount = new RecipeDao().selectSearchListCount(conn, keyword, select);
+		
+		close(conn);
+		return listCount;
+	}
+	
+	public ArrayList<Recipe> selectSearchRecipeList(PageInfo pi, String keyword, String select){
+		Connection conn = getConnection();
+		
+		ArrayList<Recipe> list = new RecipeDao().selectSearchRecipeList(conn, pi, keyword, select);
+		
+		close(conn);
+		return list;
+		
+	}
+	
+	public int selectSearchRecListCount(String keyword, String select) {
+		Connection conn = getConnection();
+		
+		int listCount = new RecipeDao().selectSearchRecListCount(conn, keyword, select);
+		
+		close(conn);
+		return listCount;
+	}
+	
+	public ArrayList<Recipe> selectSearchRecipeRecList(PageInfo pi, String keyword, String select){
+		Connection conn = getConnection();
+		
+		ArrayList<Recipe> list = new RecipeDao().selectSearchRecipeRecList(conn, pi, keyword, select);
+		
+		close(conn);
+		return list;
+		
+	}
+	
+
+	public int selectSearchListCountUpDelM(String keyword, String select) {
+		Connection conn = getConnection();
+		
+		int listCount = new RecipeDao().selectSearchListCountUpDelM(conn, keyword, select);
+		
+		close(conn);
+		return listCount;
+	}
+	
+	public ArrayList<Recipe> selectSearchRecipeListUpDelM(PageInfo pi, String keyword, String select){
+		Connection conn = getConnection();
+		
+		ArrayList<Recipe> list = new RecipeDao().selectSearchRecipeListUpDelM(conn, pi, keyword, select);
+		
+		close(conn);
+		return list;
+		
+	}
+	
+	public int selectSearchListCountDelM(String keyword, String select) {
+		Connection conn = getConnection();
+		
+		int listCount = new RecipeDao().selectSearchListCountDelM(conn, keyword, select);
+		
+		close(conn);
+		return listCount;
+	}
+	
+	public ArrayList<Recipe> selectSearchRecipeListDelM(PageInfo pi, String keyword, String select){
+		Connection conn = getConnection();
+		
+		ArrayList<Recipe> list = new RecipeDao().selectSearchRecipeListDelM(conn, pi, keyword, select);
+		
+		close(conn);
+		return list;
+		
+	}
+	
+	public int selectSearchListRestoreCount(String keyword, String select) {
+		Connection conn = getConnection();
+		
+		int listCount = new RecipeDao().selectSearchListRestoreCount(conn, keyword, select);
+		
+		close(conn);
+		return listCount;
+	}
+	
+	public ArrayList<Recipe> selectSearchRecipeListRestoreM(PageInfo pi, String keyword, String select){
+		Connection conn = getConnection();
+		
+		ArrayList<Recipe> list = new RecipeDao().selectSearchRecipeListRestoreM(conn, pi, keyword, select);
+		
+		close(conn);
+		return list;
+		
+	}
 }
