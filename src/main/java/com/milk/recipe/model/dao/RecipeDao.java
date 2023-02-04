@@ -1843,4 +1843,106 @@ public class RecipeDao {
 		return list;
 		
 	}
+	
+	public int selectSearchReportListCount(Connection conn, String keyword, String select) {
+		int listCount = 0;
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		
+		String sql = prop.getProperty("selectSearchReportListCount");
+		
+		if(select.equals("title")) {
+			
+			sql += " AND RECIPE_TITLE LIKE '%' || ? || '%'";
+			
+		}else if(select.equals("writer")) {
+			
+			sql += " AND REPORTING_MEM_NO LIKE '%' || ? || '%'";
+			
+		}
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, keyword);
+			
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				listCount = rset.getInt("count");
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return listCount;
+		
+	}
+	
+	public ArrayList<Report> selectSearchReportRecipeListM(Connection conn, PageInfo pi, String keyword, String select){
+		ArrayList<Report> list = new ArrayList<>();
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		String sql = prop.getProperty("selectSearchReportRecipeListM");
+		
+		if(select.equals("title")) {
+			
+			sql += " AND RECIPE_TITLE LIKE '%' || ? || '%'"
+				 + " ORDER"
+				 + " BY REPORT_DATE DESC"
+				 + "  ) A"
+				 + ")"
+				 + "WHERE RNUM BETWEEN ? AND ? ";
+			
+		}else if(select.equals("writer")) {
+			
+			sql += " AND REPORTING_MEM_NO LIKE '%' || ? || '%'"
+				 + " ORDER"
+				 + " BY REPORT_DATE DESC"
+				 + " ) A"
+				 + ")"
+				 + "WHERE RNUM BETWEEN ? AND ? ";
+
+		}
+		
+		
+		try {
+			int startRow = (pi.getCurrentPage() -1) * pi.getBoardLimit() + 1;
+			int endRow = startRow + pi.getBoardLimit() -1;
+			
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, keyword);
+			pstmt.setInt(2, startRow);
+			pstmt.setInt(3, endRow);
+
+			
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				
+				list.add(new Report(rset.getInt("REPORT_NO"),
+									rset.getInt("REF_NO"),
+									rset.getString("REPORT_CONTENT"),
+									rset.getString("MEMBER_ID"),
+									rset.getString("RECIPE_TITLE"),
+									rset.getString("REPORT_DATE")));
+						   		   
+			}
+			
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return list;
+		
+	}
 }

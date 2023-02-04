@@ -4,6 +4,8 @@
 <%
 	PageInfo pi = (PageInfo)request.getAttribute("pi");
 	ArrayList<Report> list = (ArrayList<Report>)request.getAttribute("list");
+	String keyword = (String)request.getAttribute("keyword");
+    int listCount = (int)(request.getAttribute("listCount"));
 %>
 <!DOCTYPE html>
 <html>
@@ -168,15 +170,15 @@
 
         <div class="paging-area">
             <% if(pi.getCurrentPage() != 1) { %>
-                <button onclick="location.href='<%= contextPath %>/recipeReportDeleteListM.re?cpage=<%= pi.getCurrentPage()-1 %>';">&lt;</button>
+                <button onclick="location.href='<%= contextPath %>/searchReportDelM.re?cpage=<%= pi.getCurrentPage()-1 %>&keyword=<%=keyword%>';">&lt;</button>
             <% } %>
             
             <% for(int p=pi.getStartPage() ; p<=pi.getEndPage() ; p++) { %>
-                <button onclick="location.href='<%= contextPath %>/recipeReportDeleteListM.re?cpage=<%= p %>';"><%= p %></button>
+                <button onclick="location.href='<%= contextPath %>/searchReportDelM.re?cpage=<%= p %>&keyword=<%=keyword%>';"><%= p %></button>
             <% } %>
                
              <% if(pi.getCurrentPage() != pi.getMaxPage()) { %>
-                <button onclick="location.href='<%= contextPath %>/recipeReportDeleteListM.re?cpage=<%= pi.getCurrentPage()+1 %>';">&gt;</button>
+                <button onclick="location.href='<%= contextPath %>/searchReportDelM.re?cpage=<%= pi.getCurrentPage()+1 %>&keyword=<%=keyword%>';">&gt;</button>
              <% } %>
         </div>
         <br><br>

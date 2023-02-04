@@ -507,4 +507,23 @@ public class RecipeService {
 		return list;
 		
 	}
+	
+	public int selectSearchReportListCount(String keyword, String select) {
+		Connection conn = getConnection();
+		
+		int listCount = new RecipeDao().selectSearchReportListCount(conn, keyword, select);
+		
+		close(conn);
+		return listCount;
+	}
+	
+	public ArrayList<Report> selectSearchReportRecipeListM(PageInfo pi, String keyword, String select){
+		Connection conn = getConnection();
+		
+		ArrayList<Report> list = new RecipeDao().selectSearchReportRecipeListM(conn, pi, keyword, select);
+		
+		close(conn);
+		return list;
+		
+	}
 }
