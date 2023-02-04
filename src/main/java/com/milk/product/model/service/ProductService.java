@@ -16,6 +16,7 @@ import com.milk.product.model.vo.OrderInfo;
 import com.milk.product.model.vo.Product;
 import com.milk.product.model.vo.ProductLike;
 import com.milk.product.model.vo.Review;
+import com.milk.product.model.vo.Stock;
 
 public class ProductService {
 	
@@ -527,7 +528,7 @@ public class ProductService {
 	/**
 	 * 회원등급 가져오기
 	 * @author 승하
-	 * @return 회원등급
+	 * @return 회원등급(String)
 	 */
 	public String selectMemberGrade(int memNo) {
 		Connection conn = getConnection();
@@ -556,13 +557,37 @@ public class ProductService {
 	/**
 	 * 주문번호 가져오기
 	 * @author 승하
-	 * @return 주문번호
+	 * @return 주문번호(String)
 	 */
 	public String selectOrderNo(int memNo) {
 		Connection conn = getConnection();
 		String orderNo = new ProductDao().selectOrderNo(conn, memNo);
 		close(conn);
 		return orderNo;
+	}
+	
+	/**
+	 * 입출고현황 갯수 조회
+	 * @author 승하
+	 * @return 입출고현황 갯수
+	 */
+	public int selectStockListCount(String op, String key, String start, String end) {
+		Connection conn = getConnection();
+		int count = new ProductDao().selectStockListCount(conn, op, key, start, end);
+		close(conn);
+		return count;
+	}
+	
+	/**
+	 * 입출고현황 리스트
+	 * @author 승하
+	 * @return ArrayList
+	 */
+	public ArrayList<Stock> selectStockList(PageInfo pi, String op, String key, String start, String end) {
+		Connection conn = getConnection();
+		ArrayList<Stock> list = new ProductDao().selectStockList(conn, pi, op, key, start, end);
+		close(conn);
+		return list;
 	}
 
 }

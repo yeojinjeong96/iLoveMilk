@@ -40,7 +40,7 @@
                                     <option>상품코드</option>
                                     <option>브랜드</option>
                                 </select>
-                                <input type="text" name="searchKey" id="searchKey" required>
+                                <input type="text" name="searchKey" id="searchKey">
                                 <button type="button" onclick="return opNeed();" class="btn btn-primary btn-sm">검색</button>
 	                        </td>
                         </tr>
@@ -67,20 +67,20 @@
                         <tbody>
                        		<% if(!list.isEmpty()){ %>
 							    <% for(Product p : list){ %>
-	                            <tr class="prod">
-	                                <td><input type="checkbox" class="checkedPro"></td>
-	                                <td align="center"><%= p.getProductNo() %></td>
-	                                <td class="pHover"><%= p.getProductName() %> <%= p.getCapacity() %>(mL/g)</td>
-	                                <td align="right"><%= p.getStock() %></td>
-	                                <td align="center">
-	                                	<% if(p.getBrand() != null){ %>
-	                                		<%= p.getBrand() %>
-	                                	<% }else{ %>
-	                                		
-	                                	<% } %>
-	                                </td>
-	                                <td align="center"><button type="button" class="btn btn-primary btn-sm" onclick="receivingPro();" data-toggle="modal" data-target="#receiving">입고</button></td>
-	                            </tr>
+		                            <tr class="prod">
+		                                <td><input type="checkbox" class="checkedPro"></td>
+		                                <td align="center"><%= p.getProductNo() %></td>
+		                                <td class="pHover"><%= p.getProductName() %> <%= p.getCapacity() %>(mL/g)</td>
+		                                <td align="right"><%= p.getStock() %></td>
+		                                <td align="center">
+		                                	<% if(p.getBrand() != null){ %>
+		                                		<%= p.getBrand() %>
+		                                	<% }else{ %>
+		                                		
+		                                	<% } %>
+		                                </td>
+		                                <td align="center"><button type="button" class="btn btn-primary btn-sm" onclick="receivingPro();" data-toggle="modal" data-target="#receiving">입고</button></td>
+		                            </tr>
 								<% } %>
 							<% }else{ %>
 								<tr>

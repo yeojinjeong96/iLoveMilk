@@ -18,6 +18,7 @@ import com.milk.product.model.vo.OrderInfo;
 import com.milk.product.model.vo.Product;
 import com.milk.product.model.vo.ProductLike;
 import com.milk.product.model.vo.Review;
+import com.milk.product.model.vo.Stock;
 
 public class ProductDao {
 	
@@ -1105,4 +1106,88 @@ public class ProductDao {
 		}
 		return orderNo;
 	}
+	
+	public int selectStockListCount(Connection conn, String op, String key, String start, String end) {
+		int count = 0;
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String sql = prop.getProperty("selectStockListCount");
+		
+		if(op != null && op.equals("상품명")) {
+			sql += "AND PRODUCT_NAME LIKE '%" + key + "%'";
+		} else if(op != null && op.equals("상품코드")) {
+			sql += "AND PRODUCT_NO = " + key;
+		} else if(op != null && op.equals("브랜드")) {
+			sql += "AND BRAND LIKE '%" + key + "%'";
+		}
+		
+		if(start != null) {
+			sql += "AND STOCK_DATE BETWEEN " + start + " AND " + end;
+		}
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			rset = pstmt.executeQuery();
+			if(rset.next()) {
+				count = rset.getInt("count");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		return count;
+	}
+	
+	public ArrayList<Stock> selectStockList(Connection conn, PageInfo pi, String op, String key, String start, String end){
+		ArrayList<Stock> list = new ArrayList<Stock>();
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String sql = prop.getProperty("selectStockList");
+		
+		if(op != null && op.equals("상품명")) {
+			sql += "AND PRODUCT_NAME LIKE '%" + key + "%'";
+		} else if(op != null && op.equals("상품코드")) {
+			sql += "AND PRODUCT_NO = " + key;
+		} else if(op != null && op.equals("브랜드")) {
+			sql += "AND BRAND LIKE '%" + key + "%'";
+		}
+		
+		if(start != null) {
+			sql += "AND STOCK_DATE BETWEEN " + start + " AND " + end;
+		}
+		
+		sql += "ORDER BY STOCK_DATE DESC) A) WHERE RNUM BETWEEN ? AND ?";
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			int startRow = (pi.getCurrentPage() -1) * pi.getBoardLimit() + 1;
+			int endRow = startRow + pi.getBoardLimit() - 1;
+			
+			pstmt.setInt(1, startRow);
+			pstmt.setInt(2, endRow);
+			
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				Stock s = new Stock(rset.getInt("stock_no")
+								  , rset.getInt("product_no")
+								  , rset.getInt("count")
+								  , rset.getString("status")
+								  , rset.getString("stock_date")
+								  , rset.getString("product_name")
+								  , rset.getString("brand"));
+				list.add(s);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		return list;
+	}
+	
 }

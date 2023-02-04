@@ -411,7 +411,13 @@
 	</entry>
 	
 	<entry key="productCartList">
-		SELECT PRODUCT_NO, PRODUCT_IMG, PRODUCT_NAME || ' ' || CAPACITY || '(mL/g)' PRODUCT_NAME, COUNT, COUNT*PRICE PRICE, STOCK
+		SELECT
+			   PRODUCT_NO
+			 , PRODUCT_IMG
+			 , PRODUCT_NAME || ' ' || CAPACITY || '(mL/g)' PRODUCT_NAME
+			 , COUNT
+			 , COUNT*PRICE PRICE
+			 , STOCK
 		  FROM TB_CART
 		  JOIN TB_PRODUCT USING(PRODUCT_NO)
 		 WHERE MEMBER_NO = ?
@@ -429,7 +435,13 @@
 	</entry>
 	
 	<entry key="orderProductList">
-		SELECT PRODUCT_NO, PRODUCT_IMG, PRODUCT_NAME || ' ' || CAPACITY || '(mL/g)' PRODUCT_NAME, COUNT, COUNT*PRICE PRICE, STOCK
+		SELECT
+			   PRODUCT_NO
+			 , PRODUCT_IMG
+			 , PRODUCT_NAME || ' ' || CAPACITY || '(mL/g)' PRODUCT_NAME
+			 , COUNT
+			 , COUNT*PRICE PRICE
+			 , STOCK
 		  FROM TB_CART
 		  JOIN TB_PRODUCT USING(PRODUCT_NO)
 		 WHERE MEMBER_NO = 
@@ -547,6 +559,30 @@
 		             BY ORDER_NO DESC
 		       )
 		 WHERE ROWNUM = 1
+	</entry>
+	
+	<entry key ="selectStockListCount">
+		SELECT
+			   COUNT(*) COUNT
+		  FROM TB_STOCK
+	</entry>
+	
+	<entry key="selectStockList">
+		SELECT *
+		  FROM (
+		        SELECT ROWNUM RNUM, A.*
+		          FROM (
+		                SELECT 
+							   STOCK_NO
+							 , STOCK_DATE
+							 , PRODUCT_NO
+							 , PRODUCT_NAME || ' ' || CAPACITY || '(mL/g)' PRODUCT_NAME
+							 , BRAND
+							 , COUNT
+							 , S.STATUS
+						  FROM TB_STOCK S
+						  JOIN TB_PRODUCT P USING(PRODUCT_NO)
+						 WHERE P.STATUS = 'Y'
 	</entry>
 	
 </properties>
