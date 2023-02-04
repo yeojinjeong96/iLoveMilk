@@ -6,6 +6,8 @@
 	ArrayList<Stock> list = (ArrayList<Stock>)request.getAttribute("list");
 	String op = (String)request.getAttribute("op");
 	String key = (String)request.getAttribute("key");
+	String start = (String)request.getAttribute("start");
+	String end = (String)request.getAttribute("end");
 %>
 <!DOCTYPE html>
 <html>
@@ -15,7 +17,6 @@
 <style>
     .outer-1{float:left; width: 800px; box-sizing: border-box;}
     .outer-2{width: 700px;}
-    .pHover:hover{cursor: pointer;}
     #keyword{float:left; margin-top:15px;}
 </style>
 </head>
@@ -39,31 +40,96 @@
                                 <button class="btn btn-info btn-sm" onclick="seop();" style="width:55px">1개월</button>
                                 <button class="btn btn-info btn-sm" onclick="seop();" style="width:55px">3개월</button>
                             </td>
-                            <td width="60%;">
-                                <input type="date" name="">
-                                ~
-                                <input type="date" name="">
-                            </td>
+                            <form action="<%= contextPath %>/stock.pr?cp=1" method="post">
+	                            <td width="60%;">
+	                            	기간 선택 :&nbsp;
+	                                <input type="date" id="start" required name="start" onchange="endMin();">
+	                                ~
+	                                <input type="date" id="end" required name="end" max="today" onchange="startMax();">
+	                                <button type="submit" class="btn btn-primary btn-sm">조회</button>
+	                            </td>
+	                        </form>
                         </tr>
                     </table>
-                    <br>
+	                <br>
                     <table class="outer-2">
                         <tr>
                             <td>
-                                <select name="op" id="op">
-                                    <option>- 검색 조건 -</option>
-                                    <option>상품명</option>
-                                    <option>상품코드</option>
-                                    <option>브랜드</option>
-                                </select>
-                                <input type="text" name="key" id="key">
-                                <button type="button" onclick="return opNeed();" class="btn btn-primary btn-sm">검색</button>
+                            	<form action="<%= contextPath %>/stock.pr?cp=1" method="post">
+	                                <select name="op" id="op">
+	                                    <option>- 검색 조건 -</option>
+	                                    <option>상품명</option>
+	                                    <option>상품코드</option>
+	                                    <option>브랜드</option>
+	                                </select>
+	                                <input type="text" name="key" id="key">
+	                                <button type="submit" onclick="return opNeed();" class="btn btn-primary btn-sm">검색</button>
+                                </form>
                             </td>
                         </tr>
                     </table>
+	<script>
+		function opNeed(){
+			if($("#op").val() == "- 검색 조건 -"){
+				// 검색조건 미선택시 alert
+				alert("검색 조건을 선택하세요.");
+				return false;
+			}
+		}
+		
+		// 기간 선택 입력 start max 제한
+		function startMax(){
+			$("#start").attr("max", $("#end").val());
+		}
+	
+		// 기간 선택 입력 end min 제한
+		function endMin(){
+			$("#end").attr("min", $("#start").val());
+		}
+	
+		// 기간 선택 입력 end max 제한
+		$(function(){
+			var now_utc = Date.now() // 지금 날짜를 밀리초로
+			// getTimezoneOffset()은 현재 시간과의 차이를 분 단위로 반환
+			var timeOff = new Date().getTimezoneOffset()*60000; // 분단위를 밀리초로 변환
+			// new Date(now_utc-timeOff).toISOString()은 '2022-05-11T18:09:38.134Z'를 반환
+			var today = new Date(now_utc-timeOff).toISOString().split("T")[0];
+			document.getElementById("end").setAttribute("max", today);
+		});
+	
+		// 기간 선택 버튼
+		function seop(){
+			switch($(window.event.target).text()){
+			case "오늘": location.href="<%= contextPath %>/stock.pr?start=SYSDATE-1&end=SYSDATE&cp=1"; break;
+			case "1주일": location.href="<%= contextPath %>/stock.pr?start=SYSDATE-8&end=SYSDATE&cp=1"; break;
+			case "1개월": location.href="<%= contextPath %>/stock.pr?start=TO_CHAR(ADD_MONTHS(SYSDATE, -1),'YYYY-MM-DD')&end=SYSDATE&cp=1"; break;
+			case "3개월": location.href="<%= contextPath %>/stock.pr?start=TO_CHAR(ADD_MONTHS(SYSDATE, -3),'YYYY-MM-DD')&end=SYSDATE&cp=1"; break;
+			}
+		}
+	</script>
+    
+                    <br>
                     <div align="right">
-	                    <div id="keyword" align="left">
-	                   		<% if(op != null && key != null){ %>
+                    	<div id="periodArea" align="left" style="margin-bottom:10px">
+	                   		<% if(start != null){ %>
+	                   			선택된 기간 :&nbsp;
+	                   			<b>
+	                   				<% if(start.equals("SYSDATE-1")){ %>
+	                   					오늘
+	                   				<% }else if(start.equals("SYSDATE-8")){ %>
+	                   					1주일
+	                   				<% }else if(start.equals("TO_CHAR(ADD_MONTHS(SYSDATE, -1),'YYYY-MM-DD')")){ %>
+	                   					1개월
+	                   				<% }else if(start.equals("TO_CHAR(ADD_MONTHS(SYSDATE, -3),'YYYY-MM-DD')")){ %>
+	                   					3개월
+	                   				<% }else{ %>
+	                   					"<%= start %> ~ <%= end %>"
+	                   				<% } %>
+	                   			</b>
+	                   		<% } %>
+	                    </div>
+	                    <div id="keywordArea" align="left" style="margin-bottom:10px">
+	                   		<% if(op != null){ %>
 	                   			<b>"<%= key %>"</b>에 대한 검색 결과
 	                   		<% } %>
 	                    </div>
@@ -84,7 +150,7 @@
                             		<tr class="list">
 		                                <td align="center"><%= s.getStockDate().substring(0, 10) %></td>
 		                                <td align="center"><%= s.getProductNo() %></td>
-		                                <td class="pHover"><%= s.getProductName() %></td>
+		                                <td><%= s.getProductName() %></td>
 		                                <td align="center">
 		                                	<% if(s.getBrand() != null){ %>
 		                                		<%= s.getBrand() %>
@@ -145,16 +211,7 @@
     </div>
     
     <script>
-		function opNeed(){
-			if($("#searchOp").val() == "- 검색 조건 -"){
-				// 검색조건 미선택시 alert
-				alert("검색 조건을 선택하세요.");
-				return false;
-			}else{
-				// 검색 리스트 가져오기
-				location.href = "<%= contextPath %>/listUpDeRe.pr?searchOp=" + $('#searchOp').val() + "&searchKey=" + $('#searchKey').val() + "&cp=1";
-			}
-		}
+		
 	</script>
 	
 </body>

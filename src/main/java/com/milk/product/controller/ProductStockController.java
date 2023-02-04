@@ -35,10 +35,20 @@ public class ProductStockController extends HttpServlet {
 		request.setCharacterEncoding("UTF-8");
 		String op = request.getParameter("op");
 		String key = request.getParameter("key");
-		String start = request.getParameter("start");
-		String end = request.getParameter("end");
+		String start = null;
+		if(request.getParameter("start") != null && request.getParameter("start").charAt(4) == '-') {
+			start = request.getParameter("start").replace('-', '/');
+		} else {
+			start = request.getParameter("start");
+		};
+		String end = null;
+		if(request.getParameter("end") != null && request.getParameter("end").charAt(4) == '-') {
+			end = request.getParameter("end").replace('-', '/');
+		} else {
+			end = request.getParameter("end");
+		};
 		
-		int listCount = new ProductService().selectAllListCount(op, key);
+		int listCount = new ProductService().selectStockListCount(op, key, start, end);
 		int currentPage = Integer.parseInt(request.getParameter("cp"));
 		int pageLimit = 10;
 		int productLimit = 10;
@@ -52,14 +62,14 @@ public class ProductStockController extends HttpServlet {
 		
 		PageInfo pi = new PageInfo(listCount, currentPage, pageLimit, productLimit, maxPage, startPage, endPage);
 		
-		int count = new ProductService().selectStockListCount(op, key, start, end);
-		
 		ArrayList<Stock> list = new ProductService().selectStockList(pi, op, key, start, end);
 		if(request.getSession().getAttribute("loginManager") != null) {
 			request.setAttribute("list", list);
 			request.setAttribute("pi", pi);
 			request.setAttribute("op", op);
 			request.setAttribute("key", key);
+			request.setAttribute("start", start);
+			request.setAttribute("end", end);
 			request.getRequestDispatcher("views/product/managerProductStock.jsp").forward(request, response);
 		} else {
 			response.setContentType("text/html; charset=utf-8");

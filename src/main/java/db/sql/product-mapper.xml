@@ -585,7 +585,7 @@
 	<entry key ="selectStockListCount">
 		SELECT
 			   COUNT(*) COUNT
-		  FROM TB_STOCK
+		  FROM TB_STOCK 
 	</entry>
 	
 	<entry key="selectStockList">
@@ -603,7 +603,7 @@
 							 , S.STATUS
 						  FROM TB_STOCK S
 						  JOIN TB_PRODUCT P USING(PRODUCT_NO)
-						 WHERE P.STATUS = 'Y'
+						 WHERE P.STATUS = 'Y' 
 	</entry>
 	
 </properties>

@@ -1158,15 +1158,17 @@ public class ProductDao {
 		String sql = prop.getProperty("selectStockListCount");
 		
 		if(op != null && op.equals("상품명")) {
-			sql += "AND PRODUCT_NAME LIKE '%" + key + "%'";
+			sql += "JOIN TB_PRODUCT USING(PRODUCT_NO) WHERE PRODUCT_NAME LIKE '%" + key + "%' ";
 		} else if(op != null && op.equals("상품코드")) {
-			sql += "AND PRODUCT_NO = " + key;
+			sql += "WHERE PRODUCT_NO = " + key + " ";
 		} else if(op != null && op.equals("브랜드")) {
-			sql += "AND BRAND LIKE '%" + key + "%'";
+			sql += "JOIN TB_PRODUCT USING(PRODUCT_NO) WHERE BRAND LIKE '%" + key + "%' ";
 		}
 		
-		if(start != null) {
-			sql += "AND STOCK_DATE BETWEEN " + start + " AND " + end;
+		if(start != null && start.charAt(4) == '/') {
+			sql += "WHERE STOCK_DATE BETWEEN '" + start + "' AND '" + end + "' ";
+		}else if(start != null){
+			sql += "WHERE STOCK_DATE BETWEEN " + start + " AND " + end + " ";
 		}
 		
 		try {
@@ -1191,15 +1193,17 @@ public class ProductDao {
 		String sql = prop.getProperty("selectStockList");
 		
 		if(op != null && op.equals("상품명")) {
-			sql += "AND PRODUCT_NAME LIKE '%" + key + "%'";
+			sql += "AND PRODUCT_NAME LIKE '%" + key + "%' ";
 		} else if(op != null && op.equals("상품코드")) {
-			sql += "AND PRODUCT_NO = " + key;
+			sql += "AND PRODUCT_NO = " + key + " ";
 		} else if(op != null && op.equals("브랜드")) {
-			sql += "AND BRAND LIKE '%" + key + "%'";
+			sql += "AND BRAND LIKE '%" + key + "%' ";
 		}
 		
-		if(start != null) {
-			sql += "AND STOCK_DATE BETWEEN " + start + " AND " + end;
+		if(start != null && start.charAt(4) == '/') {
+			sql += "AND STOCK_DATE BETWEEN '" + start + "' AND '" + end + "' ";
+		}else if(start != null){
+			sql += "AND STOCK_DATE BETWEEN " + start + " AND " + end + " ";
 		}
 		
 		sql += "ORDER BY STOCK_DATE DESC) A) WHERE RNUM BETWEEN ? AND ?";
