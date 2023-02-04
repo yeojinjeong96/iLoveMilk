@@ -266,19 +266,47 @@ public class ProductService {
 	}
 	
 	/**
-	 * 운송장발급
+	 * 운송장발급과 제품출고
 	 * @author 이다혜
 	 * @return result
 	 */
-	public int createWaybill(String no, String courier, int waybill) {
+	public int createWaybill(String no, String courier, String waybill) {
 		Connection conn = getConnection();
-		int result = new ProductDao().createWaybill(conn,no, courier, waybill);
-		if(result > 0) {
+		int result1 = new ProductDao().createWaybill(conn,no, courier, waybill);
+		
+		if(result1 > 0) {
 			commit(conn);
 		}else {
 			rollback(conn);
 		}
-		return result;
+		
+		
+		
+		int result2 = new ProductDao().releaseStock(conn, no);
+		
+		if(result2 > 0) {
+			commit(conn);
+		}else {
+			rollback(conn);
+		}
+		
+		
+		
+		return result1 * result2;
+	}
+	
+	/**
+	 * 운송장번호 중복체크
+	 * @author 이다혜
+	 * @return count
+	 */
+	public int wayCheck(String wn) {
+		
+		Connection conn = getConnection();
+		
+		int count = new ProductDao().wayCheck(conn, wn);
+		return count;
+		
 	}
 	
 	

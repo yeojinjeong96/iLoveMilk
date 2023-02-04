@@ -11,7 +11,7 @@ public class Order {
 	private int productCount;
 	private int price;
 	private int status;
-	private int waybill;
+	private String waybill;
 	private String memberId;
 	private int productNo;
 	private int memberNo;
@@ -31,7 +31,7 @@ public class Order {
 	public Order() {}
 
 	public Order(String orderNo, Date paymentDate, String productImg, String productName, int productCount, int price,
-			int status, int waybill) {
+			int status, String waybill) {
 		super();
 		this.orderNo = orderNo;
 		this.paymentDate = paymentDate;
@@ -70,7 +70,7 @@ public class Order {
 	
 	
 
-	public Order(String orderNo, int status, int waybill, String memberId, int memberNo, String orderName,
+	public Order(String orderNo, int status, String waybill, String memberId, int memberNo, String orderName,
 			String orderPhone, String orderEmail, String addressName, String address, String addressTel, int usePoint,
 			String courier, Date paymentDate) {
 		super();
@@ -90,7 +90,7 @@ public class Order {
 		this.paymentDate = paymentDate;
 	}
 	
-	public Order(String orderNo, int status, int waybill, String memberId, int memberNo, String orderName,
+	public Order(String orderNo, int status, String waybill, String memberId, int memberNo, String orderName,
 			String orderPhone, String orderEmail, String addressName, String address, String addressTel, int usePoint,
 			String courier, Date paymentDate, String memberName) {
 		super();
@@ -176,11 +176,11 @@ public class Order {
 		this.status = status;
 	}
 
-	public int getWaybill() {
+	public String getWaybill() {
 		return waybill;
 	}
 
-	public void setWaybill(int waybill) {
+	public void setWaybill(String waybill) {
 		this.waybill = waybill;
 	}
 	

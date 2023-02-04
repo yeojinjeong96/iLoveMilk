@@ -7,21 +7,20 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import com.milk.product.model.service.ProductService;
 
 /**
- * Servlet implementation class ManagerWaybillCreateController
+ * Servlet implementation class ManagerWaybillCheck
  */
-@WebServlet("/orderWaybill.ma")
-public class ManagerWaybillCreateController extends HttpServlet {
+@WebServlet("/wayCheck.ma")
+public class ManagerWaybillCheck extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public ManagerWaybillCreateController() {
+    public ManagerWaybillCheck() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -31,24 +30,16 @@ public class ManagerWaybillCreateController extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-		request.setCharacterEncoding("UTF-8");
-		String no = request.getParameter("OrderNo");
-		String courier = request.getParameter("courier");
-		String waybill = request.getParameter("waybill");
+		String wn = request.getParameter("waybill");
 		
+		int count = new ProductService().wayCheck(wn);
 		
-		int result = new ProductService().createWaybill(no, courier, waybill);
-		
-		HttpSession session = request.getSession();
-		if(result > 0) {
-			session.setAttribute("alertMsg","운송장 발급이 완료되었습니다.");
-			response.sendRedirect(request.getContextPath() + "/orderList.ma?cpage=1");
+		if(count > 0) {
+			response.getWriter().print("N");
 		}else {
-			request.setAttribute("errorMsg", "운송장발급 실패했습니다.");
-			request.getRequestDispatcher("/views/common/errorPage.jsp").forward(request, response);
-
+			response.getWriter().print("Y");
 		}
-		response.getWriter();
+		
 	}
 
 	/**

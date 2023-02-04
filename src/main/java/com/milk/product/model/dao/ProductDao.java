@@ -572,7 +572,7 @@ public class ProductDao {
 				list.add(new Order(
 							rset.getString("ORDER_NO"),
 							rset.getInt("STATUS"),
-							rset.getInt("WAYBILL"),
+							rset.getString("WAYBILL"),
 							rset.getString("MEMBER_ID"),
 							rset.getInt("MEMBER_NO"),
 							rset.getString("ORDER_NAME"),
@@ -609,7 +609,7 @@ public class ProductDao {
 				o = new Order(
 						rset.getString("ORDER_NO"),
 						rset.getInt("STATUS"),
-						rset.getInt("WAYBILL"),
+						rset.getString("WAYBILL"),
 						rset.getString("MEMBER_ID"),
 						rset.getInt("MEMBER_NO"),
 						rset.getString("ORDER_NAME"),
@@ -635,7 +635,7 @@ public class ProductDao {
 	}
 	
 	
-	public int createWaybill(Connection conn, String no, String courier, int waybill) {
+	public int createWaybill(Connection conn, String no, String courier, String waybill) {
 		int result = 0;
 		PreparedStatement pstmt = null;
 		String sql = prop.getProperty("createWaybill");
@@ -643,7 +643,7 @@ public class ProductDao {
 		try {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, courier);
-			pstmt.setInt(2, waybill);
+			pstmt.setString(2, waybill);
 			pstmt.setString(3, no);
 			
 			result = pstmt.executeUpdate();
@@ -654,6 +654,50 @@ public class ProductDao {
 			close(pstmt);
 		}
 		return result;
+	}
+	
+	public int releaseStock(Connection conn, String no) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String sql = prop.getProperty("releaseStock");
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, no);
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		return result;
+	}
+	
+	public int wayCheck(Connection conn, String wn) {
+		ResultSet rset = null;
+		PreparedStatement pstmt = null;
+		int count = 0;
+		String sql = prop.getProperty("wayCheck");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, wn);
+			rset = pstmt.executeQuery();
+			if(rset.next()) {
+				count = rset.getInt("count");
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return count;
+		
 	}
 	
 	public int insertProduct(Connection conn, Product p) {
