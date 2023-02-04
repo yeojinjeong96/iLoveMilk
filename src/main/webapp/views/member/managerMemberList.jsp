@@ -11,7 +11,7 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
     <style>
-
+        div{border:1px solid red;}
     .mem-wrap{
         width:800px;
         padding-left:50px;
@@ -21,15 +21,24 @@
     }
     #mem-1{
         width:100%;
-        height:30%;
+        height:20%;
         padding-left:10px;
     }
     #mem-1>*{float:left;}
     #mem-2{
         width:100%;
-        height:40%;
+        height:30%;
     }
     #mem-3{
+        width:100%;
+        height:10%;
+    }
+    #mem-4{
+        padding-left:20px;
+        width:100%;
+        height:10%;
+    }
+    #mem-5{
         width:100%;
         height:30%;
     }
@@ -107,7 +116,7 @@
                                     <%if(m.getAddress() == null){ %>
                                 		 <td>없음</td>
                                 	<%}else{ %>
-                                		<td><%=m.getgetAddress() %></td>
+                                		<td><%=m.getAddress() %></td>
                                 	<%} %>
                                 	
                                 <td><%=m.getTotalpay() %></td>
@@ -354,7 +363,7 @@
                 </div>
             </div>
             </div>
-
+            
 
 
             <!-- 적립금변경 모달 div -->
@@ -410,12 +419,74 @@
             
                 </div>
             </div>
-            </div>        
-
+            </div>    
             
+            
+            
+                <div id="mem-4" >
+                        <p  style="font-size:20px; line-height: 90px; float:left;"><b>등급변경</b></p> 
+                </div>
+                <div id="mem-5">
+                    <table class="upmember-info" style="width:100%; text-align:center;" border=1>
+                        <thead>
+                            <tr>
+                                <td>회원번호</td>
+                                <td>아이디</td>
+                                <td>이름</td>
+                                <td>등급</td>
+                                <td>구매금액</td>
+                                <td></td>
+                            </tr>
+                            </thead>
+                            <tbody class="upmemContent">
+                            <%if(list.isEmpty()){ %>
+                                <tr>
+                                    <td colspan="6">등급변경대상 회원이 없습니다.</td>
+                                </tr>
+                            <%}else{ %>
+                                <%for(Member m : list){ %>
+                                    <tr>
+                                        <td><%=m.getMemberNo() %></td>
+                                        <td><%=m.getMemberId() %></td>
+                                        <td><%=m.getMemberName() %></td>
+                                        <td><%=m.getMemberGrade() %></td>
+                                        <td><%=m.getTotalpay() %></td>
+                                        <td>
+                                            <button type="button" id="btnUpgrade" onclick="memUpgrade(<%=m.getMemberNo() %>);" class="btn btn-outline-secondary btn-sm" style="font-size:15px;">변경</button>
+                                        </td>
+                                    </tr>
+                                <%} %>
+                            <%} %>
+                        </tbody>
+                    </table>
+                </div>
 
+                <script>
+                    function memUpgrade(mNo){
+
+						$.ajax({
+							url : "<%=contextPath%>/upGrade.ma"
+							data : {mNo:mNo}
+							success : function(a){
+								
+								if(a.result > 0){
+									alert(a.grade + "로 회원등급 변경완료되었습니다");
+								}else{
+									alert("회원등급 변경 실패");
+								}
+								
+							}, error : function(){
+								alert("회원등급용  ajax 통신실패")
+							}
+						});
+
+                    }
+
+                </script>
+ <br><br><br><br><br><br><br><br><br><br>
         </div>
+       
     </div>
-
+    
 </body>
 </html>
