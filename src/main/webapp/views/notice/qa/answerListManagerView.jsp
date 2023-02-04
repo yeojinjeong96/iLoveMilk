@@ -38,11 +38,12 @@
     #answer-list tbody tr{
         cursor: pointer;
     }
-    .select-area button{
+    .dateBtn{
         border: 0;
         outline: 0;
         background-color: transparent;
     }
+    
 </style>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
@@ -60,24 +61,23 @@
             <h2 align="left">답변 목록 조회 </h2>
             <hr>
             <br>
-            
+            <form action="<%=contextPath%>/listM.a" method="get">
             
                 <div class="select-area" align="left" >        
                     조회기간&nbsp;
-                    <button type="button" name="dateBtn" value="0">오늘</button>&nbsp;
-                    <button type="button" name="dateBtn" value="7">7일</button>&nbsp;
-                    <button type="button" name="dateBtn" value="15">15일</button>&nbsp;
-                    <button type="button" name="monthBtn" value="1">1개월</button>&nbsp;
-                    <button type="button" name="monthBtn" value="3">3개월</button>&nbsp;
-                    <button type="button" name="dateBtn" value="365">1년</button>&nbsp;
+                    <button type="button" name="dateBtn" value="0" class="dateBtn">오늘</button>&nbsp;
+                    <button type="button" name="dateBtn" value="7" class="dateBtn">7일</button>&nbsp;
+                    <button type="button" name="monthBtn" value="1" class="dateBtn">1개월</button>&nbsp;
+                    <button type="button" name="monthBtn" value="3" class="dateBtn">3개월</button>&nbsp;
+                    <button type="button" name="dateBtn" value="365" class="dateBtn">1년</button>&nbsp;
                     
-                </div>
-			<form action="<%=contextPath%>/listM.a" method="get">
 					<input type="date" name="fDate" id="fDate"> -
                     <input type="date" id="sDate" name="sDate" >  
                     <input type="hidden" id="cpage" name="cpage" value=1>
-                    &nbsp;
+                   
                     <button type="submit" class="btn btn-sm btn-secondary">조회</button>
+                </div>
+			
             </form>
             <br>
             <div class="search-area" align="left">
