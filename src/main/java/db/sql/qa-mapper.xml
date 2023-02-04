@@ -122,8 +122,8 @@
 	    COUNT(*) COUNT
 	    FROM TB_QA
 	    WHERE ANSWER_STATUS = 'Y'
-	    and to_char(answer_date,'YY/MM/DD') between  to_char(sysdate-?,'YY/MM/DD')
-                      and  to_char(sysdate,'YY/MM/DD')
+	    and answer_date between ?
+                      and  ?
 	</entry>
 	<entry key="selectAnswerList">
 		  SELECT * FROM
@@ -142,8 +142,8 @@
 	                JOIN TB_MANAGER ON (MANAGER_NO = A_WRITER)
                     WHERE Q.STATUS= 'Y'
                     AND ANSWER_STATUS = 'Y'
-                    and to_char(answer_date,'YY/MM/DD') between  to_char(sysdate-?,'YY/MM/DD')
-                      and  to_char(sysdate,'YY/MM/DD')
+                    and answer_date between  ?
+                      and ?
 	                ORDER BY ANSWER_DATE DESC
 	                  )E) WHERE RNUM BETWEEN ? AND ?
 	                  

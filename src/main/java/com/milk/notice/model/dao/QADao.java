@@ -269,7 +269,7 @@ public class QADao {
 		
 	}
 	
-	public int selectAnswerListCount(Connection conn,int date) {
+	public int selectAnswerListCount(Connection conn,String fDate , String sDate) {
 		int listCount =0;
 		ResultSet rset= null;
 		PreparedStatement pstmt= null;
@@ -278,11 +278,8 @@ public class QADao {
 		try {
 			pstmt = conn.prepareStatement(sql);
 
-			if(date == 0) {
-				pstmt.setInt(1, 0);
-			}else {
-				pstmt.setInt(1, date);
-			}
+			pstmt.setString(1, fDate);
+			pstmt.setString(2, sDate);
 	
 			rset= pstmt.executeQuery();
 			
@@ -298,7 +295,7 @@ public class QADao {
 		return listCount;
 	}
 	
-	public ArrayList<QA> selectAnswerList(Connection conn, PageInfo pi,int date){
+	public ArrayList<QA> selectAnswerList(Connection conn, PageInfo pi,String fDate, String sDate){
 		
 		ArrayList<QA>list = new ArrayList<>();
 		ResultSet rset= null;
@@ -313,14 +310,11 @@ public class QADao {
 			int startRow= (pi.getCurrentPage()-1)*pi.getBoardLimit()+1;
 			int endRow= startRow + pi.getBoardLimit() -1;
 			
-			if(date == 0) {
-				pstmt.setInt(1, 0);
-			}else {
-				pstmt.setInt(1, date);
-			}
-			
-			pstmt.setInt(2, startRow);
-			pstmt.setInt(3, endRow);
+		
+			pstmt.setString(1, fDate);
+			pstmt.setString(2, sDate);
+			pstmt.setInt(3, startRow);
+			pstmt.setInt(4, endRow);
 			
 			rset= pstmt.executeQuery();
 			while(rset.next()) {
