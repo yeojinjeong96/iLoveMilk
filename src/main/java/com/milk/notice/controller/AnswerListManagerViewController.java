@@ -56,6 +56,9 @@ public class AnswerListManagerViewController extends HttpServlet {
 		if(endPage>maxPage) {
 			endPage = maxPage;
 		}
+		
+		
+		String searchType= request.getParameter("searchtype");
 
 		
 		

@@ -62,8 +62,8 @@ public class QAListManagerViewController extends HttpServlet {
 		
 		
 		String value="";
-		if(request.getParameter("value")!=null) {
-			 value= request.getParameter("value");
+		if(request.getParameter("order")!=null) {
+			 value= request.getParameter("order");
 		}
 		
 		System.out.println(value);
