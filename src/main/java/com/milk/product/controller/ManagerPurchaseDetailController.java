@@ -33,7 +33,7 @@ public class ManagerPurchaseDetailController extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		int no = Integer.parseInt(request.getParameter("oNo"));
+		String no = request.getParameter("oNo");
 		ArrayList<Order> list = new ProductService().selectPurchaseDetailList(no);
 		response.setContentType("application/json; charset=UTF-8");
 		new Gson().toJson(list, response.getWriter());

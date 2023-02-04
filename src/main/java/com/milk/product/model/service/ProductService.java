@@ -222,7 +222,7 @@ public class ProductService {
 	 * @author 이다혜
 	 * @return list
 	 */
-	public ArrayList<Order> selectPurchaseDetailList(int no){
+	public ArrayList<Order> selectPurchaseDetailList(String no){
 		Connection conn = getConnection();
 		ArrayList<Order> list = new ProductDao().selectPurchaseDetailList(conn, no);
 		close(conn);
@@ -258,7 +258,7 @@ public class ProductService {
 	 * @author 이다혜
 	 * @return Order
 	 */
-	public Order selectOrderDetail(int no) {
+	public Order selectOrderDetail(String no) {
 		Connection conn = getConnection();
 		Order o = new ProductDao().selectOrderDetail(conn, no);
 		close(conn);
@@ -270,7 +270,7 @@ public class ProductService {
 	 * @author 이다혜
 	 * @return result
 	 */
-	public int createWaybill(int no, String courier, int waybill) {
+	public int createWaybill(String no, String courier, int waybill) {
 		Connection conn = getConnection();
 		int result = new ProductDao().createWaybill(conn,no, courier, waybill);
 		if(result > 0) {

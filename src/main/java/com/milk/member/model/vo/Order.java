@@ -4,7 +4,7 @@ import java.sql.Date;
 
 public class Order {
 	
-	private int orderNo;
+	private String orderNo;
 	private Date paymentDate;
 	private String productImg;
 	private String productName;
@@ -30,7 +30,7 @@ public class Order {
 	
 	public Order() {}
 
-	public Order(int orderNo, Date paymentDate, String productImg, String productName, int productCount, int price,
+	public Order(String orderNo, Date paymentDate, String productImg, String productName, int productCount, int price,
 			int status, int waybill) {
 		super();
 		this.orderNo = orderNo;
@@ -45,7 +45,7 @@ public class Order {
 	
 	
 
-	public Order(int orderNo, Date paymentDate, int price, String memberId) {
+	public Order(String orderNo, Date paymentDate, int price, String memberId) {
 		super();
 		this.orderNo = orderNo;
 		this.paymentDate = paymentDate;
@@ -55,7 +55,7 @@ public class Order {
 	
 	
 
-	public Order(int orderNo, Date paymentDate, String productImg, String productName, int productCount, int price,
+	public Order(String orderNo, Date paymentDate, String productImg, String productName, int productCount, int price,
 			String memberId, int productNo) {
 		super();
 		this.orderNo = orderNo;
@@ -70,7 +70,7 @@ public class Order {
 	
 	
 
-	public Order(int orderNo, int status, int waybill, String memberId, int memberNo, String orderName,
+	public Order(String orderNo, int status, int waybill, String memberId, int memberNo, String orderName,
 			String orderPhone, String orderEmail, String addressName, String address, String addressTel, int usePoint,
 			String courier, Date paymentDate) {
 		super();
@@ -90,7 +90,7 @@ public class Order {
 		this.paymentDate = paymentDate;
 	}
 	
-	public Order(int orderNo, int status, int waybill, String memberId, int memberNo, String orderName,
+	public Order(String orderNo, int status, int waybill, String memberId, int memberNo, String orderName,
 			String orderPhone, String orderEmail, String addressName, String address, String addressTel, int usePoint,
 			String courier, Date paymentDate, String memberName) {
 		super();
@@ -111,7 +111,7 @@ public class Order {
 		this.memberName = memberName;
 	}
 	
-	public Order(int orderNo, String productImg, String productName, int price, int count) {
+	public Order(String orderNo, String productImg, String productName, int price, int count) {
 	      super();
 	      this.orderNo = orderNo;
 	      this.productImg = productImg;
@@ -120,11 +120,11 @@ public class Order {
 	      this.count = count;
 	   }
 
-	public int getOrderNo() {
+	public String getOrderNo() {
 		return orderNo;
 	}
 
-	public void setOrderNo(int orderNo) {
+	public void setOrderNo(String orderNo) {
 		this.orderNo = orderNo;
 	}
 
