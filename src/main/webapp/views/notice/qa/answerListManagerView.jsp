@@ -80,17 +80,7 @@
 			
             </form>
             <br>
-            <div class="search-area" align="left">
-                <form action="" method="get">
-                    <select name="search" id="search">
-                        <option value="">회원아이디로검색</option>
-                        <option value="">문의내용으로검색</option>
-                    </select>
-                    <input type="text" name="search">
-                    <button type="submit" class="btn btn-secondary btn-sm">검색</button>
-                </form>
-            </div>
-            <br>
+          
             <table border="1" class="text-center" id="answer-list">  
            <thead>
                 <tr>
@@ -187,11 +177,21 @@
 
     	const fDate = urlParams.get('fDate');
     	const sDate = urlParams.get('sDate');
-    	document.getElementById('fDate').valueAsDate = new Date(fDate);
-		document.getElementById('sDate').valueAsDate = new Date(sDate);
+    	if(fDate!=null&& sDate!=null){
+    		
+    		document.getElementById('fDate').valueAsDate = new Date(fDate);
+    		document.getElementById('sDate').valueAsDate = new Date(sDate);
+    	}
+    	
     	
     
-
+		 $("button[name=searchBtn]").click(function(){
+			const searchType= $("select[name=searchType]").val();
+			const searchKey = $("input[name=searchKey]").val();
+			
+			location.href="<%=contextPath%>/listM.a?cpage=1&searchtype="+searchType+"&searchkey="+searchKey;
+			
+		 })
 
     })
     
