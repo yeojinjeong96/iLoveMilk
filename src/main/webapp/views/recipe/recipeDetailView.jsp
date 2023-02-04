@@ -6,6 +6,7 @@
 	ArrayList<Reply> listR = (ArrayList<Reply>)request.getAttribute("listR");
 	ArrayList<RecipeIngre> listI = (ArrayList<RecipeIngre>)request.getAttribute("listI");
 	ArrayList<RecipeOrder> listO = (ArrayList<RecipeOrder>)request.getAttribute("listO");
+	int replyCount = (int)request.getAttribute("replyCount");
 %>
 <!DOCTYPE html>
 <html>
@@ -256,7 +257,7 @@
                     댓글
                 </td>
                 <td>
-                    <div id="num">1</div>
+                    <div id="num"><%= replyCount %></div>
                 </td>
             </tr>
         </table>

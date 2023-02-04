@@ -44,11 +44,14 @@ public class RecipeDetailController extends HttpServlet {
 			ArrayList<RecipeIngre> listI = new RecipeService().selectRecipeIngreList(recipeNo);
 			ArrayList<RecipeOrder> listO = new RecipeService().selectRecipeOrderList(recipeNo);
 			ArrayList<Reply> listR = new RecipeService().selectReply(recipeNo);
+			int replyCount = new RecipeService().replyCount(recipeNo);
 			
 			request.setAttribute("r", r);
 			request.setAttribute("listI", listI);
 			request.setAttribute("listO", listO);
 			request.setAttribute("listR", listR);
+			request.setAttribute("replyCount", replyCount);
+			
 			
 			request.getRequestDispatcher("views/recipe/recipeDetailView.jsp").forward(request, response);
 			

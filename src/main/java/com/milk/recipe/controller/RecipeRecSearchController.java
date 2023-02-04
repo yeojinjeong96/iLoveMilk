@@ -80,6 +80,7 @@ public class RecipeRecSearchController extends HttpServlet {
 		request.setAttribute("select", select);
 		
 		
+		
 		request.getRequestDispatcher("views/recipe/recommendRecipeSearchListView.jsp").forward(request, response);
 		
 		

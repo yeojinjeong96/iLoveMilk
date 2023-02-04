@@ -1945,4 +1945,32 @@ public class RecipeDao {
 		return list;
 		
 	}
+	
+	
+	public int replyCount(Connection conn, int recipeNo) {
+		int replyCount = 0;
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		String sql = prop.getProperty("replyCount");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, recipeNo);
+			
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				replyCount = rset.getInt("COUNT");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return replyCount;
+		
+	}
 }

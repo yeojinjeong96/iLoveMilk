@@ -692,5 +692,13 @@
 		                    AND DELETE_STATUS = 'N'
 	</entry>
 	
+	
+	<entry key="replyCount">
+		SELECT
+		       COUNT(*) COUNT
+		  FROM TB_REPLY
+		 WHERE REF_NO = ?
+		   AND DELETE_STATUS = 'N'
+	</entry>
 
 </properties>
