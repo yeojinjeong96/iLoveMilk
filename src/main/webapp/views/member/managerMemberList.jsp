@@ -90,9 +90,26 @@
                                 <td><%=m.getMemberId() %></td>
                                 <td><%=m.getMemberName() %></td>
                                 <td><%=m.getMemberGrade() %></td>
-                                <td><%=m.getEmail() %></td>
-                                <td><%=m.getPhone() %></td>
-                                <td><%=m.getAddress() %></td>
+                               
+                                    <%if(m.getEmail() == null){ %>
+                                		 <td>없음</td>
+                                	<%}else{ %>
+                                		<td><%=m.getEmail() %></td>
+                                	<%} %>
+                                
+                                
+                                	<%if(m.getPhone() == null){ %>
+                                		 <td>없음</td>
+                                	<%}else{ %>
+                                		<td><%=m.getPhone() %></td>
+                                	<%} %>
+                            
+                                    <%if(m.getAddress() == null){ %>
+                                		 <td>없음</td>
+                                	<%}else{ %>
+                                		<td><%=m.getgetAddress() %></td>
+                                	<%} %>
+                                	
                                 <td><%=m.getTotalpay() %></td>
                                 <td><%=m.getTotal() %>
                                     <button type="button" id="btn1" onclick="memDetail('<%=m.getMemberId() %>', '<%=m.getMemberGrade() %>', <%=m.getTotal() %>, <%=m.getMemberNo() %>);" class="btn btn-outline-secondary btn-sm" data-toggle="modal" data-target="#point-info" style="font-size:9px;">상세</button>
