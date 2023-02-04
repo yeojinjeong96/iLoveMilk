@@ -4,6 +4,8 @@
 <%
 	ArrayList<Recipe> list = (ArrayList<Recipe>)request.getAttribute("list");
 	PageInfo pi = (PageInfo)request.getAttribute("pi");
+	String keyword = (String)request.getAttribute("keyword");
+    int listCount = (int)(request.getAttribute("listCount"));
 %>
 <!DOCTYPE html>
 <html>
@@ -72,10 +74,18 @@
 
 	<div class="outer">
         <br>
-        <h2 align="center">추천 레시피</h2>
+        <h2 align="center">자유게시판</h2>
         <br>
        
-        
+        <!-- 검색했을 경우에만 보여지도록 -->
+        <div class="searchResult">
+            "<b><%= keyword %></b>" 에 대한 검색 결과
+            <br>
+
+            총 <b><%= listCount %></b>개의 레시피가 있습니다.
+        </div>
+
+
         <div class="order" align="right">
             <button type="button" class="btn btn-secondary btn-sm">최신순</button>
             <button type="button" class="btn btn-secondary btn-sm">좋아요순</button>
@@ -105,30 +115,39 @@
 
         <div align="center">
 
-           
-			<br><br>
+            <br>
+            <% if(loginMember != null) { %>
+	            <!-- 로그인한 회원에게만 보여지도록 -->
+	            <div class="writer" align="right">
+	                <a href="<%= contextPath %>/enrollForm.re" class="btn btn-secondary btn-sm">글쓰기</a>
+	            </div>
+	        <% } %>
+	            <br>
+			
+			
+			
             <div class="paging-area">
             <% if(pi.getCurrentPage() != 1) { %>
-                <button onclick="location.href='<%= contextPath %>/listR.re?cpage=<%= pi.getCurrentPage()-1 %>';">&lt;</button>
+                <button onclick="location.href='<%= contextPath %>/search.re?cpage=<%= pi.getCurrentPage()-1 %>&keyword=<%=keyword%>';">&lt;</button>
             <% } %>
             
             <% for(int p=pi.getStartPage() ; p<=pi.getEndPage() ; p++) { %>
-                <button onclick="location.href='<%= contextPath %>/listR.re?cpage=<%= p %>';"><%= p %></button>
+                <button onclick="location.href='<%= contextPath %>/search.re?cpage=<%= p %>&keyword=<%=keyword%>';"><%= p %></button>
             <% } %>
                
              <% if(pi.getCurrentPage() != pi.getMaxPage()) { %>
-                <button onclick="location.href='<%= contextPath %>/listR.re?cpage=<%= pi.getCurrentPage()+1 %>';">&gt;</button>
+                <button onclick="location.href='<%= contextPath %>/search.re?cpage=<%= pi.getCurrentPage()+1 %>&keyword=<%=keyword%>';">&gt;</button>
              <% } %>
             </div>
             <br><br>
 
-            <form action="<%= contextPath %>/searchR.re?cpage=1" method="post">
+            <form action="<%= contextPath %>/search.re?cpage=1" method="post">
 
                 <table>
                     <tr>
                         <td width="60px">
                             <select name="search-select" style="height:30px;">
-                               <option value="title">제목</option>
+                                <option value="title">제목</option>
                                 <option value="content">본문</option>
                                 <option value="writer">작성자</option>
                                 <option value="ingre">재료</option>
@@ -149,7 +168,7 @@
         
         <script>
         	$(".thumbnail").click(function(){
-        		location.href = "<%= contextPath %>/detailR.re?no=" + $(this).children('input').val();
+        		location.href = "<%= contextPath %>/detail.re?no=" + $(this).children('input').val();
         	})
         </script>
         

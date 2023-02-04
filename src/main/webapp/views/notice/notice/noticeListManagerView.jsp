@@ -120,7 +120,7 @@
                   
                     
                     
-                    <form action="<%=contextPath%>/search.no?cpage=1" method="get">
+                    <form action="<%=contextPath%>/searchM.no" method="get">
                        	
                   
        					  <%if(searchNo != null){ %>
@@ -128,7 +128,7 @@
        					  <%}else{%>
        					   <input type="text" name="searchNo">
        					   <%} %>
-       					   
+       					   <input type="hidden" name="cpage" value="1">
                         <button type="submit">검색</button>
                     </form>
                 </div>

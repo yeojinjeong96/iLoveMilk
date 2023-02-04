@@ -33,7 +33,10 @@ public class AnswerListManagerViewController extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		int date=Integer.parseInt(request.getParameter("date"));
+		
+		String fDate = request.getParameter("fDate");
+		String sDate = request.getParameter("sDate");
+		
 		int listCount;  
 		int currentPage; 
 		int pageLimit;   
@@ -42,7 +45,7 @@ public class AnswerListManagerViewController extends HttpServlet {
 		int maxPage;     
 		int startPage;	 
 		int endPage;	
-		listCount = new QAService().selectAnswerListCount(date);
+		listCount = new QAService().selectAnswerListCount(fDate,sDate);
 		currentPage= Integer.parseInt(request.getParameter("cpage"));
 		pageLimit= 5;
 		boardLimit=10;
@@ -55,11 +58,16 @@ public class AnswerListManagerViewController extends HttpServlet {
 		}
 		
 		
+		String searchType= request.getParameter("searchtype");
+
+		
+		
 		PageInfo pi = new PageInfo(listCount,currentPage, pageLimit, boardLimit,maxPage,startPage,endPage);
 		
-		ArrayList<QA>list= new QAService().selectAnswerList(pi,date);
+		ArrayList<QA>list= new QAService().selectAnswerList(pi,fDate,sDate);
 		request.setAttribute("list", list);
 		request.setAttribute("pi", pi);
+	
 		request.getRequestDispatcher("views/notice/qa/answerListManagerView.jsp").forward(request, response);
 	}
 

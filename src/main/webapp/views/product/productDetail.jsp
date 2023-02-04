@@ -226,7 +226,7 @@
 			    <div id="pro-1-3-2-3">
                     <table class="pro-qna">
                         <tr>
-                            <td>상품코드</td>
+                            <td width="100px;">상품코드</td>
                             <td id="pNo"><%= p.getProductNo() %></td>
                         </tr>
                         <tr>
@@ -235,29 +235,23 @@
                         </tr>
                         <tr>
                             <td>용량</td>
-                            <td><%= p.getCapacity() %></td>
+                            <td><%= p.getCapacity() %>(ml/g)</td>
                         </tr>
                         <tr>
                             <td>수량</td>
                             <td>
-                                <select name="pro-amount" id="pro-amount" style="width:50px;">
-                                    <option value="1">1</option>
-                                    <option value="2">2</option>
-                                    <option value="3">3</option>
-                                    <option value="4">4</option>
-                                    <option value="5">5</option>
-                                </select>
+                                <input type="number" name="pro-amount" id="pro-amount" style="width:50px;">
+
                             </td>
                         </tr>
                     </table>
-                    
                 </div>
-
+                
                 <div id="pro-1-3-2-4"  align=center>
                     <i class="bi-heart like-btn" style="font-size:2rem; color: red; cursor: pointer;" onclick="memberLike(<%=p.getProductNo()%>);" ></i>
                     <button type="button" onclick="cartInput();" id="btn-buy"  style=" width:270px; height:40px;" class="btn btn-outline-primary">장바구니</button>
-                   
                 </div>
+                
                 <script>
 	                function cartInput(){
 	                	$.ajax({
@@ -275,6 +269,8 @@
 	                		}
 	                	});
 	                }
+	                
+
                 </script>
             </div>
         </div>

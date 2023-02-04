@@ -112,8 +112,8 @@
 		                            <td><%=o.getAddress() %></td>
 		                            <td>
 		                                <!-- 조건문 사용해서 운송장 완료하면 버튼비활성화시키기 -->
-		                                <%if(o.getWaybill() == 0) {%>
-		                                	<button type="button" onclick="issWaybill(<%=o.getOrderNo() %>)" id="getWbtn" class="btn btn-outline-secondary btn-sm" data-toggle="modal" data-target="#delivery-info" style="font-size:10px;">대기</button>
+		                                <%if(o.getWaybill().equals("미발급")) {%>
+		                                	<button type="button" onclick="issWaybill('<%=o.getOrderNo() %>')" id="getWbtn" class="btn btn-outline-secondary btn-sm" data-toggle="modal" data-target="#delivery-info" style="font-size:10px;">대기</button>
 		                                <%}else{ %>
 		                                	<button type="button" id="getWbtn" class="btn btn-outline-secondary btn-sm" data-toggle="modal" data-target="#delivery-info" disabled="disabled" style="font-size:10px;">완료</button>
 		                                <%} %>
@@ -160,7 +160,7 @@
                     <!-- Modal body -->
                     <div class="modal-body">
                     
-                    <form action="<%=contextPath %>/orderWaybill.ma" method="post">
+                    <form action="<%=contextPath %>/orderWaybill.ma" method="post" id="orderWay">
                             <input type="hidden" name="" value="">
                             <table class="table" style="width:100%;">
                                     <tr>
@@ -185,18 +185,28 @@
                                     </tr>
                                     <tr>
                                         <td>택배사</td>
-                                        <td><input type="text" name="courier" placeholder="내용을 입력해주세요"></td>
+                                        <td>
+                                        	<select name="courier" id="courier" required>
+											    <option value="">--선택해주세요--</option>
+											    <option value="한진택배">한진택배</option>
+											    <option value="cj대한통운">cj대한통운</option>
+											    <option value="로젠택배">로젠택배</option>
+											</select>
+                                        </td>
                                     </tr>
                                     <tr>
                                         <td>운송장번호</td>
-                                        <td><input type="text" name="waybill" placeholder="내용을 입력해주세요"></td>
+                                        <td>
+                                        <input type="text" name="waybill" id="waybill2" placeholder="8자리의 운송장번호를 입력해주세요" required> 
+                                        <button type="button" class="btn btn-outline-secondary btn-sm" onclick="ranNum();">생성하기</button>
+                                       </td>
                                     </tr>
                                     
                             </table>
         
                             <br>
                             <div align="center">
-                            <button type="submit" class="btn btn-outline-secondary btn-sm">발급하기</button>
+                            <button type="submit" class="btn btn-outline-secondary btn-sm" onclick="return wayConfig();">발급하기</button>
                             <button type="button" class="btn btn-outline-secondary btn-sm" data-dismiss="modal" >취소</button>
                             </div>
                     </form>
@@ -217,8 +227,6 @@
         					data: {ono:ono},
         					success:function(result){
         						
-        						console.log(result);
-        						
 								$("#wayOrderNo").val(result.orderNo);
 								$("#wayOrderDate").text(result.paymentDate);
 								$("#wayMemberName").text(result.memberName);
@@ -230,6 +238,47 @@
         					}
         				})
         				
+        			}
+        			
+        			function ranNum(){
+        				  let num = '';
+        					  for (let i = 0; i < 8; i++) {
+        					    num += Math.floor(Math.random() * 10);
+        					  }
+        				 $("#waybill2").val(num);
+        			}
+        			 
+        			function wayConfig(){
+        				
+        	            let regExp = /^[0-9]{8}$/;
+        	            if(!regExp.test($("#waybill2").val())){
+        	                alert("유효한 운송장번호를 입력하세요");
+        	                $("#waybill2").val() = "";
+        	                $("#waybill2").focus(); //커서가 깜빡거릴수있게 해줌
+        	                return false;
+        	            }
+        	            
+        	          
+        	                   				
+        				const wayInput = $("#orderWay input[name=waybill]").val(); 
+        				
+        				$.ajax({
+        					url:"<%=contextPath%>/wayCheck.ma",
+        					data:{waybill:wayInput},
+        					success:function(result){
+        						
+        						
+        						if(result == "N"){
+        							alert("이미 존재하는 운송장번호입니다.");
+        							$("#waybill2").val() = "";
+        							 $("#waybill2").focus();
+        						}
+        						
+        					}, error:function(){
+        						alert("운송장 중복검사 통신실패");
+        					}
+        				})
+        			
         			}
         		</script>
         		

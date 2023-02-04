@@ -74,14 +74,6 @@
         <br>
         <h2 align="center">자유게시판</h2>
         <br>
-       
-        <!-- 검색했을 경우에만 보여지도록 -->
-        <div class="searchResult">
-            "<b>검색결과</b>" 에 대한 검색 결과
-            <br>
-
-            총 <b>777,777</b>개의 레시피가 있습니다.
-        </div>
 
 
         <div class="order" align="right">
@@ -139,20 +131,20 @@
             </div>
             <br><br>
 
-            <form action="" method="">
+            <form action="<%= contextPath %>/search.re?cpage=1" method="post">
 
                 <table>
                     <tr>
                         <td width="60px">
-                            <select name="" style="height:30px;">
-                                <option value="">전체</option>
-                                <option value="">제목</option>
-                                <option value="">본문</option>
-                                <option value="">재료</option>
+                            <select name="search-select" style="height:30px;">
+                                <option value="title">제목</option>
+                                <option value="content">본문</option>
+                                <option value="writer">작성자</option>
+                                <option value="ingre">재료</option>
                             </select>
                         </td>
                         <td width="365px">
-                            <input type="text" name="" size="40" placeholder="검색어를 입력하세요." required>
+                            <input type="text" name="keyword" size="40" placeholder="검색어를 입력하세요." required>
                         </td>
                         <td width="60px">
                             <button type="submit" style="width:60px;">검색</button>

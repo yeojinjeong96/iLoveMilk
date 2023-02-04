@@ -1125,4 +1125,722 @@ public class RecipeDao {
 		return list;
 		
 	}
+	
+	
+	public int selectSearchListCount(Connection conn, String keyword, String select) {
+		int listCount = 0;
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		
+		String sql = prop.getProperty("selectSearchListCount");
+		
+		if(select.equals("title")) {
+			
+			sql += " FROM TB_RECIPE"
+			     + " WHERE RECIPE_TYPE = 2"
+				 + " AND DELETE_STATUS = 'N'"
+				 + " AND RECIPE_TITLE LIKE '%' || ? || '%'";
+			
+		}else if(select.equals("content")) {
+			
+			sql += " FROM TB_RECIPE"
+				 + " WHERE RECIPE_TYPE = 2"
+			     + " AND DELETE_STATUS = 'N'"
+				 + " AND RECIPE_INTRO LIKE '%' || ? || '%'";
+			
+		}else if(select.equals("writer")) {
+			
+			sql += " FROM TB_RECIPE"
+			     + " WHERE RECIPE_TYPE = 2"
+				 + " AND DELETE_STATUS = 'N'"
+			     + " AND RECIPE_WRITER LIKE '%' || ? || '%'";
+			
+		}else if(select.equals("ingre")) {
+			
+			sql += " FROM TB_RECIPE"
+				 + " JOIN TB_RECIPE_INGRE USING (RECIPE_NO)"
+				 + " WHERE RECIPE_TYPE = 2"
+				 + " AND DELETE_STATUS = 'N'"
+				 + " AND INGRE_NAME LIKE '%' || ? || '%'";
+			
+		}
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, keyword);
+			
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				listCount = rset.getInt("count");
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return listCount;
+		
+	}
+	
+	public ArrayList<Recipe> selectSearchRecipeList(Connection conn, PageInfo pi, String keyword, String select){
+		ArrayList<Recipe> list = new ArrayList<>();
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		String sql = prop.getProperty("selectSearchRecipeList");
+		
+		if(select.equals("title")) {
+			
+			sql += " WHERE RECIPE_TYPE = 2"
+				 + " AND DELETE_STATUS = 'N'"
+				 + " AND RECIPE_TITLE LIKE '%' || ? || '%'"
+				 + " ORDER"
+				 + " BY ENROLL_DATE DESC"
+				 + "  ) A"
+				 + ")"
+				 + "WHERE RNUM BETWEEN ? AND ? ";
+			
+		}else if(select.equals("content")) {
+			
+			
+			sql += " WHERE RECIPE_TYPE = 2"
+				 + " AND DELETE_STATUS = 'N'"
+				 + " AND RECIPE_INTRO LIKE '%' || ? || '%'"
+				 + " ORDER"
+				 + " BY ENROLL_DATE DESC"
+				 + " ) A"
+				 + ")"
+				 + "WHERE RNUM BETWEEN ? AND ? ";
+			
+		}else if(select.equals("writer")) {
+			
+			sql += " WHERE RECIPE_TYPE = 2"
+				 + " AND DELETE_STATUS = 'N'"
+				 + " AND RECIPE_WRITER LIKE '%' || ? || '%'"
+				 + " ORDER"
+				 + " BY ENROLL_DATE DESC"
+				 + " ) A"
+				 + ")"
+				 + "WHERE RNUM BETWEEN ? AND ? ";
+
+		}else if(select.equals("ingre")) {
+			 
+			sql += " JOIN TB_RECIPE_INGRE USING (RECIPE_NO)"
+				 + " WHERE RECIPE_TYPE = 2"
+				 + " AND DELETE_STATUS = 'N'"
+				 + " AND INGRE_NAME LIKE '%' || ? || '%'"
+				 + " ORDER"
+				 + " BY ENROLL_DATE DESC"
+				 + " ) A"
+				 + ")"
+				 + "WHERE RNUM BETWEEN ? AND ? ";
+			
+		}
+		
+		
+		try {
+			int startRow = (pi.getCurrentPage() -1) * pi.getBoardLimit() + 1;
+			int endRow = startRow + pi.getBoardLimit() -1;
+			
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, keyword);
+			pstmt.setInt(2, startRow);
+			pstmt.setInt(3, endRow);
+
+			
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				Recipe r = new Recipe();
+				r.setRecipeNo(rset.getInt("RECIPE_NO"));
+				r.setRecipeTitle(rset.getString("RECIPE_TITLE"));
+				r.setRecipeWriter(rset.getString("MEMBER_ID"));
+				r.setEnrollDate(rset.getString("ENROLL_DATE"));
+				r.setCount(rset.getInt("COUNT"));
+				r.setMainImg(rset.getString("MAIN_IMG"));
+				
+				list.add(r);
+				
+			}
+			
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return list;
+		
+	}
+	
+	
+	public int selectSearchRecListCount(Connection conn, String keyword, String select) {
+		int listCount = 0;
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		
+		String sql = prop.getProperty("selectSearchListCount");
+		
+		if(select.equals("title")) {
+			
+			sql += " FROM TB_RECIPE"
+			     + " WHERE RECIPE_TYPE = 1"
+				 + " AND DELETE_STATUS = 'N'"
+				 + " AND RECIPE_TITLE LIKE '%' || ? || '%'";
+			
+		}else if(select.equals("content")) {
+			
+			sql += " FROM TB_RECIPE"
+				 + " WHERE RECIPE_TYPE = 1"
+			     + " AND DELETE_STATUS = 'N'"
+				 + " AND RECIPE_INTRO LIKE '%' || ? || '%'";
+			
+		}else if(select.equals("writer")) {
+			
+			sql += " FROM TB_RECIPE"
+			     + " WHERE RECIPE_TYPE = 1"
+				 + " AND DELETE_STATUS = 'N'"
+			     + " AND RECIPE_WRITER LIKE '%' || ? || '%'";
+			
+		}else if(select.equals("ingre")) {
+			
+			sql += " FROM TB_RECIPE"
+				 + " JOIN TB_RECIPE_INGRE USING (RECIPE_NO)"
+				 + " WHERE RECIPE_TYPE = 1"
+				 + " AND DELETE_STATUS = 'N'"
+				 + " AND INGRE_NAME LIKE '%' || ? || '%'";
+			
+		}
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, keyword);
+			
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				listCount = rset.getInt("count");
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return listCount;
+		
+	}
+	
+	public ArrayList<Recipe> selectSearchRecipeRecList(Connection conn, PageInfo pi, String keyword, String select){
+		ArrayList<Recipe> list = new ArrayList<>();
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		String sql = prop.getProperty("selectSearchRecipeList");
+		
+		if(select.equals("title")) {
+			
+			sql += " WHERE RECIPE_TYPE = 1"
+				 + " AND DELETE_STATUS = 'N'"
+				 + " AND RECIPE_TITLE LIKE '%' || ? || '%'"
+				 + " ORDER"
+				 + " BY ENROLL_DATE DESC"
+				 + "  ) A"
+				 + ")"
+				 + "WHERE RNUM BETWEEN ? AND ? ";
+			
+		}else if(select.equals("content")) {
+			
+			
+			sql += " WHERE RECIPE_TYPE = 1"
+				 + " AND DELETE_STATUS = 'N'"
+				 + " AND RECIPE_INTRO LIKE '%' || ? || '%'"
+				 + " ORDER"
+				 + " BY ENROLL_DATE DESC"
+				 + " ) A"
+				 + ")"
+				 + "WHERE RNUM BETWEEN ? AND ? ";
+			
+		}else if(select.equals("writer")) {
+			
+			sql += " WHERE RECIPE_TYPE = 1"
+				 + " AND DELETE_STATUS = 'N'"
+				 + " AND RECIPE_WRITER LIKE '%' || ? || '%'"
+				 + " ORDER"
+				 + " BY ENROLL_DATE DESC"
+				 + " ) A"
+				 + ")"
+				 + "WHERE RNUM BETWEEN ? AND ? ";
+
+		}else if(select.equals("ingre")) {
+			 
+			sql += " JOIN TB_RECIPE_INGRE USING (RECIPE_NO)"
+				 + " WHERE RECIPE_TYPE = 1"
+				 + " AND DELETE_STATUS = 'N'"
+				 + " AND INGRE_NAME LIKE '%' || ? || '%'"
+				 + " ORDER"
+				 + " BY ENROLL_DATE DESC"
+				 + " ) A"
+				 + ")"
+				 + "WHERE RNUM BETWEEN ? AND ? ";
+			
+		}
+		
+		
+		try {
+			int startRow = (pi.getCurrentPage() -1) * pi.getBoardLimit() + 1;
+			int endRow = startRow + pi.getBoardLimit() -1;
+			
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, keyword);
+			pstmt.setInt(2, startRow);
+			pstmt.setInt(3, endRow);
+
+			
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				Recipe r = new Recipe();
+				r.setRecipeNo(rset.getInt("RECIPE_NO"));
+				r.setRecipeTitle(rset.getString("RECIPE_TITLE"));
+				r.setRecipeWriter(rset.getString("MEMBER_ID"));
+				r.setEnrollDate(rset.getString("ENROLL_DATE"));
+				r.setCount(rset.getInt("COUNT"));
+				r.setMainImg(rset.getString("MAIN_IMG"));
+				
+				list.add(r);
+				
+			}
+			
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return list;
+		
+	}
+	
+	
+	public int selectSearchListCountUpDelM(Connection conn, String keyword, String select) {
+		int listCount = 0;
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		
+		String sql = prop.getProperty("selectSearchListCount");
+		
+		if(select.equals("title")) {
+			
+			sql += " FROM TB_RECIPE"
+			     + " WHERE RECIPE_TYPE = 1"
+				 + " AND DELETE_STATUS = 'N'"
+				 + " AND RECIPE_TITLE LIKE '%' || ? || '%'";
+			
+		}else if(select.equals("content")) {
+			
+			sql += " FROM TB_RECIPE"
+				 + " WHERE RECIPE_TYPE = 1"
+			     + " AND DELETE_STATUS = 'N'"
+				 + " AND RECIPE_INTRO LIKE '%' || ? || '%'";
+			
+		}else if(select.equals("writer")) {
+			
+			sql += " FROM TB_RECIPE"
+			     + " WHERE RECIPE_TYPE = 1"
+				 + " AND DELETE_STATUS = 'N'"
+			     + " AND RECIPE_WRITER LIKE '%' || ? || '%'";
+			
+		}else if(select.equals("ingre")) {
+			
+			sql += " FROM TB_RECIPE"
+				 + " JOIN TB_RECIPE_INGRE USING (RECIPE_NO)"
+				 + " WHERE RECIPE_TYPE = 1"
+				 + " AND DELETE_STATUS = 'N'"
+				 + " AND INGRE_NAME LIKE '%' || ? || '%'";
+			
+		}
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, keyword);
+			
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				listCount = rset.getInt("count");
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return listCount;
+		
+	}
+	
+	public ArrayList<Recipe> selectSearchRecipeListUpDelM(Connection conn, PageInfo pi, String keyword, String select){
+		ArrayList<Recipe> list = new ArrayList<>();
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		String sql = prop.getProperty("selectSearchRecipeListUpDelM");
+		
+		if(select.equals("title")) {
+			
+			sql += " WHERE RECIPE_TYPE = 1"
+				 + " AND DELETE_STATUS = 'N'"
+				 + " AND RECIPE_TITLE LIKE '%' || ? || '%'"
+				 + " ORDER"
+				 + " BY ENROLL_DATE DESC"
+				 + "  ) A"
+				 + ")"
+				 + "WHERE RNUM BETWEEN ? AND ? ";
+			
+		}else if(select.equals("content")) {
+			
+			
+			sql += " WHERE RECIPE_TYPE = 1"
+				 + " AND DELETE_STATUS = 'N'"
+				 + " AND RECIPE_INTRO LIKE '%' || ? || '%'"
+				 + " ORDER"
+				 + " BY ENROLL_DATE DESC"
+				 + " ) A"
+				 + ")"
+				 + "WHERE RNUM BETWEEN ? AND ? ";
+			
+		}else if(select.equals("writer")) {
+			
+			sql += " WHERE RECIPE_TYPE = 1"
+				 + " AND DELETE_STATUS = 'N'"
+				 + " AND RECIPE_WRITER LIKE '%' || ? || '%'"
+				 + " ORDER"
+				 + " BY ENROLL_DATE DESC"
+				 + " ) A"
+				 + ")"
+				 + "WHERE RNUM BETWEEN ? AND ? ";
+
+		}else if(select.equals("ingre")) {
+			 
+			sql += " JOIN TB_RECIPE_INGRE USING (RECIPE_NO)"
+				 + " WHERE RECIPE_TYPE = 1"
+				 + " AND DELETE_STATUS = 'N'"
+				 + " AND INGRE_NAME LIKE '%' || ? || '%'"
+				 + " ORDER"
+				 + " BY ENROLL_DATE DESC"
+				 + " ) A"
+				 + ")"
+				 + "WHERE RNUM BETWEEN ? AND ? ";
+			
+		}
+		
+		
+		try {
+			int startRow = (pi.getCurrentPage() -1) * pi.getBoardLimit() + 1;
+			int endRow = startRow + pi.getBoardLimit() -1;
+			
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, keyword);
+			pstmt.setInt(2, startRow);
+			pstmt.setInt(3, endRow);
+
+			
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				
+				list.add(new Recipe(rset.getString("RECIPE_TITLE"),
+									rset.getString("MANAGER_ID"),
+									rset.getInt("RECIPE_NO"),
+									rset.getString("ENROLL_DATE")));
+						   		   
+			}
+			
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return list;
+		
+	}
+	
+	public int selectSearchListCountDelM(Connection conn, String keyword, String select) {
+		int listCount = 0;
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		
+		String sql = prop.getProperty("selectSearchListCount");
+		
+		if(select.equals("title")) {
+			
+			sql += " FROM TB_RECIPE"
+			     + " WHERE RECIPE_TYPE = 2"
+				 + " AND DELETE_STATUS = 'N'"
+				 + " AND RECIPE_TITLE LIKE '%' || ? || '%'";
+			
+		}else if(select.equals("content")) {
+			
+			sql += " FROM TB_RECIPE"
+				 + " WHERE RECIPE_TYPE = 2"
+			     + " AND DELETE_STATUS = 'N'"
+				 + " AND RECIPE_INTRO LIKE '%' || ? || '%'";
+			
+		}else if(select.equals("writer")) {
+			
+			sql += " FROM TB_RECIPE"
+			     + " WHERE RECIPE_TYPE = 2"
+				 + " AND DELETE_STATUS = 'N'"
+			     + " AND RECIPE_WRITER LIKE '%' || ? || '%'";
+			
+		}else if(select.equals("ingre")) {
+			
+			sql += " FROM TB_RECIPE"
+				 + " JOIN TB_RECIPE_INGRE USING (RECIPE_NO)"
+				 + " WHERE RECIPE_TYPE = 2"
+				 + " AND DELETE_STATUS = 'N'"
+				 + " AND INGRE_NAME LIKE '%' || ? || '%'";
+			
+		}
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, keyword);
+			
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				listCount = rset.getInt("count");
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return listCount;
+		
+	}
+	
+	public ArrayList<Recipe> selectSearchRecipeListDelM(Connection conn, PageInfo pi, String keyword, String select){
+		ArrayList<Recipe> list = new ArrayList<>();
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		String sql = prop.getProperty("selectSearchRecipeListDelM");
+		
+		if(select.equals("title")) {
+			
+			sql += " WHERE RECIPE_TYPE = 2"
+				 + " AND DELETE_STATUS = 'N'"
+				 + " AND RECIPE_TITLE LIKE '%' || ? || '%'"
+				 + " ORDER"
+				 + " BY ENROLL_DATE DESC"
+				 + "  ) A"
+				 + ")"
+				 + "WHERE RNUM BETWEEN ? AND ? ";
+			
+		}else if(select.equals("content")) {
+			
+			
+			sql += " WHERE RECIPE_TYPE = 2"
+				 + " AND DELETE_STATUS = 'N'"
+				 + " AND RECIPE_INTRO LIKE '%' || ? || '%'"
+				 + " ORDER"
+				 + " BY ENROLL_DATE DESC"
+				 + " ) A"
+				 + ")"
+				 + "WHERE RNUM BETWEEN ? AND ? ";
+			
+		}else if(select.equals("writer")) {
+			
+			sql += " WHERE RECIPE_TYPE = 2"
+				 + " AND DELETE_STATUS = 'N'"
+				 + " AND RECIPE_WRITER LIKE '%' || ? || '%'"
+				 + " ORDER"
+				 + " BY ENROLL_DATE DESC"
+				 + " ) A"
+				 + ")"
+				 + "WHERE RNUM BETWEEN ? AND ? ";
+
+		}else if(select.equals("ingre")) {
+			 
+			sql += " JOIN TB_RECIPE_INGRE USING (RECIPE_NO)"
+				 + " WHERE RECIPE_TYPE = 2"
+				 + " AND DELETE_STATUS = 'N'"
+				 + " AND INGRE_NAME LIKE '%' || ? || '%'"
+				 + " ORDER"
+				 + " BY ENROLL_DATE DESC"
+				 + " ) A"
+				 + ")"
+				 + "WHERE RNUM BETWEEN ? AND ? ";
+			
+		}
+		
+		
+		try {
+			int startRow = (pi.getCurrentPage() -1) * pi.getBoardLimit() + 1;
+			int endRow = startRow + pi.getBoardLimit() -1;
+			
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, keyword);
+			pstmt.setInt(2, startRow);
+			pstmt.setInt(3, endRow);
+
+			
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				
+				list.add(new Recipe(rset.getString("RECIPE_TITLE"),
+									rset.getString("MEMBER_ID"),
+									rset.getInt("RECIPE_NO"),
+									rset.getString("ENROLL_DATE")));
+						   		   
+			}
+			
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return list;
+		
+	}
+	
+	
+	public int selectSearchListRestoreCount(Connection conn, String keyword, String select) {
+		int listCount = 0;
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		
+		String sql = prop.getProperty("selectSearchListCount");
+		
+		if(select.equals("title")) {
+			
+			sql += " FROM TB_RECIPE"
+			     + " WHERE RECIPE_TYPE = 2"
+				 + " AND DELETE_STATUS = 'Y'"
+				 + " AND RECIPE_TITLE LIKE '%' || ? || '%'";
+			
+		}else if(select.equals("writer")) {
+			
+			sql += " FROM TB_RECIPE"
+			     + " WHERE RECIPE_TYPE = 2"
+				 + " AND DELETE_STATUS = 'Y'"
+			     + " AND RECIPE_WRITER LIKE '%' || ? || '%'";
+			
+		}
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, keyword);
+			
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				listCount = rset.getInt("count");
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return listCount;
+		
+	}
+	
+	public ArrayList<Recipe> selectSearchRecipeListRestoreM(Connection conn, PageInfo pi, String keyword, String select){
+		ArrayList<Recipe> list = new ArrayList<>();
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		String sql = prop.getProperty("selectSearchRecipeListDelM");
+		
+		if(select.equals("title")) {
+			
+			sql += " WHERE RECIPE_TYPE = 2"
+				 + " AND DELETE_STATUS = 'Y'"
+				 + " AND RECIPE_TITLE LIKE '%' || ? || '%'"
+				 + " ORDER"
+				 + " BY ENROLL_DATE DESC"
+				 + "  ) A"
+				 + ")"
+				 + "WHERE RNUM BETWEEN ? AND ? ";
+			
+		}else if(select.equals("writer")) {
+			
+			sql += " WHERE RECIPE_TYPE = 2"
+				 + " AND DELETE_STATUS = 'Y'"
+				 + " AND RECIPE_WRITER LIKE '%' || ? || '%'"
+				 + " ORDER"
+				 + " BY ENROLL_DATE DESC"
+				 + " ) A"
+				 + ")"
+				 + "WHERE RNUM BETWEEN ? AND ? ";
+
+		}
+		
+		
+		try {
+			int startRow = (pi.getCurrentPage() -1) * pi.getBoardLimit() + 1;
+			int endRow = startRow + pi.getBoardLimit() -1;
+			
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, keyword);
+			pstmt.setInt(2, startRow);
+			pstmt.setInt(3, endRow);
+
+			
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				
+				list.add(new Recipe(rset.getString("RECIPE_TITLE"),
+									rset.getString("MEMBER_ID"),
+									rset.getInt("RECIPE_NO"),
+									rset.getString("ENROLL_DATE")));
+						   		   
+			}
+			
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return list;
+		
+	}
 }

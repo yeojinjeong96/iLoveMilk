@@ -175,20 +175,18 @@
         <br><br>
         <br><br>
 
-        <form action="" method="">
+        <form action="<%= contextPath %>/searchRestoreM.re?cpage=1" method="post">
 
             <table>
                 <tr>
                     <td>
-                        <select name="" style="height:30px;">
-                            <option value="">전체</option>
-                            <option value="">제목</option>
-                            <option value="">작성자</option>
-                            <option value="">삭제자</option>
+                        <select name="search-select" style="height:30px;">
+                            	<option value="title">제목</option>
+                                <option value="writer">작성자</option>
                         </select>
                     </td>
                     <td>
-                        <input type="text" name="" value="검색어를 입력하세요.">
+                        <input type="text" name="keyword" placeholder="검색어를 입력하세요." required>
                     </td>
                     <td>
                         <button type="submit">검색</button>

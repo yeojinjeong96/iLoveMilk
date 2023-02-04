@@ -91,20 +91,20 @@ public class QAService {
 		return result;
 	}
 	
-	public int selectAnswerListCount(int date) {
+	public int selectAnswerListCount(String fDate,String sDate) {
 		
 		Connection conn = getConnection();
 		
-		int result = new QADao().selectAnswerListCount(conn,date);
+		int result = new QADao().selectAnswerListCount(conn,fDate,sDate);
 		close(conn);
 		return result;
 	}
 	
-	public ArrayList<QA> selectAnswerList(PageInfo pi,int date){
+	public ArrayList<QA> selectAnswerList(PageInfo pi,String fDate, String sDate){
 		
 		Connection conn= getConnection();
 		
-		ArrayList<QA>list= new QADao().selectAnswerList(conn, pi,date);
+		ArrayList<QA>list= new QADao().selectAnswerList(conn, pi, fDate,  sDate);
 		
 		close(conn);
 		return list;

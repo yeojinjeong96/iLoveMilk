@@ -115,23 +115,14 @@
 			$("#q-list tbody tr").click(function(){
 				location.href='<%=contextPath%>/detailM.qa?no='+$(this).children().eq(0).text();
 			})
-						
-		})
-		
-		function orderQA(){
-			const value = $("select[name=select-qa] option").val();
 			
-			$.ajax({
-				url:"<%=contextPath%>/listM.qa?cpage=1",
-				type:"get",
-				data:{value:value},
-				success:function(){
-					location.reload();
+			$("select[name=select-qa]").on("change",function(){
+				if($(this).val() != ""){
+					location.href='<%=contextPath%>/listM.qa?cpage=1&order='+$(this).val();
 				}
 			})
-			
-			
-		}
+						
+		})
 	</script>
    
 </body>

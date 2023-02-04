@@ -231,7 +231,7 @@
 	                        SELECT 
 			                        O.ORDER_NO,
 			                        O.STATUS, 
-			                        NVL(WAYBILL, 0)WAYBILL,
+			                        NVL(WAYBILL, '미발급')WAYBILL,
 			                        MEMBER_ID,    
 			                        O.MEMBER_NO,
 			                        ORDER_NAME,
@@ -255,7 +255,7 @@
           SELECT
  		                        O.ORDER_NO,
 		                        O.STATUS, 
-		                        NVL(WAYBILL, 0)WAYBILL,
+		                        NVL(WAYBILL, '미발급')WAYBILL,
 		                        MEMBER_ID,    
 		                        O.MEMBER_NO,
 		                        ORDER_NAME,
@@ -278,9 +278,30 @@
 	      TB_ORDER
 	  SET 
 		    COURIER = ?,
-		    WAYBILL = ?
-	  
+		    WAYBILL = ?,
+	  		STATUS = 2
 	  WHERE ORDER_NO = ?	
+	</entry>
+	<entry key="releaseStock">
+	INSERT
+	  INTO TB_STOCK
+	  (
+	    STOCK_NO,
+	    PRODUCT_NO,
+	    COUNT, 
+	    STATUS
+	  )
+	 
+	SELECT  SEQ_SNO.NEXTVAL, PRODUCT_NO, COUNT, '출고'
+	FROM TB_ORDERDETAIL
+	WHERE ORDER_NO = ?
+	</entry>
+	
+	<entry key="wayCheck">
+	SELECT 
+		   COUNT(*) COUNT
+	  FROM TB_ORDER
+	 WHERE WAYBILL = ? 		   
 	</entry>
 	
 	<entry key="insertProduct">
