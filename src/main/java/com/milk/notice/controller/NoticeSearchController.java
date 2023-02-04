@@ -16,7 +16,7 @@ import com.milk.notice.model.vo.Notice;
 /**
  * Servlet implementation class NoticeSearchController
  */
-@WebServlet("/search.no")
+@WebServlet("/searchM.no")
 public class NoticeSearchController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        

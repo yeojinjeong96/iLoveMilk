@@ -109,12 +109,13 @@
             
             <%} }%>
             <br>
-            <form action="<%=contextPath %>/searchM.faq?cpage=1" method="get">
+            <form action="<%=contextPath %>/searchM.faq" method="get">
             	<%if (searchFaq ==null){ %>
                 <input type="text" name="searchFaq">
                 <%}else{ %>
                 <input tyle="text" name ="searchFaq" value="<%=searchFaq%>">
                 <%} %>
+                <input type="hidden" value=1 name="cpage">
                 <button type="submit">검색</button>
             </form>
         

@@ -52,6 +52,11 @@ public class FaqListManagerViewController extends HttpServlet {
 			endPage = maxPage;
 		}
 		
+	
+		if(request.getParameter("searchFaq") != null) {
+			String searchFaq= request.getParameter("searchFaq");
+		}
+		
 		PageInfo pi = new PageInfo(listCount,currentPage, pageLimit, boardLimit,maxPage,startPage,endPage);
 		
 		ArrayList<Faq>list= new FaqService().selectManagerFaqList(pi);
