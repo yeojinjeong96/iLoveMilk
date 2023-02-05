@@ -67,8 +67,8 @@
                 
                 <div align="left" style="width:680px;font-size: 13px;">
                     <br>
-                    <b>구분</b>
-                    <select name="delivery-option" id="delivery-option" style="font-size: 13px;">
+                    <b>상태</b>
+                    <select name="delivery-option" id="delivery-option" onchange="selectStatement(1);" style="font-size: 13px;">
                         <option value="1">배송전</option>
                         <option value="2">배송중</option>
                         <option value="3">배송완료</option>
@@ -90,7 +90,7 @@
 	                            <td>운송장</td>
 	                        </tr>
                         </thead>
-                         <tbody>
+                         <tbody class="delbody">
                         <%if(list.isEmpty()) {%>
                         	<tr colspan="7"> 조회된 데이터가 없습니다. </tr>
                         <%}else{ %>
@@ -280,6 +280,87 @@
         				})
         			
         			}
+        			
+        			function selectStatement(cpage, option){
+        				
+        				$.ajax({
+        					url : "<%=contextPath%>/orderStatement.ma",
+        					data : {cpage:cpage, option:$("#delivery-option option:selected").val()},
+        					success :function(o){
+
+									if(o){
+										
+										let val = "";
+										
+										if(o.olist.length == 0){
+											val += "<tr colspan="7"> 조회된 데이터가 없습니다. </tr>";
+				                        	
+				                            }else{ 
+				                            	
+				                           		for(let i =0; i< o.olist.length; i++){ 
+				    		                       
+				                           		val +=	"<tr>"
+				    		                         + "<td></td>"
+				    		                         + "<td>" + o.olist.orderNo + "</td>"
+				    		                         + "<td>" + o.olist.paymentDate() %></td>"
+				    		                         + "<td>" + o.olist.memberId%></td>"
+				    		                         + "<td>
+				    		                            	if(o.olist.status == 1){ 
+				    		                            	+	상품준비중
+				    		                            	}else if(o.olist.status == 2){ 
+				    		                            	+	배송중
+				    		                            	}else if(o.olist.status == 3){ 
+				    		                            	+	배송완료
+				    		                            	} 
+				    		                            	+ "</td>"
+				    		                            	+ " <td>" + o.olist.address + "</td>"
+				    		                            	+ " <td>"
+				    		                                <!-- 조건문 사용해서 운송장 완료하면 버튼비활성화시키기 -->
+				    		                                	if (o.olist.waybill == "미발급") {
+				    		                                + " <button type='button' onclick='issWaybill('o.olist.orderNo');' id='getWbtn' class='btn btn-outline-secondary btn-sm' data-toggle='modal' data-target='#delivery-info' style='font-size:10px;'>"+ 대기 + "</button>"
+				    		                                	}else{ 
+				    		                                +	"<button type='button' id='getWbtn' class='btn btn-outline-secondary btn-sm' data-toggle='modal' data-target='#delivery-info' disabled='disabled' style='font-size:10px;'>" + 완료 + "</button>"
+				    		                                	}
+				    		                                + "</td>"
+				    		                                + "</tr>";
+				    		                        
+				    	                        	} 
+				    	                  		}
+										
+										$(".delbody").html(val);
+										
+										
+					                    let value2 = "";
+					                    
+					                    
+					                    
+					                     if(o.spi.currentPage != 1){ 
+					                        	   value2 += "<button onclick='location.href='" + "<%=contextPath%>/orderStatement.ma?cpage=o.spi.currentPage-1 " + "';'>&lt;</button>";
+					                     		} 
+					          
+					                     for(let p=o.spi.startPage; p<=o.spi.endPage; p++){ 
+					                    	 value2+=" <button onclick='location.href='" + "<%=contextPath%>/orderStatement.ma?cpage=p" + "';'> " +  p + "</button>";
+					                       } 
+					         
+					                       if(o.spi.currentPage != o.spi.maxPage){
+					                    	   value2+=" <button onclick='location.href='" + "<%=contextPath%>/orderStatement.ma?cpage=o.spi.currentPage+1" + "';'>&gt;</button>";
+					                      } 
+					                   	$(".paging-area").html(value2);    
+										
+										
+										
+									}else{
+										alert("실패");
+									}
+        						
+        					}, error : function(){
+        						alert("배송상태 조회 ajax 통신실패");
+        					}
+        				});
+        				
+        			}
+        			
+        			
         		</script>
         		
             </div>

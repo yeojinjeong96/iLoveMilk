@@ -701,6 +701,72 @@ public class ProductDao {
 		
 	}
 	
+	public int countOrderStatement(Connection conn, int option) {
+		int listCount = 0;
+		ResultSet rset = null;
+		PreparedStatement pstmt = null;
+		
+		String sql = prop.getProperty("countOrderStatement");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setInt(1, option);
+			rset = pstmt.executeQuery();
+			if(rset.next()) {
+				listCount = rset.getInt("count");
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return listCount;
+	}
+	
+	public ArrayList<Order> selectOrderStatement(Connection conn, PageInfo pi, int option){
+		ResultSet rset = null;
+		ArrayList<Order> list = new ArrayList<>();
+		PreparedStatement pstmt = null;
+		String sql = prop.getProperty("selectOrderStatement");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			int startRow = (pi.getCurrentPage() -1) * pi.getBoardLimit() + 1;
+			int endRow = startRow + pi.getBoardLimit() -1;
+			
+			pstmt.setInt(1, option);
+			pstmt.setInt(2, startRow);
+			pstmt.setInt(3, endRow);
+			rset = pstmt.executeQuery();
+			while(rset.next()) {
+				list.add(new Order(
+						rset.getString("ORDER_NO"),
+						rset.getInt("STATUS"),
+						rset.getString("WAYBILL"),
+						rset.getString("MEMBER_ID"),
+						rset.getInt("MEMBER_NO"),
+						rset.getString("ORDER_NAME"),
+						rset.getString("ORDER_PHONE"),
+						rset.getString("ORDER_EMAIL"),
+						rset.getString("ADDRESS_NAME"),
+						rset.getString("ADDRESS"),
+						rset.getString("ADDRESS_TEL"),
+						rset.getInt("USE_POINT"),
+						rset.getString("COURIER"),
+						rset.getDate("PAYMENT_DATE")
+						));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return list;
+	}
+	
 	public int insertProduct(Connection conn, Product p) {
 		int result = 0;
 		PreparedStatement pstmt = null;

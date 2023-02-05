@@ -291,7 +291,7 @@ public class ProductService {
 			rollback(conn);
 		}
 		
-		
+		close(conn);
 		
 		return result1 * result2;
 	}
@@ -306,8 +306,33 @@ public class ProductService {
 		Connection conn = getConnection();
 		
 		int count = new ProductDao().wayCheck(conn, wn);
+		close(conn);
 		return count;
 		
+	}
+	
+	/**
+	 * 배송상태별 페이징처리를 위한 카운트
+	 * @author 이다혜
+	 * @return listCount
+	 */
+	public int countOrderStatement(int option) {
+		Connection conn = getConnection();
+		int listCount = new ProductDao().countOrderStatement(conn, option);
+		close(conn);
+		return listCount;
+	}
+	
+	/**
+	 * 배송상태별 리스트 조회
+	 * @author 이다혜
+	 * @return listCount
+	 */
+	public ArrayList<Order> selectOrderStatement(PageInfo pi, int option){
+		Connection conn = getConnection();
+		ArrayList<Order> list = new ProductDao().selectOrderStatement(conn, pi, option);
+		close(conn);
+		return list;
 	}
 	
 	

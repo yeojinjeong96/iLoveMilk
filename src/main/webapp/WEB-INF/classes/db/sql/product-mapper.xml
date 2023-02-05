@@ -304,6 +304,45 @@
 	 WHERE WAYBILL = ? 		   
 	</entry>
 	
+	<entry key="countOrderStatement">
+	SELECT 
+			COUNT(*)COUNT
+      FROM TB_ORDER	
+	 WHERE STATUS = ?	
+	</entry>
+	
+	<entry key="selectOrderStatement">
+	SELECT *
+	          FROM (
+	                SELECT ROWNUM RNUM, A.*
+	                  FROM (
+	    
+	                        SELECT 
+			                        O.ORDER_NO,
+			                        O.STATUS, 
+			                        NVL(WAYBILL, '미발급')WAYBILL,
+			                        MEMBER_ID,    
+			                        O.MEMBER_NO,
+			                        ORDER_NAME,
+			                        ORDER_PHONE,
+			                        ORDER_EMAIL,
+			                        ADDRESS_NAME,
+			                        O.ADDRESS,
+			                        ADDRESS_TEL,
+			                        USE_POINT,
+			                        NVL(COURIER, '미지정')COURIER,
+			                        PAYMENT_DATE
+		                       FROM TB_ORDER O
+		                       JOIN TB_MEMBER M ON (M.MEMBER_NO = O.MEMBER_NO)
+		                       JOIN TB_PAYMENT P ON (P.ORDER_NO = O.ORDER_NO)
+                               WHERE O.STATUS = ?
+		                       ORDER BY PAYMENT_DATE DESC
+	                       ) A
+	               )
+	         WHERE RNUM BETWEEN ? AND ?	
+	
+	</entry>
+	
 	<entry key="insertProduct">
 	INSERT
 	  INTO TB_PRODUCT

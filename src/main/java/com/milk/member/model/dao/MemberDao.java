@@ -782,7 +782,7 @@ public Member updateCheckPwd(Connection conn, String memberId, String memberPwd)
 	
 	public String upgradeResult(Connection conn, int no) {
 		String grade = "";
-		ResultSet rset = null;
+		ResultSet rset = null; 
 		PreparedStatement pstmt = null;
 		String sql = prop.getProperty("upgradeResult");
 		try {
