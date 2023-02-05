@@ -6,6 +6,10 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import com.milk.member.model.service.MemberService;
+import com.milk.member.model.vo.Review;
 
 /**
  * Servlet implementation class ReviewUpdateController
@@ -26,8 +30,29 @@ public class ReviewUpdateController extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+		
+		request.setCharacterEncoding("UTF-8");
+		
+		int reviewNo = Integer.parseInt(request.getParameter("reviewNo"));
+		String reviewContent = request.getParameter("reviewContent");
+		int star = Integer.parseInt(request.getParameter("star"));
+		
+		
+		Review r = new Review(reviewNo, reviewContent, star);
+		
+		int result = new MemberService().ReviewUpdate(r);
+		
+		HttpSession session = request.getSession();
+		if(result > 0) { // 실패
+			session.setAttribute("alertMsg", "수정에 실패했습니다");
+		}else { // 성공
+			
+			
+			session.setAttribute("alertMsg", "성공적으로 리뷰를 수정했습니다.");
+			response.sendRedirect(request.getContextPath() + "/reviewList.me");
+		
+		}
+		
 	}
 
 	/**

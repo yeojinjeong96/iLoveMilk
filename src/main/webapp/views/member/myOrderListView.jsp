@@ -148,7 +148,11 @@ ArrayList<Order> list2 = (ArrayList<Order>)request.getAttribute("list2");
 						                    				<div name="productImg" style="width:100px; height:100px;  float: left; magin:auto;"> 
 						                    					<img src="<%=o.getProductImg() %>" width="100%" height="100%"> 
 						                    				</div>
-							                    			<div style="float: left; padding-top:35px"> <a href="<%=contextPath %>/orderD.me?orderNo=<%=o.getOrderNo() %>"data-toggle="modal" data-target="#orderdetail"><%=o.getProductName() %> 외 <%= (o.getProductCount())-1%>건</a>  </div>
+							                    			<div style="float: left; padding-top:35px"> 
+							                    				<a href="<%=contextPath %>/orderD.me?orderNo=<%=o.getOrderNo() %>"data-toggle="modal" data-target="#orderdetail">
+							                    					<%=o.getProductName() %> 외 <%= (o.getProductCount())-1%>건
+							                    				</a>  
+							                    			</div>
 						                    			</td>
 						                    		</tr>
 						                    

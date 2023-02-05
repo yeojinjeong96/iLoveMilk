@@ -429,5 +429,33 @@ public class MemberService {
 		   return list;
 	   }
 	  
+	   /**
+	      *  작성한 리뷰 수정 서비스 
+	      */
+	   public int ReviewUpdate(Review r) {
+	         Connection conn = getConnection();
+	         int result = new MemberDao().ReviewUpdate(conn,r);
+	         
+	       
+	            
+	         if(result > 0) {
+	            commit(conn);
+	         }else {
+	            rollback(conn);
+	         }
+	         
+	         close(conn);
+	         
+	         return result;
+	         
+	      }
 	   
+
+	   
+	  public ArrayList<Point> pointList(int memberNo) {
+		  Connection conn = getConnection();
+		  ArrayList<Point> list = new MemberDao().pointList(conn, memberNo);
+		  close(conn);
+		  return list;
+	  }
 }
