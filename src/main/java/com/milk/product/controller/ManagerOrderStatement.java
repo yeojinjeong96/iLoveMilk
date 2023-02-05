@@ -37,6 +37,9 @@ public class ManagerOrderStatement extends HttpServlet {
 		
 		int option = Integer.parseInt(request.getParameter("option"));
 		int currentPage = Integer.parseInt(request.getParameter("cpage"));
+		
+		System.out.println(option + " | cpage : " + currentPage);
+		
 		int listCount = new ProductService().countOrderStatement(option);
 		int pageLimit = 10;
 		int boardLimit = 5;
@@ -49,6 +52,8 @@ public class ManagerOrderStatement extends HttpServlet {
 		
 		PageInfo pi = new PageInfo(listCount, currentPage, pageLimit, boardLimit, maxPage, startPage, endPage);
 		ArrayList<Order> list = new ProductService().selectOrderStatement(pi, option);
+		
+		System.out.println(list);
 		
 		HashMap <String, Object> map = new HashMap<>();
 		map.put("opi", pi);
