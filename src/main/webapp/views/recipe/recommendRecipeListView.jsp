@@ -77,9 +77,9 @@
        
         
         <div class="order" align="right">
-            <button type="button" class="btn btn-secondary btn-sm">최신순</button>
-            <button type="button" class="btn btn-secondary btn-sm">좋아요순</button>
-            <button type="button" class="btn btn-secondary btn-sm">조회순</button>
+            <button onclick="desc();" type="button" class="btn btn-secondary btn-sm">최신순</button>
+            <button onclick="asc();" type="button" class="btn btn-secondary btn-sm">좋아요순</button>
+            <button onclick="count();" type="button" class="btn btn-secondary btn-sm">조회순</button>
         </div>
         <br><br>
 
@@ -151,6 +151,16 @@
         	$(".thumbnail").click(function(){
         		location.href = "<%= contextPath %>/detailR.re?no=" + $(this).children('input').val();
         	})
+        	
+        	function desc(){
+        		location.href = "<%= contextPath %>/listR.re?cpage=1"
+        	}
+        	function asc(){
+        		location.href = "<%= contextPath %>/oldestlistR.re?cpage=1"
+        	}
+        	function count(){
+        		location.href = "<%= contextPath %>/countlistR.re?cpage=1"
+        	}
         </script>
         
     </div>
