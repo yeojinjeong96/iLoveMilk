@@ -154,7 +154,10 @@
                     			success:function(result){
                     				
                     				if(result){
-                    					alert("신고내역이 성공적으로 삭제되었습니다.");
+                    					var r = confirm("해당 신고내역을 삭제하시겠습니까?");
+                    					if(r){
+                    						alert("신고내역이 성공적으로 삭제되었습니다.");
+                    					}
                     				}
                     				
                     				

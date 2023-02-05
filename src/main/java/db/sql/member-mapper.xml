@@ -402,48 +402,79 @@
 	
 	<entry key = "selectUpMember">
 	
-         SELECT
-                 M.MEMBER_NO,
-                 MEMBER_ID,
-                MEMBER_NAME,
-                 MEMBER_GRADE,
-                 (
-                SELECT SUM(PRICE)
-                   FROM TB_ORDER
-                   JOIN TB_PAYMENT USING(ORDER_NO)
-                  WHERE MEMBER_NO = M.MEMBER_NO
-                 )TOTALPAY
-            FROM TB_MEMBER M
-           WHERE M.STATUS = 'Y'
-             AND 500000 <![CDATA[<=]]> (
-                                SELECT SUM(PRICE)
-                                     FROM TB_PAYMENT
-                                     JOIN TB_ORDER USING(ORDER_NO)
-                                    WHERE MEMBER_NO = M.MEMBER_NO
-                           )
-             AND  MEMBER_GRADE NOT LIKE '%'||'VIP'||'%'    
-            OR 300000 <![CDATA[<=]]> (
-                                SELECT SUM(PRICE)
-                                     FROM TB_PAYMENT
-                                     JOIN TB_ORDER USING(ORDER_NO)
-                                    WHERE MEMBER_NO = M.MEMBER_NO
-                           )
-             AND  MEMBER_GRADE NOT LIKE '%'||'GOLD'||'%'     
-            OR 100000 <![CDATA[<=]]> (
-                                SELECT SUM(PRICE)
-                                     FROM TB_PAYMENT
-                                     JOIN TB_ORDER USING(ORDER_NO)
-                                    WHERE MEMBER_NO = M.MEMBER_NO
-                           )
-             AND  MEMBER_GRADE NOT LIKE '%'||'SILVER'||'%'     
-            OR 100000 <![CDATA[>]]> (
-                                SELECT SUM(PRICE)
-                                     FROM TB_PAYMENT
-                                     JOIN TB_ORDER USING(ORDER_NO)
-                                    WHERE MEMBER_NO = M.MEMBER_NO
-                           )
-             AND  MEMBER_GRADE NOT LIKE '%'||'GREEN'||'%'   
-	
+
+                        SELECT
+                                M.MEMBER_NO,
+                                MEMBER_ID,
+                               MEMBER_NAME,
+                                MEMBER_GRADE,
+                                (
+                               SELECT SUM(PRICE)
+                                  FROM TB_ORDER
+                                  JOIN TB_PAYMENT USING(ORDER_NO)
+                                 WHERE MEMBER_NO = M.MEMBER_NO
+                                )TOTALPAY
+                           FROM TB_MEMBER M
+                          WHERE M.STATUS = 'Y'
+                            AND(
+                            (
+                                500000 <![CDATA[<=]]> (
+                                                   SELECT SUM(PRICE)
+                                                        FROM TB_PAYMENT
+                                                        JOIN TB_ORDER USING(ORDER_NO)
+                                                       WHERE MEMBER_NO = M.MEMBER_NO
+                                              ) 
+                              AND  300000 > (
+                                                   SELECT SUM(PRICE)
+                                                        FROM TB_PAYMENT
+                                                        JOIN TB_ORDER USING(ORDER_NO)
+                                                       WHERE MEMBER_NO = M.MEMBER_NO
+                                              ) 
+                                              
+                                 AND  MEMBER_GRADE NOT LIKE '%VIP%'  
+                                )
+                            OR(
+                                300000 <![CDATA[<=]]> (
+                                                   SELECT SUM(PRICE)
+                                                        FROM TB_PAYMENT
+                                                        JOIN TB_ORDER USING(ORDER_NO)
+                                                       WHERE MEMBER_NO = M.MEMBER_NO
+                                              )
+                              AND  500000 > (
+                                                   SELECT SUM(PRICE)
+                                                        FROM TB_PAYMENT
+                                                        JOIN TB_ORDER USING(ORDER_NO)
+                                                       WHERE MEMBER_NO = M.MEMBER_NO
+                                              ) 
+                                               
+                                 AND  MEMBER_GRADE NOT LIKE '%GOLD%'  
+                            ) 
+                            OR(
+                                100000 <![CDATA[<=]]> (
+                                                   SELECT SUM(PRICE)
+                                                        FROM TB_PAYMENT
+                                                        JOIN TB_ORDER USING(ORDER_NO)
+                                                       WHERE MEMBER_NO = M.MEMBER_NO
+                                              )
+                              AND  300000 > (
+                                                   SELECT SUM(PRICE)
+                                                        FROM TB_PAYMENT
+                                                        JOIN TB_ORDER USING(ORDER_NO)
+                                                       WHERE MEMBER_NO = M.MEMBER_NO
+                                              ) 
+                                               
+                                AND  MEMBER_GRADE NOT LIKE '%SILVER%'  
+                            )
+                            OR(
+                                100000 > (
+                                                       SELECT SUM(PRICE)
+                                                            FROM TB_PAYMENT
+                                                            JOIN TB_ORDER USING(ORDER_NO)
+                                                           WHERE MEMBER_NO = M.MEMBER_NO
+                                                  ) AND  MEMBER_GRADE NOT LIKE '%GREEN%'
+                            )
+                          )  
+                          	
 	</entry>
 	
 

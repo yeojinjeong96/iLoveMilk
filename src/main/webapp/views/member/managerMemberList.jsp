@@ -41,7 +41,8 @@ ArrayList<Member> ulist = (ArrayList<Member>)request.getAttribute("ulist");
     }
     #mem-5{
         width:100%;
-        height:30%;
+        height:300px;
+        overflow:scroll;
     }
 
 
@@ -381,7 +382,7 @@ ArrayList<Member> ulist = (ArrayList<Member>)request.getAttribute("ulist");
                 <!-- Modal body -->
                 <div class="modal-body">
                 
-                <form action="<%=contextPath %>/memPointCh.ma" method="post">
+                <form action="<%=contextPath %>/memPointCh.ma" method="post" >
                         <input type="hidden" name="" value="">
                        
 	                        <table style="width:100%;" class="table table-borderless">
@@ -425,9 +426,10 @@ ArrayList<Member> ulist = (ArrayList<Member>)request.getAttribute("ulist");
             
             
                 <div id="mem-4" >
-                        <p  style="font-size:20px; line-height: 90px; float:left;"><b>등급변경</b></p> 
+                        <p  style="font-size:20px; line-height: 90px; float:left;"><b>등급관리</b></p> 
                 </div>
-                <div id="mem-5">
+                <div id="mem-5" data-spy="scroll" data-offset="50" >
+               
                     <table class="upmember-info" style="width:100%; text-align:center;" border=1>
                         <thead>
                             <tr>
@@ -440,26 +442,32 @@ ArrayList<Member> ulist = (ArrayList<Member>)request.getAttribute("ulist");
                             </tr>
                             </thead>
                             <tbody class="upmemContent">
-                            <%if(list.isEmpty()){ %>
+                            <%if(ulist.isEmpty()){ %>
                                 <tr>
                                     <td colspan="6">등급변경대상 회원이 없습니다.</td>
                                 </tr>
+                                
                             <%}else{ %>
+                            
                                 <%for(Member m : ulist){ %>
-                                    <tr>
-                                        <td><%=m.getMemberNo() %></td>
-                                        <td><%=m.getMemberId() %></td>
-                                        <td><%=m.getMemberName() %></td>
-                                        <td><%=m.getMemberGrade() %></td>
-                                        <td><%=m.getTotalpay() %></td>
-                                        <td>
-                                            <button type="button" id="btnUpgrade" onclick="memUpgrade(<%=m.getMemberNo() %>);" class="btn btn-outline-secondary btn-sm" style="font-size:15px;">변경</button>
-                                        </td>
-                                    </tr>
+
+	                                    <tr>
+	                                        <td><%=m.getMemberNo() %></td>
+	                                        <td><%=m.getMemberId() %></td>
+	                                        <td><%=m.getMemberName() %></td>
+	                                        <td><%=m.getMemberGrade() %></td>
+	                                        <td><%=m.getTotalpay() %></td>
+	                                        <td>
+	                                            <button type="button" id="btnUpgrade" onclick="memUpgrade(<%=m.getMemberNo() %>);" class="btn btn-outline-secondary btn-sm" style="font-size:15px;">변경</button>
+	                                        </td>
+	                                    </tr>
+                                    
                                 <%} %>
+                                
                             <%} %>
                         </tbody>
                     </table>
+                   
                 </div>
 
                 <script>
