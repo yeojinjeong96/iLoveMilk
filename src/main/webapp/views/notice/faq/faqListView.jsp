@@ -64,9 +64,9 @@
             <div class="search">
                 <form action="<%=contextPath %>/search.faq" method="get" >  
                 		<%if(searchFaq !=null){ %>
-                		<input type="text" name="searchFaq" placeholder="검색어를 입력하세요." value="<%=searchFaq%>"><button type="submit" >검색</button> 
+                		 <input type="text" name="searchFaq" placeholder="검색어를 입력하세요." class=" input-sm" required value="<%=searchFaq%>"><button type="submit" class="btn btn-primary btn-sm">검색</button> 
                 		<%}else{ %>
-                        <input type="text" name="searchFaq" placeholder="검색어를 입력하세요."><button type="submit" >검색</button>   
+                         <input type="text" name="searchFaq" placeholder="검색어를 입력하세요." class=" input-sm" required><button type="submit" class="btn btn-primary btn-sm">검색</button>   
                         <%} %>           
                         <input type="hidden" name="cpage" value="1">
                 </form>     
@@ -134,13 +134,13 @@
             <%if(searchFaq!=null){ %>
             <div class="paging-area" >
                 <%if(pi.getCurrentPage()!=1){ %>
-                <button onclick="location.href='<%=contextPath%>/search.faq?cpage=<%=pi.getCurrentPage()-1%>';">&lt;</button>
+                <button onclick="location.href='<%=contextPath%>/search.faq?cpage=<%=pi.getCurrentPage()-1%>';" class="btn btn-primary btn-sm">&lt;</button>
 	            <%} %>   
 	            <%for(int p= pi.getStartPage(); p<=pi.getEndPage(); p++){ %>
-	                <button onclick="location.href='<%=contextPath%>/search.faq?cpage=<%=p%>';"><%=p %></button>
+	                <button onclick="location.href='<%=contextPath%>/search.faq?cpage=<%=p%>';" class="btn btn-primary btn-sm"><%=p %></button>
 	            <%} %>
 	            <%if(pi.getCurrentPage()!=pi.getMaxPage()){ %>
-	                <button onclick="location.href='<%=contextPath%>/search.faq?cpage=<%=pi.getCurrentPage()+1%>';">&gt;</button>
+	                <button onclick="location.href='<%=contextPath%>/search.faq?cpage=<%=pi.getCurrentPage()+1%>';" class="btn btn-primary btn-sm">&gt;</button>
             	<%} %>
            	</div>
          	 <%}else{ %>
