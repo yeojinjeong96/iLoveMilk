@@ -666,6 +666,7 @@
    		SELECT 
 		       PRODUCT_NAME
 		     , PRODUCT_IMG
+		     , ORDE.PRODUCT_NO
 		  FROM TB_ORDERDETAIL ORDE
 		  JOIN TB_PRODUCT PRO ON PRO.PRODUCT_NO = ORDE.PRODUCT_NO
 		  JOIN TB_ORDER ORD ON ORD.ORDER_NO = ORDE.ORDER_NO
@@ -697,6 +698,39 @@
 	 ORDER 
 	    BY POINT_NO DESC
    
+   </entry>
+   
+   <entry key="insertReview">
+   		INSERT
+		  INTO TB_REVIEW
+		 
+		      (
+		        REVIEW_NO
+		      , MEMBER_NO
+		      , PRODUCT_NO
+		      , REVIEW_CONTENT
+		      , STAR
+		      , R_ENROLL_DATE
+		      , R_MODIFY_DATE
+		      , R_REPORT
+		      , R_STATUS
+		      )
+		     
+		      VALUES
+		      (
+		        SEQ_REVNO.NEXTVAL
+		      , ?
+		      , (SELECT PRODUCT_NO
+		           FROM TB_PRODUCT
+		          WHERE PRODUCT_NO = ?
+		        )
+		      , ?
+		      , ?
+		      , DEFAULT
+		      , DEFAULT
+		      , DEFAULT
+		      , DEFAULT
+		      )
    </entry>
    
 </properties>

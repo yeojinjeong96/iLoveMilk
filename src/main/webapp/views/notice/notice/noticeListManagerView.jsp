@@ -23,7 +23,7 @@
     
     tbody>tr:hover{cursor: pointer;}
     
-    
+
     
 </style>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
@@ -47,15 +47,15 @@
                     <br>
               
                         <div class="btn-area" align="right">
-                            <a href="<%=contextPath%>/enroll.no" class="btn btn-secondary btn-sm">공지작성</a>
-                            <button type="button" class="btn btn-secondary btn-sm" onclick="deleteNotice();">선택삭제</button>
+                            <a href="<%=contextPath%>/enroll.no"  class="btn btn-primary btn-sm">공지작성</a>
+                            <button type="button" class="btn btn-primary btn-sm" onclick="deleteNotice();">선택삭제</button>
                         </div>
                         <br>
-                        <table id="notice-list" border="1" class="text-center" >
-                            <thead>
+                        <table id="notice-list" class="text-center table" >
+                            <thead class="thead-light">
                                 <tr>
                                     <th>선택</th>
-                                    <th width="70" >글번호</th>
+                                    <th width="80" >글번호</th>
                                     <th width="300" >제목</th>
                                     <th width="100">작성자</th>
                                     <th width="100">작성일</th>
@@ -93,26 +93,26 @@
                   	<%if(searchNo == null){ %>
                     <div class="paging-area" >
                     <%if(pi.getCurrentPage()!=1){ %>
-                        <button onclick="location.href='<%=contextPath%>/listM.no?cpage=<%=pi.getCurrentPage()-1%>';">&lt;</button>
+                        <button onclick="location.href='<%=contextPath%>/listM.no?cpage=<%=pi.getCurrentPage()-1%>';" class="btn btn-primary btn-sm">&lt;</button>
                     <%} %>   
                     <%for(int p= pi.getStartPage(); p<=pi.getEndPage(); p++){ %>
-                        <button onclick="location.href='<%=contextPath%>/listM.no?cpage=<%=p%>';"><%=p %></button>
+                        <button onclick="location.href='<%=contextPath%>/listM.no?cpage=<%=p%>';"class="btn btn-primary btn-sm"><%=p %></button>
                     <%} %>
                     <%if(pi.getCurrentPage()!=pi.getMaxPage()){ %>
-                        <button onclick="location.href='<%=contextPath%>/listM.no?cpage=<%=pi.getCurrentPage()+1%>';">&gt;</button>
+                        <button onclick="location.href='<%=contextPath%>/listM.no?cpage=<%=pi.getCurrentPage()+1%>';" class="btn btn-primary btn-sm">&gt;</button>
                     <%} %>
                     </div>
                     <br>
                     <%}else{ %>
                     <div class="paging-area" >
                     <%if(pi.getCurrentPage()!=1){ %>
-                        <button onclick="location.href='<%=contextPath%>/search.no?cpage=<%=pi.getCurrentPage()-1%>';">&lt;</button>
+                        <button onclick="location.href='<%=contextPath%>/search.no?cpage=<%=pi.getCurrentPage()-1%>';" class="btn btn-primary btn-sm">&lt;</button>
                     <%} %>   
                     <%for(int p= pi.getStartPage(); p<=pi.getEndPage(); p++){ %>
-                        <button onclick="location.href='<%=contextPath%>/search.no?cpage=<%=p%>';"><%=p %></button>
+                        <button onclick="location.href='<%=contextPath%>/search.no?cpage=<%=p%>';"  class="btn btn-primary btn-sm"><%=p %></button>
                     <%} %>
                     <%if(pi.getCurrentPage()!=pi.getMaxPage()){ %>
-                        <button onclick="location.href='<%=contextPath%>/search.no?cpage=<%=pi.getCurrentPage()+1%>';">&gt;</button>
+                        <button onclick="location.href='<%=contextPath%>/search.no?cpage=<%=pi.getCurrentPage()+1%>';"  class="btn btn-primary btn-sm">&gt;</button>
                     <%} %>
                     </div>
               		<%}} %>

@@ -17,16 +17,18 @@
 	</entry>
 	
 	<entry key="needReceivingProduct">
-		SELECT
-		       ROWNUM
-		     , PRODUCT_NO
-		     , PRODUCT_NAME || ' ' || CAPACITY || '(mL/g)' PRODUCT_NAME
-		     , STOCK
-		  FROM TB_PRODUCT
-		 WHERE STATUS = 'Y'
-  <![CDATA[AND STOCK < 10]]>
-		 ORDER
-		    BY STOCK
+		SELECT ROWNUM, A.*
+		  FROM (
+		        SELECT
+				       PRODUCT_NO
+				     , PRODUCT_NAME || ' ' || CAPACITY || '(mL/g)' PRODUCT_NAME
+				     , STOCK
+				  FROM TB_PRODUCT
+				 WHERE STATUS = 'Y'
+		  <![CDATA[AND STOCK < 10]]>
+				 ORDER
+				    BY STOCK
+		       ) A
 	</entry>
 	
 	<entry key="recentPayment">

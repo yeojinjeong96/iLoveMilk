@@ -35,9 +35,9 @@
             <br>
             <form action="<%=contextPath%>/insert.qa" method="post" enctype="multipart/form-data">
             	<input type="hidden" name="memberNo" value="<%=m.getMemberNo()%>">
-                <table border="1" class="qa-form">
+                <table border="1" class="qa-form table">
                     <tr>
-                        <th width="150" class="text-center">* 말머리</th>
+                        <th width="150" class="text-center" >* 말머리</th>
                         <td width="400">
                             <select onchange="scCateShow();"  name="fCate"  id="fCate" required>
                                 <option>- 1차 카테고리 -</option>
@@ -59,7 +59,7 @@
                         </td>
                     </tr>
                     <tr>
-                        <th class="text-center">* 제목</th>
+                        <th class="text-center" >* 제목</th>
                         <td><input type="text" name="title" style="width: 300px;" maxlength="10" required></td>
                     </tr>
                     <tr>

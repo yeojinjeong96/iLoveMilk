@@ -407,9 +407,9 @@ public class MemberService {
 	  */
 	   public ArrayList<ProductLike> productLikeList(int memberNo){
 			Connection conn = getConnection();
-			ArrayList<ProductLike> list = new MemberDao().productLikeList(conn, memberNo);
+			ArrayList<ProductLike> list2 = new MemberDao().productLikeList(conn, memberNo);
 			close(conn);
-			return list;
+			return list2;
 	   }
 	   
 	  /**
@@ -477,5 +477,25 @@ public class MemberService {
 		  ArrayList<Point> list = new MemberDao().pointList(conn, memberNo);
 		  close(conn);
 		  return list;
+	  }
+	  
+	   
+	 /**
+	   *  리뷰등록 서비스 
+	   */
+	  
+	  public int insertReview (Review r) {
+			Connection conn = getConnection();
+			int result = new MemberDao().insertReview(conn, r);
+			
+			if(result > 0) { // 성공
+				commit(conn);
+			}else { // 실패
+				rollback(conn);
+			}
+			
+			close(conn);
+			
+			return result;
 	  }
 }

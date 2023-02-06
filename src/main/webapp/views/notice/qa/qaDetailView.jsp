@@ -42,7 +42,7 @@
             <h2 align="left">나의 1:1문의 </h2>
             <hr>
             <br>
-            <table border="1" class="question-area, text-center" style="width: 700px;">
+            <table  class="question-area text-center table" style="width: 700px;">
                 <tr >
                     <td colspan="3">[<%=q.getfCategory() %>/<%=q.getsCategory() %>]&nbsp;<%=q.getqTitle() %></td>
                              
@@ -82,15 +82,16 @@
             <!--답변 미완료시-->
               <%if(q.getAnswerStatus().equals("N")){ %>
             <div align="center">
-                <a href="<%=contextPath%>/delete.q?qNo=<%=q.getqNo()%>">삭제</a>
-                <a href="<%=contextPath%>/updateForm.qa?qNo=<%=q.getqNo()%>">수정</a>
-                <a href="<%=contextPath%>/list.qa?cpage=1">목록</a>
+                <a href="<%=contextPath%>/delete.q?qNo=<%=q.getqNo()%>" class="btn btn-sm btn-primary">삭제</a>
+                <a href="<%=contextPath%>/updateForm.qa?qNo=<%=q.getqNo()%>" class="btn btn-sm btn-primary">수정</a>
+                <a href="<%=contextPath%>/list.qa?cpage=1" class="btn btn-sm btn-primary">목록</a>
             </div>
             <%}else{ %>
             <!--답변완료시-->
             <br>
+            <hr>
             <div class="answer-area, text-center" style="width: 700px;">
-                <table border="1" style="width: 700px;">
+                <table class="table" style="width: 700px;">
                     <tr>
                         <td colspan="2"><%=q.getaTitle() %></td>
                     
@@ -109,7 +110,7 @@
                     </tr>
                 </table>
                 <br><br>
-                <button type="button" onclick=location.href="<%=contextPath%>/list.qa?cpage=1">목록으로</button>
+                <button type="button" onclick=location.href="<%=contextPath%>/list.qa?cpage=1" class="btn btn-sm btn-primary">목록으로</button>
 
             </div>
             <%} %>

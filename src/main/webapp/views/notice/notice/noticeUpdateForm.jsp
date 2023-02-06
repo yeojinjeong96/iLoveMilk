@@ -61,12 +61,40 @@
                     </tr>
                 </table>
                 <br>
-                <button type="submit">수정하기</button>
-                <button type="reset">초기화</button>
-                <button type="button">삭제하기</button>
+                <button type="submit" class="btn btn-sm btn-secondary">수정하기</button>
+                <button type="reset" class="btn btn-sm btn-secondary">초기화</button>
+                <button type="button" class="btn btn-sm btn-danger" onclick="deleteNotice();">삭제하기</button>
             </form>
         </div>
     </div>
-  
+  	<script>
+  	function deleteNotice(){
+		const delNoArr = new Array();
+
+			delNoArr.push(<%=n.getNoticeNo() %>);
+	
+		$.ajax({
+			url:"<%=contextPath%>/delete.no",
+			data:{delNoArr: delNoArr},
+			type:"post",
+			traditional:true,
+			success:function(result){
+				if(result>0){
+					alert("공지사항 삭제 성공");
+                    location.href="<%=contextPath%>/listM.no?cpage=1"
+				}else{
+					alert("공지사항 삭제 실패");
+				}
+		
+				
+			},
+			error:function(){
+				console.log("공지사항 삭제 ajax 통신 실패");
+			}
+		
+		})
+		
+	}
+  	</script>
 </body>
 </html>

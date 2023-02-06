@@ -899,7 +899,7 @@ public Member updateCheckPwd(Connection conn, String memberId, String memberPwd)
 		      
 		      ResultSet rset = null;
 		      PreparedStatement pstmt = null;
-		      ArrayList<ProductLike> list = new ArrayList<>();
+		      ArrayList<ProductLike> list2 = new ArrayList<>();
 		      
 		      String sql = prop.getProperty("productLikeList");
 		      
@@ -912,7 +912,7 @@ public Member updateCheckPwd(Connection conn, String memberId, String memberPwd)
 		         
 		         while(rset.next()) {
 		            
-		            list.add(new ProductLike (
+		            list2.add(new ProductLike (
 		                  rset.getInt("PRODUCT_NO"),
 		                  rset.getInt("MEMBER_NO"),
 		                  rset.getDate("P_LIKE_DATE"),
@@ -929,7 +929,7 @@ public Member updateCheckPwd(Connection conn, String memberId, String memberPwd)
 		         close(rset);
 		         close(pstmt);
 		      }
-		      return list;
+		      return list2;
 		   }
 	
 	   public ArrayList<Order> myOrderList(Connection conn, int memberNo) {
@@ -984,6 +984,7 @@ public Member updateCheckPwd(Connection conn, String memberId, String memberPwd)
 			
 			while(rset.next()) {
 				list.add(new Review(
+						 rset.getInt("PRODUCT_NO"),
 						 rset.getString("PRODUCT_NAME"),
 						 rset.getString("PRODUCT_IMG")
 						)); 
@@ -1096,4 +1097,30 @@ public Member updateCheckPwd(Connection conn, String memberId, String memberPwd)
 		   
 		   return list;
 	   }
+	   
+	   public int insertReview(Connection conn, Review r) {
+			
+			//System.out.println(m);
+			int result = 0;
+			PreparedStatement pstmt = null;
+			String sql = prop.getProperty("insertReview");
+			
+			try {
+				pstmt=conn.prepareStatement(sql);
+				pstmt.setInt(1, r.getMemberNo());
+				pstmt.setInt(2, r.getProductNo());
+				pstmt.setString(3, r.getReviewContent());
+				pstmt.setInt(4, r.getStar());
+				
+				result = pstmt.executeUpdate();
+				
+			} catch (SQLException e) {
+				e.printStackTrace();
+			} finally {
+				close(pstmt);
+			}
+			
+			return result;
+		}  
+	   
 }

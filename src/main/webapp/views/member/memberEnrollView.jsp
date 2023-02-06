@@ -106,18 +106,10 @@
 						<td>* 이메일</td>
 						<td>
 							<input type="email" name="email"  id ="inputEmailForm" required placeholder="aaa@ilovemilk.com">
-							<button type="button" class="btn btn-outline-secondary btn-sm"  id="emailAuthBtn" >인증번호발송</button>
 							<div class = "pop4" id= "pop4">올바르지 않은 이메일 양식입니다.</div>
 						</td>
 					</tr>
-	                <tr>
-						<td></td>
-						<td>
-							<input type="text" name="authCode" id="inputAuthCode" maxlength="10" disabled="disabled" required>
-							<button  id="authCodeCheckBtn" type="button" disabled="disabled" class="btn btn-outline-secondary btn-sm" >인증확인</button>
-							
-						</td>
-					</tr>
+	                
 					<tr>
 						<td>&nbsp;&nbsp;주소</td>
 						<td>

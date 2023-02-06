@@ -70,8 +70,8 @@
                 
                 </table>
                 <br>
-                <button type="button" onclick="history.back();">이전으로</button>
-                <button type="submit">수정하기</button>
+                <button type="button" onclick="history.back();" class="btn btn-sm btn-secondary">이전으로</button>
+                <button type="submit" class="btn btn-sm btn-secondary">수정하기</button>
 
                 
             </form>

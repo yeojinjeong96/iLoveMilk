@@ -55,7 +55,7 @@
             <br>
 			<form action="<%=contextPath%>/list.qa" method="get">
         
-                <div class="select-area" align="left" >        
+                <div class="select-area" align="left">        
                     조회기간&nbsp;
                     <button type="button" name="dateBtn" value="0" class="dateBtn">오늘</button>&nbsp;
                     <button type="button" name="dateBtn" value="7" class="dateBtn">7일</button>&nbsp;
@@ -72,8 +72,8 @@
 			
             </form>
             <br>
-            <table align="center" border="1" id="qa-list">
-                <tr>
+            <table align="center" class="table" id="qa-list">
+                <tr  class="thead-light">
                     <th width="100" height="30">문의날짜</th>
                     <th width="150">카테고리</th>
                     <th width="350" >제목</th>
@@ -111,13 +111,13 @@
         <br>
         <div class="paging-area" >
             <%if(pi.getCurrentPage()!=1){ %>
-                <button onclick="location.href='<%=contextPath%>/list.qa?cpage=<%=pi.getCurrentPage()-1%>';">&lt;</button>
+                <button class="btn btn-sm btn-primary" onclick="location.href='<%=contextPath%>/list.qa?cpage=<%=pi.getCurrentPage()-1%>';">&lt;</button>
             <%} %>   
             <%for(int p= pi.getStartPage(); p<=pi.getEndPage(); p++){ %>
-                <button onclick="location.href='<%=contextPath%>/list.qa?cpage=<%=p%>';"><%=p %></button>
+                <button class="btn btn-sm btn-primary" onclick="location.href='<%=contextPath%>/list.qa?cpage=<%=p%>';"><%=p %></button>
             <%} %>
             <%if(pi.getCurrentPage()!=pi.getMaxPage()){ %>
-                <button onclick="location.href='<%=contextPath%>/list.qa?cpage=<%=pi.getCurrentPage()+1%>';">&gt;</button>
+                <button class="btn btn-sm btn-primary" onclick="location.href='<%=contextPath%>/list.qa?cpage=<%=pi.getCurrentPage()+1%>';">&gt;</button>
             <%} %>
           </div>
     </div>

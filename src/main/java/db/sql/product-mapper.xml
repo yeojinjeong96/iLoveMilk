@@ -377,7 +377,7 @@
 		SELECT
 		       COUNT(*) COUNT
 		  FROM TB_PRODUCT
-		 WHERE STATUS = 'Y'
+		 WHERE STATUS = 'Y' 
 	</entry>
 	
 	
@@ -394,7 +394,7 @@
 		                     , STOCK
 		                     , BRAND
 		                  FROM TB_PRODUCT B
-		                 WHERE STATUS = 'Y'
+		                 WHERE STATUS = 'Y' 
 	</entry>
 	
 	<entry key="productDetail">

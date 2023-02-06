@@ -133,7 +133,7 @@
                     <td><%= r.getReplyNo() %></td>
                     <td><%= r.getReportContent() %></td>
                     <td><%= r.getMemberNo() %></td>
-                    <td><a href="<%= contextPath %>/detail.re?no=<%= r.getRefNo() %>"><%= r.getRecipeTItle() %></a></td>
+                    <td><%= r.getRecipeTItle() %></td>
                     <td><%= r.getReplyContent() %></td>
                 </tr>
                 <% } %>

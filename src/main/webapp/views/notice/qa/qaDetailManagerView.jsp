@@ -20,7 +20,7 @@
         width:100%;
     }
     .a a{text-decoration: none;
-    color:black}
+    color:blue}
     
 </style>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
@@ -39,7 +39,7 @@
             <h2 align="left">미답변 문의 </h2>
             <hr>
             <br>
-            <table  width="700px" border="1" class="text-center">
+            <table  width="700px" border="1" class="text-center table">
                 <tr>
                     <th>제목</th>
                     <td><%=q.getqTitle() %></td>
@@ -80,12 +80,12 @@
                 </tr>
             </table>
             <br>
-            <button type="button" onclick="showForm();">답변하기</button>
+            <button type="button" onclick="showForm();" class="btn btn-sm btn-primary">답변하기</button>
             <br>
             <br>
                 <form action="<%=contextPath%>/enroll.a" id="answer-form" style="display: none;">
                     <input type="hidden" name="qNo" value="<%=q.getqNo()%>">
-                    <table id="answer-form">
+                    <table id="answer-form" class="table">
                         <tr>
                             <th width="50">제목</th>
                             <td width="650"><input type="text" name="title" placeholder="제목을 입력하세요" required></td>
@@ -99,7 +99,7 @@
 
                     </table>
                     <br>
-                    <button type="submit">답변완료</button>
+                    <button type="submit" class="btn btn-sm btn-primary">답변완료</button>
                 </form>
                 <br>
                 <div align="right" style="width:700px" class="a">

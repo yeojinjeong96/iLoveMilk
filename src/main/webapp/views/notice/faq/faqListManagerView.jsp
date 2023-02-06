@@ -45,15 +45,15 @@
             <br>
         
                 <div class="btn-area" align="right">
-                    <button type="button" onclick="location.href='<%=contextPath%>/enroll.faq';">FAQ 작성</button>
-                    <button type="submit" onclick="deleteFaq();">선택삭제</button>
+                    <button type="button" onclick="location.href='<%=contextPath%>/enroll.faq';"  class="btn btn-primary btn-sm">FAQ 작성</button>
+                    <button type="submit" onclick="deleteFaq();"  class="btn btn-primary btn-sm">선택삭제</button>
                 </div>
                 <br>
                 
-                <table border="1" class="faq-list">
-                   <thead>
+                <table  class="faq-list table" >
+                   <thead class="thead-light">
                     <tr onclick="event.cancelBubble=true">
-                        <th width="30">선택</th>
+                        <th width="70">선택</th>
                         <th width="100">글번호</th>
                         <th width="200">카테고리</th>
                         <th width="350">질문</th>
@@ -85,25 +85,25 @@
             <%if(searchFaq == null){ %>
             <div class="paging-area" >
                 <%if(pi.getCurrentPage()!=1){ %>
-                <button onclick="location.href='<%=contextPath%>/listM.faq?cpage=<%=pi.getCurrentPage()-1%>';">&lt;</button>
+                <button onclick="location.href='<%=contextPath%>/listM.faq?cpage=<%=pi.getCurrentPage()-1%>';"  class="btn btn-primary btn-sm">&lt;</button>
 	            <%} %>   
 	            <%for(int p= pi.getStartPage(); p<=pi.getEndPage(); p++){ %>
-	                <button onclick="location.href='<%=contextPath%>/listM.faq?cpage=<%=p%>';"><%=p %></button>
+	                <button onclick="location.href='<%=contextPath%>/listM.faq?cpage=<%=p%>';"  class="btn btn-primary btn-sm"><%=p %></button>
 	            <%} %>
 	            <%if(pi.getCurrentPage()!=pi.getMaxPage()){ %>
-	                <button onclick="location.href='<%=contextPath%>/listM.faq?cpage=<%=pi.getCurrentPage()+1%>';">&gt;</button>
+	                <button onclick="location.href='<%=contextPath%>/listM.faq?cpage=<%=pi.getCurrentPage()+1%>';"  class="btn btn-primary btn-sm">&gt;</button>
             	<%} %>
             </div>
             <%}else{ %>
             <div class="paging-area" >
                 <%if(pi.getCurrentPage()!=1){ %>
-                <button onclick="location.href='<%=contextPath%>/searchM.faq?cpage=<%=pi.getCurrentPage()-1%>';">&lt;</button>
+                <button onclick="location.href='<%=contextPath%>/searchM.faq?cpage=<%=pi.getCurrentPage()-1%>';"  class="btn btn-primary btn-sm">&lt;</button>
 	            <%} %>   
 	            <%for(int p= pi.getStartPage(); p<=pi.getEndPage(); p++){ %>
-	                <button onclick="location.href='<%=contextPath%>/searchM.faq?cpage=<%=p%>';"><%=p %></button>
+	                <button onclick="location.href='<%=contextPath%>/searchM.faq?cpage=<%=p%>';"  class="btn btn-primary btn-sm"><%=p %></button>
 	            <%} %>
 	            <%if(pi.getCurrentPage()!=pi.getMaxPage()){ %>
-	                <button onclick="location.href='<%=contextPath%>/searchM.faq?cpage=<%=pi.getCurrentPage()+1%>';">&gt;</button>
+	                <button onclick="location.href='<%=contextPath%>/searchM.faq?cpage=<%=pi.getCurrentPage()+1%>';"  class="btn btn-primary btn-sm">&gt;</button>
             	<%} %>
             </div>
             

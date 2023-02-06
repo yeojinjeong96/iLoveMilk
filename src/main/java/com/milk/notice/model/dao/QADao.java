@@ -298,13 +298,17 @@ public class QADao {
 		ResultSet rset= null;
 		PreparedStatement pstmt= null;
 		String sql= prop.getProperty("selectAnswerListCount");
+		if(fDate!=null && sDate!=null) {
+			sql+= "and to_char(answer_date, 'YY-MM-DD')>=  to_date(?, 'YY-MM-DD')and to_char(answer_date, 'YY-MM-DD')<=  to_date(?, 'YY-MM-DD')  ";
+		}
 		
+	
 		try {
 			pstmt = conn.prepareStatement(sql);
-
+			if(fDate!=null && sDate!=null) {
 			pstmt.setString(1, fDate);
 			pstmt.setString(2, sDate);
-	
+			}
 			rset= pstmt.executeQuery();
 			
 			if(rset.next()) {
@@ -348,6 +352,12 @@ public class QADao {
 		PreparedStatement pstmt= null;
 		String sql= prop.getProperty("selectAnswerList");
 		
+		if(fDate!=null && sDate !=null) {
+		
+			sql+="and to_char(answer_date, 'YY-MM-DD')>= to_date(?, 'YY-MM-DD') and to_char(answer_date, 'YY-MM-DD')<= to_date(?, 'YY-MM-DD')   ";
+			   
+		}
+		sql+="ORDER BY ANSWER_DATE DESC )E) WHERE RNUM BETWEEN ? AND ?";
 	
 		
 		
@@ -356,11 +366,15 @@ public class QADao {
 			int startRow= (pi.getCurrentPage()-1)*pi.getBoardLimit()+1;
 			int endRow= startRow + pi.getBoardLimit() -1;
 			
-		
-			pstmt.setString(1, fDate);
-			pstmt.setString(2, sDate);
-			pstmt.setInt(3, startRow);
-			pstmt.setInt(4, endRow);
+			if(fDate !=null && sDate!=null) {
+				pstmt.setString(1, fDate);
+				pstmt.setString(2, sDate);
+				pstmt.setInt(3, startRow);
+				pstmt.setInt(4, endRow);
+			}else {
+				pstmt.setInt(1, startRow);
+				pstmt.setInt(2, endRow);
+			}
 			
 			rset= pstmt.executeQuery();
 			while(rset.next()) {
@@ -417,7 +431,9 @@ public class QADao {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, q.getqTitle());
 			pstmt.setString(2, q.getqContent());
-			pstmt.setInt(3, q.getqNo());
+			pstmt.setString(3, q.getfCategory());
+			pstmt.setString(4, q.getsCategory());
+			pstmt.setInt(5, q.getqNo());
 			
 			result = pstmt.executeUpdate();
 		} catch (SQLException e) {
