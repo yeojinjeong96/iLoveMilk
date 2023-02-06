@@ -487,6 +487,41 @@ public class QADao {
 		}
 		return result;
 	}
+	
+	public ArrayList<QA> selectManagerQList(Connection conn){
+		
+		ArrayList<QA>list = new ArrayList<>();
+		ResultSet rset= null;
+		PreparedStatement pstmt= null;
+		String sql= prop.getProperty("selectManagerQList");
+	
+		try {
+			pstmt= conn.prepareStatement(sql);
+		
+			rset= pstmt.executeQuery();
+			while(rset.next()) {
+				
+				list.add(new QA(
+						rset.getInt("rnum")
+						,rset.getInt("q_no")
+					   ,rset.getString("member_Id")
+					   ,rset.getString("q_title")
+					   ,rset.getString("q_content")
+					   ,rset.getString("enroll_date")
+					   ,rset.getString("answer_status")
+					   ,rset.getString("fcategory_name")
+					   ,rset.getString("scategory_name")
+						));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return list;
+	}
 
 
 }
