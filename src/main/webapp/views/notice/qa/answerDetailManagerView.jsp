@@ -50,7 +50,7 @@
             <hr>
             <br>
             
-            <table  width="700px" border="1" class="text-center">
+            <table  width="700px" border="1" class="text-center table">
                 <tr>
                     <th>제목</th>
                     <td><%=q.getqTitle() %></td>

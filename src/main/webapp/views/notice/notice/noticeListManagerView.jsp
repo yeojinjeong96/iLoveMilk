@@ -51,11 +51,11 @@
                             <button type="button" class="btn btn-secondary btn-sm" onclick="deleteNotice();">선택삭제</button>
                         </div>
                         <br>
-                        <table id="notice-list" border="1" class="text-center" >
+                        <table id="notice-list" border="1" class="text-center table" >
                             <thead>
                                 <tr>
                                     <th>선택</th>
-                                    <th width="70" >글번호</th>
+                                    <th width="80" >글번호</th>
                                     <th width="300" >제목</th>
                                     <th width="100">작성자</th>
                                     <th width="100">작성일</th>

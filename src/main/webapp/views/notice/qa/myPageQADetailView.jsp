@@ -115,7 +115,7 @@
             <!--답변완료시-->
             <br>
             <div class="answer-area text-center" style="width: 700px;">
-                <table border="1" style="width: 700px;">
+                <table border="1" style="width: 700px;" class="table">
                     <tr>
                         <td colspan="2"><%=q.getaTitle() %></td>
                     
@@ -134,7 +134,7 @@
                     </tr>
                 </table>
                 <br><br>
-                <button type="button" onclick=location.href="<%=contextPath%>/mypage.qa?cpage=1">목록으로</button>
+                <button type="button" class="btn btn-sm btn-primary" onclick=location.href="<%=contextPath%>/mypage.qa?cpage=1">목록으로</button>
 
             </div>
             <%} %>

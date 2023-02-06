@@ -50,10 +50,10 @@
                 </div>
                 <br>
                 
-                <table border="1" class="faq-list">
+                <table border="1" class="faq-list table" >
                    <thead>
                     <tr onclick="event.cancelBubble=true">
-                        <th width="30">선택</th>
+                        <th width="70">선택</th>
                         <th width="100">글번호</th>
                         <th width="200">카테고리</th>
                         <th width="350">질문</th>

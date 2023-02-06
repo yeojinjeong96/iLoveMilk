@@ -80,7 +80,7 @@
                     <a href="<%=contextPath%>/list.sv?cpage=1&category=기타">기타</a>&nbsp;
                 </p>
                 
-                <table  border="1" style="text-align:center" class="content-area">
+                <table  border="1" style="text-align:center" class="content-area table">
                     <tr>
                         <th width="100">No.</th>
                         <th width="100">분류</th>

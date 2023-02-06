@@ -35,7 +35,7 @@
             <br>
             <form action="<%=contextPath%>/insert.qa" method="post" enctype="multipart/form-data">
             	<input type="hidden" name="memberNo" value="<%=m.getMemberNo()%>">
-                <table border="1" class="qa-form">
+                <table border="1" class="qa-form table">
                     <tr>
                         <th width="150" class="text-center">* 말머리</th>
                         <td width="400">

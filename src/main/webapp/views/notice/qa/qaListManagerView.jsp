@@ -53,7 +53,7 @@
                 </select>
             </div>
             <br>
-            <table border="1" id="q-list">
+            <table border="1" id="q-list" class="table"> 
             	<thead>
                 <tr>
                     <th width="50">No.</th>

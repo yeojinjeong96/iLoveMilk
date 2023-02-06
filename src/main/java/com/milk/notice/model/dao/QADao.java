@@ -417,7 +417,9 @@ public class QADao {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, q.getqTitle());
 			pstmt.setString(2, q.getqContent());
-			pstmt.setInt(3, q.getqNo());
+			pstmt.setString(3, q.getfCategory());
+			pstmt.setString(4, q.getsCategory());
+			pstmt.setInt(5, q.getqNo());
 			
 			result = pstmt.executeUpdate();
 		} catch (SQLException e) {
