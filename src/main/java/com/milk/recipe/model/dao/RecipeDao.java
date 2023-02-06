@@ -885,7 +885,7 @@ public class RecipeDao {
 			
 			while(rset.next()) {
 				list.add(new Reply(rset.getInt("REPLY_NO"),
-						   		   rset.getString("MEMBER_ID"),
+						   		   rset.getString("REPORT_ID"),
 						   		   rset.getString("REPLY_CONTENT"),
 						   		   rset.getString("REPORT_STATUS"), 		   
 						   		   rset.getString("RECIPE_TITLE"),
