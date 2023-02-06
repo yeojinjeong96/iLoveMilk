@@ -27,6 +27,18 @@ public class Point {
 	}
 	
 	
+	
+
+	public Point(int pointNo, int amount, String status, int total, String modifyDate, String content, int memberNo) {
+		super();
+		this.pointNo = pointNo;
+		this.amount = amount;
+		this.status = status;
+		this.total = total;
+		this.modifyDate = modifyDate;
+		this.content = content;
+		this.memberNo = memberNo;
+	}
 
 	public int getPointNo() {
 		return pointNo;

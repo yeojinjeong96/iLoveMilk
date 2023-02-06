@@ -52,6 +52,26 @@ public class RecipeService {
 		
 	}
 	
+	public ArrayList<Recipe> selectRecipeOldestList(PageInfo pi){
+		Connection conn = getConnection();
+		
+		ArrayList<Recipe> list = new RecipeDao().selectRecipeOldestList(conn, pi);
+		
+		close(conn);
+		return list;
+		
+	}
+	
+	public ArrayList<Recipe> selectRecipeCountList(PageInfo pi){
+		Connection conn = getConnection();
+		
+		ArrayList<Recipe> list = new RecipeDao().selectRecipeCountList(conn, pi);
+		
+		close(conn);
+		return list;
+		
+	}
+	
 	
 	/**
 	 * listR.re
@@ -64,6 +84,26 @@ public class RecipeService {
 		Connection conn = getConnection();
 		
 		ArrayList<Recipe> list = new RecipeDao().selectRecipeListR(conn, pi);
+		
+		close(conn);
+		return list;
+		
+	}
+	
+	public ArrayList<Recipe> selectRecipeOldestListR(PageInfo pi){
+		Connection conn = getConnection();
+		
+		ArrayList<Recipe> list = new RecipeDao().selectRecipeOldestListR(conn, pi);
+		
+		close(conn);
+		return list;
+		
+	}
+	
+	public ArrayList<Recipe> selectRecipeCountListR(PageInfo pi){
+		Connection conn = getConnection();
+		
+		ArrayList<Recipe> list = new RecipeDao().selectRecipeCountListR(conn, pi);
 		
 		close(conn);
 		return list;
@@ -506,5 +546,33 @@ public class RecipeService {
 		close(conn);
 		return list;
 		
+	}
+	
+	public int selectSearchReportListCount(String keyword, String select) {
+		Connection conn = getConnection();
+		
+		int listCount = new RecipeDao().selectSearchReportListCount(conn, keyword, select);
+		
+		close(conn);
+		return listCount;
+	}
+	
+	public ArrayList<Report> selectSearchReportRecipeListM(PageInfo pi, String keyword, String select){
+		Connection conn = getConnection();
+		
+		ArrayList<Report> list = new RecipeDao().selectSearchReportRecipeListM(conn, pi, keyword, select);
+		
+		close(conn);
+		return list;
+		
+	}
+	
+	public int replyCount(int recipeNo) {
+		Connection conn = getConnection();
+		
+		int replyCount = new RecipeDao().replyCount(conn, recipeNo);
+		
+		close(conn);
+		return replyCount;
 	}
 }

@@ -71,6 +71,18 @@ public class Review {
 	
 	
 
+	public Review(int reviewNo, String reviewContent, int star) {
+		super();
+		this.reviewNo = reviewNo;
+		this.reviewContent = reviewContent;
+		this.star = star;
+	}
+
+	
+
+	
+
+
 	public int getReviewNo() {
 		return reviewNo;
 	}

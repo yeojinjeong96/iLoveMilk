@@ -126,7 +126,11 @@
 			                        <td style="width: 150px; height: 150px;" align="center"> <img src="<%= r.getProductImg() %>" style="width: 100%; height: 100%;"alt=""></td>
 			                        <td style="width: 300px;">
 			                            <div style="margin: 10px;"><%= r.getProductName() %></div>
-			                            <div style="margin: 10px;" > <%= r.getStar() %> / 5</div>
+			                            <div style="margin: 10px;" > 
+			                            	<%for(int i = 1; i <= r.getStar(); i++){ %>
+				                                <img src="resources/images/star.png">
+				                             <%} %>
+			                            </div>
 			                            
 			                            <div style="margin: 10px;"><%= r.getReviewContent1() %>...</div>
 			                        </td>
@@ -156,12 +160,16 @@
                   
                         <!-- Modal body -->
                         <div class="modal-body">
-                            <form action="" method="post">
+                            <form action="<%= contextPath %>/ReviewUpdate.me" method="post">
                               
                                <% for(Review r : list){ %>
                                <table border="1">
+                               	
                                     <tr>
-                                         <td style="width: 100px; height:100px;"><img src="<%= r.getProductImg() %>" style="width: 100%; height: 100%;"> </td>
+                                         <td style="width: 100px; height:100px;">
+                                         	<input type="hidden" name="reviewNo" value="<%= r.getReviewNo() %>"> 
+                                         	<img src="<%= r.getProductImg() %>" style="width: 100%; height: 100%;"> 
+                                         </td>
                                          <td style="width: 400px;">
                                          		<%= r.getProductName() %> <br>
                                          		<input type="text" name="star" value="<%= r.getStar() %>"> 
@@ -175,7 +183,6 @@
                                     </tr>
                                     
                                 </table>
-                               
                                <% } %>
                                
                                 <button type="submit" class = "btn btn-secondary btn-sm">리뷰 수정</button>

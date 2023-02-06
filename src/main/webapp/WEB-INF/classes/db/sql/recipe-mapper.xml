@@ -33,6 +33,52 @@
  		 WHERE RNUM BETWEEN ? AND ?
 	</entry>
 	
+	<entry key="selectRecipeOldestList">
+		SELECT *
+		  FROM (
+		        SELECT ROWNUM RNUM, A.*
+		          FROM (
+		                SELECT
+		                       RECIPE_NO
+		                     , RECIPE_TITLE
+		                     , MEMBER_ID
+		                     , COUNT
+		                     , TO_CHAR(R.ENROLL_DATE, 'YYYY-MM-DD') "ENROLL_DATE"
+		                     , MAIN_IMG
+		                  FROM TB_RECIPE R
+		                  JOIN TB_MEMBER ON (RECIPE_WRITER = MEMBER_NO)
+		                 WHERE RECIPE_TYPE = 2
+		                   AND DELETE_STATUS = 'N'
+		                 ORDER
+		                    BY ENROLL_DATE
+		                ) "A"
+	        	)
+ 		 WHERE RNUM BETWEEN ? AND ?
+	</entry>
+	
+	<entry key="selectRecipeCountList">
+		SELECT *
+		  FROM (
+		        SELECT ROWNUM RNUM, A.*
+		          FROM (
+		                SELECT
+		                       RECIPE_NO
+		                     , RECIPE_TITLE
+		                     , MEMBER_ID
+		                     , COUNT
+		                     , TO_CHAR(R.ENROLL_DATE, 'YYYY-MM-DD') "ENROLL_DATE"
+		                     , MAIN_IMG
+		                  FROM TB_RECIPE R
+		                  JOIN TB_MEMBER ON (RECIPE_WRITER = MEMBER_NO)
+		                 WHERE RECIPE_TYPE = 2
+		                   AND DELETE_STATUS = 'N'
+		                 ORDER
+		                    BY COUNT DESC
+		                ) "A"
+	        	)
+ 		 WHERE RNUM BETWEEN ? AND ?
+	</entry>
+	
 	<entry key="selectRecipeListR">
 		SELECT *
 		  FROM (
@@ -50,7 +96,53 @@
 		                 WHERE RECIPE_TYPE = 1
 		                   AND DELETE_STATUS = 'N'
 		                 ORDER
-		                    BY RECIPE_NO DESC
+		                    BY ENROLL_DATE DESC
+		                ) "A"
+	        	)
+ 		 WHERE RNUM BETWEEN ? AND ?
+	</entry>
+	
+	<entry key="selectRecipeOldestListR">
+		SELECT *
+		  FROM (
+		        SELECT ROWNUM RNUM, A.*
+		          FROM (
+		                SELECT
+		                       RECIPE_NO
+		                     , RECIPE_TITLE
+		                     , MANAGER_ID
+		                     , COUNT
+		                     , TO_CHAR(R.ENROLL_DATE, 'YYYY-MM-DD') "ENROLL_DATE"
+		                     , MAIN_IMG
+		                  FROM TB_RECIPE R
+		                  JOIN TB_MANAGER ON (RECIPE_WRITER = MANAGER_NO)
+		                 WHERE RECIPE_TYPE = 1
+		                   AND DELETE_STATUS = 'N'
+		                 ORDER
+		                    BY ENROLL_DATE
+		                ) "A"
+	        	)
+ 		 WHERE RNUM BETWEEN ? AND ?
+	</entry>
+	
+	<entry key="selectRecipeCountListR">
+		SELECT *
+		  FROM (
+		        SELECT ROWNUM RNUM, A.*
+		          FROM (
+		                SELECT
+		                       RECIPE_NO
+		                     , RECIPE_TITLE
+		                     , MANAGER_ID
+		                     , COUNT
+		                     , TO_CHAR(R.ENROLL_DATE, 'YYYY-MM-DD') "ENROLL_DATE"
+		                     , MAIN_IMG
+		                  FROM TB_RECIPE R
+		                  JOIN TB_MANAGER ON (RECIPE_WRITER = MANAGER_NO)
+		                 WHERE RECIPE_TYPE = 1
+		                   AND DELETE_STATUS = 'N'
+		                 ORDER
+		                    BY COUNT DESC
 		                ) "A"
 	        	)
  		 WHERE RNUM BETWEEN ? AND ?
@@ -315,13 +407,13 @@
                                RE.REPORT_STATUS
                              , RE.REPLY_NO
                              , RP.REPORT_CONTENT
-                             , MEMBER_ID
+                             , M.MEMBER_ID
                              , R.RECIPE_TITLE
                              , RE.REPLY_CONTENT
 		                  FROM TB_REPLY RE
-                          JOIN TB_MEMBER USING (MEMBER_NO)
+                          JOIN TB_MEMBER M ON (RE.MEMBER_NO = M.MEMBER_NO)
                           JOIN TB_RECIPE R ON (RE.REF_NO = R.RECIPE_NO)
-                     LEFT JOIN TB_REPORT RP ON (RP.REF_NO = R.RECIPE_NO)
+                          JOIN TB_REPORT RP ON (RP.REF_NO = RE.REPLY_NO)
                          WHERE RE.DELETE_STATUS = 'N'
                            AND RP.REPORT_TYPE = 2
 		                 ORDER
@@ -664,5 +756,41 @@
 		                  
 	</entry>
 	
+	<entry key="selectSearchReportListCount">
+		SELECT
+		       COUNT(*) COUNT
+		  FROM TB_REPORT
+		  JOIN TB_RECIPE ON (RECIPE_NO = REF_NO)
+		 WHERE REPORT_TYPE = 1
+		   AND DELETE_STATUS = 'N'
+	</entry>
+	
+	<entry key = "selectSearchReportRecipeListM">
+		SELECT *
+		  FROM (
+		        SELECT ROWNUM RNUM, A.*
+		          FROM (
+		                SELECT
+				                REPORT_NO
+		                      , REF_NO
+		                      , REPORT_CONTENT
+		                      , MEMBER_ID
+		                      , RECIPE_TITLE
+		                      , TO_CHAR(REPORT_DATE, 'YYYY-MM-DD') "REPORT_DATE"
+				           FROM TB_REPORT
+				           JOIN TB_RECIPE ON (RECIPE_NO = REF_NO)
+		                   JOIN TB_MEMBER ON (MEMBER_NO = REPORTING_MEM_NO)
+		                  WHERE REPORT_TYPE = 1
+		                    AND DELETE_STATUS = 'N'
+	</entry>
+	
+	
+	<entry key="replyCount">
+		SELECT
+		       COUNT(*) COUNT
+		  FROM TB_REPLY
+		 WHERE REF_NO = ?
+		   AND DELETE_STATUS = 'N'
+	</entry>
 
 </properties>

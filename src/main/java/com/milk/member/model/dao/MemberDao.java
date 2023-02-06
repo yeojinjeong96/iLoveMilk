@@ -731,6 +731,77 @@ public Member updateCheckPwd(Connection conn, String memberId, String memberPwd)
 		return list;
 	}
 	
+
+	
+	public ArrayList<Member> selectUpMember(Connection conn){
+		ArrayList<Member> list = new ArrayList<>();
+		ResultSet rset = null;
+		PreparedStatement pstmt = null;
+		String sql = prop.getProperty("selectUpMember");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			rset = pstmt.executeQuery();
+			while(rset.next()) {
+				list.add(new Member(
+							rset.getInt("MEMBER_NO"),
+							rset.getString("MEMBER_ID"),
+							rset.getString("MEMBER_NAME"),
+							rset.getString("MEMBER_GRADE"),
+							rset.getInt("TOTALPAY")
+						));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return list;
+	}	
+	
+	public int upgradeMem(Connection conn, int no) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String sql = prop.getProperty("upgradeMem");
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, no);
+			pstmt.setInt(2, no);
+			pstmt.setInt(3, no);
+			pstmt.setInt(4, no);
+			pstmt.setInt(5, no);
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		return result;
+	}
+	
+	public String upgradeResult(Connection conn, int no) {
+		String grade = "";
+		ResultSet rset = null; 
+		PreparedStatement pstmt = null;
+		String sql = prop.getProperty("upgradeResult");
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, no);
+			rset = pstmt.executeQuery();
+			if(rset.next()) {
+				grade = rset.getString("MEMBER_GRADE");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return grade;
+	}
+	
 	public int UpdateProfile(Connection conn, Member m) {
 		
 		int result = 0;
@@ -816,14 +887,14 @@ public Member updateCheckPwd(Connection conn, String memberId, String memberPwd)
 			while (rset.next()) {
 				
 				list.add(new Order (
-						 rset.getInt("ORDER_NO"),
+						 rset.getString("ORDER_NO"),
 						 rset.getDate("PAYMENT_DATE"),
 						 rset.getString("PRODUCT_IMG"),
 						 rset.getString("PRODUCT_NAME"),
 						 rset.getInt("PRODUCT_COUNT"),
 						 rset.getInt("PRICE"),
 						 rset.getInt("STATUS"),
-						 rset.getInt("WAYBILL")
+						 rset.getString("WAYBILL")
 						));
 			}
 		} catch (SQLException e) {
@@ -870,5 +941,64 @@ public Member updateCheckPwd(Connection conn, String memberId, String memberPwd)
 			}
 			 return list;  
 	   }
+	   public int ReviewUpdate(Connection conn, Review r) {
+	         
+	         int result = 0;
+	         PreparedStatement pstmt = null;
+	         String sql = prop.getProperty("ReviewUpdate");
+	         
+	         try {
+	         pstmt=conn.prepareStatement(sql);
+	         
+	         pstmt.setString(1, r.getReviewContent());
+	         pstmt.setInt(2, r.getStar());
+	         pstmt.setInt(3, r.getReviewNo());
+	         
+	         result=pstmt.executeUpdate();
+	         
+	      } catch (SQLException e) {
+	         e.printStackTrace();
+	      } finally {
+	         close(pstmt);
+	      }
+	         
+	       return result;
+	         
+	      }
 	   
+	   
+	   public ArrayList<Point> pointList(Connection conn, int memberNo) {
+		   ResultSet rset = null;
+		   PreparedStatement pstmt = null;
+		   ArrayList<Point> list = new ArrayList<>();
+		   
+		   String sql = prop.getProperty("pointList");
+		   
+		   try {
+			pstmt=conn.prepareStatement(sql);
+			pstmt.setInt(1, memberNo);
+			rset=pstmt.executeQuery();
+			
+			while(rset.next()) {
+				list.add(new Point(
+						rset.getInt("POINT_NO"),
+						rset.getInt("AMOUNT"),
+						rset.getString("status"),
+						rset.getInt("total"),
+						rset.getString("MODIFY_DATE"),
+						rset.getString("content"),
+						rset.getInt("member_no")
+						));
+				
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		   
+		   return list;
+	   }
 }

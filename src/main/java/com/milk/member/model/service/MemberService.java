@@ -335,6 +335,47 @@ public class MemberService {
 		close(conn);
 		return list;
 	}
+	
+	/**
+	 * 등급변경대상인 회원 조회
+	 * @author 이다혜
+	 * @return ulist
+	 */
+	public ArrayList<Member> selectUpMember(){
+		Connection conn = getConnection();
+		ArrayList<Member> list = new MemberDao().selectUpMember(conn);
+		close(conn);
+		return list;
+	}
+	
+	/**
+	 * 회원등급변경
+	 * @author 이다혜
+	 * @return result
+	 */
+	public int upgradeMem(int no) {
+		Connection conn = getConnection();
+		int result = new MemberDao().upgradeMem(conn, no);
+		if(result > 0) {
+			commit(conn);
+		}else {
+			rollback(conn);
+		}
+		close(conn);
+		return result;
+	}
+	
+	/**
+	 * 변경된 등급을 출력
+	 * @author 이다혜
+	 * @return grade
+	 */
+	public String upgradeResult(int no) {
+		Connection conn = getConnection();
+		String grade = new MemberDao().upgradeResult(conn, no);
+		close(conn);
+		return grade;
+	}
 
 	 /**
 	  * 회원프로필 변경 서비스 
@@ -388,5 +429,33 @@ public class MemberService {
 		   return list;
 	   }
 	  
+	   /**
+	      *  작성한 리뷰 수정 서비스 
+	      */
+	   public int ReviewUpdate(Review r) {
+	         Connection conn = getConnection();
+	         int result = new MemberDao().ReviewUpdate(conn,r);
+	         
+	       
+	            
+	         if(result > 0) {
+	            commit(conn);
+	         }else {
+	            rollback(conn);
+	         }
+	         
+	         close(conn);
+	         
+	         return result;
+	         
+	      }
 	   
+
+	   
+	  public ArrayList<Point> pointList(int memberNo) {
+		  Connection conn = getConnection();
+		  ArrayList<Point> list = new MemberDao().pointList(conn, memberNo);
+		  close(conn);
+		  return list;
+	  }
 }

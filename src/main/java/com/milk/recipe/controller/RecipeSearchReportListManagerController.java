@@ -11,19 +11,19 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.milk.common.model.vo.PageInfo;
 import com.milk.recipe.model.service.RecipeService;
-import com.milk.recipe.model.vo.Recipe;
+import com.milk.recipe.model.vo.Report;
 
 /**
- * Servlet implementation class RecipeSearchController
+ * Servlet implementation class RecipeListManagerController
  */
-@WebServlet("/searchR.re")
-public class RecipeRecSearchController extends HttpServlet {
+@WebServlet("/searchReportDelM.re")
+public class RecipeSearchReportListManagerController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public RecipeRecSearchController() {
+    public RecipeSearchReportListManagerController() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -50,14 +50,14 @@ public class RecipeRecSearchController extends HttpServlet {
 		int endPage;
 		
 		// 총 게시글 개수
-		listCount = new RecipeService().selectSearchRecListCount(keyword, select);
+		listCount = new RecipeService().selectSearchReportListCount(keyword, select);
 		
 		// 사용자가 요청한 페이지 (현재 페이지)
 		currentPage = Integer.parseInt(request.getParameter("cpage"));
 		
 		pageLimit = 5;
 		
-		boardLimit = 9;
+		boardLimit = 10;
 		
 		maxPage = (int)Math.ceil( (double)listCount / boardLimit );
 		
@@ -72,7 +72,7 @@ public class RecipeRecSearchController extends HttpServlet {
 		PageInfo pi = new PageInfo(listCount, currentPage, pageLimit, boardLimit, maxPage, startPage, endPage);
 		
 
-		ArrayList<Recipe> list = new RecipeService().selectSearchRecipeRecList(pi, keyword, select);
+		ArrayList<Report> list = new RecipeService().selectSearchReportRecipeListM(pi, keyword, select);
 		request.setAttribute("list", list);
 		request.setAttribute("pi", pi);
 		request.setAttribute("keyword", keyword);
@@ -80,9 +80,7 @@ public class RecipeRecSearchController extends HttpServlet {
 		request.setAttribute("select", select);
 		
 		
-		
-		request.getRequestDispatcher("views/recipe/recommendRecipeSearchListView.jsp").forward(request, response);
-		
+		request.getRequestDispatcher("views/recipe/managerSearchRecipeReportDelete.jsp").forward(request, response);
 		
 	}
 

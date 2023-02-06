@@ -122,6 +122,92 @@ public class RecipeDao {
 		
 	}
 	
+	public ArrayList<Recipe> selectRecipeOldestList(Connection conn, PageInfo pi){
+		ArrayList<Recipe> list = new ArrayList<>();
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		String sql = prop.getProperty("selectRecipeOldestList");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			int startRow = (pi.getCurrentPage() - 1) * pi.getBoardLimit() + 1;
+			int endRow = startRow + pi.getBoardLimit() - 1;
+			
+			pstmt.setInt(1, startRow);
+			pstmt.setInt(2, endRow);
+			
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				Recipe r = new Recipe();
+				r.setRecipeNo(rset.getInt("RECIPE_NO"));
+				r.setRecipeTitle(rset.getString("RECIPE_TITLE"));
+				r.setRecipeWriter(rset.getString("MEMBER_ID"));
+				r.setEnrollDate(rset.getString("ENROLL_DATE"));
+				r.setCount(rset.getInt("COUNT"));
+				r.setMainImg(rset.getString("MAIN_IMG"));
+				
+				list.add(r);
+				
+			}
+			
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return list;
+		
+	}
+	
+	public ArrayList<Recipe> selectRecipeCountList(Connection conn, PageInfo pi){
+		ArrayList<Recipe> list = new ArrayList<>();
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		String sql = prop.getProperty("selectRecipeCountList");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			int startRow = (pi.getCurrentPage() - 1) * pi.getBoardLimit() + 1;
+			int endRow = startRow + pi.getBoardLimit() - 1;
+			
+			pstmt.setInt(1, startRow);
+			pstmt.setInt(2, endRow);
+			
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				Recipe r = new Recipe();
+				r.setRecipeNo(rset.getInt("RECIPE_NO"));
+				r.setRecipeTitle(rset.getString("RECIPE_TITLE"));
+				r.setRecipeWriter(rset.getString("MEMBER_ID"));
+				r.setEnrollDate(rset.getString("ENROLL_DATE"));
+				r.setCount(rset.getInt("COUNT"));
+				r.setMainImg(rset.getString("MAIN_IMG"));
+				
+				list.add(r);
+				
+			}
+			
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return list;
+		
+	}
+	
 	
 	/**
 	 * listR.re
@@ -137,6 +223,92 @@ public class RecipeDao {
 		ResultSet rset = null;
 		
 		String sql = prop.getProperty("selectRecipeListR");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			int startRow = (pi.getCurrentPage() - 1) * pi.getBoardLimit() + 1;
+			int endRow = startRow + pi.getBoardLimit() - 1;
+			
+			pstmt.setInt(1, startRow);
+			pstmt.setInt(2, endRow);
+			
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				Recipe r = new Recipe();
+				r.setRecipeNo(rset.getInt("RECIPE_NO"));
+				r.setRecipeTitle(rset.getString("RECIPE_TITLE"));
+				r.setRecipeWriter(rset.getString("MANAGER_ID"));
+				r.setEnrollDate(rset.getString("ENROLL_DATE"));
+				r.setCount(rset.getInt("COUNT"));
+				r.setMainImg(rset.getString("MAIN_IMG"));
+				
+				list.add(r);
+				
+			}
+			
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return list;
+		
+	}
+	
+	public ArrayList<Recipe> selectRecipeOldestListR(Connection conn, PageInfo pi){
+		ArrayList<Recipe> list = new ArrayList<>();
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		String sql = prop.getProperty("selectRecipeOldestListR");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			int startRow = (pi.getCurrentPage() - 1) * pi.getBoardLimit() + 1;
+			int endRow = startRow + pi.getBoardLimit() - 1;
+			
+			pstmt.setInt(1, startRow);
+			pstmt.setInt(2, endRow);
+			
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				Recipe r = new Recipe();
+				r.setRecipeNo(rset.getInt("RECIPE_NO"));
+				r.setRecipeTitle(rset.getString("RECIPE_TITLE"));
+				r.setRecipeWriter(rset.getString("MANAGER_ID"));
+				r.setEnrollDate(rset.getString("ENROLL_DATE"));
+				r.setCount(rset.getInt("COUNT"));
+				r.setMainImg(rset.getString("MAIN_IMG"));
+				
+				list.add(r);
+				
+			}
+			
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return list;
+		
+	}
+	
+	public ArrayList<Recipe> selectRecipeCountListR(Connection conn, PageInfo pi){
+		ArrayList<Recipe> list = new ArrayList<>();
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		String sql = prop.getProperty("selectRecipeCountListR");
 		
 		try {
 			pstmt = conn.prepareStatement(sql);
@@ -1841,6 +2013,136 @@ public class RecipeDao {
 		}
 		
 		return list;
+		
+	}
+	
+	public int selectSearchReportListCount(Connection conn, String keyword, String select) {
+		int listCount = 0;
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		
+		String sql = prop.getProperty("selectSearchReportListCount");
+		
+		if(select.equals("title")) {
+			
+			sql += " AND RECIPE_TITLE LIKE '%' || ? || '%'";
+			
+		}else if(select.equals("writer")) {
+			
+			sql += " AND REPORTING_MEM_NO LIKE '%' || ? || '%'";
+			
+		}
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, keyword);
+			
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				listCount = rset.getInt("count");
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return listCount;
+		
+	}
+	
+	public ArrayList<Report> selectSearchReportRecipeListM(Connection conn, PageInfo pi, String keyword, String select){
+		ArrayList<Report> list = new ArrayList<>();
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		String sql = prop.getProperty("selectSearchReportRecipeListM");
+		
+		if(select.equals("title")) {
+			
+			sql += " AND RECIPE_TITLE LIKE '%' || ? || '%'"
+				 + " ORDER"
+				 + " BY REPORT_DATE DESC"
+				 + "  ) A"
+				 + ")"
+				 + "WHERE RNUM BETWEEN ? AND ? ";
+			
+		}else if(select.equals("writer")) {
+			
+			sql += " AND REPORTING_MEM_NO LIKE '%' || ? || '%'"
+				 + " ORDER"
+				 + " BY REPORT_DATE DESC"
+				 + " ) A"
+				 + ")"
+				 + "WHERE RNUM BETWEEN ? AND ? ";
+
+		}
+		
+		
+		try {
+			int startRow = (pi.getCurrentPage() -1) * pi.getBoardLimit() + 1;
+			int endRow = startRow + pi.getBoardLimit() -1;
+			
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, keyword);
+			pstmt.setInt(2, startRow);
+			pstmt.setInt(3, endRow);
+
+			
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				
+				list.add(new Report(rset.getInt("REPORT_NO"),
+									rset.getInt("REF_NO"),
+									rset.getString("REPORT_CONTENT"),
+									rset.getString("MEMBER_ID"),
+									rset.getString("RECIPE_TITLE"),
+									rset.getString("REPORT_DATE")));
+						   		   
+			}
+			
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return list;
+		
+	}
+	
+	
+	public int replyCount(Connection conn, int recipeNo) {
+		int replyCount = 0;
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		String sql = prop.getProperty("replyCount");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, recipeNo);
+			
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				replyCount = rset.getInt("COUNT");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return replyCount;
 		
 	}
 }

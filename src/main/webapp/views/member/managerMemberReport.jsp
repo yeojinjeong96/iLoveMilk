@@ -68,7 +68,7 @@
                         <table class="table member-report" style="width:100%; font-size:15px; text-align:center;">
                         	<thead>
                             <tr>
-                                <td>번호</td>
+                                <td>신고번호</td>
                                 <td>신고일</td>
                                 <td>신고내용</td>
                                 <td>아이디</td>
@@ -87,7 +87,7 @@
                             	<tr>
                                 <td><%=r.getReportNo() %></td>
                                 <td><%=r.getRepDate() %></td>
-                                <td><%=r.getRepContent() %></td>
+                                <td><a onclick="detailRep('<%=r.getRepType() %>');" style="cursor:pointer;"><%=r.getRepContent() %></a></td>
                                 <td><%=r.getMemberId() %></td>
                                 <td>
                                 	<button type="button" onclick="memReport1(<%=r.getRepMemNo()%>);" class="btn btn-outline-secondary btn-sm" data-toggle="modal" data-target="#report-mngm">관리</button>
@@ -154,7 +154,10 @@
                     			success:function(result){
                     				
                     				if(result){
-                    					alert("신고내역이 성공적으로 삭제되었습니다.");
+                    					var r = confirm("해당 신고내역을 삭제하시겠습니까?");
+                    					if(r){
+                    						alert("신고내역이 성공적으로 삭제되었습니다.");
+                    					}
                     				}
                     				
                     				
@@ -194,6 +197,18 @@
                     			}
                     			
                     		});
+                    	}
+                    	
+                    	function detailRep(type){
+                    		
+                    		if(type == "1"){
+                    			location.href="<%=contextPath%>/recipeDeleteListM.re?cpage=1";
+                    		}else if(type == "2"){
+                    			location.href ="<%=contextPath%>/replyM.re?cpage=1";
+                    		}else if(type = "3"){ // 리뷰관리 페이지 href 넣기
+                    			location.href ="<%=contextPath%>/recipeDeleteListM.re?cpage=1";
+                    		}
+                    		
                     	}
                     	
                     </script>
