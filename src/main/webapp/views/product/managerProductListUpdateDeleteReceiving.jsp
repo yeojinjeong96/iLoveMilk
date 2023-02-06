@@ -34,14 +34,16 @@
                     <table class="outer-2">
                         <tr>
                             <td>
-                           	    <select name="searchOp" id="searchOp">
-                                	<option>- 검색 조건 -</option>
-                                    <option>상품명</option>
-                                    <option>상품코드</option>
-                                    <option>브랜드</option>
-                                </select>
-                                <input type="text" name="searchKey" id="searchKey">
-                                <button type="button" onclick="return opNeed();" class="btn btn-primary btn-sm">검색</button>
+                            	<form action="<%= contextPath %>/listUpDeRe.pr?cp=1" method="post">
+	                           	    <select name="searchOp" id="searchOp">
+	                                	<option onchange="changeOp();">- 검색 조건 -</option>
+	                                    <option>상품명</option>
+	                                    <option>상품코드</option>
+	                                    <option>브랜드</option>
+	                                </select>
+	                                <input type="text" name="searchKey" id="searchKey" required>
+	                                <button type="submit" onclick="return opNeed();" class="btn btn-primary btn-sm">검색</button>
+	                            </form>
 	                        </td>
                         </tr>
                     </table>
@@ -189,14 +191,19 @@
     </div>
     
 	<script>
+		function changeOp(){
+			if($("#searchOp").val() == "상품코드"){
+				$("#searchKey").attr('type', 'number');
+			}else{
+				$("#searchKey").attr('type', 'text');
+			}
+		}
+	
 		function opNeed(){
 			if($("#searchOp").val() == "- 검색 조건 -"){
 				// 검색조건 미선택시 alert
 				alert("검색 조건을 선택하세요.");
 				return false;
-			}else{
-				// 검색 리스트 가져오기
-				location.href = "<%= contextPath %>/listUpDeRe.pr?searchOp=" + $('#searchOp').val() + "&searchKey=" + $('#searchKey').val() + "&cp=1";
 			}
 		}
 			
