@@ -1204,23 +1204,13 @@ public class ProductDao {
 		int result = 0;
 		PreparedStatement pstmt = null;
 		String sql = prop.getProperty("pointInsert");
-		if(point.getStatus().equals("적립")) {
-			sql += ", " + point.getAmount()
-				 + ", " + point.getStatus()
-				 + ", NVL((SELECT SUM(AMOUNT) FROM TB_POINT WHERE MEMBER_NO = " + point.getMemNo() + "), 0) + " + point.getAmount()
-				 + ", " + point.getContent()
-				 + ", " + point.getOrderNo()
-				 + ", " + point.getMemNo()
-				 + ")";
-		} else {
-			sql += ", " + point.getAmount()
-				 + ", " + point.getStatus()
-				 + ", NVL((SELECT SUM(AMOUNT) FROM TB_POINT WHERE MEMBER_NO = " + point.getMemNo() + "), 0) - " + point.getAmount()
-				 + ", " + point.getContent()
-				 + ", " + point.getOrderNo()
-				 + ", " + point.getMemNo()
-				 + ")";
-		}
+		sql += ", " + point.getAmount()
+			 + ", '" + point.getStatus() + "'"
+			 + ", NVL((SELECT SUM(AMOUNT) FROM TB_POINT WHERE MEMBER_NO = " + point.getMemNo() + "), 0) + " + point.getAmount()
+			 + ", '" + point.getContent() + "'"
+			 + ", '" + point.getOrderNo() + "'"
+			 + ", " + point.getMemNo()
+			 + ")";
 		try {
 			pstmt = conn.prepareStatement(sql);
 			result = pstmt.executeUpdate();
