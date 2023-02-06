@@ -94,8 +94,8 @@
 			
             </form>
             <br>
-            <table align="center" border="1" id="qa-list" class="text-center table">
-                <tr>
+            <table align="center"id="qa-list" class="text-center table">
+                <tr class="thead-light">
                     <th width="100" height="30">문의날짜</th>
                     <th width="190">카테고리</th>
                     <th width="350" >제목</th>

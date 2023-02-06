@@ -13,6 +13,7 @@ import com.milk.member.model.vo.Member;
 import com.milk.member.model.vo.Order;
 import com.milk.product.model.dao.ProductDao;
 import com.milk.product.model.vo.OrderInfo;
+import com.milk.product.model.vo.PointIn;
 import com.milk.product.model.vo.Product;
 import com.milk.product.model.vo.ProductLike;
 import com.milk.product.model.vo.Review;
@@ -595,9 +596,9 @@ public class ProductService {
 	 * @author 승하
 	 * @return 성공시 1, 실패시 2
 	 */
-	public int pointInsert(int point, int memNo, String orderNo) {
+	public int pointInsert(PointIn point) {
 		Connection conn = getConnection();
-		int result = new ProductDao().pointInsert(conn, point, memNo, orderNo);
+		int result = new ProductDao().pointInsert(conn, point);
 		if(result > 0) {
 			commit(conn);
 		} else {

@@ -81,8 +81,8 @@
             </form>
             <br>
           
-            <table border="1" class="text-center table" id="answer-list">  
-           <thead>
+            <table  class="text-center table" id="answer-list">  
+           <thead class="thead-light">
                 <tr>
                     <th width="100">완료일</th>
                     <th width="150">카테고리</th>

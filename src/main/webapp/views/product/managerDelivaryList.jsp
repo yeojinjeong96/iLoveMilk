@@ -97,7 +97,7 @@
                        		<%for(Order o : list){ %>
 		                        <tr>
 		                            <td></td>
-		                            <td><%=o.getOrderNo() %></td>
+		                            <td id="orderN"><%=o.getOrderNo() %></td>
 		                            <td><%=o.getPaymentDate() %></td>
 		                            <td><%=o.getMemberId() %></td>
 		                            <td>
@@ -221,7 +221,10 @@
         		
         		<script>
         		
-        			function issWaybill(ono){
+        			function issWaybill(){
+        				
+        				let ono = $(window.event.target).parent().prev().prev().prev().prev().prev().text();
+        				
         				
         				$.ajax({
         					url : "<%=contextPath%>/orderDetail.ma",
@@ -309,7 +312,7 @@
 				    		                       
 				                           		val +=	"<tr>"
 				    		                         + "<td></td>"
-				    		                         + "<td>" + o.olist[i].orderNo + "</td>"
+				    		                         + "<td id='orderN'>" + o.olist[i].orderNo + "</td>"
 				    		                         + "<td>" + o.olist[i].paymentDate + "</td>"
 				    		                         + "<td>" + o.olist[i].memberId+ "</td>"
 				    		                         + "<td>" ; 
@@ -326,7 +329,7 @@
 				    		                                <!-- 조건문 사용해서 운송장 완료하면 버튼비활성화시키기 -->
 				    		                                	if (o.olist[i].waybill == "미발급") {
 				    		                                		
-				    		                                		val +=" <button type='button' onclick='issWaybill('"+ o.olist[i].orderNo + "');' id='getWbtn' class='btn btn-outline-secondary btn-sm' data-toggle='modal' data-target='#delivery-info' style='font-size:10px;'>"+ "대기" + "</button>";
+				    		                                		val +="<button type='button' onclick='issWaybill();' id='getWbtn' class='btn btn-outline-secondary btn-sm' data-toggle='modal' data-target='#delivery-info' style='font-size:10px;'>"+ "대기" + "</button>";
 				    		                                	}else{ 
 				    		                                		val +="<button type='button' id='getWbtn' class='btn btn-outline-secondary btn-sm' data-toggle='modal' data-target='#delivery-info' disabled='disabled' style='font-size:10px;'>" + "완료" + "</button>";
 				    		                                	}
