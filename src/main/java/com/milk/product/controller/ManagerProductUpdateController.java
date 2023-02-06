@@ -17,16 +17,16 @@ import com.milk.product.model.vo.Product;
 import com.oreilly.servlet.MultipartRequest;
 
 /**
- * Servlet implementation class ProductInsertController
+ * Servlet implementation class ProductUpdateController
  */
-@WebServlet("/insert.pr")
-public class ProductInsertController extends HttpServlet {
+@WebServlet("/update.pr")
+public class ManagerProductUpdateController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public ProductInsertController() {
+    public ManagerProductUpdateController() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -38,35 +38,39 @@ public class ProductInsertController extends HttpServlet {
 		request.setCharacterEncoding("UTF-8");
 		
 		if(ServletFileUpload.isMultipartContent(request)) {
-			int maxSize = 10 * 1024 * 1024;
 			String savePath = request.getSession().getServletContext().getRealPath("/resources/product_upfiles/");
+			int maxSize = 10 * 1024 * 1024;
 			MultipartRequest multiRequest = new MultipartRequest(request, savePath, maxSize, "UTF-8", new MyFileRenamePolicy());
 			
+			int pNo = Integer.parseInt(multiRequest.getParameter("pNo"));
 			String pName = multiRequest.getParameter("productName");
 			int price = Integer.parseInt(multiRequest.getParameter("price"));
 			int capacity = Integer.parseInt(multiRequest.getParameter("capacity"));
 			String brand = multiRequest.getParameter("brand");
 			String pInfo = multiRequest.getParameter("productInfo");
-			int stock = Integer.parseInt(multiRequest.getParameter("stock"));
 			String fCate = multiRequest.getParameter("fCate");
 			String sCate = multiRequest.getParameter("sCate");
-			String pImg = "resources/product_upfiles/" + multiRequest.getFilesystemName("productImg");
+			String pImg = "";
+			if(multiRequest.getFilesystemName("updateImg") != null) {
+				pImg = "resources/product_upfiles/" + multiRequest.getFilesystemName("updateImg");
+			} else {
+				pImg = multiRequest.getParameter("productImg");
+			}
+			System.out.println(pImg);
 			
-			Product p = new Product(pName, price, capacity, brand, pInfo, stock, fCate, sCate, pImg);
+			Product p = new Product(pNo, pName, price, capacity, brand, pInfo, fCate, sCate, pImg);
 			
-			int result = new ProductService().insertProduct(p);
+			int result = new ProductService().updateProduct(p);
 			
 			if(result > 0) {
-				request.getSession().setAttribute("alertMsg", "상품 등록 성공");
-				response.sendRedirect(request.getContextPath() + "/listUpDeRe.pr?cp=1");
+				request.getSession().setAttribute("alertMsg", "상품 수정 성공");
+				response.sendRedirect(request.getContextPath() + "/detail.pr?no=" + pNo);
 			} else {
 				new File(savePath + multiRequest.getFilesystemName("productImg")).delete();
-				request.getSession().setAttribute("alertMsg", "상품 등록 실패");
-				response.sendRedirect(request.getContextPath() + "/listUpDeRe.pr?cp=1");
+				request.getSession().setAttribute("alertMsg", "상품 수정 실패");
+				response.sendRedirect(request.getContextPath() + "/detail.pr?no=" + pNo);
 			}
 		}
-		
-		
 	}
 
 	/**

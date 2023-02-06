@@ -33,25 +33,34 @@ public class QAService {
 		return result1*result2;
 	}
 	
-	public ArrayList<QA> selectQuestionList(PageInfo pi,int memberNo ){
+	public ArrayList<QA> selectQuestionList(PageInfo pi,int memberNo,String fDate,String sDate ){
 		
 		Connection conn= getConnection();
 		
-		ArrayList<QA>list= new QADao().selectQuestionList(conn, pi, memberNo);
+		ArrayList<QA>list= new QADao().selectQuestionList(conn, pi, memberNo,fDate,sDate);
 		
 		close(conn);
 		return list;
 	}
 	
-	public int selectQAListCount(int memberNo) {
+	public int selectQAListCount(int memberNo,String fDate,String sDate) {
 		
 		Connection conn = getConnection();
 		
-		int result = new QADao().selectQAListCount(conn,memberNo);
+		int result = new QADao().selectQAListCount(conn,memberNo,fDate,sDate);
 		close(conn);
 		return result;
 	}
 	
+	
+	public int selectIncompletedListCount() {
+		
+		Connection conn = getConnection();
+		
+		int result = new QADao().selectIncompletedListCount(conn);
+		close(conn);
+		return result;
+	}
 	public QA selectQA(int qNo) {
 		Connection conn = getConnection();
 		
