@@ -37,7 +37,8 @@ public class QAListViewController extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session= request.getSession();
 		int memberNo= ((Member)session.getAttribute("loginMember")).getMemberNo();
-		
+		String fDate = request.getParameter("fDate");
+		String sDate = request.getParameter("sDate");
 		int listCount;  
 		int currentPage; 
 		int pageLimit;   
@@ -47,7 +48,7 @@ public class QAListViewController extends HttpServlet {
 		int startPage;	 
 		int endPage;	
 		
-		listCount = new QAService().selectQAListCount(memberNo);
+		listCount = new QAService().selectQAListCount(memberNo,fDate,sDate);
 		currentPage= Integer.parseInt(request.getParameter("cpage"));
 		pageLimit= 5;
 		boardLimit=5;
@@ -67,7 +68,7 @@ public class QAListViewController extends HttpServlet {
 		
 		
 		
-		ArrayList<QA>list = new QAService().selectQuestionList(pi,memberNo);
+		ArrayList<QA>list = new QAService().selectQuestionList(pi,memberNo,fDate,sDate);
 		request.setAttribute("list",list);
 		request.getRequestDispatcher("views/notice/qa/qaListView.jsp").forward(request, response);
 	}

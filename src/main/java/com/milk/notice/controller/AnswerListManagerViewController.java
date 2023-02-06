@@ -58,9 +58,7 @@ public class AnswerListManagerViewController extends HttpServlet {
 		}
 		
 		
-		String searchType= request.getParameter("searchtype");
 
-		
 		
 		PageInfo pi = new PageInfo(listCount,currentPage, pageLimit, boardLimit,maxPage,startPage,endPage);
 		

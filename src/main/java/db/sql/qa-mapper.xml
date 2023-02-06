@@ -52,17 +52,16 @@
 	                    FROM TB_QA
 	                WHERE Q_WRITER =?
 	                AND STATUS= 'Y'
-	                and enroll_date between ? and ?
-	                ORDER BY Q_NO DESC
-	                  )E) WHERE RNUM BETWEEN ? AND ?
+	              
+	              
 	</entry>
 	<entry key="selectQAListCount">
 		 SELECT
 		 	COUNT(*) COUNT
 		 FROM TB_QA
 		 WHERE Q_WRITER = ?
-		 and enroll_date between ?
-                      and  ?
+		 	
+            
 	</entry>
 	<entry key="selectIncompletedListCount">
 			 SELECT
@@ -113,7 +112,7 @@
 	                   ,SCATEGORY_NAME
 	                    FROM TB_QA Q
                     JOIN TB_MEMBER ON (Q_WRITER = MEMBER_NO)
-	                WHERE ANSWER_STATUS= 'N'
+	                WHERE ANSWER_STATUS != 'Y'
 	                AND Q.STATUS= 'Y'
 	                  )E) WHERE RNUM BETWEEN ? AND ?
 		
@@ -132,8 +131,8 @@
 	    COUNT(*) COUNT
 	    FROM TB_QA
 	    WHERE ANSWER_STATUS = 'Y'
-	    and answer_date between ?
-                      and  ?
+	     and to_char(answer_date, 'YY-MM-DD')<![CDATA[>=]]>  to_date(?, 'YY-MM-DD')       
+                   and to_char(answer_date, 'YY-MM-DD')<![CDATA[<=]]>  to_date(?, 'YY-MM-DD')  
 	</entry>
 	<entry key="selectAnswerList">
 		  SELECT * FROM
@@ -152,8 +151,8 @@
 	                JOIN TB_MANAGER ON (MANAGER_NO = A_WRITER)
                     WHERE Q.STATUS= 'Y'
                     AND ANSWER_STATUS = 'Y'
-                    and answer_date between  ?
-                      and ?
+                   and to_char(answer_date, 'YY-MM-DD')<![CDATA[>=]]> to_date(?, 'YY-MM-DD')       
+                   and to_char(answer_date, 'YY-MM-DD')<![CDATA[<=]]>  to_date(?, 'YY-MM-DD')       
 	                ORDER BY ANSWER_DATE DESC
 	                  )E) WHERE RNUM BETWEEN ? AND ?
 	                  

@@ -67,6 +67,7 @@ public class MyPageQAListController extends HttpServlet {
 		
 		ArrayList<QA>list = new QAService().selectQuestionList(pi,memberNo,fDate,sDate);
 		request.setAttribute("list",list);
+	
 		request.getRequestDispatcher("views/notice/qa/myPageQAListView.jsp").forward(request, response);
 	}
 
