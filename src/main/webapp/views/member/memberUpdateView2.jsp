@@ -245,7 +245,7 @@
 					      
 					            <!-- Modal Header -->
 					            <div class="modal-header">
-					              <h4 class="modal-title">프로필 변경</h4>
+					              <h4 class="modal-title">비밀번호 변경</h4>
 					              <button type="button" class="close" data-dismiss="modal">&times;</button>
 					            </div>
 					      
