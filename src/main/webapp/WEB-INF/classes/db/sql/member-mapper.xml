@@ -612,4 +612,29 @@
 	   AND R_STATUS= 'Y' 
    </entry>
    
+   <entry key="ReviewUpdate">
+         UPDATE TB_REVIEW
+         SET REVIEW_CONTENT = ?
+           , STAR = ?
+           , R_MODIFY_DATE = SYSDATE
+       WHERE REVIEW_NO = ?
+   
+   </entry>
+   
+   <entry key="pointList">
+	   SELECT 
+	       POINT_NO
+	     , AMOUNT
+	     , STATUS
+	     , TOTAL 
+	     , MODIFY_DATE
+	     , CONTENT 
+	     , MEMBER_NO
+	  FROM TB_POINT PO
+	 WHERE MEMBER_NO = ?
+	 ORDER 
+	    BY POINT_NO DESC
+   
+   </entry>
+   
 </properties>

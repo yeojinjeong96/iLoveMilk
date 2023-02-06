@@ -681,6 +681,27 @@ public class RecipeDao {
 		return result;
 	}
 	
+	public int deleteReply(Connection conn, Reply r) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		
+		String sql = prop.getProperty("deleteReply");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, r.getReplyNo());
+			
+			result = pstmt.executeUpdate();
+					
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		return result;
+	}
+	
 
 	/*
 	public int insertReplyAttachment(Connection conn, Attachment at) {
@@ -1248,7 +1269,7 @@ public class RecipeDao {
 		
 		try {
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setInt(1, re.getRefNo());
+			pstmt.setInt(1, re.getReplyNo());
 			//pstmt.setInt(2, re.getRefNo());
 			
 			result = pstmt.executeUpdate();
