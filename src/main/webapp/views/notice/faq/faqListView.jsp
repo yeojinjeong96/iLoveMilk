@@ -35,7 +35,7 @@
     .faq-list table{ text-align: center;}
     .answer-area{
             border: 1px solid lightgrey;
-            width: 450px;
+            width: 500px;
             height: 140px;
             margin-top: 5px;
             padding: 10px;
@@ -96,11 +96,11 @@
                 <a href="<%=contextPath%>/list.faq?cpage=1&category=기타">기타</a>
             </div>
             <br>
-            <div class="faq-list">
-                <table border="1"  class="">
+            <div class="faq-list" style="width:700px">
+                <table border="1"  class="table">
                     <tr>
-                        <th width="100">번호</th>
-                        <th width="150">분류</th>
+                        <th width="70">No.</th>
+                        <th width="100">분류</th>
                         <th width="450">내용</th>
                     </tr>
                     <%if (list.isEmpty()){ %>

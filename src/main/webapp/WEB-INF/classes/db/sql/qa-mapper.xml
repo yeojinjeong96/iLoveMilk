@@ -167,6 +167,8 @@
 		    TB_QA
 		    SET Q_TITLE = ?
 		    ,Q_CONTENT = ?
+		    ,FCATEGORY_NAME= ?
+		    ,SCATEGORY_NAME =?
 		    ,ENROLL_DATE =SYSDATE
 		WHERE Q_NO = ?
 	</entry>

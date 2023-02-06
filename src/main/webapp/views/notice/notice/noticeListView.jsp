@@ -38,10 +38,10 @@
     <div id="outer" align="center">
         <br>
         <div style="width: 700px;">
-            <table id="notice-list" border="1" class="text-center">
+            <table id="notice-list" border="1" class="text-center table">
                 <thead>
                     <tr>
-                        <th width="50">번호</th>
+                        <th width="70">No.</th>
                         <th width="350">제목</th>
                         <th width="100">작성일</th>
                         <th width="100">작성자</th>

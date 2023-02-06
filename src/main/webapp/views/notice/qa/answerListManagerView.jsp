@@ -81,7 +81,7 @@
             </form>
             <br>
           
-            <table border="1" class="text-center" id="answer-list">  
+            <table border="1" class="text-center table" id="answer-list">  
            <thead>
                 <tr>
                     <th width="100">완료일</th>
@@ -124,13 +124,13 @@
             <br>
             <div class="paging-area" >
             <%if(pi.getCurrentPage()!=1){ %>
-                <button onclick="location.href='<%=contextPath%>/listM.a?cpage=<%=pi.getCurrentPage()-1%>';">&lt;</button>
+                <button class="btn btn-sm btn-primary" onclick="location.href='<%=contextPath%>/listM.a?cpage=<%=pi.getCurrentPage()-1%>';">&lt;</button>
             <%} %>   
             <%for(int p= pi.getStartPage(); p<=pi.getEndPage(); p++){ %>
-                <button onclick="location.href='<%=contextPath%>/listM.a?cpage=<%=p%>';"><%=p %></button>
+                <button class="btn btn-sm btn-primary" onclick="location.href='<%=contextPath%>/listM.a?cpage=<%=p%>';"><%=p %></button>
             <%} %>
             <%if(pi.getCurrentPage()!=pi.getMaxPage()){ %>
-                <button onclick="location.href='<%=contextPath%>/listM.a?cpage=<%=pi.getCurrentPage()+1%>';">&gt;</button>
+                <button class="btn btn-sm btn-primary" onclick="location.href='<%=contextPath%>/listM.a?cpage=<%=pi.getCurrentPage()+1%>';">&gt;</button>
             <%} %>
             </div>
     
