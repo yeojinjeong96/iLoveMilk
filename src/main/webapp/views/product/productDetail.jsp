@@ -290,7 +290,7 @@
             </div>
             <div style="border-bottom:1px solid gray;"></div> 
 
-            <div id="pro-wrap3-2" style="position:relative;">
+            <div id="pro-wrap3-2" style="position:relative;" width:100%;>
 
 
 				<%if(!(list.isEmpty())){ %>
@@ -298,17 +298,17 @@
 	                 <%for(Review r : list){ %>
 		                
 		                <div style="height:100px;">
-		                    <p style="width:100%">상품번호 : <%=r.getReviewNo()%> <br>상품명 : <%= r.getProductName() %>
+		                    <p style="width:680px;">번호 : <%=r.getReviewNo()%> <br>상품명 : <%= r.getProductName() %> <br>
 		                    	<%if(loginMember != null && !(loginMember.getMemberNo() ==r.getMemberNo())){ %>
 		                            <!--조건문 써서 작성자 아니면 신고  -->
-		                            <a href="" style="float:right;" data-toggle="modal" data-target="#mem-report" >신고</a>
+		                            <a href="" onclick="sendReport(<%=r.getReviewNo()%>, <%= r.getProductNo() %>);" style="float:right;" data-toggle="modal" data-target="#mem-report" >신고</a>
 		                        <%} else if(loginMember != null && (loginMember.getMemberNo()== r.getMemberNo())){ %>    
 		                            <!-- 조건문 써서 작성자일때에는 수정 | 삭제 -->
-		                            <a href="" style="float:right;">수정</a>   <a href="" style="float:right;">삭제</a>
+		                            <a href="<%=contextPath %>/review.me"  onclick="return confirm('내가 쓴 리뷰 페이지로 이동합니다.');" style="float:right;">수정 / 삭제</a>
 		                        <%} %>    
 		                    </p> 
 		                   
-		                    <div style="height:5%; border-bottom:1px solid gray;"></div>
+		                   <!--  <div style="height:5%;"width:100%"; border-bottom:1px solid gray;"></div> -->
 		             
 		                    <p>
 							<%for(int i = 1; i <= r.getStar(); i++){ %>
@@ -390,6 +390,7 @@
 				<%}%>
 				
 			});
+	
 		
 		</script>
 
@@ -461,7 +462,12 @@
 			
 			}
 
-			
+			function sendReport(rno, pno){
+				
+				$("#repNo").val(rno);
+				$("#pNo").val(pno)
+				
+			}
 
         </script> 
         
@@ -479,9 +485,11 @@
                     <!-- Modal body -->
                     <div class="modal-body">
                     
-                    <form action="" method="post">
+                    <form action="<%= contextPath %>/report.rev" method="post">
                             <input type="hidden" name="" value="">
                             <table  style="width:100%; height:150px;">
+                            <input type="hidden" name="repNo" id="repNo" >
+                            <input type="hidden" name="pNo" id="pNo" >
                                     <tr>
                                         <td><input type="radio" name="report-content" value="광고성게시물"> </td>
                                         <td>광고성 게시물</td>
@@ -505,14 +513,14 @@
                                     <tr>
                                         <td></td>
                                         <td>
-                                            <textarea name="" id="" cols="20" rows="2" style=" resize:none" placeholder="신고내용을 입력해주세요(15자 이내)"></textarea>
+                                            <textarea name="etc-content" id="" cols="20" rows="2" style=" resize:none" placeholder="신고내용을 입력해주세요"></textarea>
                                         </td>
                                     </tr>
                             </table>
         
                             <br>
                             <div align="center">
-                            <button onclick="alert("성공적으로 신고접수 되었습니다.");" type="submit" class="btn btn-outline-secondary"  style=" width:200px;">신고하기</button> 
+                            <button  type="submit" class="btn btn-outline-secondary"  style=" width:200px;">신고하기</button> 
                             <br> 
                             <button type="reset" class="btn btn-outline-secondary"  style=" width:200px;" data-dismiss="modal" >닫기</button>
                             </div>    

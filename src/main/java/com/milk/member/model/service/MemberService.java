@@ -382,6 +382,24 @@ public class MemberService {
 		close(conn);
 		return grade;
 	}
+	
+	/**
+	 * 상품상세페이지 내에서 리뷰신고
+	 * @author 이다혜
+	 * @return result
+	 */
+	public int insertReviewReport(Report r) {
+		Connection conn = getConnection();
+		int result = new MemberDao().insertReviewReport(conn, r);
+		
+		if(result > 0) {
+			commit(conn);
+		}else {
+			rollback(conn);
+		}
+		close(conn);
+		return result;
+	}
 
 	 /**
 	  * 회원프로필 변경 서비스 
