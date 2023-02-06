@@ -194,5 +194,22 @@
 		     , FILE_PATH = ?
 		 WHERE FILE_NO = ?
 	</entry>
-	
+	<entry key="selectManagerQList">
+		  SELECT * FROM
+	        (SELECT ROWNUM RNUM, E.*FROM
+	            (SELECT 
+	                   Q_NO
+                       ,MEMBER_ID
+	                   ,Q_TITLE
+	                   ,q_content
+	                   ,TO_CHAR(Q.ENROLL_DATE,'YY-MM-DD') ENROLL_DATE
+	                   ,ANSWER_STATUS
+	                   ,FCATEGORY_NAME
+	                   ,SCATEGORY_NAME
+	                    FROM TB_QA Q
+                    JOIN TB_MEMBER ON (Q_WRITER = MEMBER_NO)
+	                WHERE ANSWER_STATUS != 'Y'
+	                AND Q.STATUS= 'Y'
+	                  )E) wHERE RNUm <![CDATA[=<]]> 5
+	</entry>
 </properties>

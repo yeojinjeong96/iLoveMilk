@@ -61,7 +61,8 @@
 	</entry>
 	
 	<entry key="selectProductReview">
-	   SELECT
+          
+         	   SELECT
 		     	REVIEW_NO
 		      , MEMBER_NO
 		      , PRODUCT_NAME	
@@ -69,10 +70,11 @@
               , STAR
               , R_ENROLL_DATE
               , R_MODIFY_DATE
-         FROM TB_REVIEW
-         JOIN TB_PRODUCT USING (PRODUCT_NO)
-        WHERE PRODUCT_NO = ?
-          AND R_STATUS = 'Y'	
+              , P.PRODUCT_NO
+         FROM TB_REVIEW R
+         JOIN TB_PRODUCT P ON (P.PRODUCT_NO = R.PRODUCT_NO)
+        WHERE P.PRODUCT_NO = ?
+          AND R_STATUS = 'Y'	 
 	</entry>
 	
 	<entry key="countProductLike">

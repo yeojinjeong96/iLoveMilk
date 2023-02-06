@@ -819,7 +819,30 @@ public Member updateCheckPwd(Connection conn, String memberId, String memberPwd)
 		}
 		
 		return list;
-	}	
+	}
+	
+	public int insertReviewReport(Connection conn, Report r) {
+		
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String sql = prop.getProperty("insertReviewReport");
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, r.getRepMemNo());
+			pstmt.setInt(2, r.getRefNo());
+			pstmt.setString(3, r.getRepContent());
+			
+			result = pstmt.executeUpdate();
+			
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		return result;
+	}
 	
 	public int upgradeMem(Connection conn, int no) {
 		int result = 0;
@@ -1124,6 +1147,27 @@ public int UpdateProfile(Connection conn, Member m) {
 			}
 			
 			return result;
-		}  
+		} 
+	   
+	   public int ReviewDelete(Connection conn, int reviewNo ) {
+			int result = 0;
+			PreparedStatement pstmt = null;
+			String sql = prop.getProperty("ReviewDelete");
+			
+			try {
+				pstmt=conn.prepareStatement(sql);
+				pstmt.setInt(1, reviewNo);
+				
+				
+				result=pstmt.executeUpdate();
+				
+			} catch (SQLException e) {
+				e.printStackTrace();
+			} finally {
+				close(pstmt);
+			}
+			
+			return result;
+		}
 	   
 }

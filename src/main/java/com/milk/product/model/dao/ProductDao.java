@@ -220,7 +220,8 @@ public class ProductDao {
 						rset.getString("REVIEW_CONTENT"),
 						rset.getInt("star"),
 						rset.getString("R_ENROLL_DATE"),
-						rset.getString("R_MODIFY_DATE")
+						rset.getString("R_MODIFY_DATE"),
+						rset.getInt("PRODUCT_NO")
 						));
 			}
 			
