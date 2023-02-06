@@ -44,6 +44,18 @@ public class MemberService {
 	}
 	
 	/**
+	 * 비밀번호 찾기 서비스 
+	 */
+	public Member findMemberPwd(String memberId, String memberName, String email) {
+		
+		Connection conn = getConnection();
+		Member m = new MemberDao().findMemberPwd(conn, memberId, memberName, email);
+		close(conn);
+		return m;
+	}
+	
+	
+	/**
 	 * 아이디 중복확인 서비스 
 	 */
 	
@@ -88,13 +100,7 @@ public class MemberService {
 	/**
 	 * 회원정보변경 확인 서비스 
 	 */
-//	public Attachment selectAttachment(int memberNo){
-//		Connection conn = getConnection();
-//		Attachment at = new MemberDao().selectAttachment(conn, memberNo);
-//		close(conn);
-//		return at;
-//	}
-//	
+
 	
 	public Member updateMember(Member m){
 		
@@ -419,6 +425,17 @@ public class MemberService {
 		   }
 	   
 	   /**
+		*  작성전 리뷰 조회 서비스 
+		*/  
+	   
+	   public ArrayList<Review> ReviewListN(int memberNo) {
+		   Connection conn = getConnection();
+		   ArrayList<Review> list = new MemberDao().ReviewListN(conn, memberNo);
+		   close(conn);
+		   return list;
+	   }
+	   
+	   /**
 		*  작성한 리뷰 조회 서비스 
 		*/  
 	   
@@ -429,6 +446,7 @@ public class MemberService {
 		   return list;
 	   }
 	  
+	   
 	   /**
 	      *  작성한 리뷰 수정 서비스 
 	      */
@@ -450,7 +468,9 @@ public class MemberService {
 	         
 	      }
 	   
-
+	 /**
+	   *  회원 포인트 조회 서비스 
+	   */
 	   
 	  public ArrayList<Point> pointList(int memberNo) {
 		  Connection conn = getConnection();

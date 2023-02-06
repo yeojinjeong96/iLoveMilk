@@ -1,5 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@page import = "com.milk.member.model.vo.Review, java.util.ArrayList" %>
+
+<%
+    ArrayList<Review> list = (ArrayList<Review>)request.getAttribute("list");	
+	
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -116,35 +122,31 @@
        			
        </div>
        
-		<div class="maincontent" align="center" >
+		<div class="maincontent" align="center" style="height:500px; overflow-y: auto;" >
 			 <table border="1">
                     <tr >
-                        <td style="width: 150px; height: 150px;" align="center"> <img src="" alt=""> 사진자리 </td>
-                        <td style="width: 300px;">상품이름</td>
-                        <td style="width: 100px;" align="center">
-                            <button type="button" class = "btn btn-secondary btn-sm" data-toggle="modal" data-target="#reviewInsert">리뷰작성</button>
-                        </td>
+                 
                         
-                        <!-- 
-                        <% //if(list.isEmpty()){ %>
+                         
+                        <% if(list.isEmpty()){ %>
                            
                             <tr>
                                 <td colspan="3"> 작성할 수 있는 리뷰가 없습니다.</td>
                             </tr>
-                        <% //}else{ %>
+                        <% }else{ %>
                            
-                            <% //for(Review : list){ %>
+                            <% for(Review r : list){ %>
                             <tr>
-                                <td style="width: 100px;"> <img src="" alt=""> 사진자리 </td>
-                                <td style="width: 300px;">상품이름</td>
-                                <td style="width: 100px;">
+                                <td style="width: 150px; height: 150px;" align="center"> <img src="<%= r.getProductName() %>"> </td>
+                                <td style="width: 300px; margin:auto;" ><%= r.getProductName() %></td>
+                                <td style="width: 100px;" align="center">
                                     <button type="button" class = "btn btn-secondary btn-sm" data-toggle="modal" data-target="#reviewInsert">리뷰작성</button>
                                 </td>
                             </tr>
-                            <%// } %>
-                        <%// } %>
+                            <% } %>
+                        <% } %>
                         
-                        -->
+                      
                         
                     </tr>
                 </table>

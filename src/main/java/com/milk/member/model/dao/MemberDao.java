@@ -104,8 +104,71 @@ private Properties prop = new Properties();
 			rset = pstmt.executeQuery();
 			
 			if(rset.next()) {
-				m = new Member(rset.getString("member_id"),
-							   rset.getString("member_name")
+				m = new Member(
+							   rset.getInt("member_no"),
+							   rset.getString("member_id"),
+							   rset.getString("member_pwd"),
+							   rset.getString("member_name"),
+							   rset.getString("phone"),
+							   rset.getString("email"),
+							   rset.getString("address_number"),
+							   rset.getString("address"),
+							   rset.getString("address_detail"),
+							   rset.getString("profile"),
+							   rset.getDate("enroll_date"),
+							   rset.getDate("modify_date"),
+							   rset.getString("black_list"),
+							   rset.getString("status"),
+							   rset.getString("member_grade")
+							  );
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return m;
+		
+	}
+	
+	
+	
+	public Member findMemberPwd(Connection conn, String memberId, String memberName, String email) {
+		
+		Member m = null;
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		String sql = prop.getProperty("findMemberPwd");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, memberId);
+			pstmt.setString(2, memberName);
+			pstmt.setString(3, email);
+			
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				m = new Member(
+						   rset.getInt("member_no"),
+						   rset.getString("member_id"),
+						   rset.getString("member_pwd"),
+						   rset.getString("member_name"),
+						   rset.getString("phone"),
+						   rset.getString("email"),
+						   rset.getString("address_number"),
+						   rset.getString("address"),
+						   rset.getString("address_detail"),
+						   rset.getString("profile"),
+						   rset.getDate("enroll_date"),
+						   rset.getDate("modify_date"),
+						   rset.getString("black_list"),
+						   rset.getString("status"),
+						   rset.getString("member_grade")
 							  );
 			}
 			
@@ -905,6 +968,38 @@ public Member updateCheckPwd(Connection conn, String memberId, String memberPwd)
 		}
 		return list;
 	   }
+	   
+	   public ArrayList<Review> ReviewListN(Connection conn, int memberNo) {
+		   
+		   ResultSet rset = null;
+		   PreparedStatement pstmt = null;
+		   ArrayList<Review> list = new ArrayList<>();
+		   
+		   String sql = prop.getProperty("ReviewListN");
+		   
+		   try {
+			pstmt=conn.prepareStatement(sql);
+			pstmt.setInt(1, memberNo);
+			rset=pstmt.executeQuery();
+			
+			while(rset.next()) {
+				list.add(new Review(
+						 rset.getString("PRODUCT_NAME"),
+						 rset.getString("PRODUCT_IMG")
+						)); 
+			}
+			
+			
+			} catch (SQLException e) {
+				e.printStackTrace();
+			} finally {
+				close(rset);
+				close(pstmt);
+			}
+			 return list;  
+	   }
+	   
+	   
 	   
 	   public ArrayList<Review> ReviewListY(Connection conn, int memberNo) {
 		   
