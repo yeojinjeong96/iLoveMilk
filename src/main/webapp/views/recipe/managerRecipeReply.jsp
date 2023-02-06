@@ -77,7 +77,6 @@
                 <tr>
                     <td width="50px">
                         <select name="" style="border: none;">
-                            <option value="">전체</option>
                             <option value="">제목</option>
                             <option value="">작성자</option>
                         </select>

@@ -7,6 +7,7 @@
 	ArrayList<RecipeIngre> listI = (ArrayList<RecipeIngre>)request.getAttribute("listI");
 	ArrayList<RecipeOrder> listO = (ArrayList<RecipeOrder>)request.getAttribute("listO");
 	int replyCount = (int)request.getAttribute("replyCount");
+	
 %>
 <!DOCTYPE html>
 <html>
@@ -122,6 +123,8 @@
 
 	<%@ include file = "../common/header.jsp" %>
 
+	<% String loginUserId = loginMember == null ? "" : loginMember.getMemberId(); %>
+	
 	<div class="outer" align="center">
         <br>
         <table class="detail-area">
@@ -345,14 +348,16 @@
         							   +	"<td width='160px'>" + list[i].enrollDate + "</td>"
         							   +	"<input type='hidden' name='reNo' value='" + list[i].replyNo + "'>";
         							   
-        							  
-        							   <% if(loginMember != null && loginMember.getMemberId().equals(r.getRecipeWriter())) { %>
-        								  value += "<td width=''><button type='button' onclick='replyDel();' style='border:none; background:none;'>삭제</button></td>";  
-        							   <% }else if(loginMember == null) { %>
-        							   value += "<td width=''></td>";  
-        							   <% }else { %>
-        							      value += "<td width=''><button type='button' onclick='sReply();' data-toggle='modal' data-target='#report-reply-view' style='border:none; background:none;'>신고</button></td>";
-        							   <% } %>
+        							   
+        							   if(list[i].memberNo == '<%= loginUserId %>') {
+        								   value += "<td width=''><button type='button' onclick='replyDel();' style='border:none; background:none;'>삭제</button></td>";  
+        							   }else if('<%= loginUserId %>' == "") {
+     									  value += "<td width=''></td>";
+     								  }else {
+     									  value += "<td width=''><button type='button' onclick='sReply();' data-toggle='modal' data-target='#report-reply-view' style='border:none; background:none;'>신고</button></td>";
+     								  }
+        							   
+        						
         							   
         							   value += "</tr>"
         							   + "<tr>"

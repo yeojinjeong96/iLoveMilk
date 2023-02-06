@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.milk.common.model.vo.PageInfo;
+import com.milk.member.model.vo.Member;
 import com.milk.recipe.model.service.RecipeService;
 import com.milk.recipe.model.vo.Reply;
 
@@ -57,6 +58,7 @@ public class RecipeReplyListManagerController extends HttpServlet {
 		
 		PageInfo pi = new PageInfo(listCount, currentPage, pageLimit, boardLimit, maxPage, startPage, endPage);
 	
+
 		ArrayList<Reply> list = new RecipeService().selectReplyListM(pi);
 		
 		request.setAttribute("pi", pi);
