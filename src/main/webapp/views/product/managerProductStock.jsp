@@ -56,19 +56,31 @@
                         <tr>
                             <td>
                             	<form action="<%= contextPath %>/stock.pr?cp=1" method="post">
-	                                <select name="op" id="op">
+	                                <select name="op" id="op" onchange="changeOp();">
 	                                    <option>- 검색 조건 -</option>
 	                                    <option>상품명</option>
 	                                    <option>상품코드</option>
 	                                    <option>브랜드</option>
 	                                </select>
-	                                <input type="text" name="key" id="key">
+	                                <input type="text" name="key" id="key" onkeyup="codeRefuse();">
 	                                <button type="submit" onclick="return opNeed();" class="btn btn-primary btn-sm">검색</button>
                                 </form>
                             </td>
                         </tr>
                     </table>
 	<script>
+		// 옵션 변경시 text 초기화
+		function changeOp(){
+			$("#key").val("");
+		}
+	
+		// 상품코드시 숫자 이외의 값 불가
+		//function codeRefuse(e){
+		//	if($("#op").val() == "상품코드" && ($("#key").val() >= 0 && $("#key").val() < 10)){
+		//		$("#key").val("");
+		//	}
+		//}
+	
 		function opNeed(){
 			if($("#op").val() == "- 검색 조건 -"){
 				// 검색조건 미선택시 alert

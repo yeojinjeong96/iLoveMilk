@@ -35,13 +35,13 @@
                         <tr>
                             <td>
                             	<form action="<%= contextPath %>/listUpDeRe.pr?cp=1" method="post">
-	                           	    <select name="searchOp" id="searchOp">
-	                                	<option onchange="changeOp();">- 검색 조건 -</option>
+	                           	    <select name="searchOp" id="searchOp" onchange="changeOp();">
+	                                	<option>- 검색 조건 -</option>
 	                                    <option>상품명</option>
 	                                    <option>상품코드</option>
 	                                    <option>브랜드</option>
 	                                </select>
-	                                <input type="text" name="searchKey" id="searchKey" required>
+	                                <input type="text" name="searchKey" id="searchKey" required onkeyup="codeRefuse();">
 	                                <button type="submit" onclick="return opNeed();" class="btn btn-primary btn-sm">검색</button>
 	                            </form>
 	                        </td>
@@ -191,12 +191,18 @@
     </div>
     
 	<script>
+		// 상품코드시 숫자 이외의 값 불가
+		//function codeRefuse(e){
+		//	console.log(e);
+		//	let code = e.keyCode;
+		//	if(code <= 47 || code >= 58){
+		//		$("#searchKey").val("");
+		//	}
+		//}
+
+		// 옵션 변경시 text 초기화
 		function changeOp(){
-			if($("#searchOp").val() == "상품코드"){
-				$("#searchKey").attr('type', 'number');
-			}else{
-				$("#searchKey").attr('type', 'text');
-			}
+			$("#searchKey").val("");
 		}
 	
 		function opNeed(){
