@@ -297,7 +297,7 @@
 	                 <!--리뷰내용 -->
 	                 <%for(Review r : list){ %>
 		                <div>
-		                    <img src="resources/images/photo.png" alt="" style="display:block; width:100px; height:150px; margin:auto;">
+		                    
 		                </div>
 		
 		                <div style="width:590px; height:100px;">
@@ -307,7 +307,7 @@
 		                            <a href="" style="float:right;" data-toggle="modal" data-target="#mem-report" >신고</a>
 		                        <%} else if(loginMember != null && (loginMember.getMemberNo()== r.getMemberNo())){ %>    
 		                            <!-- 조건문 써서 작성자일때에는 수정 | 삭제 -->
-		                            <a href="" style="float:right;">수정</a>   <a href="" style="float:right;">삭제</a>
+		                            <a href="<%=contextPath %>/review.me" style="float:right;">수정</a>   <a href="<%=contextPath %>/review.me" style="float:right;">삭제</a>
 		                        <%} %>    
 		                    </p> 
 		                   
