@@ -52,11 +52,18 @@ public class ManagerProductInsertController extends HttpServlet {
 			String sCate = multiRequest.getParameter("sCate");
 			String pImg = "resources/product_upfiles/" + multiRequest.getFilesystemName("productImg");
 			
-			Product p = new Product(pName, price, capacity, brand, pInfo, stock, fCate, sCate, pImg);
+			Product p = new Product(pName, price, capacity, brand, pInfo, 0, fCate, sCate, pImg);
 			
-			int result = new ProductService().insertProduct(p);
+			// 상품 등록
+			int result1 = new ProductService().insertProduct(p);
 			
-			if(result > 0) {
+			// 상품코드 가져오기
+			int proNo = new ProductService().selectRecentProductList().get(0).getProductNo();
+						
+			// 상품 입고
+			int result2 = new ProductService().receivingProduct(proNo, stock);
+			
+			if(result1 * result2 > 0) {
 				request.getSession().setAttribute("alertMsg", "상품 등록 성공");
 				response.sendRedirect(request.getContextPath() + "/listUpDeRe.pr?cp=1");
 			} else {
