@@ -51,7 +51,7 @@
                     			<b>"<%= key %>"</b>에 대한 검색 결과
                     		<% } %>
                     	</div>
-                        <button type="button" onclick="deleteBtn();" class="btn btn-primary btn-sm" style="margin: 15px;">선택 상품 삭제</button>
+                        <button type="button" onclick="deleteBtn();" class="btn btn-danger btn-sm" style="margin: 10px;">선택 상품 삭제</button>
                     </div>
                     <table class="table">
                         <thead class="thead-light">

@@ -15,6 +15,7 @@
 		   AND MANAGER_PWD = ?
 		   AND STATUS = 'Y'
 	</entry>
+	
 	<entry key="needReceivingProduct">
 		SELECT
 		       ROWNUM
@@ -27,6 +28,7 @@
 		 ORDER
 		    BY STOCK
 	</entry>
+	
 	<entry key="recentPayment">
 		SELECT ROWNUM, A.*
 		  FROM (SELECT

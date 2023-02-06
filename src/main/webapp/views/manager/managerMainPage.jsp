@@ -107,7 +107,7 @@
 		                                <tr>
 		                                    <td><%= p.getNum() %></td>
 		                                    <td><%= p.getOrderNo() %></td>
-		                                    <td><%= p.getPaymentDate() %></td>
+		                                    <td><%= p.getPaymentDate().substring(0, 10) %></td>
 		                                    <td><%= p.getMemberId() %></td>
 		                                    <td><%= p.getStatus() %></td>
 		                                </tr>
