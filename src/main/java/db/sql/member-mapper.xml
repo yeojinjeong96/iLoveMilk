@@ -711,4 +711,11 @@
 		      )
    </entry>
    
+   <entry key="ReviewDelete">
+   		UPDATE TB_REVIEW
+		   SET R_STATUS = 'N'
+		     , R_MODIFY_DATE = SYSDATE
+		 WHERE REVIEW_NO = ?
+   </entry>
+   
 </properties>
