@@ -46,11 +46,6 @@
             <div class="menu"><a href="<%= contextPath %>/plike.me">찜리스트</a></div>
             <br>
             <br>
-            <div class="menu mainmenu"><a >레시피관리</a></div> <br>
-            <div class="menu"><a href="<%= contextPath %>/MyRecipe.me">내가 쓴 레시피</a></div>
-            <div class="menu"><a href="">내가 좋아요한 레시피</a></div>
-            <br>
-            <br>
             <div class="menu mainmenu"><a href="<%=contextPath%>/list.sv">고객센터</a></div> <br>
             <div class="menu"><a href="<%=contextPath%>/mypage.qa?cpage=1">나의 1:1문의</a></div>
         </div>

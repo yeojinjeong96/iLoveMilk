@@ -88,18 +88,7 @@
    
    <%@ include file="../common/header.jsp" %>
    
-    <%
-    	String memberId = loginMember.getMemberId();
-		int memberNo = loginMember.getMemberNo();
-		String memberPwd = loginMember.getMemberPwd();
-		String profile = loginMember.getProfile();
-		String memberName = loginMember.getMemberName();
-    	String phone = loginMember.getPhone() == null ? "" : loginMember.getPhone(); 
-    	String email = loginMember.getEmail();
-    	String addressNumber = loginMember.getAddressNumber() == null ? "" : loginMember.getAddressNumber();
-    	String address = loginMember.getAddress() == null ? "" : loginMember.getAddress();
-    	String addressDetail = loginMember.getAddressDetail() == null ? "" : loginMember.getAddressDetail();
-    	%>
+  
    
    
    <div class="outer">
@@ -124,39 +113,59 @@
        
 		<div class="maincontent" align="center" style="height:500px; overflow-y: auto;" >
 			 <table border="1">
-                    <tr >
+                
                  
-                        
-                         
                         <% if(list.isEmpty()){ %>
                            
                             <tr>
                                 <td colspan="3"> 작성할 수 있는 리뷰가 없습니다.</td>
                             </tr>
                         <% }else{ %>
-                           
+                           	
                             <% for(Review r : list){ %>
                             <tr>
-                                <td style="width: 150px; height: 150px;" align="center"> <img src="<%= r.getProductName() %>"> </td>
+                                <td style="width: 150px; height: 150px;" align="center"> <img src="<%= r.getProductImg() %>" style="width: 100%; height: 100%;"> </td>
                                 <td style="width: 300px; margin:auto;" ><%= r.getProductName() %></td>
                                 <td style="width: 100px;" align="center">
-                                    <button type="button" class = "btn btn-secondary btn-sm" data-toggle="modal" data-target="#reviewInsert">리뷰작성</button>
+                                    <button type="button" class = "btn btn-secondary btn-sm btn-modal" 
+                                    data-toggle="modal" data-target="#reviewInsert" onclick="reviewInsert(<%= r.getProductNo() %>);">리뷰작성</button>
                                 </td>
                             </tr>
                             <% } %>
                         <% } %>
                         
+                      <script>
                       
-                        
-                    </tr>
+                      function reviewInsert(productNo) {
+                    	$(".modal_table").hide() 
+                    	document.getElementById(productNo).style.display="block";
+                      	//$("table tr").hide();
+                      	//$("table tr.productNo").show();
+                      	//alert(productNo);
+                      	//console.log(productNo);
+                      }
+                      	
+                      </script>
+                    
                 </table>
 
             </div>
 
-                   
+        <%
+    	String memberId = loginMember.getMemberId();
+		int memberNo = loginMember.getMemberNo();
+		String memberPwd = loginMember.getMemberPwd();
+		String profile = loginMember.getProfile();
+		String memberName = loginMember.getMemberName();
+    	String phone = loginMember.getPhone() == null ? "" : loginMember.getPhone(); 
+    	String email = loginMember.getEmail();
+    	String addressNumber = loginMember.getAddressNumber() == null ? "" : loginMember.getAddressNumber();
+    	String address = loginMember.getAddress() == null ? "" : loginMember.getAddress();
+    	String addressDetail = loginMember.getAddressDetail() == null ? "" : loginMember.getAddressDetail();
+    	%>
                    <!-- 리뷰 작성용 모달 div -->
                        <div class="modal" id="reviewInsert">
-                           <div class="modal-dialog">
+                           <div class="modal-dialog" role="document">
                              <div class="modal-content">
                          
                                <!-- Modal Header -->
@@ -167,26 +176,51 @@
                          
                                <!-- Modal body -->
                                <div class="modal-body">
-                                   <form action="" method="post">
-                                       <input type="hidden" name ="memberId" value="">
+                                   <form action="<%= contextPath %>/RInsert.me " method="post">
+                                   
+                                    <% for(Review r : list){ %>
+                                       <input type="hidden" class="body-contents" id="contents" name ="memberNo" value="<%= memberNo %>">
+                                       <input type="hidden" name = "productNo" value="<%= r.getProductNo() %>" >
                                       
-                                       <table border="1">
+                                       <table border="1" id="<%= r.getProductNo() %>"  class="modal_table">
+                                       
                                            <tr>
-                                                <td style="width: 100px;"> <img src="" alt=""> 사진자리 </td>
-                                                <td style="width: 400px;">상품이름</td>
+                                                <td style="width: 100px;"> <img src="<%= r.getProductImg() %>" style="width: 100%; height: 100%;"> </td>
+                                                <td style="width: 400px;"><%= r.getProductName() %></td>
                                            </tr>
+                                           <tr>
+                                               <th>별점</th>
+                                               <td>
+                                                    <select name="star" id="star">
+                                                    	<option value="1"> 
+                                                    		★
+                                                    	</option >
+                                                    	<option value="2"> 
+                                                    		★★
+                                                    	</option>
+                                                    	<option value="3"> 
+                                                    		★★★
+                                                    	</option>
+                                                    	<option value="4"> 
+                                                    		★★★★
+                                                    	</option>
+                                                    	<option value="5"> 
+                                                    		★★★★★
+                                                    	</option>
+                                                    </select>
+                                               </td>
+                                           </tr>
+                                           
                                            <tr>
                                                <th>상세리뷰</th>
                                                <td>
-                                                    <textarea name="content" rows="10" style="resize:none" required></textarea>
+                                                    <textarea name="reviewContent" rows="10" style="resize:none; width:100%; " required> </textarea>
                                                </td>
                                            </tr>
-                                           <tr>
-                                               <th>사진첨부</th>
-                                               <td><input type="file" id="reviewPhoto" required></td>
-                                           </tr>
+                                           
                                        </table>
-                                       <br>
+                                        <% } %>
+                                        <br>
                                        
                                        <button type="submit" class = "btn btn-secondary btn-sm">리뷰 등록</button>
                                    
