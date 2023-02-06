@@ -293,6 +293,71 @@ public class FaqDao {
 		
 	}
 	
+	public int selectBestSearchListCount(Connection conn, String searchBFaq) {
+		int listCount= 0;
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String sql= prop.getProperty("selectBestSearchListCount");
+		
+		try {
+			pstmt= conn.prepareStatement(sql);
+			pstmt.setString(1, searchBFaq);
+			
+			rset= pstmt.executeQuery();
+			if(rset.next()) {
+				listCount=  rset.getInt("count");
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return listCount;
+		
+		
+	}
+	
+	public ArrayList<Faq> selectBestSearchList(Connection conn,PageInfo pi, String searchBFaq){
+		
+		ArrayList<Faq>list = new ArrayList<>();
+		PreparedStatement pstmt= null;
+		ResultSet rset = null;
+		String sql= prop.getProperty("selectBestSearchList");
+		
+		try {
+			
+			pstmt= conn.prepareStatement(sql);
+			int startRow= (pi.getCurrentPage()-1)*pi.getBoardLimit()+1;
+			int endRow= startRow + pi.getBoardLimit() -1;
+			
+			pstmt.setString(1, searchBFaq);
+			pstmt.setInt(2, startRow);
+			pstmt.setInt(3, endRow);
+			
+			rset = pstmt.executeQuery();
+			while(rset.next()) {
+				list.add(new Faq(
+						rset.getInt("FAQ_NO")
+					   ,rset.getString("QUESTION")
+					   ,rset.getString("CATEGORY_NAME")			
+						));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return list;
+		
+		
+	}
+	
+	
 	public int insertFaq(Connection conn, Faq f) {
 		int result= 0;
 		PreparedStatement pstmt = null;

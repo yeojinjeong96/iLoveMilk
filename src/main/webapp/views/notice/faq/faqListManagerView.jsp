@@ -128,6 +128,7 @@
 			$("input[type=checkbox]:checked").each(function(){
 				delNoArr.push($(this).val())
 			})
+			if(confirm('정말 삭제하시겠습니까?'))
     		$.ajax({
     			url:"<%=contextPath%>/delete.faq",
     			data:{delNoArr: delNoArr},
