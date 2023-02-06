@@ -62,20 +62,13 @@
 	                                    <option>상품코드</option>
 	                                    <option>브랜드</option>
 	                                </select>
-	                                <input type="text" name="key" id="key" onkeyup="codeRefuse();">
+	                                <input type="text" name="key" id="key">
 	                                <button type="submit" onclick="return opNeed();" class="btn btn-primary btn-sm">검색</button>
                                 </form>
                             </td>
                         </tr>
                     </table>
 	<script>
-		// 상품코드시 숫자 이외의 값 불가
-		//function codeRefuse(e){
-		//	if($("#op").val() == "상품코드" && ($("#key").val() >= 0 && $("#key").val() < 10)){
-		//		$("#key").val("");
-		//	}
-		//}
-	
 		// 옵션 변경시 text 초기화
 		function changeOp(){
 			$("#key").val("");
@@ -99,8 +92,18 @@
 			$("#end").attr("min", $("#start").val());
 		}
 	
-		// 기간 선택 입력 end max 제한
 		$(function(){
+			// 상품코드시 숫자 이외의 값 불가
+			$("#key").keyup(function(e){
+				if($("#op").val() == "상품코드"){
+					if(isNaN(e.key) || e.key == " "){
+						let str = $("#key").val();
+						$("#key").val(str.substring(0, str.length - 1));
+					}
+				}
+			});
+			
+			// 기간 선택 입력 end max 제한
 			var now_utc = Date.now() // 지금 날짜를 밀리초로
 			// getTimezoneOffset()은 현재 시간과의 차이를 분 단위로 반환
 			var timeOff = new Date().getTimezoneOffset()*60000; // 분단위를 밀리초로 변환

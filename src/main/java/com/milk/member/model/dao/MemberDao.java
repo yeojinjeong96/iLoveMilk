@@ -888,7 +888,7 @@ public Member updateCheckPwd(Connection conn, String memberId, String memberPwd)
 		return grade;
 	}
 	
-	public int UpdateProfile(Connection conn, Member m) {
+public int UpdateProfile(Connection conn, Member m) {
 		
 		int result = 0;
 		PreparedStatement pstmt = null;
@@ -917,6 +917,8 @@ public Member updateCheckPwd(Connection conn, String memberId, String memberPwd)
 		
 		return result;
 	}
+		
+		
 	
 	   public ArrayList<ProductLike> productLikeList(Connection conn, int memberNo) {
 		      
@@ -980,7 +982,8 @@ public Member updateCheckPwd(Connection conn, String memberId, String memberPwd)
 						 rset.getInt("PRODUCT_COUNT"),
 						 rset.getInt("PRICE"),
 						 rset.getInt("STATUS"),
-						 rset.getString("WAYBILL")
+						 rset.getString("WAYBILL"),
+						 rset.getString("COURIER")
 						));
 			}
 		} catch (SQLException e) {
@@ -1144,6 +1147,27 @@ public Member updateCheckPwd(Connection conn, String memberId, String memberPwd)
 			}
 			
 			return result;
-		}  
+		} 
+	   
+	   public int ReviewDelete(Connection conn, int reviewNo ) {
+			int result = 0;
+			PreparedStatement pstmt = null;
+			String sql = prop.getProperty("ReviewDelete");
+			
+			try {
+				pstmt=conn.prepareStatement(sql);
+				pstmt.setInt(1, reviewNo);
+				
+				
+				result=pstmt.executeUpdate();
+				
+			} catch (SQLException e) {
+				e.printStackTrace();
+			} finally {
+				close(pstmt);
+			}
+			
+			return result;
+		}
 	   
 }

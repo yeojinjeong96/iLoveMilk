@@ -72,7 +72,7 @@
 		const delNoArr = new Array();
 
 			delNoArr.push(<%=n.getNoticeNo() %>);
-	
+			 if(confirm('정말 삭제하시겠습니까?'))
 		$.ajax({
 			url:"<%=contextPath%>/delete.no",
 			data:{delNoArr: delNoArr},
