@@ -150,13 +150,13 @@
             <div class="paging-area">
                 
                <%if(pi.getCurrentPage()!=1){ %>
-                <button onclick="location.href='<%=contextPath%>/list.faq?cpage=<%=pi.getCurrentPage()-1%>&category=<%=category%>';">&lt;</button>
+                <button onclick="location.href='<%=contextPath%>/list.faq?cpage=<%=pi.getCurrentPage()-1%>&category=<%=category%>';" class="btn btn-primary btn-sm">&lt;</button>
 	            <%} %>   
 	            <%for(int p= pi.getStartPage(); p<=pi.getEndPage(); p++){ %>
-	                <button onclick="location.href='<%=contextPath%>/list.faq?cpage=<%=p%>&category=<%=category%>';"><%=p %></button>
+	                <button onclick="location.href='<%=contextPath%>/list.faq?cpage=<%=p%>&category=<%=category%>';"class="btn btn-primary btn-sm"><%=p %></button>
 	            <%} %>
 	            <%if(pi.getCurrentPage()!=pi.getMaxPage()){ %>
-	                <button onclick="location.href='<%=contextPath%>/list.faq?cpage=<%=pi.getCurrentPage()+1%>&category=<%=category%>';">&gt;</button>
+	                <button onclick="location.href='<%=contextPath%>/list.faq?cpage=<%=pi.getCurrentPage()+1%>&category=<%=category%>';"class="btn btn-primary btn-sm">&gt;</button>
             	<%} %>
             </div>
          	 	<%} %>
@@ -164,13 +164,13 @@
 	            <div class="paging-area">
 	                  
 	               <%if(pi.getCurrentPage()!=1){ %>
-	                <button onclick="location.href='<%=contextPath%>/list.faq?cpage=<%=pi.getCurrentPage()-1%>';">&lt;</button>
+	                <button onclick="location.href='<%=contextPath%>/list.faq?cpage=<%=pi.getCurrentPage()-1%>';" class="btn btn-primary btn-sm">&lt;</button>
 		            <%} %>   
 		            <%for(int p= pi.getStartPage(); p<=pi.getEndPage(); p++){ %>
-		                <button onclick="location.href='<%=contextPath%>/list.faq?cpage=<%=p%>';"><%=p %></button>
+		                <button onclick="location.href='<%=contextPath%>/list.faq?cpage=<%=p%>';" class="btn btn-primary btn-sm"><%=p %></button>
 		            <%} %>
 		            <%if(pi.getCurrentPage()!=pi.getMaxPage()){ %>
-		                <button onclick="location.href='<%=contextPath%>/list.faq?cpage=<%=pi.getCurrentPage()+1%>';">&gt;</button>
+		                <button onclick="location.href='<%=contextPath%>/list.faq?cpage=<%=pi.getCurrentPage()+1%>';" class="btn btn-primary btn-sm">&gt;</button>
 	             	<% }%>
 	            </div>
 	  

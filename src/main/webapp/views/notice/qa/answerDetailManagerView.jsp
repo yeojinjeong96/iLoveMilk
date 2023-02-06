@@ -79,7 +79,7 @@
             <hr>
     
             <br>
-                <table  width="700px" border="1" class="text-center">
+                <table  width="700px" border="1" class="text-center table">
                     <tr>
                         <th>제목</th>
                         <td><%=q.getaTitle() %></td>
@@ -111,7 +111,7 @@
                     </tr>
                 </table>
                 <br>
-                <button type="button" onclick="location.href='<%=contextPath %>/listM.a?cpage=1';" >목록으로</button>
+                <button type="button" onclick="location.href='<%=contextPath %>/listM.a?cpage=1';"  class="btn btn-primary btn-sm" >목록으로</button>
 
         </div>
        

@@ -13,12 +13,12 @@
 <title>Insert title here</title>
 <style>
         .select-area a{
-        color:black;
+        color:blue;
         text-decoration: none;
     }
 
     .a a{
-        color: black;
+        color: blue;
         text-decoration: none;
     }
     .outer-1{
@@ -75,7 +75,7 @@
                     <input type="date" id="sDate" name="sDate" >  
                     <input type="hidden" id="cpage" name="cpage" value=1>
                    
-                    <button type="submit" class="btn btn-sm btn-secondary">조회</button>
+                    <button type="submit"  class="btn btn-primary btn-sm">조회</button>
                 </div>
 			
             </form>
@@ -94,8 +94,10 @@
             </thead>
                 <%if(list.isEmpty()){ %>
                 <!--데이터 없을시-->
-                <tr>
-                    <td colspan="5">답변 목록이 없습니다.</td>
+                <tr onclick="event.cancelBubble=true">
+                    <td colspan="5" onclick="event.cancelBubble=true">
+                    <p >작성된 답변목록이 없습니다.</p>
+                    </td>
                 </tr>
                 <!--데이터 있을시-->
                 <%}else{ %>

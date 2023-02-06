@@ -65,8 +65,8 @@
                 </table>
                 <br>
     
-                <button type="submit">작성하기</button>
-       			<button type="button" onclick="history.back();">이전으로</button>
+                <button type="submit"  class="btn btn-primary btn-sm">작성하기</button>
+       			<button type="button" onclick="history.back();"  class="btn btn-primary btn-sm">이전으로</button>
                 
             </form>
         </div>
