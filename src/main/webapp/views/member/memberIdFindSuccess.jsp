@@ -32,7 +32,7 @@
         <br>
         <br>
     </div>
-    <div align="center">
+   <div align="center">
         <%= findId.getMemberName() %> 회원님의 아이디는 <br>
         <%= findId.getMemberId() %> 입니다
     </div>
