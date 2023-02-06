@@ -92,7 +92,7 @@
                         </thead>
                          <tbody class="delbody">
                         <%if(list.isEmpty()) {%>
-                        	<tr colspan="7"> 조회된 데이터가 없습니다. </tr>
+                        	<tr><td colspan="7"> 조회된 데이터가 없습니다. </td></tr>
                         <%}else{ %>
                        		<%for(Order o : list){ %>
 		                        <tr>
@@ -197,7 +197,7 @@
                                     <tr>
                                         <td>운송장번호</td>
                                         <td>
-                                        <input type="text" name="waybill" id="waybill2" placeholder="8자리의 운송장번호를 입력해주세요" required> 
+                                        <input type="text" name="waybill" id="waybill2" placeholder="8자리의 운송장번호를 입력해주세요" onkeyup="return wayConfig();" required> 
                                         <button type="button" class="btn btn-outline-secondary btn-sm" onclick="ranNum();">생성하기</button>
                                        </td>
                                     </tr>
@@ -206,7 +206,7 @@
         
                             <br>
                             <div align="center">
-                            <button type="submit" class="btn btn-outline-secondary btn-sm" onclick="return wayConfig();">발급하기</button>
+                            <button type="submit" class="btn btn-outline-secondary btn-sm" disabled>발급하기</button>
                             <button type="button" class="btn btn-outline-secondary btn-sm" data-dismiss="modal" >취소</button>
                             </div>
                     </form>
@@ -249,6 +249,7 @@
         			}
         			 
         			function wayConfig(){
+        				
         				
         	            let regExp = /^[0-9]{8}$/;
         	            if(!regExp.test($("#waybill2").val())){
@@ -293,7 +294,7 @@
 										let val = "";
 										
 										if(o.olist.length == 0){
-											val += "<tr colspan='7'> 조회된 데이터가 없습니다. </tr>";
+											val += "<tr><td colspan='7'> 조회된 데이터가 없습니다. </td></tr>";
 				                        	
 				                            }else{ 
 				                            	
@@ -317,7 +318,7 @@
 				    		                            	+ " <td>" ;
 				    		                                <!-- 조건문 사용해서 운송장 완료하면 버튼비활성화시키기 -->
 				    		                                	if (o.olist[i].waybill == "미발급") {
-				    		                                		val +=" <button type='button' onclick='issWaybill('"+ o.olist[i].orderNo + "');' id='getWbtn' class='btn btn-outline-secondary btn-sm' data-toggle='modal' data-target='#delivery-info' style='font-size:10px;'>"+ "대기" + "</button>";
+				    		                                		val +=" <button type='button' onclick='issWaybill("+ o.olist[i].orderNo + ");' id='getWbtn' class='btn btn-outline-secondary btn-sm' data-toggle='modal' data-target='#delivery-info' style='font-size:10px;'>"+ "대기" + "</button>";
 				    		                                	}else{ 
 				    		                                		val +="<button type='button' id='getWbtn' class='btn btn-outline-secondary btn-sm' data-toggle='modal' data-target='#delivery-info' disabled='disabled' style='font-size:10px;'>" + "완료" + "</button>";
 				    		                                	}

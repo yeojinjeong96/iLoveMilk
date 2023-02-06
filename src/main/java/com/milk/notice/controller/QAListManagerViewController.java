@@ -47,7 +47,7 @@ public class QAListManagerViewController extends HttpServlet {
 		int startPage;	 
 		int endPage;	
 		
-		listCount = new QAService().selectQAListCount(managerNo);
+		listCount = new QAService().selectIncompletedListCount();
 		currentPage= Integer.parseInt(request.getParameter("cpage"));
 		pageLimit= 5;
 		boardLimit=10;
@@ -66,7 +66,7 @@ public class QAListManagerViewController extends HttpServlet {
 			 value= request.getParameter("order");
 		}
 		
-		System.out.println(value);
+
 		ArrayList<QA>list = new QAService().selectIncompletedList(pi,value);
 		request.setAttribute("list",list);
 		request.setAttribute("pi", pi);
