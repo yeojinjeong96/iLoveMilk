@@ -307,7 +307,7 @@
         					value += "<tr>"
         						   + 	"<td colspan='4'>조회된 댓글이 없습니다.</td>"
         						   + "</tr>"
-        				}else{ // 댓글이 있을 경우
+        				}else { // 댓글이 있을 경우
         					for(let i=0; i<list.length; i++){
         						value += "<tr>"
         							   +	"<td width='70px' rowspan='2' align='center' style='vertical-align: top;'>"
@@ -317,8 +317,19 @@
         							   +	"</td>"
         							   +	"<td width='70px' height='1'>" + list[i].memberNo + "</td>"
         							   +	"<td width='160px'>" + list[i].enrollDate + "</td>"
-        							   +	"<td width=''>신고</td>"
-        							   + "</tr>"
+        							   +	"<input type='hidden' name='reNo' value='" + list[i].replyNo + "'>";
+        							   
+        							   
+        							   <% if(loginMember != null && loginMember.getMemberId().equals(loginMember.getMemberId())) { %>
+        								  value += "<td width=''><button type='button' onclick='replyDel();' style='border:none; background:none;'>삭제</button></td>";  
+        							   <% }else if(loginMember == null) { %>
+        							   value += "<td width=''></td>";  
+        							   <% }else { %>
+        							      value += "<td width=''><button type='button' data-toggle='modal' data-target='#report-reply-view' style='border:none; background:none;'>신고</button></td>";
+        							   <% } %>
+        				
+        							   
+        							   value += "</tr>"
         							   + "<tr>"
         							   +	"<td colspan='3' style='vertical-align: top'>"
         							   +		list[i].replyContent
@@ -330,6 +341,26 @@
         				$(".reply-area tbody").html(value);
 						
 					}
+				})
+			}
+			
+			function replyDel(){
+				$.ajax({
+					url:"<%= contextPath %>/reDelete.re",
+					type:"post",
+					data:{
+						no:$(window.event.target).parent().prev().val()
+					},
+					success:function(result){
+						if(result > 0) {
+							alert("성공적으로 댓글을 삭제했습니다.")
+							selectReplyList();
+							
+						}else{
+							alert("댓글 삭제에 실패했습니다.")
+						}
+					}
+					
 				})
 			}
 			

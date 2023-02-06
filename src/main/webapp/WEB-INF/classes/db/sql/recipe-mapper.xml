@@ -411,11 +411,10 @@
                              , R.RECIPE_TITLE
                              , RE.REPLY_CONTENT
 		                  FROM TB_REPLY RE
-                          JOIN TB_MEMBER M ON (RE.MEMBER_NO = M.MEMBER_NO)
-                          JOIN TB_RECIPE R ON (RE.REF_NO = R.RECIPE_NO)
-                          JOIN TB_REPORT RP ON (RP.REF_NO = RE.REPLY_NO)
+                          LEFT JOIN TB_MEMBER M ON (RE.MEMBER_NO = M.MEMBER_NO)
+                          LEFT JOIN TB_RECIPE R ON (RE.REF_NO = R.RECIPE_NO)
+                          LEFT JOIN TB_REPORT RP ON (RP.REF_NO = RE.REPLY_NO)
                          WHERE RE.DELETE_STATUS = 'N'
-                           AND RP.REPORT_TYPE = 2
 		                 ORDER
 		                    BY REPLY_NO DESC
 		                ) "A"
@@ -647,7 +646,12 @@
 		  (
 		    SEQ_REPNO.NEXTVAL
 		  , ?
-		  , ?
+		  , (
+            SELECT 
+                   RECIPE_NO
+              FROM TB_RECIPE
+             WHERE RECIPE_NO = ?
+            )
 		  , ?
 		  , SYSDATE
 		  ,	1
@@ -670,7 +674,12 @@
 		  (
 		    SEQ_REPNO.NEXTVAL
 		  , ?
-		  , ?
+		  , (
+            SELECT 
+                   REPLY_NO
+              FROM TB_REPLY
+             WHERE REPLY_NO = ?
+            )
 		  , ?
 		  , SYSDATE
 		  ,	2
@@ -681,7 +690,7 @@
 		UPDATE
 			   TB_REPLY
 		   SET REPORT_STATUS = 'Y'
-		 WHERE REF_NO = ?
+		 WHERE REPLY_NO = ?
 	</entry>
 	
 	
@@ -791,6 +800,12 @@
 		  FROM TB_REPLY
 		 WHERE REF_NO = ?
 		   AND DELETE_STATUS = 'N'
+	</entry>
+	
+	<entry key="deleteReply">
+		UPDATE TB_REPLY
+		   SET DELETE_STATUS = 'Y'
+		 WHERE REPLY_NO = ?
 	</entry>
 
 </properties>

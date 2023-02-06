@@ -38,16 +38,16 @@ public class RecipeReportReplyController extends HttpServlet {
 		int recipeNo = Integer.parseInt(request.getParameter("no"));
 		int memberNo = ((Member)request.getSession().getAttribute("loginMember")).getMemberNo();
 		
-		int replyNo = Integer.parseInt(request.getParameter("rNo"));
+		int replyNo = Integer.parseInt(request.getParameter("reNo"));
 		
 		String reportContent = request.getParameter("selectReport");
 		String reportEtcContent = request.getParameter("etc");
 		
-		// System.out.println(reportContent);
+		//System.out.println(reportContent);
 		// System.out.println(reportEtcContent);
 		
 		Report r = new Report();
-		r.setRefNo(recipeNo);
+		r.setRefNo(replyNo);
 		r.setReportingMemberNo(String.valueOf(memberNo));
 		
 		if(reportContent.contains("기타")) {
@@ -60,14 +60,15 @@ public class RecipeReportReplyController extends HttpServlet {
 		re.setReplyNo(replyNo);
 		re.setRefNo(recipeNo);
 		
-		System.out.println(replyNo);
+		//System.out.println(replyNo);
+		//System.out.println(recipeNo);
 		
 		int result = new RecipeService().insertReportReply(r, re);
 		
 		
 		if(result > 0) {
 			request.getSession().setAttribute("alertMsg", "해당 댓글이 신고되었습니다.");
-			response.sendRedirect(request.getContextPath() + "/detail.re?no=" + r.getRefNo());
+			response.sendRedirect(request.getContextPath() + "/detail.re?no=" + re.getRefNo());
 		}else {
 			
 		}

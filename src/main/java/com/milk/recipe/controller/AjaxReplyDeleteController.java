@@ -1,7 +1,6 @@
 package com.milk.recipe.controller;
 
 import java.io.IOException;
-import java.util.ArrayList;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -9,22 +8,26 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.google.gson.Gson;
+import org.apache.tomcat.util.http.fileupload.servlet.ServletFileUpload;
+
+import com.milk.common.MyFileRenamePolicy;
+import com.milk.member.model.vo.Member;
 import com.milk.recipe.model.service.RecipeService;
 import com.milk.recipe.model.vo.Attachment;
 import com.milk.recipe.model.vo.Reply;
+import com.oreilly.servlet.MultipartRequest;
 
 /**
- * Servlet implementation class AjaxReplyListController
+ * Servlet implementation class AjaxReplyInsertController
  */
-@WebServlet("/relist.re")
-public class AjaxReplyListController extends HttpServlet {
+@WebServlet("/reDelete.re")
+public class AjaxReplyDeleteController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public AjaxReplyListController() {
+    public AjaxReplyDeleteController() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -35,13 +38,15 @@ public class AjaxReplyListController extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		
-		int recipeNo = Integer.parseInt(request.getParameter("no"));
+		int replyNo = Integer.parseInt(request.getParameter("no"));
 		
-		ArrayList<Reply> list = new RecipeService().selectReplyList(recipeNo);
-	
-		response.setContentType("application/json; charset=UTF-8");
-		new Gson().toJson(list, response.getWriter());
+		Reply r = new Reply();
+		r.setReplyNo(replyNo);
+
+		int result = new RecipeService().deleteReply(r);
 		
+		response.getWriter().print(result);
+			
 	}
 
 	/**
