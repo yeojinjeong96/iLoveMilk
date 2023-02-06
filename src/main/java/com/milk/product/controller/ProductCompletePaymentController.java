@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.milk.member.model.vo.Member;
 import com.milk.product.model.service.ProductService;
 import com.milk.product.model.vo.OrderInfo;
+import com.milk.product.model.vo.PointIn;
 import com.milk.product.model.vo.Product;
 
 /**
@@ -70,28 +71,33 @@ public class ProductCompletePaymentController extends HttpServlet {
 				
 		int price = Integer.parseInt(request.getParameter("price"));
 		// 결제 테이블 insert
-		int result3 = new ProductService().paymentInsert(orderNo, price);
+		int result3 = new ProductService().paymentInsert(orderNo, price-usePoint);
 		
 		// 회원등급 가져오기
 		String memGrade = new ProductService().selectMemberGrade(memNo);
 		
 		int point = 0;
 		if(memGrade.equals("GREEN")) {
-			point = (int)Math.ceil(price * 0.02);
+			point = (int)Math.ceil((price-usePoint) * 0.02);
 		} else if(memGrade.equals("SILVER")) {
-			point = (int)Math.ceil(price * 0.04);
+			point = (int)Math.ceil((price-usePoint) * 0.04);
 		} else if(memGrade.equals("GOLD")) {
-			point = (int)Math.ceil(price * 0.06);
+			point = (int)Math.ceil((price-usePoint) * 0.06);
 		} else if(memGrade.equals("VIP")) {
-			point = (int)Math.ceil(price * 0.08);
+			point = (int)Math.ceil((price-usePoint) * 0.08);
 		}
+		PointIn plusPoint = new PointIn(point, "적립", "상품 구매로 인한 적립", orderNo, memNo);
 		// 회원등급별 적립금 insert
-		int result4 = new ProductService().pointInsert(point, memNo, orderNo);
+		int result4 = new ProductService().pointInsert(plusPoint);
 
-		// 구매상품 장바구니에서 삭제
-		int result5 = new ProductService().productCartDelete(memNo, proNo);
+		PointIn minusPoint = new PointIn(usePoint, "사용", "사용("+orderNo+")", orderNo, memNo);
+		// 사용한 적립금 insert
+		int result5 = new ProductService().pointInsert(minusPoint);
 		
-		if(result1 * result2 * result3 * result4 * result5 > 0) {
+		// 구매상품 장바구니에서 삭제
+		int result6 = new ProductService().productCartDelete(memNo, proNo);
+		
+		if(result1 * result2 * result3 * result4 * result5 * result6 > 0) {
 			request.setAttribute("orderNo", orderNo);
 			request.getRequestDispatcher("views/product/productCompletePayment.jsp").forward(request, response);
 		} else {

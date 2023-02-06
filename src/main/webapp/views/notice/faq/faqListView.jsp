@@ -132,7 +132,7 @@
                 </table>
             </div>
             <br>
-            <%if(searchFaq!=null){ %>
+            <%if(searchFaq!=null &&!list.isEmpty()){ %>
             <div class="paging-area" >
                 <%if(pi.getCurrentPage()!=1){ %>
                 <button onclick="location.href='<%=contextPath%>/search.faq?cpage=<%=pi.getCurrentPage()-1%>';" class="btn btn-primary btn-sm">&lt;</button>
@@ -161,7 +161,7 @@
             	<%} %>
             </div>
          	 	<%} %>
-	         	 <%if(category==null){ %>
+	         	 <%if(category==null &&!list.isEmpty()){ %>
 	            <div class="paging-area">
 	                  
 	               <%if(pi.getCurrentPage()!=1){ %>

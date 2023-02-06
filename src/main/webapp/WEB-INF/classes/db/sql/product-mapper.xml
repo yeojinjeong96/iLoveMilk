@@ -598,15 +598,6 @@
 		  VALUES
 		  (
 		    SEQ_PONO.NEXTVAL
-		  , ?
-		  , '적립'
-		  , NVL((SELECT SUM(AMOUNT)
-             	   FROM TB_POINT
-            	  WHERE MEMBER_NO = ?), 0) + ?
-		  , '상품 구매로 인한 적립'
-		  , ?
-		  , ?
-		  )
 	</entry>
 	
 	<entry key="selectOrderNo">
