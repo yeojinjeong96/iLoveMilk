@@ -21,14 +21,10 @@
 		                     , PRODUCT_NAME
 		                     , PRICE
 		                     , PRODUCT_IMG
-		                  FROM TB_PRODUCT B
-		                 WHERE B.STATUS = 'Y'
+		                  FROM TB_PRODUCT 
+		                 WHERE STATUS = 'Y'
                            AND FCATEGORY_NAME = ? OR SCATEGORY_NAME = ?
-		                 ORDER
-		                    BY ENROLL_DATE DESC
-		                ) A
-		        )
-		  WHERE RNUM BETWEEN ? AND ? 
+
 	</entry>
 	
 	<entry key="selectCategoryList">

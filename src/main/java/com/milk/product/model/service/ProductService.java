@@ -41,17 +41,17 @@ public class ProductService {
 	 * @author 이다혜
 	 * @return 상품 ArrayList
 	 */
-	public ArrayList<Product> selectProductList(PageInfo pi, String category){
+	public ArrayList<Product> selectProductList(PageInfo pi, String category, int order){
 		
 		Connection conn = getConnection();
-		ArrayList<Product> list = new ProductDao().selectProductList(conn, pi, category);
+		ArrayList<Product> list = new ProductDao().selectProductList(conn, pi, category, order);
  		
-		
-		
 		close(conn);
 		return list;
 		
 	}
+	
+
 	
 	/**
 	 * 상품목록페이지 카테고리리스트 조회

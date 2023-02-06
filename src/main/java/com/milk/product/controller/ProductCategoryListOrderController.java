@@ -9,30 +9,27 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.google.gson.Gson;
 import com.milk.common.model.vo.PageInfo;
 import com.milk.product.model.service.ProductService;
 import com.milk.product.model.vo.Product;
 
 /**
- * Servlet implementation class ProductCategoryListController
+ * Servlet implementation class ProductCategoryListOrderController
  */
-@WebServlet("/proList.pro")
-public class ProductCategoryListController extends HttpServlet {
+@WebServlet("/oProList.pro")
+public class ProductCategoryListOrderController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public ProductCategoryListController() {
+    public ProductCategoryListOrderController() {
         super();
         // TODO Auto-generated constructor stub
     }
 
 	/**
-	 * 카테고리 클릭시 해당 제품 목록페이지 띄워
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 * 
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
@@ -72,11 +69,12 @@ public class ProductCategoryListController extends HttpServlet {
 		PageInfo pi = new PageInfo(listCount, currentPage, pageLimit, boardLimit, maxPage, startPage,endPage);
 		
 		
-		ArrayList <Product> list = new ProductService().selectProductList(pi, category, order);
+		ArrayList <Product> list = new ProductService().selectOrderProductList(pi, category, order);
 		
 		ArrayList <Product> categoryList = new ProductService().selectCategoryList(category);
 		
-		request.setAttribute("order", order);
+		System.out.println(list);
+		
 		request.setAttribute("pi", pi);
 		request.setAttribute("list", list);
 		request.setAttribute("category", category);
@@ -86,7 +84,8 @@ public class ProductCategoryListController extends HttpServlet {
 		request.getRequestDispatcher("views/product/productList.jsp").forward(request, response);
 		
 
-		
+
+	
 	}
 
 	/**

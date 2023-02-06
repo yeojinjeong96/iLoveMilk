@@ -296,11 +296,8 @@
 				<%if(!(list.isEmpty())){ %>
 	                 <!--리뷰내용 -->
 	                 <%for(Review r : list){ %>
-		                <div>
-		                    <img src="resources/images/photo.png" alt="" style="display:block; width:100px; height:150px; margin:auto;">
-		                </div>
-		
-		                <div style="width:590px; height:100px;">
+		                
+		                <div style="height:100px;">
 		                    <p style="width:100%">상품번호 : <%=r.getReviewNo()%> <br>상품명 : <%= r.getProductName() %>
 		                    	<%if(loginMember != null && !(loginMember.getMemberNo() ==r.getMemberNo())){ %>
 		                            <!--조건문 써서 작성자 아니면 신고  -->
