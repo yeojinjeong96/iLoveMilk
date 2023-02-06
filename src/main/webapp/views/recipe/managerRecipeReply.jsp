@@ -79,9 +79,9 @@
             <table class="search-area" border="1">
                 <tr>
                     <td width="50px">
-                        <select name="" style="border: none;">
+                        <select name="search-select" style="border: none;">
                             <option value="title">제목</option>
-                            <option value="">작성자</option>
+                            <option value="reporting">신고자</option>
                         </select>
                     </td>
                     <td width="500px">
@@ -91,11 +91,11 @@
                 <tr>
                     <td>신고 여부</td>
                     <td>
-                        <input type="radio" name="option" id="">
-                        <label for="">Y</label>
+                        <input type="radio" name="option" id="y" value="Y" checked>
+                        <label for="y">Y</label>
                         
-                        <input type="radio" name="option" id="">
-                        <label for="">N</label>
+                        <input type="radio" name="option" id="n" value="N">
+                        <label for="n">N</label>
                     </td>
                 </tr>
                 <tr>
