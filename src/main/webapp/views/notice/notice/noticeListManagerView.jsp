@@ -51,8 +51,8 @@
                             <button type="button" class="btn btn-primary btn-sm" onclick="deleteNotice();">선택삭제</button>
                         </div>
                         <br>
-                        <table id="notice-list" border="1" class="text-center table" >
-                            <thead>
+                        <table id="notice-list" class="text-center table" >
+                            <thead class="thead-light">
                                 <tr>
                                     <th>선택</th>
                                     <th width="80" >글번호</th>

@@ -56,7 +56,7 @@
                 </tr>
             </table>
         </div>
-       <button  type="button" onclick="history.back()">이전으로</button>
+       <button  type="button" onclick="history.back()" class="btn btn-sm btn-secondary">이전으로</button>
     </div>
 	<%@include file="/views/common/footer.jsp" %>
 </body>

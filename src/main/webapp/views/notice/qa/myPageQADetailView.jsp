@@ -67,7 +67,7 @@
 			<h4 align="left">나의 1:1 문의 </h4>
             <hr>
             <br>
-            <table border="1" class="question-area text-center table" style="width: 700px;">
+            <table class="question-area text-center table" style="width: 700px;">
                 <tr >
                     <td colspan="3">[<%=q.getfCategory() %>/<%=q.getsCategory() %>]&nbsp;<%=q.getqTitle() %></td>
                              
@@ -115,7 +115,7 @@
             <!--답변완료시-->
             <br>
             <div class="answer-area text-center" style="width: 700px;">
-                <table border="1" style="width: 700px;" class="table">
+                <table  style="width: 700px;" class="table">
                     <tr>
                         <td colspan="2"><%=q.getaTitle() %></td>
                     

@@ -98,10 +98,10 @@
             </div>
             <br>
             <div class="faq-list" style="width:700px">
-                <table border="1"  class="table">
-                    <tr>
+                <table  class="table">
+                    <tr class="thead-light">
                         <th width="70">No.</th>
-                        <th width="100">분류</th>
+                        <th width="120">분류</th>
                         <th width="450">내용</th>
                     </tr>
                     <%if (list.isEmpty()){ %>

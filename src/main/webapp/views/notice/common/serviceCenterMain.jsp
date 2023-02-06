@@ -82,12 +82,15 @@
                     <a href="<%=contextPath%>/list.sv?cpage=1&category=기타">기타</a>&nbsp;
                 </p>
                 
-                <table  border="1" style="text-align:center" class="content-area table">
-                    <tr>
-                        <th width="100">No.</th>
-                        <th width="100">분류</th>
-                        <th width="500">내용</th>
-                    </tr>
+                <table style="text-align:center" class="content-area table">
+                    <thead class="thead-light">
+	                    <tr>
+	                        <th width="100">No.</th>
+	                        <th width="100">분류</th>
+	                        <th width="500">내용</th>
+	                    </tr>
+                    </thead>
+                    
                     <%if(list.isEmpty()) {%>
                       <!--내용이 없을 경우-->
                     <tr>

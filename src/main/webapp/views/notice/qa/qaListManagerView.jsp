@@ -53,8 +53,8 @@
                 </select>
             </div>
             <br>
-            <table border="1" id="q-list" class="table"> 
-            	<thead>
+            <table id="q-list" class="table"> 
+            	<thead class="thead-light">
                 <tr>
                     <th width="50">No.</th>
                     <th width="100">작성자ID</th>
