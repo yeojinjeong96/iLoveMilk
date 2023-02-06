@@ -1,6 +1,7 @@
 package com.milk.product.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -10,18 +11,19 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.milk.member.model.vo.Member;
 import com.milk.product.model.service.ProductService;
+import com.milk.product.model.vo.Product;
 
 /**
  * Servlet implementation class ProductCartInController
  */
 @WebServlet("/cartIn.pr")
-public class ProductCartInController extends HttpServlet {
+public class AjaxProductCartInController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public ProductCartInController() {
+    public AjaxProductCartInController() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -30,10 +32,24 @@ public class ProductCartInController extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		int proNo = Integer.parseInt(request.getParameter("proNo"));
 		int memNo = ((Member)request.getSession().getAttribute("loginMember")).getMemberNo();
-		int amount = Integer.parseInt(request.getParameter("amount"));
-		new ProductService().productCartInsert(proNo, memNo, amount);
+		ArrayList<Product> cartProList = new ProductService().productCartList(memNo);
+		
+		int duf = 0;
+		int proNo = Integer.parseInt(request.getParameter("proNo"));
+		for(Product p : cartProList) {
+			if(p.getProductNo() == proNo) {
+				duf++;
+			}
+		}
+		
+		int result = 0;
+		if (duf == 0) {
+			int amount = Integer.parseInt(request.getParameter("amount"));
+			result = new ProductService().productCartInsert(proNo, memNo, amount);
+		}
+		
+		response.getWriter().print(result);
 	}
 
 	/**

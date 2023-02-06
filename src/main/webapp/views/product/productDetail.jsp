@@ -249,29 +249,9 @@
                 
                 <div id="pro-1-3-2-4"  align=center>
                     <i class="bi-heart like-btn" style="font-size:2rem; color: red; cursor: pointer;" onclick="memberLike(<%=p.getProductNo()%>);" ></i>
-                    <button type="button" onclick="cartInput();" id="btn-buy"  style=" width:270px; height:40px;" class="btn btn-outline-primary">장바구니</button>
+                    <button type="button" id="btn-buy"  style=" width:270px; height:40px;" class="btn btn-outline-primary">장바구니</button>
                 </div>
                 
-                <script>
-	                function cartInput(){
-	                	$.ajax({
-	                		url:"<%= contextPath %>/cartIn.pr",
-	                		data:{
-	                			proNo:$("#pNo").html(),
-	                			amount:$("#pro-amount").val()
-	                		},
-	    					type:"post",
-	                		success:function(){
-	                			
-	                		},
-	                		error:function(){
-	                			console.log("장바구니 추가용 ajax통신 실패");
-	                		}
-	                	});
-	                }
-	                
-
-                </script>
             </div>
         </div>
 
@@ -386,15 +366,32 @@
 				
 				<% if(loginMember != null){%>
 					
-					var con = confirm(" 장바구니에 추가되었습니다. 해당페이지로 이동하시겠습니까?");
-					if(con){
-						location.href="<%=contextPath%>/cart.pr";
-					}
+					$.ajax({
+	            		url:"<%= contextPath %>/cartIn.pr",
+	            		data:{
+	            			proNo:$("#pNo").html(),
+	            			amount:$("#pro-amount").val()
+	            		},
+						type:"post",
+	            		success:function(result){
+	            			if(result > 0){
+		            			if(confirm("장바구니에 추가되었습니다. 해당페이지로 이동하시겠습니까?")){
+		    						location.href="<%=contextPath%>/cart.pr";
+		    					}
+	            			}else{
+	            				alert("장바구니에 동일한 상품이 존재합니다.");
+	            			}
+	            		},
+	            		error:function(){
+	            			console.log("장바구니 추가용 ajax통신 실패");
+	            		}
+	            	});
+					
 				<%}else{%>
 					alert("로그인이 필요한 기능입니다. 로그인 후 사용해주세요");
 					location = "<%=contextPath%>/loginpage.me";
 				<%}%>
-	
+				
 			});
 		
 		</script>
