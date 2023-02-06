@@ -82,16 +82,29 @@ public class QADao {
 		ResultSet rset= null;
 		PreparedStatement pstmt= null;
 		String sql= prop.getProperty("selectQuestionList");
+		if(fDate !=null && sDate !=null) {
+		sql+= "and to_char(enroll_date, 'YY-MM-DD')>= to_date(?, 'YY-MM-DD') and to_char(enroll_date, 'YY-MM-DD') <= to_date(?, 'YY-MM-DD')  ";	
+		};
+		
+		sql+= " ORDER BY Q_NO DESC )E) WHERE RNUM BETWEEN ? AND ?";
 		
 		try {
 			pstmt= conn.prepareStatement(sql);
 			pstmt.setInt(1, memberNo);
 			int startRow= (pi.getCurrentPage()-1)*pi.getBoardLimit()+1;
 			int endRow= startRow + pi.getBoardLimit() -1;
+			
+			if(fDate !=null && sDate !=null) {
 			pstmt.setString(2, fDate);
 			pstmt.setString(3, sDate);
 			pstmt.setInt(4, startRow);
 			pstmt.setInt(5, endRow);
+			}else {
+				pstmt.setInt(2, startRow);
+				pstmt.setInt(3, endRow);
+			}
+			
+		
 			
 			rset= pstmt.executeQuery();
 			while(rset.next()) {
@@ -120,13 +133,20 @@ public class QADao {
 		ResultSet rset= null;
 		PreparedStatement pstmt= null;
 		String sql= prop.getProperty("selectQAListCount");
+		if(fDate !=null && sDate !=null) {
+			sql+= "and to_char(enroll_date, 'YY-MM-DD')>= to_date(?, 'YY-MM-DD') and to_char(enroll_date, 'YY-MM-DD') <= to_date(?, 'YY-MM-DD')  ";	
+			};
 		
 		try {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, memberNo);
-
-			pstmt.setString(2, fDate);
-			pstmt.setString(3, sDate);
+			if(fDate !=null && sDate !=null) {
+			
+				pstmt.setString(2, fDate);
+				pstmt.setString(3, sDate);
+			}
+			
+			
 			rset= pstmt.executeQuery();
 			
 			if(rset.next()) {

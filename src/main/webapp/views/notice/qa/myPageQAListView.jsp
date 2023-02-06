@@ -38,6 +38,12 @@
 		
 		float: left;
 	}
+	 .dateBtn{
+        border: 0;
+        outline: 0;
+        background-color: transparent;
+    }
+    
 	#qa-list tbody tr:hover{cursor: pointer;}
     #qa-list tr{  
         overflow: hidden;
@@ -69,7 +75,7 @@
 			<h4 align="left">나의 1:1 문의 </h4>
             <hr>
             <br>
-            <form action="<%=contextPath%>/listM.a" method="get">
+            <form action="<%=contextPath%>/mypage.qa" method="get">
         
                 <div class="select-area" align="left" >        
                     조회기간&nbsp;
