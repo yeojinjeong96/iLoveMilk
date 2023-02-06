@@ -28,8 +28,9 @@
     .search input{ width: 300px; height: 30px;}
     .search button{ height: 30px;}
     .qa{ 
-        background-color: rgb(156, 208, 229);
-        padding: 10px;
+        background-color: rgb(180, 225, 243);
+        padding: 20px;
+        border-radius: 30px;
 
     }
     .faq-list table{ text-align: center;}
@@ -80,7 +81,7 @@
                 </strong>
                 <br>
                 <br>
-                <a href="<%=contextPath%>/enroll.q" class="btn btn-sm btn-secondary">1:1 문의</a>
+                <a href="<%=contextPath%>/enroll.q" class="btn btn-sm btn-secondary" style="border-radius:20px">1:1 문의</a>
                 </p>
             </div>
             <br>

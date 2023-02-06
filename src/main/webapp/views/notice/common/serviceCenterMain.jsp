@@ -29,8 +29,10 @@
     .search input{ width: 300px; height: 30px;}
     .search button{ height: 30px;}
     .qa{ 
-        background-color: rgb(156, 208, 229);
-        padding: 10px;
+        background-color: rgb(180, 225, 243);
+        padding: 20px;
+        border-radius: 30px;
+       
 
     }
 </style>
@@ -52,7 +54,7 @@
             <div style="width: 700px;">
                 <div class="search form-outline">
                     <form action="<%=contextPath%>/search.bfaq" method="get" >  
-                            <input type="text" name="searchFaq" placeholder="검색어를 입력하세요." class=" input-sm" required><button type="submit" class="btn btn-primary btn-sm">검색</button>              
+                            <input type="text" name="searchFaq" placeholder="검색어를 입력하세요." class=" input-sm" required><button type="submit" class="btn btn-primary btn-sm" >검색</button>              
                     		 <input type="hidden" name="cpage" value="1">
                     </form>     
                 </div>
@@ -65,7 +67,7 @@
                     </strong>
                     <br>
                     <br>
-                    <a href="<%=contextPath%>/enroll.q" class="btn btn-sm btn-secondary">1:1 문의</a>
+                    <a href="<%=contextPath%>/enroll.q" class="btn btn-sm btn-secondary" style="border-radius:20px">1:1 문의</a>
                     </p>
                 </div>
                 <br>
