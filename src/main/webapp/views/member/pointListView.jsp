@@ -50,7 +50,7 @@
            
            
         }
-        
+        .pointheader{font-size: 25px; font-weight: bolder; padding-bottom: 50px;}
         .pointserch{border: 1px solid gray; margin-bottom: 50px; padding: 10px;}
 		.point-list{ width: 100%;}
 		#poimtlist {width: 100%;}
@@ -91,34 +91,15 @@
 		
 		
 		<div class="maincontent">
-		
-			<div class="outer_up">
 			
-				<div class="pointserch" >
-			        <table >
-			                <tr >
-			                    <td style="height: 50px;">조회기간</td>
-			                    <td style="height: 50px;">
-			                        <button>1주일</button>
-			                        <button>1개월</button>
-			                        <button>3개월</button>
-			                        <button>6개월</button>
-			                    </td>
-			                </tr>
-			                 <tr>
-			                    <td>조회기간</td>
-			                    <td>
-			                        <form action="">
-			                        <input type="date" id="day1" name="day1">
-			                        ~
-			                        <input type="date" id="day2" name="day2">
-			                        <input type="submit" value="기간조회" id="pointserch">
-			                        </form>
-			                    </td>
-			                 </tr>
-			            </table>
-			        </div>
-			        
+			<div class="pointheader">
+            적립금 조회
+           
+        	</div>
+			
+			<div class="outer_up">
+					
+				
 			        <div class="point-list" style="height:500px; overflow-y: auto;">
 			        	
 			            <table id="pointlist" border="1px solid gray;">

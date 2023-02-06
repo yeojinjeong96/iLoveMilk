@@ -52,7 +52,7 @@
 		        <div class="under" >
 				        <a onclick="enrollPage();">회원가입</a> &nbsp;&nbsp;| &nbsp;&nbsp;
 				        <a onclick="idFindPage();">ID찾기</a> &nbsp;&nbsp;| &nbsp;&nbsp;
-				        <a>PW찾기</a>
+				        <a onclick="pwdFindPage();">PW찾기</a>
 				</div>  
 				<script>
 	            	function enrollPage(){
@@ -62,6 +62,10 @@
 	            	function idFindPage(){
 	            		location.href = "<%= contextPath%>/idFindPage.me";
 	            	};
+	            	
+	            	function pwdFindPage(){
+	            		location.href="<%= contextPath%>/pwdFindPage.me";
+	            	}
             	</script>
 	        </div>
         </div>

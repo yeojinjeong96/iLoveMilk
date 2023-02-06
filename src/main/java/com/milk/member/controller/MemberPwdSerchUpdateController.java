@@ -1,8 +1,6 @@
 package com.milk.member.controller;
 
 import java.io.IOException;
-import java.util.ArrayList;
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -12,19 +10,18 @@ import javax.servlet.http.HttpSession;
 
 import com.milk.member.model.service.MemberService;
 import com.milk.member.model.vo.Member;
-import com.milk.product.model.vo.ProductLike;
 
 /**
- * Servlet implementation class productLikeListPageController
+ * Servlet implementation class MemberPwdUpdateController
  */
-@WebServlet("/plike.me")
-public class productLikeListPageController extends HttpServlet {
+@WebServlet("/updateSerchPwd.me")
+public class MemberPwdSerchUpdateController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public productLikeListPageController() {
+    public MemberPwdSerchUpdateController() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -33,22 +30,23 @@ public class productLikeListPageController extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
-		//int memberNo = Integer.parseInt(request.getParameter("memberNo"));
-		
-		HttpSession session = request.getSession();
-		int memberNo = ((Member)session.getAttribute("loginMember")).getMemberNo();
-		
-		ArrayList<ProductLike> list2 = new MemberService().productLikeList(memberNo);
-		request.setAttribute("list2", list2);
-		
-		
-		request.getRequestDispatcher("views/member/productLikeList.jsp").forward(request, response);
-		
-		
-		
-		
-		
+
+			String memberId = request.getParameter("memberId");
+			String memberPwd = request.getParameter("memberPwd");
+			String updatePwd = request.getParameter("updatePwd");
+			
+			Member updateMem = new MemberService().updatePwdMember(memberId, memberPwd, updatePwd);
+			
+			HttpSession session = request.getSession();
+			if(updateMem == null) { 
+				session.setAttribute("alertMsg", "현재 비밀번호를 다시 확인해주세요.");
+				
+			}else { // 성공 => 로그인
+				session.setAttribute("alertMsg", "성공적으로 비밀번호를 수정했습니다.");
+				response.sendRedirect(request.getContextPath() + "//loginpage.me");
+			}
+			
+			
 		
 	}
 

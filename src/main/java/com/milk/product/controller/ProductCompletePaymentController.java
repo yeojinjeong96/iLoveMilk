@@ -48,9 +48,12 @@ public class ProductCompletePaymentController extends HttpServlet {
 		OrderInfo o = new OrderInfo(memNo, orderName, orderPhone, orderEmail, addressName, address, addressTel, usePoint);
 		// 주문 테이블 insert
 		int result1 = new ProductService().orderInsert(o);
-				
-		// 주문번호 가져오기
-		String orderNo = new ProductService().selectOrderNo(memNo);
+		
+		String orderNo = "";
+		if(result1 > 0) {
+			// 주문번호 가져오기
+			orderNo = new ProductService().selectOrderNo(memNo);
+		}
 		String[] proNo = request.getParameterValues("proNo");
 		String[] count = request.getParameterValues("count");
 		ArrayList<Product> list = new ArrayList<Product>();

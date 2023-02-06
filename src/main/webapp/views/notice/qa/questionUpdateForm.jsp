@@ -43,7 +43,7 @@
             	<%if (at!=null){ %>
             	<input type="hidden" name="fileNo" value="<%=at.getFileNo()%>">
             	<%} %>
-                <table border="1" class="qa-form">
+                <table border="1" class="qa-form table">
                     <tr>
                         <th width="150" class="text-center">* 말머리</th>
                         <td width="400">
@@ -93,15 +93,26 @@
                     
                 </table>
                 <br>
-                <a href="" class="btn btn-sm btn-secondary">목록으로</a>
-                <button type="submit" onclick="return cateNeed();" class="btn btn-sm btn-secondary">수정하기</button>
+                <a href="<%=contextPath %>/list.qa?cpage=1" class="btn btn-sm btn-primary">목록으로</a>
+                <button type="submit" onclick="return cateNeed();" class="btn btn-sm btn-primary">수정하기</button>
         
             </form>
             
         </div>
     </div>
     <script>
-    	
+    $(function(){
+		$("select[name=fCate]").children().each(function(){
+			if($(this).text() == "<%= q.getfCategory() %>"){
+				$(this).prop("selected", true);
+			}
+		});
+		$("select[name=sCate]").children().each(function(){
+			if($(this).text() == "<%= q.getsCategory() %>"){
+				$(this).prop("selected", true);
+			}
+		});
+	});
     	
    		 function cateNeed(){
 			if($("#fCate").val() == "- 1차 카테고리 -" || $("#sCate").val() == "- 2차 카테고리 -"){

@@ -71,6 +71,16 @@ public class Review {
 	
 	
 
+
+	public Review(int productNo, String productName, String productImg) {
+		super();
+		this.productNo = productNo;
+		this.productName = productName;
+		this.productImg = productImg;
+	}
+
+
+
 	public Review(int reviewNo, String reviewContent, int star) {
 		super();
 		this.reviewNo = reviewNo;
@@ -81,6 +91,16 @@ public class Review {
 	
 
 	
+
+
+	public Review(int memberNo, int productNo, String reviewContent, int star) {
+		super();
+		this.memberNo = memberNo;
+		this.productNo = productNo;
+		this.reviewContent = reviewContent;
+		this.star = star;
+	}
+
 
 
 	public int getReviewNo() {

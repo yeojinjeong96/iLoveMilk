@@ -132,7 +132,7 @@
 			                    <tr>
 			                        <th>프로필</th>
 			                        <td id="image_outer">
-			                         <button type="button" class = "btn btn-sm" data-toggle="modal" data-target="#updateProfileModal">프로필 변경</button>   
+			                         <button type="button" class = "btn btn-secondary btn-sm" data-toggle="modal" data-target="#updateProfileModal">프로필 변경</button>   
 			                        </td>
 			                    </tr>
 			
@@ -245,7 +245,7 @@
 					      
 					            <!-- Modal Header -->
 					            <div class="modal-header">
-					              <h4 class="modal-title">프로필 변경</h4>
+					              <h4 class="modal-title">비밀번호 변경</h4>
 					              <button type="button" class="close" data-dismiss="modal">&times;</button>
 					            </div>
 					      

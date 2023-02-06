@@ -92,7 +92,7 @@
                         </thead>
                          <tbody class="delbody">
                         <%if(list.isEmpty()) {%>
-                        	<tr colspan="7"> 조회된 데이터가 없습니다. </tr>
+                        	<tr><td colspan="7"> 조회된 데이터가 없습니다. </td></tr>
                         <%}else{ %>
                        		<%for(Order o : list){ %>
 		                        <tr>
@@ -197,8 +197,9 @@
                                     <tr>
                                         <td>운송장번호</td>
                                         <td>
-                                        <input type="text" name="waybill" id="waybill2" placeholder="8자리의 운송장번호를 입력해주세요" required> 
+                                        <input type="text" name="waybill" id="waybill2" placeholder="8자리의 운송장번호를 입력해주세요" onkeyup="wayConfig();" required> 
                                         <button type="button" class="btn btn-outline-secondary btn-sm" onclick="ranNum();">생성하기</button>
+                                        <br> <p id="check1"></p>
                                        </td>
                                     </tr>
                                     
@@ -206,7 +207,7 @@
         
                             <br>
                             <div align="center">
-                            <button type="submit" class="btn btn-outline-secondary btn-sm" onclick="return wayConfig();">발급하기</button>
+                            <button type="submit" id="createWay1" class="btn btn-outline-secondary btn-sm" disabled>발급하기</button>
                             <button type="button" class="btn btn-outline-secondary btn-sm" data-dismiss="modal" >취소</button>
                             </div>
                     </form>
@@ -227,6 +228,9 @@
         					data: {ono:ono},
         					success:function(result){
         						
+        						
+        						console.log(result);
+        						
 								$("#wayOrderNo").val(result.orderNo);
 								$("#wayOrderDate").text(result.paymentDate);
 								$("#wayMemberName").text(result.memberName);
@@ -236,7 +240,7 @@
         					}, error:function(){
         						alert("통신실패");
         					}
-        				})
+        				});
         				
         			}
         			
@@ -246,33 +250,37 @@
         					    num += Math.floor(Math.random() * 10);
         					  }
         				 $("#waybill2").val(num);
+        				 
+        				 wayConfig();
         			}
         			 
         			function wayConfig(){
         				
-        	            let regExp = /^[0-9]{8}$/;
-        	            if(!regExp.test($("#waybill2").val())){
-        	                alert("유효한 운송장번호를 입력하세요");
-        	                $("#waybill2").val() = "";
-        	                $("#waybill2").focus(); //커서가 깜빡거릴수있게 해줌
-        	                return false;
-        	            }
-        	            
-        	          
-        	                   				
         				const wayInput = $("#orderWay input[name=waybill]").val(); 
+        				
+
         				
         				$.ajax({
         					url:"<%=contextPath%>/wayCheck.ma",
         					data:{waybill:wayInput},
         					success:function(result){
         						
+        						;
         						
-        						if(result == "N"){
-        							alert("이미 존재하는 운송장번호입니다.");
-        							$("#waybill2").val() = "";
-        							 $("#waybill2").focus();
-        						}
+                	            let regExp = /^[0-9]{8}$/;
+                	            if(!regExp.test($("#waybill2").val())){
+                	                $("#check1").text("유효한 운송장번호를 입력하세요");
+                	            }else if(result == "N"){
+                	            	$("#check1").text("이미 존재하는 운송장번호입니다.");
+                	            }else if(regExp.test($("#waybill2").val()) && !(result == "N")) {
+                	            	
+	                	            	if(confirm("해당 운송장번호를 사용하시겠습니까?")){
+	                	            		$("#waybill2").attr("readonly", true);
+	                	            		$("#createWay1").removeAttr("disabled");
+	                	            		$("#check1").text("");
+	                	            	}
+                	            	
+                	            }        						
         						
         					}, error:function(){
         						alert("운송장 중복검사 통신실패");
@@ -293,7 +301,7 @@
 										let val = "";
 										
 										if(o.olist.length == 0){
-											val += "<tr colspan='7'> 조회된 데이터가 없습니다. </tr>";
+											val += "<tr><td colspan='7'> 조회된 데이터가 없습니다. </td></tr>";
 				                        	
 				                            }else{ 
 				                            	
@@ -317,6 +325,7 @@
 				    		                            	+ " <td>" ;
 				    		                                <!-- 조건문 사용해서 운송장 완료하면 버튼비활성화시키기 -->
 				    		                                	if (o.olist[i].waybill == "미발급") {
+				    		                                		
 				    		                                		val +=" <button type='button' onclick='issWaybill('"+ o.olist[i].orderNo + "');' id='getWbtn' class='btn btn-outline-secondary btn-sm' data-toggle='modal' data-target='#delivery-info' style='font-size:10px;'>"+ "대기" + "</button>";
 				    		                                	}else{ 
 				    		                                		val +="<button type='button' id='getWbtn' class='btn btn-outline-secondary btn-sm' data-toggle='modal' data-target='#delivery-info' disabled='disabled' style='font-size:10px;'>" + "완료" + "</button>";

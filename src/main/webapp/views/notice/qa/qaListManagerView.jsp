@@ -12,7 +12,7 @@
 <style>
     #q-list td{ text-align: center;}
     .a a{text-decoration: none;
-    color:black}
+    color:blue}
     .outer-1{
         width: 800px;
         float: left;
@@ -53,7 +53,7 @@
                 </select>
             </div>
             <br>
-            <table border="1" id="q-list">
+            <table border="1" id="q-list" class="table"> 
             	<thead>
                 <tr>
                     <th width="50">No.</th>
@@ -64,8 +64,8 @@
                 </tr>
                 </thead>
                 <%if(list.isEmpty()){ %>
-                <tr>
-                    <td colspan="5">미답변 문의가 없습니다.</td>
+                <tr onclick="event.cancelBubble=true">
+                    <td colspan="5" onclick="event.cancelBubble=true" >미답변 문의가 없습니다.</td>
                 </tr>
                 <%}else{ %>
                 <%for(QA q:list){ %>
@@ -93,18 +93,18 @@
             <br> <br>
             <div class="paging-area" >
              <%if(pi.getCurrentPage()!=1){ %>
-                <button onclick="location.href='<%=contextPath%>/listM.qa?cpage=<%=pi.getCurrentPage()-1%>';">&lt;</button>
+                <button  class="btn btn-primary btn-sm" onclick="location.href='<%=contextPath%>/listM.qa?cpage=<%=pi.getCurrentPage()-1%>';">&lt;</button>
             <%} %>   
             <%for(int p= pi.getStartPage(); p<=pi.getEndPage(); p++){ %>
-                <button onclick="location.href='<%=contextPath%>/listM.qa?cpage=<%=p%>';"><%=p %></button>
+                <button  class="btn btn-primary btn-sm" onclick="location.href='<%=contextPath%>/listM.qa?cpage=<%=p%>';"><%=p %></button>
             <%} %>
             <%if(pi.getCurrentPage()!=pi.getMaxPage()){ %>
-                <button onclick="location.href='<%=contextPath%>/listM.qa?cpage=<%=pi.getCurrentPage()+1%>';">&gt;</button>
+                <button  class="btn btn-primary btn-sm" onclick="location.href='<%=contextPath%>/listM.qa?cpage=<%=pi.getCurrentPage()+1%>';">&gt;</button>
             <%} %>
             </div>
             
             <div align="right" style="width:600px" class="a">
-                <a href="<%=contextPath %>/listM.a?cpage=1&date=0">> 답변 목록 조회</a>
+                <a href="<%=contextPath %>/listM.a?cpage=1">> 답변 목록 조회</a>
                  <br><br>
             </div>
         </div>

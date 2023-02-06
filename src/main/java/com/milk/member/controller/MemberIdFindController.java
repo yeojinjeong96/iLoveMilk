@@ -41,14 +41,14 @@ public class MemberIdFindController extends HttpServlet {
 		
 		System.out.println(findId);
 		
-		
+		HttpSession session = request.getSession();
 		if(findId==null) { //조회결과 없음 
-			
+			session.setAttribute("alertMsg", "입력하신 정보를 확인해주세요");
 			response.sendRedirect(request.getContextPath() + "/idFindPage.me"); 
 		
 		}else { //조회결과 있음 
 			
-			HttpSession session = request.getSession();
+			
 			session.setAttribute("findId", findId);
 			response.sendRedirect(request.getContextPath() + "/idFindSuccess.me" );
 			

@@ -1,8 +1,6 @@
 package com.milk.member.controller;
 
 import java.io.IOException;
-import java.util.ArrayList;
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -12,19 +10,18 @@ import javax.servlet.http.HttpSession;
 
 import com.milk.member.model.service.MemberService;
 import com.milk.member.model.vo.Member;
-import com.milk.product.model.vo.ProductLike;
 
 /**
- * Servlet implementation class productLikeListPageController
+ * Servlet implementation class MemberIdFindController
  */
-@WebServlet("/plike.me")
-public class productLikeListPageController extends HttpServlet {
+@WebServlet("/PwdFind.me")
+public class MemberPwdFindController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public productLikeListPageController() {
+    public MemberPwdFindController() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -34,20 +31,33 @@ public class productLikeListPageController extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		//int memberNo = Integer.parseInt(request.getParameter("memberNo"));
 		
-		HttpSession session = request.getSession();
-		int memberNo = ((Member)session.getAttribute("loginMember")).getMemberNo();
+		request.setCharacterEncoding("UTF-8");
 		
-		ArrayList<ProductLike> list2 = new MemberService().productLikeList(memberNo);
-		request.setAttribute("list2", list2);
+		String memberId = request.getParameter("memberId");
+		String memberName = request.getParameter("memberName");
+		String email = request.getParameter("email");
 		
+		Member findPwd = new MemberService().findMemberPwd(memberId, memberName, email);
 		
-		request.getRequestDispatcher("views/member/productLikeList.jsp").forward(request, response);
-		
-		
+		System.out.println(findPwd);
 		
 		
+		if(findPwd==null) { //조회결과 없음 
+			request.getSession().setAttribute("alertMsg", "입력하신 정보를 다시 확인해주세요");
+			response.sendRedirect(request.getContextPath() + "/pwdFindPage.me"); 
+		
+		}else { //조회결과 있음 
+			
+			HttpSession session = request.getSession();
+			session.setAttribute("findPwd", findPwd);
+			
+			response.sendRedirect(request.getContextPath() + "/PwdFindSuccess.me"); 
+			
+		
+			
+		}
+
 		
 		
 	}

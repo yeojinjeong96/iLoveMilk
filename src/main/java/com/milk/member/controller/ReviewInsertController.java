@@ -1,8 +1,6 @@
 package com.milk.member.controller;
 
 import java.io.IOException;
-import java.util.ArrayList;
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -11,20 +9,19 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.milk.member.model.service.MemberService;
-import com.milk.member.model.vo.Member;
-import com.milk.product.model.vo.ProductLike;
+import com.milk.member.model.vo.Review;
 
 /**
- * Servlet implementation class productLikeListPageController
+ * Servlet implementation class ReviewInsertController
  */
-@WebServlet("/plike.me")
-public class productLikeListPageController extends HttpServlet {
+@WebServlet("/RInsert.me")
+public class ReviewInsertController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public productLikeListPageController() {
+    public ReviewInsertController() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -33,20 +30,34 @@ public class productLikeListPageController extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		request.setCharacterEncoding("UTF-8");
 		
-		//int memberNo = Integer.parseInt(request.getParameter("memberNo"));
+		int memberNo = Integer.parseInt(request.getParameter("memberNo"));
+		int productNo = Integer.parseInt(request.getParameter("productNo"));
+		String reviewContent = request.getParameter("reviewContent");
+		int star = Integer.parseInt(request.getParameter("star"));
+		
+		
+		Review r = new Review(memberNo, productNo,reviewContent,star );
+				
+		int result = new MemberService().insertReview(r);
 		
 		HttpSession session = request.getSession();
-		int memberNo = ((Member)session.getAttribute("loginMember")).getMemberNo();
-		
-		ArrayList<ProductLike> list2 = new MemberService().productLikeList(memberNo);
-		request.setAttribute("list2", list2);
 		
 		
-		request.getRequestDispatcher("views/member/productLikeList.jsp").forward(request, response);
-		
-		
-		
+		if(result > 0) {
+			
+			
+			session.setAttribute("alertMsg", "성공적으로 리뷰가 등록되었습니다.");
+			
+			
+			response.sendRedirect(request.getContextPath()+ "/review.me");
+			
+		}else {
+			
+			session.setAttribute("alertMsg", "리뷰 등록에 실패했습니다.");
+			response.sendRedirect(request.getContextPath()+ "/review.me");
+		}
 		
 		
 		

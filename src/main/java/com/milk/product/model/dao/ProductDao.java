@@ -863,11 +863,11 @@ public class ProductDao {
 		String sql = prop.getProperty("selectAllListCount");
 		
 		if(op != null && op.equals("상품명")) {
-			sql += "AND PRODUCT_NAME LIKE '%" + searchKey + "%'";
+			sql += "AND PRODUCT_NAME LIKE '%" + searchKey + "%' ";
 		} else if(op != null && op.equals("상품코드")) {
-			sql += "AND PRODUCT_NO =" + searchKey;
+			sql += "AND PRODUCT_NO = '" + searchKey + "' ";
 		} else if(op != null && op.equals("브랜드")) {
-			sql += "AND BRAND LIKE '%" + searchKey + "%'";
+			sql += "AND BRAND LIKE '%" + searchKey + "%' ";
 		}
 				
 		try {
@@ -892,11 +892,11 @@ public class ProductDao {
 		String sql = prop.getProperty("selectAllList");
 		
 		if(op != null && op.equals("상품명")) {
-			sql += "AND PRODUCT_NAME LIKE '%" + searchKey + "%'";
+			sql += "AND PRODUCT_NAME LIKE '%" + searchKey + "%' ";
 		} else if(op != null && op.equals("상품코드")) {
-			sql += "AND PRODUCT_NO =" + searchKey;
+			sql += "AND PRODUCT_NO = '" + searchKey + "' ";
 		} else if(op != null && op.equals("브랜드")) {
-			sql += "AND BRAND LIKE '%" + searchKey + "%'";
+			sql += "AND BRAND LIKE '%" + searchKey + "%' ";
 		}
 		sql += "ORDER BY PRODUCT_NO DESC) A) WHERE RNUM BETWEEN ? AND ?";
 		
@@ -1226,7 +1226,7 @@ public class ProductDao {
 		if(op != null && op.equals("상품명")) {
 			sql += "JOIN TB_PRODUCT USING(PRODUCT_NO) WHERE PRODUCT_NAME LIKE '%" + key + "%' ";
 		} else if(op != null && op.equals("상품코드")) {
-			sql += "WHERE PRODUCT_NO = " + key + " ";
+			sql += "WHERE PRODUCT_NO = '" + key + "' ";
 		} else if(op != null && op.equals("브랜드")) {
 			sql += "JOIN TB_PRODUCT USING(PRODUCT_NO) WHERE BRAND LIKE '%" + key + "%' ";
 		}
@@ -1261,7 +1261,7 @@ public class ProductDao {
 		if(op != null && op.equals("상품명")) {
 			sql += "AND PRODUCT_NAME LIKE '%" + key + "%' ";
 		} else if(op != null && op.equals("상품코드")) {
-			sql += "AND PRODUCT_NO = " + key + " ";
+			sql += "AND PRODUCT_NO = '" + key + "' ";
 		} else if(op != null && op.equals("브랜드")) {
 			sql += "AND BRAND LIKE '%" + key + "%' ";
 		}

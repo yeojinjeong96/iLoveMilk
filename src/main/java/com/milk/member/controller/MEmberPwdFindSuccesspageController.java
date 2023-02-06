@@ -1,4 +1,4 @@
-package com.milk.product.controller;
+package com.milk.member.controller;
 
 import java.io.IOException;
 import javax.servlet.ServletException;
@@ -8,16 +8,16 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * Servlet implementation class ProductInsertFormController
+ * Servlet implementation class MEmberIdFindSuccesspageController
  */
-@WebServlet("/insertForm.pr")
-public class ProductInsertFormController extends HttpServlet {
+@WebServlet("/PwdFindSuccess.me")
+public class MEmberPwdFindSuccesspageController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public ProductInsertFormController() {
+    public MEmberPwdFindSuccesspageController() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -26,12 +26,7 @@ public class ProductInsertFormController extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		if(request.getSession().getAttribute("loginManager") != null) {
-			request.getRequestDispatcher("views/product/managerProductInsertForm.jsp").forward(request, response);
-		} else {
-			response.setContentType("text/html; charset=utf-8");
-			response.getWriter().print("<script>alert('로그인 후 이용가능한 서비스입니다.');location.href='loginForm.ma'</script>");
-		}
+		request.getRequestDispatcher("views/member/memberPwdSuccess.jsp").forward(request, response);
 	}
 
 	/**

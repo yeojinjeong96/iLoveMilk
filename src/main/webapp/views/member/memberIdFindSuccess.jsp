@@ -32,14 +32,14 @@
         <br>
         <br>
     </div>
-    <div align="center">
+   <div align="center">
         <%= findId.getMemberName() %> 회원님의 아이디는 <br>
         <%= findId.getMemberId() %> 입니다
     </div>
 
     <br><br>
     <div class="under" align="center">
-        <a href="">PW찾기</a> &nbsp;&nbsp;| &nbsp;&nbsp;
+        <a href="<%= contextPath%>/pwdFindPage.me">PW찾기</a> &nbsp;&nbsp;| &nbsp;&nbsp;
         <a href="<%= contextPath %>/loginpage.me"">로그인</a>
     </div>
     

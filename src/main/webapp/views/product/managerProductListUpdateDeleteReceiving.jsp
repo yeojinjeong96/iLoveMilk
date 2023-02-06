@@ -34,14 +34,16 @@
                     <table class="outer-2">
                         <tr>
                             <td>
-                           	    <select name="searchOp" id="searchOp">
-                                	<option>- 검색 조건 -</option>
-                                    <option>상품명</option>
-                                    <option>상품코드</option>
-                                    <option>브랜드</option>
-                                </select>
-                                <input type="text" name="searchKey" id="searchKey">
-                                <button type="button" onclick="return opNeed();" class="btn btn-primary btn-sm">검색</button>
+                            	<form action="<%= contextPath %>/listUpDeRe.pr?cp=1" method="post">
+	                           	    <select name="searchOp" id="searchOp" onchange="changeOp();">
+	                                	<option>- 검색 조건 -</option>
+	                                    <option>상품명</option>
+	                                    <option>상품코드</option>
+	                                    <option>브랜드</option>
+	                                </select>
+	                                <input type="text" name="searchKey" id="searchKey" required onkeyup="codeRefuse();">
+	                                <button type="submit" onclick="return opNeed();" class="btn btn-primary btn-sm">검색</button>
+	                            </form>
 	                        </td>
                         </tr>
                     </table>
@@ -51,7 +53,7 @@
                     			<b>"<%= key %>"</b>에 대한 검색 결과
                     		<% } %>
                     	</div>
-                        <button type="button" onclick="deleteBtn();" class="btn btn-primary btn-sm" style="margin: 15px;">선택 상품 삭제</button>
+                        <button type="button" onclick="deleteBtn();" class="btn btn-danger btn-sm" style="margin: 10px;">선택 상품 삭제</button>
                     </div>
                     <table class="table">
                         <thead class="thead-light">
@@ -189,14 +191,25 @@
     </div>
     
 	<script>
+		// 상품코드시 숫자 이외의 값 불가
+		//function codeRefuse(e){
+		//	console.log(e);
+		//	let code = e.keyCode;
+		//	if(code <= 47 || code >= 58){
+		//		$("#searchKey").val("");
+		//	}
+		//}
+
+		// 옵션 변경시 text 초기화
+		function changeOp(){
+			$("#searchKey").val("");
+		}
+	
 		function opNeed(){
 			if($("#searchOp").val() == "- 검색 조건 -"){
 				// 검색조건 미선택시 alert
 				alert("검색 조건을 선택하세요.");
 				return false;
-			}else{
-				// 검색 리스트 가져오기
-				location.href = "<%= contextPath %>/listUpDeRe.pr?searchOp=" + $('#searchOp').val() + "&searchKey=" + $('#searchKey').val() + "&cp=1";
 			}
 		}
 			

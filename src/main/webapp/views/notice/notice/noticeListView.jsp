@@ -38,10 +38,10 @@
     <div id="outer" align="center">
         <br>
         <div style="width: 700px;">
-            <table id="notice-list" border="1" class="text-center">
+            <table id="notice-list" border="1" class="text-center table">
                 <thead>
                     <tr>
-                        <th width="50">번호</th>
+                        <th width="70">No.</th>
                         <th width="350">제목</th>
                         <th width="100">작성일</th>
                         <th width="100">작성자</th>
@@ -74,13 +74,13 @@
             <%if(!list.isEmpty()){ %>
             <div class="paging-area" >
             <%if(pi.getCurrentPage()!=1){ %>
-                <button onclick="location.href='<%=contextPath%>/list.no?cpage=<%=pi.getCurrentPage()-1%>';">&lt;</button>
+                <button onclick="location.href='<%=contextPath%>/list.no?cpage=<%=pi.getCurrentPage()-1%>';"  class="btn btn-primary btn-sm">&lt;</button>
             <%} %>   
             <%for(int p= pi.getStartPage(); p<=pi.getEndPage(); p++){ %>
-                <button onclick="location.href='<%=contextPath%>/list.no?cpage=<%=p%>';"><%=p %></button>
+                <button onclick="location.href='<%=contextPath%>/list.no?cpage=<%=p%>';"  class="btn btn-primary btn-sm"><%=p %></button>
             <%} %>
             <%if(pi.getCurrentPage()!=pi.getMaxPage()){ %>
-                <button onclick="location.href='<%=contextPath%>/list.no?cpage=<%=pi.getCurrentPage()+1%>';">&gt;</button>
+                <button onclick="location.href='<%=contextPath%>/list.no?cpage=<%=pi.getCurrentPage()+1%>';"  class="btn btn-primary btn-sm">&gt;</button>
             <%} }%>
             </div>
             

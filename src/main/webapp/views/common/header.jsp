@@ -248,7 +248,7 @@
                        
                        
                                 <ul class="all-menu">
-                                  <li><a class="dropdown-header" href="<%=contextPath%>/proList.pro?우유&cpage=1">우유</a> <!-- 카테고리 -->
+                                  <li><a class="dropdown-header" href="<%=contextPath%>/proList.pro?category=우유&cpage=1">우유</a> <!-- 카테고리 -->
                                         <br>
                                         <!-- <div style="border:1px solid gray; width:150px"></div> -->
                                         <br>
