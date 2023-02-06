@@ -41,7 +41,7 @@
 	                                    <option>상품코드</option>
 	                                    <option>브랜드</option>
 	                                </select>
-	                                <input type="text" name="searchKey" id="searchKey" required onkeyup="codeRefuse();">
+	                                <input type="text" name="searchKey" id="searchKey">
 	                                <button type="submit" onclick="return opNeed();" class="btn btn-primary btn-sm">검색</button>
 	                            </form>
 	                        </td>
@@ -191,15 +191,6 @@
     </div>
     
 	<script>
-		// 상품코드시 숫자 이외의 값 불가
-		//function codeRefuse(e){
-		//	console.log(e);
-		//	let code = e.keyCode;
-		//	if(code <= 47 || code >= 58){
-		//		$("#searchKey").val("");
-		//	}
-		//}
-
 		// 옵션 변경시 text 초기화
 		function changeOp(){
 			$("#searchKey").val("");
@@ -219,6 +210,16 @@
 				$(this).children().eq(2).click(function(){
 	 				location.href = '<%= contextPath %>/detail.pr?no=' + $(this).prev().text();
 	 			});
+			});
+			
+			// 상품코드시 숫자 이외의 값 불가
+			$("#searchKey").keyup(function(e){
+				if($("#searchOp").val() == "상품코드"){
+					if(isNaN(e.key) || e.key == " "){
+						let str = $("#searchKey").val();
+						$("#searchKey").val(str.substring(0, str.length - 1));
+					}
+				}
 			});
 		});
 		
