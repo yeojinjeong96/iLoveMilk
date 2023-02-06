@@ -15,32 +15,30 @@
 		   AND MANAGER_PWD = ?
 		   AND STATUS = 'Y'
 	</entry>
-	
-	<entry key="findIdWithPhone">
-		SELECT MANAGER_ID
-		  FROM TB_MANAGER
+	<entry key="needReceivingProduct">
+		SELECT
+		       ROWNUM
+		     , PRODUCT_NO
+		     , PRODUCT_NAME || ' ' || CAPACITY || '(mL/g)' PRODUCT_NAME
+		     , STOCK
+		  FROM TB_PRODUCT
 		 WHERE STATUS = 'Y'
-		   AND MANAGER_PHONE = ?
+  <![CDATA[AND STOCK < 10]]>
+		 ORDER
+		    BY STOCK
 	</entry>
-	
-	<entry key="findIdWithEail">
-		SELECT MANAGER_ID
-		  FROM TB_MANAGER
-		 WHERE STATUS = 'Y'
-		   AND MANAGER_EMAIL = ?
-	</entry>
-	
-	<entry key="updatePwdWithPhone">
-		UPDATE TB_MANAGER
-		   SET MANAGER_PWD = ?
-		 WHERE STATUS = 'Y'
-		   AND MANAGER_PHONE = ?
-	</entry>
-	
-	<entry key="updatePwdWithEmail">
-		UPDATE TB_MANAGER
-		   SET MANAGER_PWD = ?
-		 WHERE STATUS = 'Y'
-		   AND MANAGER_EMAIL = ?
+	<entry key="recentPayment">
+		SELECT ROWNUM, A.*
+		  FROM (SELECT
+		               ORDER_NO
+		             , PAYMENT_DATE
+		             , MEMBER_ID
+		             , O.STATUS
+		          FROM TB_ORDER O
+		          JOIN TB_PAYMENT USING(ORDER_NO)
+		          JOIN TB_MEMBER USING(MEMBER_NO)
+		         ORDER
+		            BY PAYMENT_DATE DESC) A
+<![CDATA[WHERE ROWNUM <= 5]]>
 	</entry>
 </properties>

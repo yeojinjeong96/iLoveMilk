@@ -1,5 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ page import="java.util.ArrayList, com.milk.product.model.vo.Product, com.milk.product.model.vo.Payment" %>
+<%
+	ArrayList<Product> stockList = (ArrayList<Product>)request.getAttribute("stockList");
+	ArrayList<Payment> recentPayList = (ArrayList<Payment>)request.getAttribute("recentPayList");
+
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -34,15 +40,20 @@
                                 </tr>
                             </thead>
                             <tbody>
-
-                                <!-- 반복 -->
-                                <tr>
-                                    <td>1</td>
-                                    <td>2</td>
-                                    <td>이름자리</td>
-                                    <td>재고량자리</td>
-                                </tr>
-
+                            	<% if(stockList != null){ %>
+									<% for(Product p : stockList){ %>
+		                                <tr>
+		                                    <td><%= p.getPrice() %></td>
+		                                    <td><%= p.getProductNo() %></td>
+		                                    <td><%= p.getProductName() %></td>
+		                                    <td><%= p.getStock() %></td>
+		                                </tr>
+									<% } %>
+								<% }else{ %>
+									<tr>
+										<td colspan="4">재입고 필요한 상품이 없습니다.</td>
+									</tr>
+								<% } %>
                             </tbody>
                         </table>
                     </div>
@@ -91,16 +102,21 @@
                                 </tr>
                             </thead>
                             <tbody>
-
-                                <!-- 반복 -->
-                                <tr>
-                                    <td>1</td>
-                                    <td>주문번호자리</td>
-                                    <td>주문일자자리</td>
-                                    <td>아이디자리</td>
-                                    <td>배송상태자리</td>
-                                </tr>
-
+								<% if(recentPayList != null){ %>
+									<% for(Payment p : recentPayList){ %>
+		                                <tr>
+		                                    <td><%= p.getNum() %></td>
+		                                    <td><%= p.getOrderNo() %></td>
+		                                    <td><%= p.getPaymentDate() %></td>
+		                                    <td><%= p.getMemberId() %></td>
+		                                    <td><%= p.getStatus() %></td>
+		                                </tr>
+									<% } %>
+								<% }else{ %>
+									<tr>
+										<td colspan="5">최근 주문목록이 없습니다.</td>
+									</tr>
+								<% } %>
                             </tbody>
                         </table>
                     </div>
