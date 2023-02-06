@@ -81,7 +81,7 @@
         width: 100%;
     }
 
-    .detail-area , .reply-area, .reply-count, .like-report{
+    .detail-area , .reply-area, .reply-count{
         width: 700px;
     }
 
@@ -214,18 +214,7 @@
         </table>
         <br><br>
         
-        <table class="like-report">
-            <tr>
-                <td>
-                    <div id="like" align="left">
-                        <button type="submit" id="btn-buy" data-target="#like-btn" data-toggle="modal" style="background: none; border: 0; color: red;">♡</button>
-                        좋아요
-                        0
-                    </div>
-                </td>
-            </tr>
-        </table>
-
+        
         <div style="border-bottom: 3px solid gray; width: 700px;"></div>
         <br><br>
 
@@ -287,6 +276,7 @@
 						if(result > 0) {
 							selectReplyList();
 							$(".reply-enroll textarea").val("");
+							location.reload();
 						}else{
 							alert("댓글 등록을 실패했습니다.")
 						}
@@ -358,7 +348,7 @@
 						if(result > 0) {
 							alert("성공적으로 댓글을 삭제했습니다.")
 							selectReplyList();
-							
+							location.reload();
 						}else{
 							alert("댓글 삭제에 실패했습니다.")
 						}

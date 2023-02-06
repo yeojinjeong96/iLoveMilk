@@ -83,7 +83,7 @@
         width: 100%;
     }
 
-    .detail-area , .reply-area, .reply-count, .like-report{
+    .detail-area , .reply-area, .reply-count, .report-area{
         width: 700px;
     }
 
@@ -224,15 +224,8 @@
         </table>
         <br><br>
         
-        <table class="like-report">
+        <table class="report-area">
             <tr>
-                <td>
-                    <div id="like" align="left">
-                        <i class="bi-heart like-btn" style="font-size:1rem; color: red; cursor: pointer;" onclick="memberLike(<%= r.getRecipeNo() %>);"></i>
-                        좋아요
-                        0
-                    </div>
-                </td>
                 <td>
                 	<% if(loginMember != null && loginMember.getMemberId().equals(r.getRecipeWriter())) { %>
                     <!-- 로그인한 회원만 보이도록 -->
