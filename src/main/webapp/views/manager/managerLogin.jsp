@@ -53,15 +53,16 @@
 					   	<div class="modal fade" id="modalIdFind1">
 					       	<div class="modal-dialog">
 						       	<div class="modal-content">
-						      	 	<!-- Modal Header -->
-						       		<div class="modal-header">
-						           		<h4 class="modal-title">아이디 찾기</h4>
-						            	<button type="button" class="close" data-dismiss="modal">×</button>
-						         	</div>
-						         	<!-- Modal body -->
-						         	<div class="modal-body" align="center">
-						            	<form action="" method="post">
-						               		<table>
+						       	
+						       		<div id="output">
+							      	 	<!-- Modal Header -->
+							       		<div class="modal-header">
+							           		<h4 class="modal-title">아이디 찾기</h4>
+							            	<button type="button" class="close" data-dismiss="modal">×</button>
+							         	</div>
+							         	<!-- Modal body -->
+							         	<div class="modal-body" align="center">
+						            		<table>
 						                  		<tr>
 						                     		<td width="100px">
 						                        		<input type="radio" id="email" name="idFind" value="email" checked onclick="inputShow();">
@@ -87,24 +88,35 @@
 						                  		</tr>
 						               		</table>
 						
-							                <script>
-							                   	function inputShow(){
-							                      	if($("#email").is(":checked")){
-							                         	$("#findVal").attr('type', 'email');
-							                         	$("#findVal").attr('placeholder', '이메일');
-							                         	$("#findVal").attr('name', 'email');
-							                      	}else{
-							                      		$("#findVal").attr('type', 'text');
-							                         	$("#findVal").attr('placeholder', '핸드폰 번호 - 제외하고 입력');
-							                         	$("#findVal").attr('name', 'phone');
-							                      	}
-							                   	}
-							                </script>
+	<script>
+		function inputShow(){
+		  	if($("#email").is(":checked")){
+		     	$("#findVal").attr('type', 'email');
+		     	$("#findVal").attr('placeholder', '이메일');
+		     	$("#findVal").attr('name', 'email');
+		  	}else{
+		  		$("#findVal").attr('type', 'text');
+		     	$("#findVal").attr('placeholder', '핸드폰 번호 - 제외하고 입력');
+		     	$("#findVal").attr('name', 'phone');
+		  	}
+		}
+		
+		function ajaxIdControll1(){
+			$.ajax({
+				url:"<%= contextPath %>/find.ma?",
+				data:{},
+				method:"post",
+				success:function(){},
+				error:function(){}
+			});
+		}
+	</script>
 							
 							               	<br><br>
-							               	<button type="submit" id="modalIdFindBtb2" class="btn btn-primary" data-toggle="modal" data-target="#modalIdFind2">다음</button>
-							            </form>
-						      		</div>
+							               	<button type="button" id="modalIdFindBtb2" class="btn btn-primary" onclick="ajaxIdControll1();">다음</button>
+							            </div>
+							      	</div>
+							      	
 						      		<!-- Modal footer -->
 						      		<div class="modal-footer">
 						        		<button type="button" class="btn btn-danger" data-dismiss="modal">닫기</button>
@@ -114,6 +126,8 @@
 					    </div>
 					</div>
 					<!-- 아이디 찾기 모달1 종료 -->
+					
+					
 					<!-- 아이디 찾기 모달2 시작 -->
 					<div class="container mt-3">
 						<!-- The Modal -->
