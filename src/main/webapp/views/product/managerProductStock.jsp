@@ -69,17 +69,17 @@
                         </tr>
                     </table>
 	<script>
-		// 옵션 변경시 text 초기화
-		function changeOp(){
-			$("#key").val("");
-		}
-	
 		// 상품코드시 숫자 이외의 값 불가
 		//function codeRefuse(e){
 		//	if($("#op").val() == "상품코드" && ($("#key").val() >= 0 && $("#key").val() < 10)){
 		//		$("#key").val("");
 		//	}
 		//}
+	
+		// 옵션 변경시 text 초기화
+		function changeOp(){
+			$("#key").val("");
+		}
 	
 		function opNeed(){
 			if($("#op").val() == "- 검색 조건 -"){
