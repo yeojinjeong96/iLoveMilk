@@ -158,9 +158,6 @@ public class MemberService {
 		close(conn);
 	
 		return result;
-		
-		
-		
 	}
 	
 	/**
@@ -413,7 +410,7 @@ public class MemberService {
 	   }
 	   
 	  /**
-		* 찜한상품 조회 서비스 
+		* 주문 상품 조회 서비스 
 		*/
 	   
 	   public ArrayList<Order> MyOrderList(int memberNo){
@@ -498,4 +495,19 @@ public class MemberService {
 			
 			return result;
 	  }
+	  
+	  public int ReviewDelete(int reviewNo) {
+			Connection conn = getConnection();
+			int result = new MemberDao().ReviewDelete(conn, reviewNo);
+			
+			if(result > 0) {
+				commit(conn);
+			}else {
+				rollback(conn);
+			}
+			
+			close(conn);
+		
+			return result;
+		}
 }

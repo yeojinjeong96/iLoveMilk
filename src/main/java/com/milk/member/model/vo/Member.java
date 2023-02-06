@@ -169,6 +169,24 @@ public class Member {
 		this.total = total;
 		this.totalpay = totalpay;
 	}
+	
+	
+	
+	public Member(int memberNo, String memberPwd, String memberName, String phone, String email, String addressNumber,
+			String address, String addressDetail, String profile, String status, String memberGrade) {
+		super();
+		this.memberNo = memberNo;
+		this.memberPwd = memberPwd;
+		this.memberName = memberName;
+		this.phone = phone;
+		this.email = email;
+		this.addressNumber = addressNumber;
+		this.address = address;
+		this.addressDetail = addressDetail;
+		this.profile = profile;
+		this.status = status;
+		this.memberGrade = memberGrade;
+	}
 
 	public int getMemberNo() {
 		return memberNo;
