@@ -172,7 +172,23 @@
                                          </td>
                                          <td style="width: 400px;">
                                          		<%= r.getProductName() %> <br>
-                                         		<input type="text" name="star" value="<%= r.getStar() %>"> 
+                                         		<select name="star" id="star">
+                                                    	<option value="1"> 
+                                                    		★
+                                                    	</option >
+                                                    	<option value="2"> 
+                                                    		★★
+                                                    	</option>
+                                                    	<option value="3"> 
+                                                    		★★★
+                                                    	</option>
+                                                    	<option value="4"> 
+                                                    		★★★★
+                                                    	</option>
+                                                    	<option value="5"> 
+                                                    		★★★★★
+                                                    	</option>
+                                                    </select>
                                          </td>
                                     </tr>
                                     <tr>

@@ -68,10 +68,7 @@
     </div>
 
     <br><br>
-    <div class="under" align="center">
-        <a href="">PW찾기</a> &nbsp;&nbsp;| &nbsp;&nbsp;
-        <a href="<%= contextPath %>/loginpage.me"">로그인</a>
-    </div>
+    
     
     <%@ include file="../common/footer.jsp" %> 	 
     

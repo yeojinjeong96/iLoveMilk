@@ -39,7 +39,7 @@ public class MemberUpdate1Controller extends HttpServlet {
 		
 		HttpSession session = request.getSession();
 		if(updateCheck==null) { //조회결과 없음 
-			
+			request.getSession().setAttribute("alertMsg", "비밀번호를 확인해주세요");
 			response.sendRedirect(request.getContextPath() + "/myPageUpdate.me"); 
 		
 		}else { //조회결과 있음 
