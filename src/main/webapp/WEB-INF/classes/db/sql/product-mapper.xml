@@ -508,11 +508,16 @@
 	</entry>
 	
 	<entry key="orderMember">
-		SELECT MEMBER_NAME, PHONE, EMAIL, TOTAL
-		  FROM TB_MEMBER
-		  LEFT
-		  JOIN TB_POINT USING(MEMBER_NO)
-		 WHERE MEMBER_NO = ?
+		SELECT ROWNUM, A.*
+		  FROM (SELECT MEMBER_NAME, PHONE, EMAIL, TOTAL
+		          FROM TB_MEMBER
+		          LEFT
+		          JOIN TB_POINT p USING(MEMBER_NO)
+			     WHERE MEMBER_NO = ?
+		         ORDER
+		            BY POINT_NO DESC
+		       ) A
+		 WHERE ROWNUM = 1
 	</entry>
 	
 	<entry key="orderInsert">
