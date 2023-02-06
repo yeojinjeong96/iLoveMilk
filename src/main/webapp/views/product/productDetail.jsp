@@ -240,7 +240,7 @@
                         <tr>
                             <td>수량</td>
                             <td>
-                                <input type="number" name="pro-amount" id="pro-amount" style="width:50px;">
+                                <input type="number" name="pro-amount" id="pro-amount"  min='1' style="width:50px;">
 
                             </td>
                         </tr>
