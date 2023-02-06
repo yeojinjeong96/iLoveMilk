@@ -81,11 +81,11 @@ ArrayList<Member> ulist = (ArrayList<Member>)request.getAttribute("ulist");
                         <td>아이디</td>
                         <td>이름</td>
                         <td>등급</td>
-                        <td>이메일</td>
+                        
                         <td>휴대폰</td>
                         <td>주소</td>
                         <td>구매금액</td>
-                        <td>적립금</td>
+                        <td colspan='2'>적립금</td>
                         <td>가입일</td>
                     </tr>
                     </thead>
@@ -102,13 +102,6 @@ ArrayList<Member> ulist = (ArrayList<Member>)request.getAttribute("ulist");
                                 <td><%=m.getMemberName() %></td>
                                 <td><%=m.getMemberGrade() %></td>
                                
-                                    <%if(m.getEmail() == null){ %>
-                                		 <td>없음</td>
-                                	<%}else{ %>
-                                		<td><%=m.getEmail() %></td>
-                                	<%} %>
-                                
-                                
                                 	<%if(m.getPhone() == null){ %>
                                 		 <td>없음</td>
                                 	<%}else{ %>
@@ -122,9 +115,10 @@ ArrayList<Member> ulist = (ArrayList<Member>)request.getAttribute("ulist");
                                 	<%} %>
                                 	
                                 <td><%=m.getTotalpay() %></td>
-                                <td><%=m.getTotal() %>
-                                    <button type="button" id="btn1" onclick="memDetail('<%=m.getMemberId() %>', '<%=m.getMemberGrade() %>', <%=m.getTotal() %>, <%=m.getMemberNo() %>);" class="btn btn-outline-secondary btn-sm" data-toggle="modal" data-target="#point-info" style="font-size:9px;">상세</button>
-                                    <button type="button" id="btn2" onclick="memModify('<%=m.getMemberId() %>', <%=m.getMemberNo() %>);" class="btn btn-outline-secondary btn-sm" data-toggle="modal" data-target="#point-change" style="font-size:9px;">변경</button>
+                                <td width=40px;><%=m.getTotal() %></td>
+                                <td>
+                                    <button type="button" id="btn1" onclick="memDetail();" class="btn btn-outline-secondary btn-sm" data-toggle="modal" data-target="#point-info" style="font-size:9px;">상세</button>
+                                    <button type="button" id="btn2" onclick="memModify();" class="btn btn-outline-secondary btn-sm" data-toggle="modal" data-target="#point-change" style="font-size:9px;">변경</button>
                                 </td>
                                 <td>
                                     <%=m.getEnrollDate() %>
@@ -141,15 +135,21 @@ ArrayList<Member> ulist = (ArrayList<Member>)request.getAttribute("ulist");
          <script>
 	    	
          
-     	function memDetail(a, b, c, d){
-     
-				$("#detailModalId").text(a);
-				$("#detailModalGrade").text(b);
-				$("#detailModalPoint").text(c);
+     	function memDetail(){
+     	
+     		
+     		var id = $(window.event.target).parent().prev().prev().prev().prev().prev().prev().prev().text();
+     		var grade = $(window.event.target).parent().prev().prev().prev().prev().prev().text();
+     		var point = $(window.event.target).parent().prev().text();
+     		var no = $(window.event.target).parent().prev().prev().prev().prev().prev().prev().prev().prev().text();
+     		
+				$("#detailModalId").text(id);
+				$("#detailModalGrade").text(grade);
+				$("#detailModalPoint").text(point);
 				
  		$.ajax({
 					url:"<%=contextPath%>/memPoint.ma?",
-				   data: {memNo:d, ppage:1}
+				   data: {memNo:no, ppage:1}
 				   ,success:function(result){
 					 
 					   
@@ -162,13 +162,15 @@ ArrayList<Member> ulist = (ArrayList<Member>)request.getAttribute("ulist");
                     let value = "";
                     
 					   if(result.list.length == 0){
-						   value += "<td colspan='3'>" + "내역이 없습니다." + " </td>";
+						   value += "<tr><td colspan='3'>" + "내역이 없습니다." + " </td></tr>";
 					   }else{
                         for(let i = 0; i<result.list.length; i++){
 
-                            value += "<td>" + result.list[i].modifyDate + "</td>"
+                            value += "<tr>"
+                            		+"<td>" + result.list[i].modifyDate + "</td>"
                                     +"<td>" + result.list[i].content + "</td>"
-                                    +"<td>" + result.list[i].total + "</td>";
+                                    +"<td>" + result.list[i].total + "</td>" 
+                                    + "</tr>";
 
                         }
 					   }
@@ -230,13 +232,13 @@ ArrayList<Member> ulist = (ArrayList<Member>)request.getAttribute("ulist");
                                 + "<td>" + result.slist[i].memberId + "</td>"
                                 + "<td>" + result.slist[i].memberName + "</td>"
                                 + "<td>" + result.slist[i].memberGrade + "</td>"
-                                + "<td>" + result.slist[i].email + "</td>"
                                 + "<td>" + result.slist[i].phone + "</td>"
                                 + "<td>" + result.slist[i].address + "</td>"
                                 + "<td>" + result.slist[i].totalpay + "</td>"
-                                + "<td>" + result.slist[i].total 
-                                +  "<button type='button' id='btn1' onclick= 'memDetail('" + result.slist[i].memberId + "', '" + result.slist[i].memberGrade+ "'," + result.slist[i].total +","+ result.slist[i].memberNo + ");' class='btn btn-outline-secondary btn-sm' data-toggle='modal' data-target='#point-info' style='font-size:9px;'> 상세 </button>"
-                                +  "<button type='button' id='btn2' onclick= 'memModify(" + result.slist[i].memberId + "', " + result.slist[i].memberNo+ ");' class='btn btn-outline-secondary btn-sm' data-toggle='modal' data-target='#point-change' style='font-size:9px;'>변경</button>"
+                                + "<td width='40px;'>" + result.slist[i].total  + "</td>"
+                                + "<td>" 
+                                +  "<button type='button' id='btn1' onclick= 'memDetail();' class='btn btn-outline-secondary btn-sm' data-toggle='modal' data-target='#point-info' style='font-size:9px;'> 상세 </button>"
+                                +  "<button type='button' id='btn2' onclick= 'memModify();' class='btn btn-outline-secondary btn-sm' data-toggle='modal' data-target='#point-change' style='font-size:9px;'>변경</button>"
                                  + "</td>"
                                  + "<td>" 
                                  + result.slist[i].enrollDate + "</td>"
@@ -272,7 +274,11 @@ ArrayList<Member> ulist = (ArrayList<Member>)request.getAttribute("ulist");
     		}
     		
     		
-        function memModify(a, b){
+        function memModify(){
+        	
+     		var a = $(window.event.target).parent().prev().prev().prev().prev().prev().prev().prev().text();
+     		var b = $(window.event.target).parent().prev().prev().prev().prev().prev().prev().prev().prev().text();
+        	
      		$("#modifyModalId").val(a);
      		$("#modifyModalNo").val(b);
      	}	
@@ -341,10 +347,8 @@ ArrayList<Member> ulist = (ArrayList<Member>)request.getAttribute("ulist");
                                 <th>금액</th>
                             </tr>
                           </thead>
-                          <tbody>
-                            <tr id="pointHistory">
-
-                            </tr>
+                          <tbody id="pointHistory">
+                            
                             <tr>
                             	<td colspan="3">
 				                    <div class="paging-area2">
@@ -480,6 +484,7 @@ ArrayList<Member> ulist = (ArrayList<Member>)request.getAttribute("ulist");
 								
 								if(a.result > 0){
 									alert(a.grade + "로 회원등급 변경완료되었습니다");
+									location.reload();
 								}else{
 									alert("회원등급 변경 실패");
 								}

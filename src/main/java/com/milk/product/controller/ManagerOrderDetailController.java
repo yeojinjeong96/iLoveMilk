@@ -34,7 +34,7 @@ public class ManagerOrderDetailController extends HttpServlet {
 
 		request.setCharacterEncoding("UTF-8");
 		String no = request.getParameter("ono");
-		System.out.println(no);
+		
 		Order o = new ProductService().selectOrderDetail(no);
 		response.setContentType("application/json; charset=UTF-8");
 		new Gson().toJson(o, response.getWriter());
