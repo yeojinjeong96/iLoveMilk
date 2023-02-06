@@ -52,6 +52,7 @@
 	                    FROM TB_QA
 	                WHERE Q_WRITER =?
 	                AND STATUS= 'Y'
+	                and enroll_date between ? and ?
 	                ORDER BY Q_NO DESC
 	                  )E) WHERE RNUM BETWEEN ? AND ?
 	</entry>
@@ -60,6 +61,15 @@
 		 	COUNT(*) COUNT
 		 FROM TB_QA
 		 WHERE Q_WRITER = ?
+		 and enroll_date between ?
+                      and  ?
+	</entry>
+	<entry key="selectIncompletedListCount">
+			 SELECT
+		 	COUNT(*) COUNT
+		 FROM TB_QA
+		 WHERE answer_status != 'Y'
+         and status ='Y'
 	</entry>
 	<entry key="selectQA">
 		SELECT 

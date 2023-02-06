@@ -69,8 +69,25 @@
 			<h4 align="left">나의 1:1 문의 </h4>
             <hr>
             <br>
-            
-       
+            <form action="<%=contextPath%>/listM.a" method="get">
+        
+                <div class="select-area" align="left" >        
+                    조회기간&nbsp;
+                    <button type="button" name="dateBtn" value="0" class="dateBtn">오늘</button>&nbsp;
+                    <button type="button" name="dateBtn" value="7" class="dateBtn">7일</button>&nbsp;
+                    <button type="button" name="monthBtn" value="1" class="dateBtn">1개월</button>&nbsp;
+                    <button type="button" name="monthBtn" value="3" class="dateBtn">3개월</button>&nbsp;
+                    <button type="button" name="dateBtn" value="365" class="dateBtn">1년</button>&nbsp;
+                    
+					<input type="date" name="fDate" id="fDate"> -
+                    <input type="date" id="sDate" name="sDate" >  
+                    <input type="hidden" id="cpage" name="cpage" value=1>
+                   
+                    <button type="submit" class="btn btn-sm btn-secondary">조회</button>
+                </div>
+			
+            </form>
+            <br>
             <table align="center" border="1" id="qa-list" class="text-center table">
                 <tr>
                     <th width="100" height="30">문의날짜</th>
@@ -132,6 +149,50 @@
 			$("#qa-list tbody tr").click(function(){
 				location.href='<%=contextPath%>/mypage.dq?no='+$(this).children().eq(0).text();
 			})
+			
+
+	    	$("button[name=dateBtn]").click(function(){
+	    		var date = new Date();
+	    		var yyyy = date.getFullYear();
+	    		var mm = date.getMonth()+1 > 9 ? date.getMonth()+1 : '0' + date.getMonth()+1;
+	    		var dd = date.getDate() > 9 ? date.getDate() : '0' + date.getDate();
+	    		document.getElementById('sDate').valueAsDate = new Date();
+	    		
+	    		
+	    		var fDate = new Date();
+	    		var fDateValue = new Date(fDate.setDate(fDate.getDate()-$(this).val()));
+	    		document.getElementById('fDate').valueAsDate = new Date(fDateValue);
+	    	
+	    	})
+	    	
+	    	
+	    	$("button[name=monthBtn]").click(function(){
+	    		var fDate = new Date();
+	    		var fDateValue = new Date(fDate.setMonth(fDate.getMonth()-$(this).val()));
+	    		document.getElementById('fDate').valueAsDate = new Date(fDateValue);
+	    		document.getElementById('sDate').valueAsDate = new Date();
+	    	})
+	    	
+	    	const urlParams = new URL(location.href).searchParams;
+
+	    	const fDate = urlParams.get('fDate');
+	    	const sDate = urlParams.get('sDate');
+	    	if(fDate!=null&& sDate!=null){
+	    		
+	    		document.getElementById('fDate').valueAsDate = new Date(fDate);
+	    		document.getElementById('sDate').valueAsDate = new Date(sDate);
+	    	}
+	    	
+	    	
+	    
+			 $("button[name=searchBtn]").click(function(){
+				const searchType= $("select[name=searchType]").val();
+				const searchKey = $("input[name=searchKey]").val();
+				
+				location.href="<%=contextPath%>/myPage.qa?cpage=1&searchtype="+searchType+"&searchkey="+searchKey;
+				
+			 })
+
 		})
 	</script>
 </body>

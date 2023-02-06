@@ -76,7 +76,7 @@ public class QADao {
 		return result;
 		
 	}
-	public ArrayList<QA> selectQuestionList(Connection conn, PageInfo pi,int memberNo){
+	public ArrayList<QA> selectQuestionList(Connection conn, PageInfo pi,int memberNo,String fDate,String sDate){
 		
 		ArrayList<QA>list = new ArrayList<>();
 		ResultSet rset= null;
@@ -88,9 +88,10 @@ public class QADao {
 			pstmt.setInt(1, memberNo);
 			int startRow= (pi.getCurrentPage()-1)*pi.getBoardLimit()+1;
 			int endRow= startRow + pi.getBoardLimit() -1;
-			
-			pstmt.setInt(2, startRow);
-			pstmt.setInt(3, endRow);
+			pstmt.setString(2, fDate);
+			pstmt.setString(3, sDate);
+			pstmt.setInt(4, startRow);
+			pstmt.setInt(5, endRow);
 			
 			rset= pstmt.executeQuery();
 			while(rset.next()) {
@@ -114,7 +115,7 @@ public class QADao {
 		return list;
 	}
 	
-	public int selectQAListCount(Connection conn,int memberNo) {
+	public int selectQAListCount(Connection conn,int memberNo,String fDate,String sDate) {
 		int listCount =0;
 		ResultSet rset= null;
 		PreparedStatement pstmt= null;
@@ -123,6 +124,9 @@ public class QADao {
 		try {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, memberNo);
+
+			pstmt.setString(2, fDate);
+			pstmt.setString(3, sDate);
 			rset= pstmt.executeQuery();
 			
 			if(rset.next()) {
@@ -295,6 +299,28 @@ public class QADao {
 		return listCount;
 	}
 	
+	public int selectIncompletedListCount(Connection conn) {
+		int listCount =0;
+		ResultSet rset= null;
+		PreparedStatement pstmt= null;
+		String sql= prop.getProperty("selectIncompletedListCount");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+
+			rset= pstmt.executeQuery();
+			
+			if(rset.next()) {
+				listCount = rset.getInt("count");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(conn);
+		}
+		
+		return listCount;
+	}
 	public ArrayList<QA> selectAnswerList(Connection conn, PageInfo pi,String fDate, String sDate){
 		
 		ArrayList<QA>list = new ArrayList<>();
