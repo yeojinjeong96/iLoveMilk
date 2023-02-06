@@ -7,6 +7,7 @@
 	ArrayList<RecipeIngre> listI = (ArrayList<RecipeIngre>)request.getAttribute("listI");
 	ArrayList<RecipeOrder> listO = (ArrayList<RecipeOrder>)request.getAttribute("listO");
 	int replyCount = (int)request.getAttribute("replyCount");
+	
 %>
 <!DOCTYPE html>
 <html>
@@ -122,6 +123,8 @@
 
 	<%@ include file = "../common/header.jsp" %>
 
+	<% String loginUserId = loginMember == null ? "" : loginMember.getMemberId(); %>
+	
 	<div class="outer" align="center">
         <br>
         <table class="detail-area">
@@ -333,7 +336,7 @@
         					value += "<tr>"
         						   + 	"<td colspan='4'>조회된 댓글이 없습니다.</td>"
         						   + "</tr>"
-        				}else{ // 댓글이 있을 경우
+        				}else { // 댓글이 있을 경우
         					for(let i=0; i<list.length; i++){
         						value += "<tr>"
         							   +	"<td width='70px' rowspan='2' align='center' style='vertical-align: top;'>"
@@ -343,8 +346,20 @@
         							   +	"</td>"
         							   +	"<td width='70px' height='1'>" + list[i].memberNo + "</td>"
         							   +	"<td width='160px'>" + list[i].enrollDate + "</td>"
-        							   +	"<td width=''><button type='button' data-toggle='modal' data-target='#report-reply-view' style='border:none; background:none;'>신고</button></td>"
-        							   + "</tr>"
+        							   +	"<input type='hidden' name='reNo' value='" + list[i].replyNo + "'>";
+        							   
+        							   
+        							   if(list[i].memberNo == '<%= loginUserId %>') {
+        								   value += "<td width=''><button type='button' onclick='replyDel();' style='border:none; background:none;'>삭제</button></td>";  
+        							   }else if('<%= loginUserId %>' == "") {
+     									  value += "<td width=''></td>";
+     								  }else {
+     									  value += "<td width=''><button type='button' onclick='sReply();' data-toggle='modal' data-target='#report-reply-view' style='border:none; background:none;'>신고</button></td>";
+     								  }
+        							   
+        						
+        							   
+        							   value += "</tr>"
         							   + "<tr>"
         							   +	"<td colspan='3' style='vertical-align: top'>"
         							   +		list[i].replyContent
@@ -359,9 +374,27 @@
 				})
 			}
 			
+			function replyDel(){
+				$.ajax({
+					url:"<%= contextPath %>/reDelete.re",
+					type:"post",
+					data:{
+						no:$(window.event.target).parent().prev().val()
+					},
+					success:function(result){
+						if(result > 0) {
+							alert("성공적으로 댓글을 삭제했습니다.")
+							selectReplyList();
+							
+						}else{
+							alert("댓글 삭제에 실패했습니다.")
+						}
+					}
+					
+				})
+			}
 			
 		</script>
-		
 		
         
          <!-- 이미지 미리보기 스크립트 -->
@@ -390,6 +423,13 @@
                     }
                 }
                 
+                
+                
+                function sReply(){
+                	var rno = $(window.event.target).parent().prev().val();
+                	$("#reNo").val(rno);
+                }
+                
         </script>
         
         
@@ -406,6 +446,7 @@
         			<!-- Modal body -->
 			        <div class="modal-body">
 			        	<form action="<%= contextPath %>/report.re" method="post">
+			        	
 			        	<input type="hidden" name="no" value="<%= r.getRecipeNo() %>">
 				            <table>
 				            	<tr>
@@ -468,6 +509,7 @@
         			<!-- Modal body -->
 			        <div class="modal-body">
 			        	<form action="<%= contextPath %>/reportReply.re" method="post">
+			        	<input type="hidden" name="reNo" id="reNo">
 			        	<input type="hidden" name="no" value="<%= r.getRecipeNo() %>">
 				            <table>
 				            	<tr>
@@ -509,9 +551,6 @@
 				            <br>
 				            <input type="submit" value="신고하기">
 				            
-				            <% for(Reply re : listR) { %>
-			        		<input type="hidden" name="rNo" value="<%= re.getReplyNo() %>">
-			        		<% } %>
 
 				        </form>
                        

@@ -378,11 +378,6 @@
                         <form action="" method="post">
                                 <input type="hidden" name="" value="">
                                 
-
-                                <input type="text" name = "" ><button type="submit"  style="border:none">검색</button>
-
-                                <br><br>
-
                                 <table style="width:100%; height:100px; text-align: center; "class="table blackTable">
                                 	<thead>
 	                                    <tr> 

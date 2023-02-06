@@ -77,7 +77,6 @@
                 <tr>
                     <td width="50px">
                         <select name="" style="border: none;">
-                            <option value="">전체</option>
                             <option value="">제목</option>
                             <option value="">작성자</option>
                         </select>
@@ -133,7 +132,7 @@
                     <td><%= r.getReplyNo() %></td>
                     <td><%= r.getReportContent() %></td>
                     <td><%= r.getMemberNo() %></td>
-                    <td><a href="<%= contextPath %>/detail.re?no=<%= r.getRefNo() %>"><%= r.getRecipeTItle() %></a></td>
+                    <td><%= r.getRecipeTItle() %></td>
                     <td><%= r.getReplyContent() %></td>
                 </tr>
                 <% } %>

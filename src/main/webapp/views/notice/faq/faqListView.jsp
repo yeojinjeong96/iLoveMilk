@@ -28,8 +28,9 @@
     .search input{ width: 300px; height: 30px;}
     .search button{ height: 30px;}
     .qa{ 
-        background-color: rgb(156, 208, 229);
-        padding: 10px;
+        background-color: rgb(180, 225, 243);
+        padding: 20px;
+        border-radius: 30px;
 
     }
     .faq-list table{ text-align: center;}
@@ -64,9 +65,9 @@
             <div class="search">
                 <form action="<%=contextPath %>/search.faq" method="get" >  
                 		<%if(searchFaq !=null){ %>
-                		<input type="text" name="searchFaq" placeholder="검색어를 입력하세요." value="<%=searchFaq%>"><button type="submit" >검색</button> 
+                		 <input type="text" name="searchFaq" placeholder="검색어를 입력하세요." class=" input-sm" required value="<%=searchFaq%>"><button type="submit" class="btn btn-primary btn-sm">검색</button> 
                 		<%}else{ %>
-                        <input type="text" name="searchFaq" placeholder="검색어를 입력하세요."><button type="submit" >검색</button>   
+                         <input type="text" name="searchFaq" placeholder="검색어를 입력하세요." class=" input-sm" required><button type="submit" class="btn btn-primary btn-sm">검색</button>   
                         <%} %>           
                         <input type="hidden" name="cpage" value="1">
                 </form>     
@@ -80,7 +81,7 @@
                 </strong>
                 <br>
                 <br>
-                <a href="<%=contextPath%>/enroll.q" class="btn btn-sm btn-secondary">1:1 문의</a>
+                <a href="<%=contextPath%>/enroll.q" class="btn btn-sm btn-secondary" style="border-radius:20px">1:1 문의</a>
                 </p>
             </div>
             <br>
@@ -97,10 +98,10 @@
             </div>
             <br>
             <div class="faq-list" style="width:700px">
-                <table border="1"  class="table">
-                    <tr>
+                <table  class="table">
+                    <tr class="thead-light">
                         <th width="70">No.</th>
-                        <th width="100">분류</th>
+                        <th width="120">분류</th>
                         <th width="450">내용</th>
                     </tr>
                     <%if (list.isEmpty()){ %>
@@ -131,16 +132,16 @@
                 </table>
             </div>
             <br>
-            <%if(searchFaq!=null){ %>
+            <%if(searchFaq!=null &&!list.isEmpty()){ %>
             <div class="paging-area" >
                 <%if(pi.getCurrentPage()!=1){ %>
-                <button onclick="location.href='<%=contextPath%>/search.faq?cpage=<%=pi.getCurrentPage()-1%>';">&lt;</button>
+                <button onclick="location.href='<%=contextPath%>/search.faq?cpage=<%=pi.getCurrentPage()-1%>';" class="btn btn-primary btn-sm">&lt;</button>
 	            <%} %>   
 	            <%for(int p= pi.getStartPage(); p<=pi.getEndPage(); p++){ %>
-	                <button onclick="location.href='<%=contextPath%>/search.faq?cpage=<%=p%>';"><%=p %></button>
+	                <button onclick="location.href='<%=contextPath%>/search.faq?cpage=<%=p%>';" class="btn btn-primary btn-sm"><%=p %></button>
 	            <%} %>
 	            <%if(pi.getCurrentPage()!=pi.getMaxPage()){ %>
-	                <button onclick="location.href='<%=contextPath%>/search.faq?cpage=<%=pi.getCurrentPage()+1%>';">&gt;</button>
+	                <button onclick="location.href='<%=contextPath%>/search.faq?cpage=<%=pi.getCurrentPage()+1%>';" class="btn btn-primary btn-sm">&gt;</button>
             	<%} %>
            	</div>
          	 <%}else{ %>
@@ -160,7 +161,7 @@
             	<%} %>
             </div>
          	 	<%} %>
-	         	 <%if(category==null){ %>
+	         	 <%if(category==null &&!list.isEmpty()){ %>
 	            <div class="paging-area">
 	                  
 	               <%if(pi.getCurrentPage()!=1){ %>

@@ -50,8 +50,8 @@
                 </div>
                 <br>
                 
-                <table border="1" class="faq-list table" >
-                   <thead>
+                <table  class="faq-list table" >
+                   <thead class="thead-light">
                     <tr onclick="event.cancelBubble=true">
                         <th width="70">선택</th>
                         <th width="100">글번호</th>

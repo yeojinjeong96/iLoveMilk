@@ -38,7 +38,6 @@ public class AjaxReplyListController extends HttpServlet {
 		int recipeNo = Integer.parseInt(request.getParameter("no"));
 		
 		ArrayList<Reply> list = new RecipeService().selectReplyList(recipeNo);
-		
 	
 		response.setContentType("application/json; charset=UTF-8");
 		new Gson().toJson(list, response.getWriter());

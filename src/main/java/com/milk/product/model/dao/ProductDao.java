@@ -15,6 +15,7 @@ import com.milk.common.model.vo.PageInfo;
 import com.milk.member.model.vo.Member;
 import com.milk.member.model.vo.Order;
 import com.milk.product.model.vo.OrderInfo;
+import com.milk.product.model.vo.PointIn;
 import com.milk.product.model.vo.Product;
 import com.milk.product.model.vo.ProductLike;
 import com.milk.product.model.vo.Review;
@@ -1176,17 +1177,29 @@ public class ProductDao {
 		return memGrade;
 	}
 	
-	public int pointInsert(Connection conn, int point, int memNo, String orderNo) {
+	public int pointInsert(Connection conn, PointIn point) {
 		int result = 0;
 		PreparedStatement pstmt = null;
 		String sql = prop.getProperty("pointInsert");
+		if(point.getStatus().equals("적립")) {
+			sql += ", " + point.getAmount()
+				 + ", " + point.getStatus()
+				 + ", NVL((SELECT SUM(AMOUNT) FROM TB_POINT WHERE MEMBER_NO = " + point.getMemNo() + "), 0) + " + point.getAmount()
+				 + ", " + point.getContent()
+				 + ", " + point.getOrderNo()
+				 + ", " + point.getMemNo()
+				 + ")";
+		} else {
+			sql += ", " + point.getAmount()
+				 + ", " + point.getStatus()
+				 + ", NVL((SELECT SUM(AMOUNT) FROM TB_POINT WHERE MEMBER_NO = " + point.getMemNo() + "), 0) - " + point.getAmount()
+				 + ", " + point.getContent()
+				 + ", " + point.getOrderNo()
+				 + ", " + point.getMemNo()
+				 + ")";
+		}
 		try {
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setInt(1, point);
-			pstmt.setInt(2, memNo);
-			pstmt.setInt(3, point);
-			pstmt.setString(4, orderNo);
-			pstmt.setInt(5, memNo);
 			result = pstmt.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();

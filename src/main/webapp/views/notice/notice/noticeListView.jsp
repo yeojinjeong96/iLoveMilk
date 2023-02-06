@@ -38,8 +38,8 @@
     <div id="outer" align="center">
         <br>
         <div style="width: 700px;">
-            <table id="notice-list" border="1" class="text-center table">
-                <thead>
+            <table id="notice-list" class="text-center table">
+                <thead  class="thead-light">
                     <tr>
                         <th width="70">No.</th>
                         <th width="350">제목</th>

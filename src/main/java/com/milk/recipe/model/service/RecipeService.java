@@ -227,6 +227,23 @@ public class RecipeService {
 		return result;
 	}
 	
+	public int deleteReply(Reply r) {
+		
+		Connection conn = getConnection();
+		
+		
+		int result = new RecipeDao().deleteReply(conn, r);
+		
+		if(result > 0) {
+			commit(conn);
+		}else {
+			rollback(conn);
+		}
+		
+		close(conn);
+		return result;
+	}
+	
 	
 	public int updateRecipe(Recipe r, ArrayList<RecipeIngre> listIngre, ArrayList<RecipeOrder> listOrder) {
 		Connection conn = getConnection();

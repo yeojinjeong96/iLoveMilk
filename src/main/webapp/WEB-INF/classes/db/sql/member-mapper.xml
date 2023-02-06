@@ -230,7 +230,7 @@
                                     AND MODIFY_DATE = (
                                                         SELECT MAX(MODIFY_DATE)
                                                            FROM TB_POINT
-                                                          WHERE MEMBER_NO = 2
+                                                          WHERE MEMBER_NO = M.MEMBER_NO
                                                         )
                                 
                                 )TOTAL,
@@ -339,10 +339,10 @@
                                 MEMBER_ID,
                                 MEMBER_PWD,
                                 MEMBER_NAME,
-                                NVL(PHONE, '없음')PHONE,
+                               PHONE,
                                 EMAIL,
                                 ADDRESS_NUMBER,
-                                NVL(ADDRESS, '없음')ADDRESS,
+                                ADDRESS,
                                 ADDRESS_DETAIL,
                                 PROFILE,
                                 ENROLL_DATE,
@@ -350,7 +350,18 @@
                                 BLACK_LIST,
                                 M.STATUS,
                                 MEMBER_GRADE,
-                                TOTAL,
+                                (
+                                SELECT
+                                        NVL(TOTAL, 0)
+                                   FROM TB_POINT
+                                  WHERE MEMBER_NO = M.MEMBER_NO
+                                    AND MODIFY_DATE = (
+                                                        SELECT MAX(MODIFY_DATE)
+                                                           FROM TB_POINT
+                                                          WHERE MEMBER_NO = M.MEMBER_NO
+                                                        )
+                                
+                                )TOTAL,
                                 (
                                SELECT NVL(SUM(PRICE), 0)
                                   FROM TB_ORDER
@@ -361,8 +372,24 @@
                           LEFT JOIN TB_POINT P ON (M.MEMBER_NO = P.MEMBER_NO)
                           WHERE M.STATUS = 'Y'
                           AND MEMBER_ID LIKE '%' ||?|| '%'
+                          GROUP BY 
+                                M.MEMBER_NO,
+                                MEMBER_ID,
+                                MEMBER_PWD,
+                                MEMBER_NAME,
+                               PHONE,
+                                EMAIL,
+                                ADDRESS_NUMBER,
+                                ADDRESS,
+                                ADDRESS_DETAIL,
+                                PROFILE,
+                                ENROLL_DATE,
+                                M.MODIFY_DATE,
+                                BLACK_LIST,
+                                M.STATUS,
+                                MEMBER_GRADE
                           ORDER BY ENROLL_DATE DESC
-		           )A
+                          		           )A
 		     )  
 		  WHERE RNUM BETWEEN ? AND ? 
 	</entry>

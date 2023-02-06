@@ -1,4 +1,4 @@
-package com.milk.product.controller;
+package com.milk.recipe.controller;
 
 import java.io.IOException;
 
@@ -8,21 +8,26 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.google.gson.Gson;
-import com.milk.member.model.vo.Order;
-import com.milk.product.model.service.ProductService;
+import org.apache.tomcat.util.http.fileupload.servlet.ServletFileUpload;
+
+import com.milk.common.MyFileRenamePolicy;
+import com.milk.member.model.vo.Member;
+import com.milk.recipe.model.service.RecipeService;
+import com.milk.recipe.model.vo.Attachment;
+import com.milk.recipe.model.vo.Reply;
+import com.oreilly.servlet.MultipartRequest;
 
 /**
- * Servlet implementation class ManagerOrderDetailController
+ * Servlet implementation class AjaxReplyInsertController
  */
-@WebServlet("/orderDetail.ma")
-public class ManagerOrderDetailController extends HttpServlet {
+@WebServlet("/reDelete.re")
+public class AjaxReplyDeleteController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public ManagerOrderDetailController() {
+    public AjaxReplyDeleteController() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -31,13 +36,17 @@ public class ManagerOrderDetailController extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
-		request.setCharacterEncoding("UTF-8");
-		String no = request.getParameter("ono");
 		
-		Order o = new ProductService().selectOrderDetail(no);
-		response.setContentType("application/json; charset=UTF-8");
-		new Gson().toJson(o, response.getWriter());
+		
+		int replyNo = Integer.parseInt(request.getParameter("no"));
+		
+		Reply r = new Reply();
+		r.setReplyNo(replyNo);
+
+		int result = new RecipeService().deleteReply(r);
+		
+		response.getWriter().print(result);
+			
 	}
 
 	/**
