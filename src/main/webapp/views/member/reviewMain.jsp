@@ -191,7 +191,7 @@
                                        		
                                        	   <tr>
                                                 <td style="width: 100px;"> 상품번호 </td>
-                                                <td style="width: 400px;" ><input type="text" name = "productNo" id="productNo" disabled></td>
+                                                <td style="width: 400px;" ><input type="text" name = "productNo" id="productNo" ></td>
                                            </tr>
                                            <tr>
                                                 <td style="width: 100px;"> <img id="productImg" style="width: 100%; height: 100%;"> </td>
