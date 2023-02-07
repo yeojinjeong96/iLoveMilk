@@ -248,10 +248,10 @@
         <!-- 로그인한 회원만 보여지도록 -->
            <table class="reply-enroll" align="center">
                <tr>
-                   <td width="600px" align="center" style="padding-top: 5px;">
-                       <textarea name="reply" style="resize: none; width: 380px; height: 100px;" required placeholder="댓글을 남겨주세요."></textarea>
+                   <td width="400px" align="right" style="padding-top: 5px; padding-right: 10px">
+                       <textarea name="reply" style="resize: none; width: 350px; height: 100px;" required placeholder="댓글을 남겨주세요."></textarea>
                    </td>
-                   <td width="100px">
+                   <td width="200px" align="left">
                        <button onclick="insertReply();">등록</button>
                    </td>
                </tr>
