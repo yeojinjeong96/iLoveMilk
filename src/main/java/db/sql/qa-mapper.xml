@@ -210,6 +210,6 @@
                     JOIN TB_MEMBER ON (Q_WRITER = MEMBER_NO)
 	                WHERE ANSWER_STATUS != 'Y'
 	                AND Q.STATUS= 'Y'
-	                  )E) wHERE RNUm <![CDATA[=<]]> 5
+	                  )E) wHERE RNUm <![CDATA[<=]]> 5
 	</entry>
 </properties>

@@ -10,6 +10,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.milk.manager.model.service.ManagerService;
+import com.milk.notice.model.service.QAService;
+import com.milk.notice.model.vo.QA;
 import com.milk.product.model.vo.Payment;
 import com.milk.product.model.vo.Product;
 
@@ -35,10 +37,16 @@ public class ManagerMainPageController extends HttpServlet {
 		if(request.getSession().getAttribute("loginManager") != null) {
 			ArrayList<Product> stockList = new ManagerService().needReceivingProduct();
 			ArrayList<Payment> recentPayList = new ManagerService().recentPayment();
+			ArrayList<QA>list = new QAService().selectManagerQList();
 			
+
+		
 			request.setAttribute("stockList", stockList);
 			request.setAttribute("recentPayList", recentPayList);
+			
+			request.setAttribute("qList",list);
 			request.getRequestDispatcher("views/manager/managerMainPage.jsp").forward(request, response);
+		
 		} else {
 			response.setContentType("text/html; charset=utf-8");
 			response.getWriter().print("<script>alert('로그인 후 이용가능한 서비스입니다.');location.href='loginForm.ma'</script>");

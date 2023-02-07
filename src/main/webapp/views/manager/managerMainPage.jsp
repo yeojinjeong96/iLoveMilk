@@ -74,20 +74,21 @@
                                 </tr>
                             </thead>
                             <tbody>
-								<% if(qList !=null){ %>
-									<% for(QA q: qList){ %>
+								<% if(qList==null){ %>
 		                                <tr>
-		                                    <td><%=q.getrNum()%></td>
-		                                    <td><%=q.getMemberId() %></td>
-		                                    <td><%=q.getEnrollDate().substring(0, 10) %></td>
-		                                    <td><%=q.getqTitle() %></td>                       
+		                                   	<td colspan="4">최근 미답변 목록이 없습니다.</td>               
 		                                </tr>
-									<% } %>
+							
 								<% }else{ %>
+									<% for(QA q: qList){ %>
 									<tr>
-										<td colspan="4">최근 미답변 목록이 없습니다.</td>
+									   	 <td><%=q.getrNum()%></td>
+		                                 <td><%=q.getMemberId() %></td>
+		                                 <td><%=q.getEnrollDate() %></td>
+		                                 <td><%=q.getqTitle() %></td>      
+									
 									</tr>
-								<% } %>
+								<% } }%>
                             </tbody>
                         </table>
                     </div>
