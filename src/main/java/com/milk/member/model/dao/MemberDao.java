@@ -575,16 +575,18 @@ public Member updateCheckPwd(Connection conn, String memberId, String memberPwd)
 			
 			rset= pstmt.executeQuery();
 			while(rset.next()) {
-				list.add(new Report(
+				list.add(new Report(	
+						rset.getString("MEMBER_ID"),
 						rset.getInt("REPORT_NO"),
-						rset.getInt("REPORTING_MEM_NO"),
 						rset.getInt("REF_NO"),
 						rset.getString("REPORT_CONTENT"),
 						rset.getString("REPORT_DATE"),
-						rset.getString("REPORT_TYPE"),
-						rset.getString("MEMBER_ID")
+						rset.getString("REPORT_TYPE")
+					
 						));
 			}
+			
+			System.out.println(list);
 			
 		} catch (SQLException e) {
 			e.printStackTrace();

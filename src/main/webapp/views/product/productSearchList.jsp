@@ -30,7 +30,7 @@
         .search-outer{
            background:rgb(238, 236, 236);
            margin-top:50px;
-           width:600px;
+           width:700px;
            height:10%;
           
         }
@@ -124,7 +124,7 @@
 	                </select>
 	                <input type="text" name = "keyword" style="width:200px;" maxlength="30" required>
 	                <button type="submit" class="btn btn-primary btn-sm">검색</button>
-	                <input type="checkbox" name="research" id="re-search1" value="0" checked><label for="re-search">결과 내 재검색</label>
+	                 <input type="hidden" name="research" id="re-search1" value="0" checked><label for="re-search"></label> 
 	                <input type="hidden" name="research" id="re-search2" value="1"><label for="re-search"></label>
                 </form>
             </div>
