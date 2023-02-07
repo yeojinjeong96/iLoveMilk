@@ -307,6 +307,7 @@
 						if(result > 0) {
 							selectReplyList();
 							$(".reply-enroll textarea").val("");
+							location.reload();
 						}else{
 							alert("댓글 등록을 실패했습니다.")
 						}
@@ -378,7 +379,7 @@
 						if(result > 0) {
 							alert("성공적으로 댓글을 삭제했습니다.")
 							selectReplyList();
-							
+							location.reload();
 						}else{
 							alert("댓글 삭제에 실패했습니다.")
 						}
