@@ -120,7 +120,7 @@
             </form>
         
         </div>
-
+		<br><br><br>
     </div>
     <script>
     	function deleteFaq(){
