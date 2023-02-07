@@ -239,7 +239,11 @@
 		// 전액 사용하기
 		function useAllPoint(){
 			if($("#useAll").is(":checked")){
-				$("#usePoint").val(<%= m.getMemberNo() %>);
+				if($("#priceInput").val() < <%= m.getMemberNo() %>){
+					$("#usePoint").val(<%= price %> + 2500);
+				}else{
+					$("#usePoint").val(<%= m.getMemberNo() %>);
+				}
 			}else{
 				$("#usePoint").val("");
 			}
