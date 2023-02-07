@@ -50,7 +50,7 @@
             <hr>
             <br>
             
-            <table  width="700px" border="1" class="text-center table">
+            <table  width="700px" class="text-center table">
                 <tr>
                     <th>제목</th>
                     <td><%=q.getqTitle() %></td>
@@ -70,6 +70,12 @@
                 <tr >
                     <td colspan="4" height="300px">
                     	<div class="content-area">
+                    		<%if(at!=null) {%>
+                                  <br>
+                                  <div>
+                                   	<img src="<%=contextPath%>/<%=at.getFilePath()%><%=at.getChangeName()%>" >
+                                  </div> 
+                                  <%} %>
                             <%=q.getqContent()%>
                         </div>
                     </td>
@@ -79,7 +85,7 @@
             <hr>
     
             <br>
-                <table  width="700px" border="1" class="text-center table">
+                <table  width="700px"  class="text-center table">
                     <tr>
                         <th>제목</th>
                         <td><%=q.getaTitle() %></td>
@@ -99,12 +105,7 @@
                     <tr >
                         <td colspan="4" height="300px">
                         	<div class="content-area">
-                                <%if(at!=null) {%>
-                                    <br>
-                                  <div>
-                                    <img src="<%=contextPath%>/<%=at.getFilePath()%><%=at.getChangeName()%>" >
-                                  </div> 
-                                  <%} %>
+                                
                             <%=q.getaContent()%>
                         	</div>
                         </td>

@@ -303,23 +303,34 @@
 	        SELECT *
             FROM(                     
  		        SELECT ROWNUM RNUM, A.*
-		          FROM (                            
-                        SELECT 
-								REPORT_NO,
-								REPORTING_MEM_NO,
-								REF_NO,
-								REPORT_CONTENT,
-								REPORT_DATE,
-								REPORT_TYPE,
-								MEMBER_ID
-                          FROM TB_REPORT
-                         JOIN TB_MEMBER ON (MEMBER_NO = REPORTING_MEM_NO) 
-                         ORDER
-                           BY REPORT_DATE DESC
+		          FROM (   
+                              SELECT 
+                                    DISTINCT M.MEMBER_ID,
+                                    REPORT_NO,
+                                    R.REF_NO,
+                                    REPORT_CONTENT,
+                                   REPORT_DATE,
+                                   REPORT_TYPE
+                             FROM TB_MEMBER M
+                             LEFT JOIN TB_RECIPE RE ON (RECIPE_WRITER = M.MEMBER_NO)
+                              LEFT JOIN TB_REVIEW V ON (V.MEMBER_NO =M.MEMBER_NO)
+                              LEFT JOIN TB_REPLY Y ON (Y.MEMBER_NO = M.MEMBER_NO)
+                              LEFT JOIN TB_REPORT R ON (R.REF_NO = Y.REPLY_NO)
+                             WHERE M.MEMBER_NO IN (SELECT RECIPE_WRITER
+                                                    FROM TB_RECIPE
+                                                    WHERE REPORT_STATUS = 'Y'
+                                                    )
+                              OR M.MEMBER_NO IN (SELECT MEMBER_NO
+                                                    FROM TB_REVIEW
+                                                    WHERE R_REPORT = 'Y')  
+                             OR M.MEMBER_NO IN (SELECT MEMBER_NO
+                                                    FROM TB_REPLY
+                                                    WHERE REPORT_STATUS = 'Y'
+                                                    )  
+                                  AND REPORT_NO IS NOT NULL    
                         )A
                     )
-         WHERE RNUM BETWEEN ? AND ? 
-	</entry>
+         WHERE RNUM BETWEEN ? AND ? 	</entry>
 	
 	<entry key="selectMemberSearchCount">
 		SELECT 

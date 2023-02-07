@@ -47,6 +47,19 @@ public class Report {
 		this.memberGrade = memberGrade;
 		
 	}
+	
+	
+
+	public Report(String memberId, int reportNo, int refNo, String repContent, String repDate, String repType ) {
+		super();
+		this.memberId = memberId;
+		this.reportNo = reportNo;
+		this.refNo = refNo;
+		this.repContent = repContent;
+		this.repDate = repDate;
+		this.repType = repType;
+		
+	}
 
 	public int getReportNo() {
 		return reportNo;
