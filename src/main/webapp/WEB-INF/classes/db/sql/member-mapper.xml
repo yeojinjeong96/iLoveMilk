@@ -303,35 +303,23 @@
 	        SELECT *
             FROM(                     
  		        SELECT ROWNUM RNUM, A.*
-		          FROM (   
-                              SELECT 
-                                    DISTINCT M.MEMBER_ID,
-                                     M.MEMBER_NO,
-                                    REPORT_NO,
-                                    R.REF_NO,
-                                    REPORT_CONTENT,
-                                   REPORT_DATE,
-                                   REPORT_TYPE
-                             FROM TB_MEMBER M
-                             LEFT JOIN TB_RECIPE RE ON (RECIPE_WRITER = M.MEMBER_NO)
-                              LEFT JOIN TB_REVIEW V ON (V.MEMBER_NO =M.MEMBER_NO)
-                              LEFT JOIN TB_REPLY Y ON (Y.MEMBER_NO = M.MEMBER_NO)
-                              LEFT JOIN TB_REPORT R ON (R.REF_NO = Y.REPLY_NO)
-                             WHERE M.MEMBER_NO IN (SELECT RECIPE_WRITER
-                                                    FROM TB_RECIPE
-                                                    WHERE REPORT_STATUS = 'Y'
-                                                    )
-                              OR M.MEMBER_NO IN (SELECT MEMBER_NO
-                                                    FROM TB_REVIEW
-                                                    WHERE R_REPORT = 'Y')  
-                             OR M.MEMBER_NO IN (SELECT MEMBER_NO
-                                                    FROM TB_REPLY
-                                                    WHERE REPORT_STATUS = 'Y'
-                                                    )  
-                                  AND REPORT_NO IS NOT NULL    
+		          FROM (                            
+                        SELECT 
+								REPORT_NO,
+								REPORTING_MEM_NO,
+								REF_NO,
+								REPORT_CONTENT,
+								REPORT_DATE,
+								REPORT_TYPE,
+								MEMBER_ID
+                          FROM TB_REPORT
+                         JOIN TB_MEMBER ON (MEMBER_NO = REPORTING_MEM_NO) 
+                         ORDER
+                           BY REPORT_DATE DESC
                         )A
                     )
-         WHERE RNUM BETWEEN ? AND ? 	</entry>
+         WHERE RNUM BETWEEN ? AND ? 
+	</entry>
 	
 	<entry key="selectMemberSearchCount">
 		SELECT 
@@ -403,12 +391,12 @@
 	</entry>
 	
 	<entry key="selectReportDetail">
- 	   SELECT 
+	   SELECT 
 		      MEMBER_ID,
 		      COUNT(*) COUNT,
 		      MEMBER_GRADE
-		 FROM TB_MEMBER
-		 LEFT JOIN  TB_REPORT ON (MEMBER_NO = REPORTING_MEM_NO)
+		 FROM TB_REPORT
+		 LEFT JOIN TB_MEMBER ON (MEMBER_NO = REPORTING_MEM_NO)
 		 WHERE MEMBER_NO = ?
 		 GROUP BY MEMBER_ID, MEMBER_GRADE
 	</entry>
@@ -661,6 +649,7 @@
    <entry key="ReviewListY">
    		SELECT 
 	       REVIEW_NO
+	     , MEMBER_NO 
 	     ,  SUBSTR(REVIEW_CONTENT, 1, 15) "REVIEW_CONTENT1" 
 	     , REVIEW_CONTENT
 	     , STAR
@@ -671,12 +660,16 @@
 	  FROM TB_REVIEW RE
 	  JOIN TB_PRODUCT PRO ON PRO.PRODUCT_NO = RE.PRODUCT_NO
 	 WHERE MEMBER_NO = ?
-	   AND R_STATUS= 'Y' 
+	   AND R_STATUS= 'Y'
+	 ORDER
+	    BY R_ENROLL_DATE DESC
+	    
    </entry>
    
    <entry key="ReviewListN">
    		SELECT 
-		       PRODUCT_NAME
+   			   MEMBER_NO
+		     , PRODUCT_NAME
 		     , PRODUCT_IMG
 		     , ORDE.PRODUCT_NO
 		  FROM TB_ORDERDETAIL ORDE
@@ -750,6 +743,12 @@
 		   SET R_STATUS = 'N'
 		     , R_MODIFY_DATE = SYSDATE
 		 WHERE REVIEW_NO = ?
+   </entry>
+   
+   <entry key="RDBUpate">
+   		UPDATE TB_ORDERDETAIL
+		   SET REVIEW_STATUS = 'Y'
+		 WHERE PRODUCT_NO = ?
    </entry>
    
 </properties>
