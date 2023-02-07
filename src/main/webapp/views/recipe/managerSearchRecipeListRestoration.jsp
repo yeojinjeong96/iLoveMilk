@@ -163,15 +163,15 @@
 
         <div class="paging-area">
             <% if(pi.getCurrentPage() != 1) { %>
-                <button onclick="location.href='<%= contextPath %>/searchRestoreM.re?cpage=<%= pi.getCurrentPage()-1 %>&keyword=<%=keyword%>';">&lt;</button>
+                <button onclick="location.href='<%= contextPath %>/searchRestoreM.re?cpage=<%= pi.getCurrentPage()-1 %>&keyword=<%=keyword%>';" class="btn btn-primary btn-sm">&lt;</button>
             <% } %>
             
             <% for(int p=pi.getStartPage() ; p<=pi.getEndPage() ; p++) { %>
-                <button onclick="location.href='<%= contextPath %>/searchRestoreM.re?cpage=<%= p %>&keyword=<%=keyword%>';"><%= p %></button>
+                <button onclick="location.href='<%= contextPath %>/searchRestoreM.re?cpage=<%= p %>&keyword=<%=keyword%>';" class="btn btn-primary btn-sm"><%= p %></button>
             <% } %>
                
              <% if(pi.getCurrentPage() != pi.getMaxPage()) { %>
-                <button onclick="location.href='<%= contextPath %>/searchRestoreM.re?cpage=<%= pi.getCurrentPage()+1 %>&keyword=<%=keyword%>';">&gt;</button>
+                <button onclick="location.href='<%= contextPath %>/searchRestoreM.re?cpage=<%= pi.getCurrentPage()+1 %>&keyword=<%=keyword%>';" class="btn btn-primary btn-sm">&gt;</button>
              <% } %>
         </div>
         <br><br>

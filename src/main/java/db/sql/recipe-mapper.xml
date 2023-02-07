@@ -723,6 +723,23 @@
 		                  
 	</entry>
 	
+	<entry key = "selectSearchRecipeRecList">
+		SELECT *
+		  FROM (
+		        SELECT ROWNUM RNUM, A.*
+		          FROM (
+		                SELECT
+		                       RECIPE_NO
+		                     , RECIPE_TITLE
+		                     , MANAGER_ID
+		                     , COUNT
+		                     , TO_CHAR(R.ENROLL_DATE, 'YYYY-MM-DD') "ENROLL_DATE"
+		                     , MAIN_IMG
+		                  FROM TB_RECIPE R
+		                  JOIN TB_MANAGER ON (RECIPE_WRITER = MANAGER_NO)
+		                  
+	</entry>
+	
 	
 	<entry key = "selectSearchRecipeListUpDelM">
 		SELECT *
