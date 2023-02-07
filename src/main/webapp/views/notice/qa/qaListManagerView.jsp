@@ -91,6 +91,7 @@
                 <%} }%>
             </table>
             <br> <br>
+            <%if(!list.isEmpty()){ %>
             <div class="paging-area" >
              <%if(pi.getCurrentPage()!=1){ %>
                 <button  class="btn btn-primary btn-sm" onclick="location.href='<%=contextPath%>/listM.qa?cpage=<%=pi.getCurrentPage()-1%>';">&lt;</button>
@@ -100,7 +101,7 @@
             <%} %>
             <%if(pi.getCurrentPage()!=pi.getMaxPage()){ %>
                 <button  class="btn btn-primary btn-sm" onclick="location.href='<%=contextPath%>/listM.qa?cpage=<%=pi.getCurrentPage()+1%>';">&gt;</button>
-            <%} %>
+            <%}} %>
             </div>
             
             <div align="right" style="width:600px" class="a">
