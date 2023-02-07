@@ -1017,7 +1017,7 @@ public int UpdateProfile(Connection conn, Member m) {
 						)); 
 			}
 			
-			System.out.println();
+			//System.out.println();
 			} catch (SQLException e) {
 				e.printStackTrace();
 			} finally {
@@ -1183,7 +1183,7 @@ public int UpdateProfile(Connection conn, Member m) {
 			
 			result2=pstmt.executeUpdate();
 			
-			System.out.println(result2);
+			//System.out.println(result2);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
