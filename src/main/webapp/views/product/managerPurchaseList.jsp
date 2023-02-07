@@ -67,14 +67,14 @@
             </div>
             
             <div align="right" style="width:700px">
-                <br>
+               <!--   <br>
                 <select name="search-option" id="search-option" style="width:100px; font-size: 13px;">
                     <option value="구매아이디">구매아이디</option>
                     <option value="상품명">상품명</option>
                     <option value="주문번호">주문번호</option>
                 </select>
                     <input type="text" name = "searchReport" ><button type="submit"  style="border:none">검색</button>
-                    <br>
+                    <br>-->
                 </div>
             </div>
             <br>

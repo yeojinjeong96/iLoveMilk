@@ -304,7 +304,7 @@
 		                          <!--  <a href="" onclick="sendReport(<%=r.getReviewNo()%>);" style="float:right;" data-toggle="modal" data-target="#mem-report" >신고</a> --> 
 		                        <%} else if(loginMember != null && (loginMember.getMemberNo()== r.getMemberNo())){ %>    
 		                            <!-- 조건문 써서 작성자일때에는 수정 | 삭제 -->
-		                            <a href="<%=contextPath %>/review.me"  onclick="return confirm('내가 쓴 리뷰 페이지로 이동합니다.');" style="float:right;">수정 / 삭제</a>
+		                            <!-- <a href="<%=contextPath %>/review.me"  onclick="return confirm('내가 쓴 리뷰 페이지로 이동합니다.');" style="float:right;">수정 / 삭제</a> -->
 		                        <%} %>    
 		                    </p> 
 		                   

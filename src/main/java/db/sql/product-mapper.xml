@@ -42,7 +42,7 @@
 	
         SELECT 	
         		   PRODUCT_NO
-        		, BRAND	   	    
+        		, NVL(BRAND, '기타')BRAND	   	    
                , PRODUCT_NAME
 	            , PRICE
 	            , PRODUCT_IMG
@@ -53,7 +53,8 @@
              	   	   , PRODUCT_NAME
                      , PRICE
                      , PRODUCT_IMG
-                  FROM TB_PRODUCT   
+                  FROM TB_PRODUCT  
+                  WHERE STATUS = 'Y'
                  ORDER 
                     BY ENROLL_DATE DESC    
                 )

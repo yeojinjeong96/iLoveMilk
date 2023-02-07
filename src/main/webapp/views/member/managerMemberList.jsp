@@ -142,7 +142,7 @@ ArrayList<Member> ulist = (ArrayList<Member>)request.getAttribute("ulist");
      		var grade = $(window.event.target).parent().prev().prev().prev().prev().prev().text();
      		var point = $(window.event.target).parent().prev().text();
      		var no = $(window.event.target).parent().prev().prev().prev().prev().prev().prev().prev().prev().text();
-     		
+     		console.log($(window.event.target).parent().prev().text());
 				$("#detailModalId").text(id);
 				$("#detailModalGrade").text(grade);
 				$("#detailModalPoint").text(point);
@@ -330,10 +330,10 @@ ArrayList<Member> ulist = (ArrayList<Member>)request.getAttribute("ulist");
                                     <td>등급</td>
                                     <td id="detailModalGrade"></td>
                                 </tr>
-                                <tr>
+                                <!-- <tr>
                                     <td>가용적립금</td>
                                     <td id="detailModalPoint" style="font-weight:800px;"></td>
-                                </tr>
+                                </tr> -->
                                 
                         </table>
 

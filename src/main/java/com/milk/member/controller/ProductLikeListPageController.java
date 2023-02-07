@@ -12,19 +12,19 @@ import javax.servlet.http.HttpSession;
 
 import com.milk.member.model.service.MemberService;
 import com.milk.member.model.vo.Member;
-import com.milk.member.model.vo.Order;
+import com.milk.product.model.vo.ProductLike;
 
 /**
- * Servlet implementation class MyOrderDetailPageController
+ * Servlet implementation class productLikeListPageController
  */
-@WebServlet("/orderD.me")
-public class MyOrderDetailPageController extends HttpServlet {
+@WebServlet("/plike.me")
+public class ProductLikeListPageController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public MyOrderDetailPageController() {
+    public ProductLikeListPageController() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -34,13 +34,22 @@ public class MyOrderDetailPageController extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		int orderNo = Integer.parseInt(request.getParameter("orderNo"));
+		//int memberNo = Integer.parseInt(request.getParameter("memberNo"));
 		
-		ArrayList<Order> list2 = new MemberService().MyOrderDetailList(orderNo);
-		System.out.println(list2);
+		HttpSession session = request.getSession();
+		int memberNo = ((Member)session.getAttribute("loginMember")).getMemberNo();
+		
+		ArrayList<ProductLike> list2 = new MemberService().productLikeList(memberNo);
+		request.setAttribute("list2", list2);
 		
 		
-		//request.getRequestDispatcher("views/member/myOrderListView.jsp").forward(request, response);
+		request.getRequestDispatcher("views/member/productLikeList.jsp").forward(request, response);
+		
+		
+		
+		
+		
+		
 	}
 
 	/**

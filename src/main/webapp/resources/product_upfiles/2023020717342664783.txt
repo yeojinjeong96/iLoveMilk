@@ -1,0 +1,73 @@
+ORDER 
+- STATUS 상품준비중/배송중/배송완료
+- COURIER 택배사
+- WAYBILL 운송장 번호
+
+PRODUCT
+- PRODUCT_NAME 상품 이름
+- PRODUCT_IMG 상품 사진 
+
+
+PAYMENT
+- ORDER_NO 주문번호
+- PRICE 총 금액
+- PAYMENT_DATE 구매 날짜 
+
+PAYMENT 
+JOIN ORDER
+JOIN PRODUCT
+
+SELECT 
+          ORDER_NO '주문번호'
+	, PRICE '총금액'
+	, PAYMENT_DATE '주문날짜'
+	, STATUS '상태'
+	, COURIER '택배사'
+	, WAYBILL '운송장'
+ FROM TB_ORDER OR
+   JOIN TB_ORDERDETAIL ORD ON OR.ORDER_NO = ORD.ORDER_NO
+   JOIN TB_PAYMENT PAY ON OR.ORDER_NO = PAT.ORDER_NO
+WHERE MEMBER_NO =  1;
+
+	, PRODUCT_NAME '상품이름'
+	, PRODUCT_IMG '상품이미지'
+
+주문번호 
+상품 사진
+상품 이름 
+상품 가격 
+구매갯수
+총 금액
+
+ORDERDETAIL
+- ORDER_NO 주문번호 
+- PRODUCT_NO 상품번호 
+- COUNT 주문갯수 
+
+
+PRODUCT
+- PRODUCT_NAME 상품이름 
+- PRODUCT_IMG 상품 이미지 
+- PRICE 상품 가격 
+
+PAYMENT
+- PRICE 총 가격
+
+
+
+SELECT
+        , (
+	    SELECT PRODUCT_IMG
+             FROM TB_ORDERDETAIL
+               JOIN TB_PRODUCT USING(PRODUCT_NO)
+            WHERE ORDER_NO = ORD.ORDER_NO
+	  )
+	상품이미지
+	, 상품이름
+	, 상품 가격
+	, 주문갯수
+	, 총 금액
+ FROM TB_ORDER ORD
+WHERE MEMBER_NO =1;
+
+
