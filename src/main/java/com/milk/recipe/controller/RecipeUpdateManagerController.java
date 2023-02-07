@@ -52,8 +52,8 @@ public class RecipeUpdateManagerController extends HttpServlet {
 			String mainImg = multiRequest.getParameter("mainFile");
 			String changeImg = "resources/recipe_upfiles/" + multiRequest.getFilesystemName("file1");
 			
-			System.out.println(mainImg);
-			System.out.println(changeImg);
+			//System.out.println(mainImg);
+			//System.out.println(changeImg);
 			
 			Recipe r = new Recipe();
 			r.setRecipeNo(recipeNo);

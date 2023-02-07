@@ -76,6 +76,10 @@ public class ProductCompletePaymentController extends HttpServlet {
 		// 회원등급 가져오기
 		String memGrade = new ProductService().selectMemberGrade(memNo);
 		
+		PointIn minusPoint = new PointIn(-usePoint, "사용", "사용("+orderNo+")", orderNo, memNo);
+		// 사용한 적립금 insert
+		int result5 = new ProductService().pointInsert(minusPoint);
+		
 		int point = 0;
 		if(memGrade.equals("GREEN")) {
 			point = (int)Math.ceil((price-usePoint) * 0.02);
@@ -90,10 +94,6 @@ public class ProductCompletePaymentController extends HttpServlet {
 		// 회원등급별 적립금 insert
 		int result4 = new ProductService().pointInsert(plusPoint);
 
-		PointIn minusPoint = new PointIn(usePoint, "사용", "사용("+orderNo+")", orderNo, memNo);
-		// 사용한 적립금 insert
-		int result5 = new ProductService().pointInsert(minusPoint);
-		
 		// 구매상품 장바구니에서 삭제
 		int result6 = new ProductService().productCartDelete(memNo, proNo);
 		

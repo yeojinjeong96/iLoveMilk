@@ -21,14 +21,10 @@
 		                     , PRODUCT_NAME
 		                     , PRICE
 		                     , PRODUCT_IMG
-		                  FROM TB_PRODUCT B
-		                 WHERE B.STATUS = 'Y'
+		                  FROM TB_PRODUCT 
+		                 WHERE STATUS = 'Y'
                            AND FCATEGORY_NAME = ? OR SCATEGORY_NAME = ?
-		                 ORDER
-		                    BY ENROLL_DATE DESC
-		                ) A
-		        )
-		  WHERE RNUM BETWEEN ? AND ? 
+
 	</entry>
 	
 	<entry key="selectCategoryList">
@@ -65,7 +61,8 @@
 	</entry>
 	
 	<entry key="selectProductReview">
-	   SELECT
+          
+         	   SELECT
 		     	REVIEW_NO
 		      , MEMBER_NO
 		      , PRODUCT_NAME	
@@ -73,10 +70,11 @@
               , STAR
               , R_ENROLL_DATE
               , R_MODIFY_DATE
-         FROM TB_REVIEW
-         JOIN TB_PRODUCT USING (PRODUCT_NO)
-        WHERE PRODUCT_NO = ?
-          AND R_STATUS = 'Y'	
+              , P.PRODUCT_NO
+         FROM TB_REVIEW R
+         JOIN TB_PRODUCT P ON (P.PRODUCT_NO = R.PRODUCT_NO)
+        WHERE P.PRODUCT_NO = ?
+          AND R_STATUS = 'Y'	 
 	</entry>
 	
 	<entry key="countProductLike">
@@ -508,11 +506,16 @@
 	</entry>
 	
 	<entry key="orderMember">
-		SELECT MEMBER_NAME, PHONE, EMAIL, TOTAL
-		  FROM TB_MEMBER
-		  LEFT
-		  JOIN TB_POINT USING(MEMBER_NO)
-		 WHERE MEMBER_NO = ?
+		SELECT ROWNUM, A.*
+		  FROM (SELECT MEMBER_NAME, PHONE, EMAIL, TOTAL
+		          FROM TB_MEMBER
+		          LEFT
+		          JOIN TB_POINT p USING(MEMBER_NO)
+			     WHERE MEMBER_NO = ?
+		         ORDER
+		            BY POINT_NO DESC
+		       ) A
+		 WHERE ROWNUM = 1
 	</entry>
 	
 	<entry key="orderInsert">

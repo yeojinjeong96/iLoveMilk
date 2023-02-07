@@ -153,8 +153,10 @@ ArrayList<Order> list2 = (ArrayList<Order>)request.getAttribute("list2");
 						                    </td>
 						                    <td align="center">
 						                    <% if( o.getStatus() == 3 ){ %>
+						                    	<%=o.getCourier() %> <br>
 						                     	<%= o.getWaybill() %>
 						                     <% }else if (o.getStatus() == 2){ %>
+						                     	<%=o.getCourier() %> <br>
 						                     	<%= o.getWaybill() %>
 						                     <% }else if (o.getStatus() == 1) {%>
 						                     	상품준비중

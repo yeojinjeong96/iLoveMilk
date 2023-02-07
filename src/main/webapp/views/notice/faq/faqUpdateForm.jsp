@@ -72,6 +72,7 @@
                 <br>
                 <button type="button" onclick="history.back();" class="btn btn-sm btn-secondary">이전으로</button>
                 <button type="submit" class="btn btn-sm btn-secondary">수정하기</button>
+                <button type="button" onclick="deleteFaq();" class="btn btn-sm btn-secondary">삭제하기</button>
 
                 
             </form>
@@ -92,11 +93,34 @@
                 $(this).prop("selected",true);
             }
         })
-        
-  
-
-        
+ 
     })
+    
+    function deleteFaq(){
+    		const delNoArr = new Array();
+		
+			delNoArr.push(<%=f.getFaqNo()%>);
+		
+			if(confirm('정말 삭제하시겠습니까?'))
+    		$.ajax({
+    			url:"<%=contextPath%>/delete.faq",
+    			data:{delNoArr: delNoArr},
+    			type:"post",
+    			traditional:true,
+    			success:function(result){
+    				if(result>0){
+    					alert("FAQ 삭제 성공");
+                        location.href="<%=contextPath%>/listM.faq?cpage=1";
+    				}else{
+    					alert("FAQ 삭제 실패");
+    				}
+    		    				
+    			},
+    			error:function(){
+    				console.log("FAQ삭제용 ajax 통신 실패");
+    			}	
+    		})
+    	}
     </script>
 
 </body>

@@ -161,4 +161,13 @@ public class QAService {
 		return result1*result2;
 	}
 	
+	public ArrayList<QA> selectManagerQList(){
+		Connection conn= getConnection();
+		
+		ArrayList<QA>list= new QADao().selectManagerQList(conn);
+		
+		close(conn);
+		return list;
+	}
+	
 }

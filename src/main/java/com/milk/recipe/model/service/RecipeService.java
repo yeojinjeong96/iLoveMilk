@@ -592,4 +592,13 @@ public class RecipeService {
 		close(conn);
 		return replyCount;
 	}
+	
+	public ArrayList<Reply> selectSearchReplyListM(PageInfo pi, String select, String keyword, String option){
+		Connection conn = getConnection();
+		
+		ArrayList<Reply> list = new RecipeDao().selectSearchReplyListM(conn, pi, select, keyword, option);
+		
+		close(conn);
+		return list;
+	}
 }

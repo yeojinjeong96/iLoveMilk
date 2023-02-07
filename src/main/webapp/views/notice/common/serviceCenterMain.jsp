@@ -5,7 +5,7 @@
 	ArrayList<Faq>list= (ArrayList<Faq>)request.getAttribute("list");
 	PageInfo pi = (PageInfo)request.getAttribute("pi");
 	String category= (String)request.getAttribute("category");
-	String searchFaq = (String)request.getAttribute("searchFaq");
+	String searchBFaq = (String)request.getAttribute("searchBFaq");
 	
 %>	
 <!DOCTYPE html>
@@ -54,7 +54,11 @@
             <div style="width: 700px;">
                 <div class="search form-outline">
                     <form action="<%=contextPath%>/search.bfaq" method="get" >  
-                            <input type="text" name="searchFaq" placeholder="검색어를 입력하세요." class=" input-sm" required><button type="submit" class="btn btn-primary btn-sm" >검색</button>              
+                    		<%if(searchBFaq !=null){ %>
+                    		 <input type="text" name="searchBFaq" placeholder="검색어를 입력하세요." class=" input-sm" value="<%=searchBFaq%>"required><button type="submit" class="btn btn-primary btn-sm" >검색</button>  
+                    		 <%}else{ %>            
+                            <input type="text" name="searchBFaq" placeholder="검색어를 입력하세요." class=" input-sm" required><button type="submit" class="btn btn-primary btn-sm" >검색</button>              
+                    		 <%} %>
                     		 <input type="hidden" name="cpage" value="1">
                     </form>     
                 </div>
@@ -112,7 +116,7 @@
                 
                 <div class="paging-area">
                 <%if(category !=null) {%>
-                
+                 <div class="paging-area">
                <%if(pi.getCurrentPage()!=1){ %>
                 <button onclick="location.href='<%=contextPath%>/list.sv?cpage=<%=pi.getCurrentPage()-1%>&category=<%=category%>';"class="btn btn-primary btn-sm">&lt;</button>
 	            <%} %>   
@@ -120,28 +124,15 @@
 	                <button onclick="location.href='<%=contextPath%>/list.sv?cpage=<%=p%>&category=<%=category%>';"class="btn btn-primary btn-sm"><%=p %></button>
 	            <%} %>
 	            <%if(pi.getCurrentPage()!=pi.getMaxPage()){ %>
-	                <button onclick="location.href='<%=contextPath%>/list.sv?cpage=<%=pi.getCurrentPage()+1%>&category=<%=category%>';"class="btn btn-primary btn-sm">&gt;</button>
-	            <%if(searchFaq !=null){ %>
-	            
-	            <div class="paging-area">
-                
-               <%if(pi.getCurrentPage()!=1){ %>
-                <button onclick="location.href='<%=contextPath%>/search.faq?cpage=<%=pi.getCurrentPage()-1%>&category=<%=category%>';"class="btn btn-primary btn-sm">&lt;</button>
-	            <%} %>   
-	            <%for(int p= pi.getStartPage(); p<=pi.getEndPage(); p++){ %>
-	                <button onclick="location.href='<%=contextPath%>/search.faq?cpage=<%=p%>&category=<%=category%>';"class="btn btn-primary btn-sm"><%=p %></button>
+	                <button onclick="location.href='<%=contextPath%>/list.sv?cpage=<%=pi.getCurrentPage()+1%>&category=<%=category%>';"class="btn btn-primary btn-sm">&gt;</button>	         
+	             <% }%>
+	            </div>
 	            <%} %>
-	            <%if(pi.getCurrentPage()!=pi.getMaxPage()){ %>
-	                <button onclick="location.href='<%=contextPath%>/search.faq?cpage=<%=pi.getCurrentPage()+1%>&category=<%=category%>';"class="btn btn-primary btn-sm">&gt;</button>	         
-           		</div>
-	             <% }}%>
-	            <% }}%>
-	            
               
-           		</div>
-           		<div class="paging-area">
-                <%if(category ==null) {%>
-                
+           		
+           	
+                <%if(category ==null && searchBFaq ==null) {%>
+                <div class="paging-area">
                <%if(pi.getCurrentPage()!=1){ %>
                 <button onclick="location.href='<%=contextPath%>/list.sv?cpage=<%=pi.getCurrentPage()-1%>';"class="btn btn-primary btn-sm">&lt;</button>
 	            <%} %>   
@@ -150,24 +141,27 @@
 	            <%} %>
 	            <%if(pi.getCurrentPage()!=pi.getMaxPage()){ %>
 	                <button onclick="location.href='<%=contextPath%>/list.sv?cpage=<%=pi.getCurrentPage()+1%>';"class="btn btn-primary btn-sm">&gt;</button>
-	            <%if(searchFaq !=null){ %>
+	            <%} %>
+	            </div>
+	            <%} %>   
 	            
+	            <%if(searchBFaq !=null &&category ==null) {%>
 	            <div class="paging-area">
-                
                <%if(pi.getCurrentPage()!=1){ %>
-                <button onclick="location.href='<%=contextPath%>/search.faq?cpage=<%=pi.getCurrentPage()-1%>';"class="btn btn-primary btn-sm">&lt;</button>
+                <button onclick="location.href='<%=contextPath%>/search.bfaq?cpage=<%=pi.getCurrentPage()-1%>&searchBFaq=<%=searchBFaq%>';"class="btn btn-primary btn-sm">&lt;</button>
 	            <%} %>   
 	            <%for(int p= pi.getStartPage(); p<=pi.getEndPage(); p++){ %>
-	                <button onclick="location.href='<%=contextPath%>/search.faq?cpage=<%=p%>';"class="btn btn-primary btn-sm"><%=p %></button>
+	                <button onclick="location.href='<%=contextPath%>/search.bfaq?cpage=<%=p%>&searchBFaq=<%=searchBFaq%>';"class="btn btn-primary btn-sm"><%=p %></button>
 	            <%} %>
 	            <%if(pi.getCurrentPage()!=pi.getMaxPage()){ %>
-	                <button onclick="location.href='<%=contextPath%>/search.faq?cpage=<%=pi.getCurrentPage()+1%>';"class="btn btn-primary btn-sm">&gt;</button>	         
-           		</div>
-	             <% }}%>
+	                <button onclick="location.href='<%=contextPath%>/search.bfaq?cpage=<%=pi.getCurrentPage()+1%>&searchBFaq=<%=searchBFaq%>';"class="btn btn-primary btn-sm">&gt;</button>	         
+	             <% }%>
+	             	</div>
+	             <%} %>
 	            
 	            
 	            
-	            <% }}%>
+	      
 	            
               
            		</div>

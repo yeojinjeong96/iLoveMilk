@@ -222,7 +222,7 @@
                                         <% } %>
                                         <br>
                                        
-                                       <button type="submit" class = "btn btn-secondary btn-sm">리뷰 등록</button>
+                                       <button type="submit" class = "btn btn-secondary btn-sm" onclick="" >리뷰 등록</button>
                                    
                                    </form>
                                </div>

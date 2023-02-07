@@ -43,9 +43,9 @@ public class BestFaqSearchController extends HttpServlet {
 		int startPage;	 
 		int endPage;	
 		
-		String searchFaq=request.getParameter("searchFaq");	
+		String searchBFaq=request.getParameter("searchBFaq");	
 		
-		listCount = new FaqService().selectSearchListCount(searchFaq);
+		listCount = new FaqService().selectBestSearchListCount(searchBFaq);
 		currentPage= Integer.parseInt(request.getParameter("cpage"));
 		pageLimit= 5;
 		boardLimit=10;
@@ -59,11 +59,11 @@ public class BestFaqSearchController extends HttpServlet {
 		PageInfo pi = new PageInfo(listCount,currentPage, pageLimit, boardLimit,maxPage,startPage,endPage);
 
 		
-		ArrayList<Faq>list= new FaqService().selectSearchList(pi,searchFaq);
+		ArrayList<Faq>list= new FaqService().selectBestSearchList(pi,searchBFaq);
 		
 		request.setAttribute("pi", pi);
 		request.setAttribute("list", list);
-		request.setAttribute("searchFaq", searchFaq);
+		request.setAttribute("searchBFaq", searchBFaq);
 		request.getRequestDispatcher("views/notice/common/serviceCenterMain.jsp").forward(request, response);
 	}
 

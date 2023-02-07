@@ -7,6 +7,7 @@
 	ArrayList<RecipeIngre> listI = (ArrayList<RecipeIngre>)request.getAttribute("listI");
 	ArrayList<RecipeOrder> listO = (ArrayList<RecipeOrder>)request.getAttribute("listO");
 	int replyCount = (int)request.getAttribute("replyCount");
+	
 %>
 <!DOCTYPE html>
 <html>
@@ -82,7 +83,7 @@
         width: 100%;
     }
 
-    .detail-area , .reply-area, .reply-count, .like-report{
+    .detail-area , .reply-area, .reply-count, .report-area{
         width: 700px;
     }
 
@@ -122,6 +123,8 @@
 
 	<%@ include file = "../common/header.jsp" %>
 
+	<% String loginUserId = loginMember == null ? "" : loginMember.getMemberId(); %>
+	
 	<div class="outer" align="center">
         <br>
         <table class="detail-area">
@@ -221,15 +224,8 @@
         </table>
         <br><br>
         
-        <table class="like-report">
+        <table class="report-area">
             <tr>
-                <td>
-                    <div id="like" align="left">
-                        <i class="bi-heart like-btn" style="font-size:1rem; color: red; cursor: pointer;" onclick="memberLike(<%= r.getRecipeNo() %>);"></i>
-                        좋아요
-                        0
-                    </div>
-                </td>
                 <td>
                 	<% if(loginMember != null && loginMember.getMemberId().equals(r.getRecipeWriter())) { %>
                     <!-- 로그인한 회원만 보이도록 -->
@@ -280,10 +276,10 @@
         <!-- 로그인한 회원만 보여지도록 -->
            <table class="reply-enroll" align="center">
                <tr>
-                   <td width="600px" align="center" style="padding-top: 5px;">
-                       <textarea name="reply" style="resize: none; width: 380px; height: 100px;" required placeholder="댓글을 남겨주세요."></textarea>
+                   <td width="400px" align="right" style="padding-top: 5px; padding-right: 10px">
+                       <textarea name="reply" style="resize: none; width: 350px; height: 100px;" required placeholder="댓글을 남겨주세요."></textarea>
                    </td>
-                   <td width="100px">
+                   <td width="200px" align="left">
                        <button onclick="insertReply();">등록</button>
                    </td>
                </tr>
@@ -345,14 +341,16 @@
         							   +	"<td width='160px'>" + list[i].enrollDate + "</td>"
         							   +	"<input type='hidden' name='reNo' value='" + list[i].replyNo + "'>";
         							   
-        							  
-        							   <% if(loginMember != null && loginMember.getMemberId().equals(r.getRecipeWriter())) { %>
-        								  value += "<td width=''><button type='button' onclick='replyDel();' style='border:none; background:none;'>삭제</button></td>";  
-        							   <% }else if(loginMember == null) { %>
-        							   value += "<td width=''></td>";  
-        							   <% }else { %>
-        							      value += "<td width=''><button type='button' onclick='sReply();' data-toggle='modal' data-target='#report-reply-view' style='border:none; background:none;'>신고</button></td>";
-        							   <% } %>
+        							   
+        							   if(list[i].memberNo == '<%= loginUserId %>') {
+        								   value += "<td width=''><button type='button' onclick='replyDel();' style='border:none; background:none;'>삭제</button></td>";  
+        							   }else if('<%= loginUserId %>' == "") {
+     									  value += "<td width=''></td>";
+     								  }else {
+     									  value += "<td width=''><button type='button' onclick='sReply();' data-toggle='modal' data-target='#report-reply-view' style='border:none; background:none;'>신고</button></td>";
+     								  }
+        							   
+        						
         							   
         							   value += "</tr>"
         							   + "<tr>"

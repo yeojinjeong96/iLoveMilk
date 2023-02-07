@@ -102,13 +102,13 @@
 				
 			        <div class="point-list" style="height:500px; overflow-y: auto;">
 			        	
-			            <table id="pointlist" border="1px solid gray;">
-			                <tr>
-			                    <th width="15%">날짜</th>
-			                    <th width="10%">구분</th>
-			                    <th width="45%">상세내역</th>
-			                    <th width="15%">금액</th>
-			                    <th width="15%">총금액</th>
+			            <table id="pointlist" border="1px solid gray;" style="width:100%;">
+			                <tr align="center">
+			                    <th width="15%" style="height:50px;" >날짜</th>
+			                    <th width="10%" style="height:50px;" >구분</th>
+			                    <th width="45%" style="height:50px;" >상세내역</th>
+			                    <th width="15%" style="height:50px;" >금액</th>
+			                    <th width="15%" style="height:50px;" >총금액</th>
 			                </tr>
 			                
 			        <% if(list.isEmpty()){ %>
@@ -117,12 +117,12 @@
 						</div>
 	                <% }else { %>
 	                	<% for(Point p : list){ %>
-	                		 <tr>
-			                    <td><%= p.getModifyDate() %> </td>
-			                    <td><%= p.getStatus() %></td>
-			                    <td><%= p.getContent() %></td>
-			                    <td><%= p.getAmount() %></td>
-			                    <td><%= p.getTotal() %></td>
+	                		 <tr align="center">
+			                    <td style="height:30px;"><%= p.getModifyDate() %> </td>
+			                    <td style="height:30px;"><%= p.getStatus() %></td>
+			                    <td style="height:30px;"><%= p.getContent() %></td>
+			                    <td style="height:30px;"><%= p.getAmount() %></td>
+			                    <td style="height:30px;"><%= p.getTotal() %></td>
 			                </tr>
 	                	<%} %>
 	                

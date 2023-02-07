@@ -8,6 +8,7 @@
 	ArrayList<Product> list = (ArrayList<Product>)request.getAttribute("list");
 	String category = String.valueOf(request.getAttribute("category"));
 	ArrayList<Product> categoryList = (ArrayList<Product>)request.getAttribute("categoryList");
+	int order = (int)(request.getAttribute("order"));
 	// 카태고리 객체배열의 카테고리값 변수정의
 	String fCategory = categoryList.get(0).getfCategory().toString();
 	String sCategory = categoryList.get(0).getsCategory().toString();
@@ -143,35 +144,35 @@
                 	<!-- 상위카테고리이름와 하위카테고리 이름이 같으면 상위카테고리만 출력 -->
 	                <%if((fCategory).equals(sCategory)){ %>
 	                
-	                	<a href="<%=contextPath%>/proList.pro?category=<%=fCategory %>&cpage=1">
+	                	<a href="<%=contextPath%>/proList.pro?category=<%=fCategory %>&cpage=1&order=1">
 	                		<%=fCategory%> 
 	                	</a>
 	                <!-- 하위 카테고리 이름과 일치하지 않으면 하위카테고리까지 출력 -->	
 	                 <%}else{ %>
 	                 
-	                 	<a href="<%=contextPath%>/proList.pro?category=<%=fCategory%>&cpage=1">
+	                 	<a href="<%=contextPath%>/proList.pro?category=<%=fCategory%>&cpage=1&order=1">
 	                 	<%= fCategory %> &gt; 
 	                 	</a>
-	                 	<a href="<%=contextPath%>/proList.pro?category=<%= sCategory %>&cpage=1">
+	                 	<a href="<%=contextPath%>/proList.pro?category=<%= sCategory %>&cpage=1&order=1">
 	                 	<%= sCategory %> 
 	                 	</a>
 	                 	
 	                 <%} %>
 	                 
                  <%}else{ %>
-                 	<a href="<%=contextPath%>/proList.pro?category=<%=category %>&cpage=1"><%=category %></a>
+                 	<a href="<%=contextPath%>/proList.pro?category=<%=category %>&cpage=1&order=1"><%=category %></a>
                  <%} %>
                  
             </div>
 
             <div id="pro-category-center" align="center">
                 <br><br>
-                <a href="<%=contextPath%>/proList.pro?category=<%=fCategory%>&cpage=1">
+                <a href="<%=contextPath%>/proList.pro?category=<%=fCategory%>&cpage=1&order=1">
                  <p id="pro-category-center-1"><%=fCategory %> </p>
                  <div>
                  
                  	<%for(Product p : categoryList){ %>
-                    	<a href="<%=contextPath%>/proList.pro?category=<%=p.getsCategory().toString() %>&cpage=1"><%= p.getsCategory().toString() %></a> 
+                    	<a href="<%=contextPath%>/proList.pro?category=<%=p.getsCategory().toString() %>&cpage=1&order=1"><%= p.getsCategory().toString() %></a> 
                     <%} %>
                     
                  </div>
@@ -182,15 +183,13 @@
         <div id="pro-seq" align="right">
 
             
-            <a href="">신상품순</a>
-            <a href="">판매인기순</a>
-            <a href="">상품평순</a>
-            <a href="">높은가격순</a>
-            <a href="">낮은가격순</a>
+            <a href="<%=contextPath%>/proList.pro?category=<%=category %>&cpage=1&order=1">신상품순</a>
+            <a href="<%=contextPath%>/proList.pro?category=<%=category %>&cpage=1&order=2">높은가격순</a>
+            <a href="<%=contextPath%>/proList.pro?category=<%=category %>&cpage=1&order=3">낮은가격순</a>
             
             <select name="sequence-list" id="">
                 <option value="12">12개씩 정렬</option>
-                <option value="24">24개씩 정렬</option>
+                <option value="24">--------</option>
             </select> 
           
 
@@ -298,19 +297,19 @@
             <div class="paging-area" align="center">
                 <!-- 내가 보고있는 페이지가 1번 페이지가 아닐때에만 나타내기 -->
                 <% if(pi.getCurrentPage() != 1){ %>
-                <button onclick="location.href='<%=contextPath%>/proList.pro?category=<%=category %>&cpage=<%= pi.getCurrentPage()-1%>';">&lt;</button>
+                <button onclick="location.href='<%=contextPath%>/proList.pro?category=<%=category %>&cpage=<%= pi.getCurrentPage()-1%>&order=<%=order%>';">&lt;</button>
                 <%} %> 
                 
 
                 
                 <%for(int p = pi.getStartPage() ; p <= pi.getEndPage() ; p++) { %>
-                <button onclick="location.href='<%=contextPath%>/proList.pro?category=<%=category %>&cpage=<%=p%>';"><%= p %></button>
+                <button onclick="location.href='<%=contextPath%>/proList.pro?category=<%=category %>&cpage=<%=p%>&order=<%=order%>';"><%= p %></button>
                 <% } %>
                 
 
                 <!--  내가 보고있는 페이지가 마지막 페이지가 아닐 때에만 나타내기 -->
                 <%if(pi.getCurrentPage() != pi.getMaxPage()){ %> 
-                <button onclick="location.href='<%=contextPath %>/proList.pro?category=<%=category %>&cpage=<%=pi.getCurrentPage()+1%>';">&gt;</button>
+                <button onclick="location.href='<%=contextPath %>/proList.pro?category=<%=category %>&cpage=<%=pi.getCurrentPage()+1%>&order=<%=order%>';">&gt;</button>
                  <%} %> 
                 
             </div>

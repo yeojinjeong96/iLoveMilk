@@ -109,7 +109,7 @@
        </div>
        
 		<div class="maincontent" align="center">
-			 <form action="">
+			 <form action="<%= contextPath%>/reDelete.me">
                 <table border="1">
                     <tr >
                         <% if(list.isEmpty()){ %>
@@ -121,7 +121,7 @@
                         
                             <% for(Review r : list){ %>
                             	<tr>
-                            	
+                            		<input type="hidden" name="reviewNo" value="<%= r.getReviewNo() %>">
                             		
 			                        <td style="width: 150px; height: 150px;" align="center"> <img src="<%= r.getProductImg() %>" style="width: 100%; height: 100%;"alt=""></td>
 			                        <td style="width: 300px;">
@@ -172,7 +172,23 @@
                                          </td>
                                          <td style="width: 400px;">
                                          		<%= r.getProductName() %> <br>
-                                         		<input type="text" name="star" value="<%= r.getStar() %>"> 
+                                         		<select name="star" id="star">
+                                                    	<option value="1"> 
+                                                    		★
+                                                    	</option >
+                                                    	<option value="2"> 
+                                                    		★★
+                                                    	</option>
+                                                    	<option value="3"> 
+                                                    		★★★
+                                                    	</option>
+                                                    	<option value="4"> 
+                                                    		★★★★
+                                                    	</option>
+                                                    	<option value="5"> 
+                                                    		★★★★★
+                                                    	</option>
+                                                    </select>
                                          </td>
                                     </tr>
                                     <tr>

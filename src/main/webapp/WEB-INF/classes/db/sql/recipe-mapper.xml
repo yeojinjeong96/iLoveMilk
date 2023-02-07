@@ -406,12 +406,18 @@
 		                SELECT
                                RE.REPORT_STATUS
                              , RE.REPLY_NO
-                             , RP.REPORT_CONTENT
-                             , M.MEMBER_ID
+                             , NVL(REPORT_CONTENT, ' ') "REPORT_CONTENT"
+                             , NVL(
+                                (
+                                 SELECT MEMBER_ID
+                                   FROM TB_REPORT
+                                   JOIN TB_MEMBER ON (REPORTING_MEM_NO = MEMBER_NO)
+                                  WHERE REF_NO = REPLY_NO
+                                ), ' ') "REPORT_ID"
                              , R.RECIPE_TITLE
                              , RE.REPLY_CONTENT
 		                  FROM TB_REPLY RE
-                          LEFT JOIN TB_MEMBER M ON (RE.MEMBER_NO = M.MEMBER_NO)
+                          LEFT JOIN TB_MEMBER USING (MEMBER_NO)
                           LEFT JOIN TB_RECIPE R ON (RE.REF_NO = R.RECIPE_NO)
                           LEFT JOIN TB_REPORT RP ON (RP.REF_NO = RE.REPLY_NO)
                          WHERE RE.DELETE_STATUS = 'N'
@@ -802,10 +808,37 @@
 		   AND DELETE_STATUS = 'N'
 	</entry>
 	
+	
 	<entry key="deleteReply">
 		UPDATE TB_REPLY
 		   SET DELETE_STATUS = 'Y'
 		 WHERE REPLY_NO = ?
+	</entry>
+	
+	<entry key = "selectSearchReplyListM">
+		SELECT *
+		  FROM (
+		        SELECT ROWNUM RNUM, A.*
+		          FROM (
+		                SELECT
+                               RE.REPORT_STATUS
+                             , RE.REPLY_NO
+                             , NVL(REPORT_CONTENT, ' ') "REPORT_CONTENT"
+                             , NVL(
+                                (
+                                 SELECT MEMBER_ID
+                                   FROM TB_REPORT
+                                   JOIN TB_MEMBER ON (REPORTING_MEM_NO = MEMBER_NO)
+                                  WHERE REF_NO = REPLY_NO
+                                ), ' ') "REPORT_ID"
+                             , R.RECIPE_TITLE
+                             , RE.REPLY_CONTENT
+		                  FROM TB_REPLY RE
+                          LEFT JOIN TB_MEMBER USING (MEMBER_NO)
+                          LEFT JOIN TB_RECIPE R ON (RE.REF_NO = R.RECIPE_NO)
+                          LEFT JOIN TB_REPORT RP ON (RP.REF_NO = RE.REPLY_NO)
+                         WHERE RE.DELETE_STATUS = 'N'
+		                  
 	</entry>
 
 </properties>

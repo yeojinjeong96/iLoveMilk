@@ -107,6 +107,7 @@
     	String addressNumber = loginMember.getAddressNumber() == null ? "" : loginMember.getAddressNumber();
     	String address = loginMember.getAddress() == null ? "" : loginMember.getAddress();
     	String addressDetail = loginMember.getAddressDetail() == null ? "" : loginMember.getAddressDetail();
+    	String memberGrade = loginMember.getMemberGrade();
     	%>
 		
 		<div class="maincontent">
@@ -304,6 +305,7 @@
 					                    <input type="hidden" name ="addressNumber" value="<%= addressNumber%>">
 					                    <input type="hidden" name ="address" value="<%= address %>">
 					                    <input type="hidden" name ="addressDetail" value="<%= addressDetail %>">
+					                    
 					                    
 					                    <div id="image">
 			                                <img src="<%= profile %>" width="100px" height="100px" >

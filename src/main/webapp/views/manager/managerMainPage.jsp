@@ -1,9 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ page import="java.util.ArrayList, com.milk.product.model.vo.Product, com.milk.product.model.vo.Payment" %>
+<%@ page import="java.util.ArrayList, com.milk.product.model.vo.Product, com.milk.product.model.vo.Payment, com.milk.notice.model.vo.QA" %>
 <%
 	ArrayList<Product> stockList = (ArrayList<Product>)request.getAttribute("stockList");
 	ArrayList<Payment> recentPayList = (ArrayList<Payment>)request.getAttribute("recentPayList");
+	ArrayList<QA> qList = (ArrayList<QA>)request.getAttribute("qList");
 
 %>
 <!DOCTYPE html>
@@ -73,15 +74,20 @@
                                 </tr>
                             </thead>
                             <tbody>
-
-                                <!-- 반복 -->
-                                <tr>
-                                    <td>1</td>
-                                    <td>아이디</td>
-                                    <td>작성일자</td>
-                                    <td>글제목자리</td>
-                                </tr>
-
+								<% if(qList !=null){ %>
+									<% for(QA q: qList){ %>
+		                                <tr>
+		                                    <td><%=q.getrNum()%></td>
+		                                    <td><%=q.getMemberId() %></td>
+		                                    <td><%=q.getEnrollDate().substring(0, 10) %></td>
+		                                    <td><%=q.getqTitle() %></td>                       
+		                                </tr>
+									<% } %>
+								<% }else{ %>
+									<tr>
+										<td colspan="4">최근 미답변 목록이 없습니다.</td>
+									</tr>
+								<% } %>
                             </tbody>
                         </table>
                     </div>

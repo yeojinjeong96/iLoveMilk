@@ -17,14 +17,14 @@ import com.milk.recipe.model.vo.Reply;
 /**
  * Servlet implementation class RecipeReplyListManagerController
  */
-@WebServlet("/replyM.re")
-public class RecipeReplyListManagerController extends HttpServlet {
+@WebServlet("/searchReply.re")
+public class RecipeSearchReplyListManagerController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public RecipeReplyListManagerController() {
+    public RecipeSearchReplyListManagerController() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -33,6 +33,16 @@ public class RecipeReplyListManagerController extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+		request.setCharacterEncoding("UTF-8");
+		
+		String select = request.getParameter("search-select");
+		String keyword = request.getParameter("keyword");
+		String option = request.getParameter("option");
+		
+		//System.out.println(select);
+		//System.out.println(keyword);
+		//System.out.println(option);
 		
 		int listCount;
 		int currentPage;
@@ -59,7 +69,7 @@ public class RecipeReplyListManagerController extends HttpServlet {
 		PageInfo pi = new PageInfo(listCount, currentPage, pageLimit, boardLimit, maxPage, startPage, endPage);
 	
 
-		ArrayList<Reply> list = new RecipeService().selectReplyListM(pi);
+		ArrayList<Reply> list = new RecipeService().selectSearchReplyListM(pi, select, keyword, option);
 		
 		request.setAttribute("pi", pi);
 		request.setAttribute("list", list);

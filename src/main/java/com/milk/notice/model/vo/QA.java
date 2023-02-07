@@ -2,6 +2,7 @@ package com.milk.notice.model.vo;
 
 public class QA {
 	
+	private int rNum;
 	private int qNo;
 	private int qWriter;
 	private String qTitle;
@@ -43,6 +44,7 @@ public class QA {
 	
 	
 	
+	
 	public QA(int qNo, String memberName, String qTitle, String qContent, String enrollDate,
 			String managerName, String answerStatus, String aTitle, String answerDate, String aContent, String fCategory, String sCategory) {
 		super();
@@ -73,6 +75,20 @@ public class QA {
 		this.fCategory = fCategory;
 		this.sCategory = sCategory;
 	}
+	
+	public QA(int rNum, int qNo,String memberId, String qTitle,String qContent, String enrollDate, String answerStatus, String fCategory, String sCategory) {
+		super();
+		this.rNum= rNum;
+		this.qNo = qNo;
+		this.memberId=memberId;
+		this.qTitle = qTitle;
+		this.qContent= qContent;
+		this.enrollDate = enrollDate;
+		this.answerStatus = answerStatus;
+		this.fCategory = fCategory;
+		this.sCategory = sCategory;
+	}
+	
 	
 	
 	public String getMemberName() {
@@ -113,6 +129,13 @@ public class QA {
 	
 	
 	
+	
+	public int getrNum() {
+		return rNum;
+	}
+	public void setrNum(int rNum) {
+		this.rNum = rNum;
+	}
 	public int getManagerNo() {
 		return managerNo;
 	}
