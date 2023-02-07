@@ -95,12 +95,12 @@
                 <h2 align="left">BEST FAQ</h2>
                 <br>
                 <p align="left" id="category">
-                    <a href="<%=contextPath%>/list.sv?cpage=1">전체</a>&nbsp;
-                    <a href="<%=contextPath%>/list.sv?cpage=1&category=회원가입/정보">회원가입/정보</a>&nbsp;
-                    <a href="<%=contextPath%>/list.sv?cpage=1&category=결제/배송">결제/배송</a>&nbsp;
-                    <a href="<%=contextPath%>/list.sv?cpage=1&category=적립금">적립금</a>&nbsp;
-                    <a href="<%=contextPath%>/list.sv?cpage=1&category=제품정보">제품정보</a>&nbsp;
-                    <a href="<%=contextPath%>/list.sv?cpage=1&category=기타">기타</a>&nbsp;
+                    <a href="<%=contextPath%>/list.sv?cpage=1">전체</a> |
+                    <a href="<%=contextPath%>/list.sv?cpage=1&category=회원가입/정보">회원가입/정보</a> |
+                    <a href="<%=contextPath%>/list.sv?cpage=1&category=결제/배송">결제/배송</a> |
+                    <a href="<%=contextPath%>/list.sv?cpage=1&category=적립금">적립금</a> |
+                    <a href="<%=contextPath%>/list.sv?cpage=1&category=제품정보">제품정보</a> |
+                    <a href="<%=contextPath%>/list.sv?cpage=1&category=기타">기타</a>
                 </p>
                 
                 <table style="text-align:center" class="content-area table">
