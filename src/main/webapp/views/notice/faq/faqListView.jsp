@@ -43,6 +43,7 @@
             box-sizing: border-box;
             border-radius: 10px;
             display: none;
+            font-size: 13px;
         }
     .question-area{
         cursor: pointer;

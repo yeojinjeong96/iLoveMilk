@@ -35,6 +35,23 @@
        
 
     }
+     .answer-area{
+            border: 1px solid lightgrey;
+            width: 500px;
+            height: 140px;
+            margin-top: 5px;
+            padding: 10px;
+            box-sizing: border-box;
+            border-radius: 10px;
+            display: none;
+            font-size: 13px;
+            
+        }
+    .question-area{
+        cursor: pointer;
+     
+        height: 100%;
+    }
 </style>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
@@ -106,7 +123,15 @@
                     <tr>
                         <td><%=f.getFaqNo() %></td>
                         <td><%=f.getCategoryName() %></td>
-                        <td><%=f.getQuestion() %></td>
+                        <td class="question-area">
+                       		<div >
+                       			 <%=f.getQuestion() %>
+                
+                       		</div>
+                            <p class="answer-area">
+                                <%=f.getAnswer() %>
+                            </p>
+                        </td>
                     </tr>
                     <%} }%>
     
@@ -174,7 +199,26 @@
         </div>
 		
         <%@include file="/views/common/footer.jsp" %>
-        
+         <script>
+     $(function(){
+
+            $(".question-area").on("click","div",function(){
+
+                const $p= $(this).next();
+                if($p.css("display") == "none"){
+                    
+                   
+                    $(".answer-area").slideUp();
+                    $p.slideDown();
+                }else{
+                    $p.slideUp();   
+                }
+
+            })
+        }) 
+
+    
+    </script>
 
 </body>
 </html>
