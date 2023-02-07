@@ -116,9 +116,9 @@
                     </th>
                     <th width="70px">신고 여부</th>
                     <th width="60px">댓글번호</th>
-                    <th width="140px">신고 사유</th>
-                    <th width="60px">신고자</th>
-                    <th width="200px">게시글 제목</th>
+                    <th width="130px">신고 사유</th>
+                    <th width="110px">신고자</th>
+                    <th width="180px">게시글 제목</th>
                     <th width="180px">댓글 내용</th>
                 </tr>
             </thead>
