@@ -528,4 +528,20 @@ public class MemberService {
 		
 			return result;
 		}
+	  
+	  
+	  public int RDBUpate(int productNo) {
+		  Connection conn = getConnection();
+		  int result2 = new MemberDao().RDBUpate(conn, productNo);
+		  
+		  if(result2 > 0) {
+				commit(conn);
+			}else {
+				rollback(conn);
+			}
+			
+			close(conn);
+		
+			return result2;
+	  }
 }
