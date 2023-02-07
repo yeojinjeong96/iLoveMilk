@@ -72,6 +72,22 @@ public class Review {
 	
 
 
+	public Review(int reviewNo, int memberNo, String reviewContent1, String reviewContent, int star, Date rEnrollDate,
+			Date rModifyDate, String productName, String productImg) {
+		super();
+		this.reviewNo = reviewNo;
+		this.memberNo = memberNo;
+		this.reviewContent1 = reviewContent1;
+		this.reviewContent = reviewContent;
+		this.star = star;
+		this.rEnrollDate = rEnrollDate;
+		this.rModifyDate = rModifyDate;
+		this.productName = productName;
+		this.productImg = productImg;
+	}
+
+
+
 	public Review(int productNo, String productName, String productImg) {
 		super();
 		this.productNo = productNo;
@@ -89,8 +105,26 @@ public class Review {
 	}
 
 	
-
 	
+	
+
+
+	public Review(int memberNo, int productNo) {
+		super();
+		this.memberNo = memberNo;
+		this.productNo = productNo;
+	}
+
+
+
+	public Review(int memberNo, int productNo, String productName, String productImg) {
+		super();
+		this.memberNo = memberNo;
+		this.productNo = productNo;
+		this.productName = productName;
+		this.productImg = productImg;
+	}
+
 
 
 	public Review(int memberNo, int productNo, String reviewContent, int star) {

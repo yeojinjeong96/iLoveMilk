@@ -138,14 +138,14 @@
                         
                       <script>
                       
-                      function reviewInsert(productNo) {
+                      function reviewInsert(a) {
                        //$(".modal_table").hide() 
                        //document.getElementById(productNo).style.display="block";
                          //$("table tr").hide();
                          //$("table tr.productNo").show();
                          //alert(productNo);
                          //console.log(productNo);
-                         $("#productNo").val(productNo);
+                         $("#productNo").val(a);
                          $("#productName").text($(window.event.target).parent().prev().text());
                          $("#productImg").attr("src", $(window.event.target).next().val());
                          
@@ -185,10 +185,14 @@
                                    <form action="<%= contextPath %>/RInsert.me " method="post">
                                    
                                        <input type="hidden" class="body-contents" id="contents" name ="memberNo" value="<%= memberNo %>">
-                                       <input type="hidden" name = "productNo" id="productNo">
+                                       
                                       
                                        <table border="1" class="modal_table">
-                                       
+                                       		
+                                       	   <tr>
+                                                <td style="width: 100px;"> 상품번호 </td>
+                                                <td style="width: 400px;" ><input type="text" name = "productNo" id="productNo" disabled></td>
+                                           </tr>
                                            <tr>
                                                 <td style="width: 100px;"> <img id="productImg" style="width: 100%; height: 100%;"> </td>
                                                 <td style="width: 400px;" id="productName" ></td>
@@ -226,7 +230,7 @@
                                        </table>
                                         <br>
                                        
-                                       <button type="submit" class = "btn btn-secondary btn-sm" onclick="<%=contextPath%>/RDBupdate.me" >리뷰 등록</button>
+                                       <button type="submit" class = "btn btn-secondary btn-sm" >리뷰 등록</button>
                                    
                                    </form>
                                </div>

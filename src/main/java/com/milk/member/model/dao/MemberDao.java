@@ -575,19 +575,16 @@ public Member updateCheckPwd(Connection conn, String memberId, String memberPwd)
 			
 			rset= pstmt.executeQuery();
 			while(rset.next()) {
-				list.add(new Report(	
-						rset.getString("MEMBER_ID"),
-						rset.getInt("MEMBER_NO"),
+				list.add(new Report(
 						rset.getInt("REPORT_NO"),
+						rset.getInt("REPORTING_MEM_NO"),
 						rset.getInt("REF_NO"),
 						rset.getString("REPORT_CONTENT"),
 						rset.getString("REPORT_DATE"),
-						rset.getString("REPORT_TYPE")
-					
+						rset.getString("REPORT_TYPE"),
+						rset.getString("MEMBER_ID")
 						));
 			}
-			
-			
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -1013,13 +1010,14 @@ public int UpdateProfile(Connection conn, Member m) {
 			
 			while(rset.next()) {
 				list.add(new Review(
+						 rset.getInt("MEMBER_NO"),
 						 rset.getInt("PRODUCT_NO"),
 						 rset.getString("PRODUCT_NAME"),
 						 rset.getString("PRODUCT_IMG")
 						)); 
 			}
 			
-			
+			System.out.println();
 			} catch (SQLException e) {
 				e.printStackTrace();
 			} finally {
@@ -1047,6 +1045,7 @@ public int UpdateProfile(Connection conn, Member m) {
 			while(rset.next()) {
 				list.add(new Review(
 						 rset.getInt("REVIEW_NO"),
+						 rset.getInt("MEMBER_NO"),
 						 rset.getString("REVIEW_CONTENT1"),
 						 rset.getString("REVIEW_CONTENT"),
 						 rset.getInt("STAR"),
@@ -1172,5 +1171,26 @@ public int UpdateProfile(Connection conn, Member m) {
 			
 			return result;
 		}
+	   
+	 public int RDBUpate(Connection conn, int productNo) {
+		 int result2= 0;
+		 PreparedStatement pstmt = null;
+		 String sql = prop.getProperty("RDBUpate");
+		 
+		 try {
+			pstmt=conn.prepareStatement(sql);
+			pstmt.setInt(1, productNo);
+			
+			result2=pstmt.executeUpdate();
+			
+			System.out.println(result2);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		 return result2;
+	 }
+	 	
 	   
 }

@@ -39,25 +39,40 @@ public class ReviewInsertController extends HttpServlet {
 		
 		
 		Review r = new Review(memberNo, productNo,reviewContent,star );
-				
+		
 		int result = new MemberService().insertReview(r);
 		
-		HttpSession session = request.getSession();
 		
+		
+		
+		
+		//System.out.println(memberNo);
+		//System.out.println(productNo);
 		
 		if(result > 0) {
 			
+			int result2 = new MemberService().RDBUpate(productNo);
+				
+				if(result2>0) {
+					HttpSession session = request.getSession();
+					session.setAttribute("alertMsg", "성공적으로 리뷰가 등록되었습니다.");
+					response.sendRedirect(request.getContextPath()+ "/review.me");
+					
+				}else {
+					HttpSession session = request.getSession();
+					session.setAttribute("alertMsg", "리뷰 상태 등록 실패했습니다.");
+					response.sendRedirect(request.getContextPath()+ "/review.me");
+				}
+				
 			
-			session.setAttribute("alertMsg", "성공적으로 리뷰가 등록되었습니다.");
-			
-			
-			response.sendRedirect(request.getContextPath()+ "/review.me");
-			
+				
 		}else {
-			
+			HttpSession session = request.getSession();
 			session.setAttribute("alertMsg", "리뷰 등록에 실패했습니다.");
 			response.sendRedirect(request.getContextPath()+ "/review.me");
 		}
+			
+		
 		
 		
 		
