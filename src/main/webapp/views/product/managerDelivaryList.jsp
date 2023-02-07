@@ -57,12 +57,13 @@
                 <p  style="font-size:20px; line-height: 90px;"><b>배송관리</b></p>  
                 <br> 
                 <div align="left" style="width:680px;font-size: 13px;">
+                <!--  
                 <b> 조회기간 </b>
                     <button class="btn btn-outline-secondary btn-sm">오늘</button>
                     <button class="btn btn-outline-secondary btn-sm">1주일</button>
                     <button class="btn btn-outline-secondary btn-sm">1개월</button>
                     <button class="btn btn-outline-secondary btn-sm">3개월</button>
-                    <input type="date" name = "searchDate1" > - <input type="date" name = "searchDate1" >
+                    <input type="date" name = "searchDate1" > - <input type="date" name = "searchDate1" >-->
                 </div>
                 
                 <div align="left" style="width:680px;font-size: 13px;">
@@ -131,15 +132,15 @@
                     <div class="paging-area">
                         
                                     <% if(pi.getCurrentPage() != 1){ %>
-                                        <button onclick="location.href='<%=contextPath%>/orderList.ma?cpage=<%=pi.getCurrentPage()-1%>';">&lt;</button>
+                                        <button onclick="location.href='<%=contextPath%>/orderList.ma?cpage=<%=pi.getCurrentPage()-1%>';" class="btn btn-primary btn-sm" >&lt;</button>
                                     <% } %>
                         
                                     <% for(int p=pi.getStartPage(); p<=pi.getEndPage(); p++){ %>
-                                        <button onclick="location.href='<%=contextPath%>/orderList.ma?cpage=<%=p%>';"><%= p %></button>
+                                        <button onclick="location.href='<%=contextPath%>/orderList.ma?cpage=<%=p%>';" class="btn btn-primary btn-sm" ><%= p %></button>
                                     <% } %>
               
                                     <% if(pi.getCurrentPage() != pi.getMaxPage()){ %>
-                                        <button onclick="location.href='<%=contextPath%>/orderList.ma?cpage=<%=pi.getCurrentPage()+1%>';">&gt;</button>
+                                        <button onclick="location.href='<%=contextPath%>/orderList.ma?cpage=<%=pi.getCurrentPage()+1%>';" class="btn btn-primary btn-sm" >&gt;</button>
                                     <%} %>    
                     </div>
                     
@@ -347,15 +348,15 @@
 					                    
 					                    
 					                     if(o.opi.currentPage != 1){ 
-					                        	   value2 += "<button onclick='selectStatement(" + (o.opi.currentPage-1) + ", "+ $("#delivery-option").val() + ");'>&lt;</button>";
+					                        	   value2 += "<button onclick='selectStatement(" + (o.opi.currentPage-1) + ", "+ $("#delivery-option").val() + ");' class='btn btn-primary btn-sm' >&lt;</button>";
 					                     		} 
 					          
 					                     for(let p=o.opi.startPage; p<=o.opi.endPage; p++){ 
-					                    	 value2+=" <button onclick='selectStatement(" + p + ", "+ $("#delivery-option").val() + ");'>" +  p + "</button>";
+					                    	 value2+=" <button onclick='selectStatement(" + p + ", "+ $("#delivery-option").val() + ");' class='btn btn-primary btn-sm' >" +  p + "</button>";
 					                       } 
 					         
 					                       if(o.opi.currentPage != o.opi.maxPage){
-					                    	   value2+=" <button onclick='selectStatement(" + (o.opi.currentPage+1) + ", "+ $("#delivery-option").val() + ");'>&gt;</button>";
+					                    	   value2+=" <button onclick='selectStatement(" + (o.opi.currentPage+1) + ", "+ $("#delivery-option").val() + ");' class='btn btn-primary btn-sm' >&gt;</button>";
 					                      } 
 					                   	$(".paging-area").html(value2);    
 										

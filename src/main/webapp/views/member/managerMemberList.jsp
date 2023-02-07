@@ -183,15 +183,15 @@ ArrayList<Member> ulist = (ArrayList<Member>)request.getAttribute("ulist");
 	                    
 	                    
 	                     if(result.pi.currentPage != 1){ 
-	                        	   value2 += "<button onclick='location.href='" + "<%=contextPath%>/memPoint.ma?ppage=result.pi.currentPage-1&memNo=d " + "';'>&lt;</button>";
+	                        	   value2 += "<button onclick='location.href='" + "<%=contextPath%>/memPoint.ma?ppage=result.pi.currentPage-1&memNo=d " + "';' class='btn btn-primary btn-sm' >&lt;</button>";
 	                     		} 
 	          
 	                     for(let p=result.pi.startPage; p<=result.pi.endPage; p++){ 
-	                    	 value2+=" <button onclick='location.href='" + "<%=contextPath%>/memPoint.ma?ppage=p&memNo=d" + "';'> " +  p + "</button>";
+	                    	 value2+=" <button onclick='location.href='" + "<%=contextPath%>/memPoint.ma?ppage=p&memNo=d" + "';' class='btn btn-primary btn-sm' > " +  p + "</button>";
 	                       } 
 	         
 	                       if(result.pi.currentPage != result.pi.maxPage){
-	                    	   value2+=" <button onclick='location.href='" + "<%=contextPath%>/memPoint.ma?ppage=result.pi.currentPage+1&memNo=d" + "';'>&gt;</button>";
+	                    	   value2+=" <button onclick='location.href='" + "<%=contextPath%>/memPoint.ma?ppage=result.pi.currentPage+1&memNo=d" + "';' class='btn btn-primary btn-sm' >&gt;</button>";
 	                      } 
 	                   $(".paging-area2").html(value2);    
                    
@@ -252,15 +252,15 @@ ArrayList<Member> ulist = (ArrayList<Member>)request.getAttribute("ulist");
     					let sval2 = "";
     					
 	                     if(result.spi.currentPage != 1){ 
-	                    	 sval2 += "<button onclick='searchKeyMem(" + (result.spi.currentPage-1) + ");'>&lt;</button>";
+	                    	 sval2 += "<button onclick='searchKeyMem(" + (result.spi.currentPage-1) + ");' class='btn btn-primary btn-sm' >&lt;</button>";
                   		} 
        
 	                     for(let p=result.spi.startPage; p<=result.spi.endPage; p++){ 
-	                    	 sval2 +=" <button onclick='searchKeyMem(" + p + ");'>"+ p +" </button>";
+	                    	 sval2 +=" <button onclick='searchKeyMem(" + p + ");' class='btn btn-primary btn-sm' >"+ p +" </button>";
 	                       } 
       
                       if(result.spi.currentPage != result.spi.maxPage){
-                     	 sval2 +=" <button onclick='searchKeyMem("+ (result.spi.currentPage+1) + ");'> &gt;</button>";
+                     	 sval2 +=" <button onclick='searchKeyMem("+ (result.spi.currentPage+1) + ");' class='btn btn-primary btn-sm' > &gt;</button>";
                    } 
                 $(".paging-area").html(sval2);   
     					
@@ -288,15 +288,15 @@ ArrayList<Member> ulist = (ArrayList<Member>)request.getAttribute("ulist");
                 <div class="paging-area">
                     
                                 <% if(pi.getCurrentPage() != 1){ %>
-                                    <button onclick="location.href='<%=contextPath%>/memList.ma?cpage=<%=pi.getCurrentPage()-1%>';">&lt;</button>
+                                    <button onclick="location.href='<%=contextPath%>/memList.ma?cpage=<%=pi.getCurrentPage()-1%>';" class="btn btn-primary btn-sm" >&lt;</button>
                                 <% } %>
                     
                                 <% for(int p=pi.getStartPage(); p<=pi.getEndPage(); p++){ %>
-                                    <button onclick="location.href='<%=contextPath%>/memList.ma?cpage=<%=p%>';"><%= p %></button>
+                                    <button onclick="location.href='<%=contextPath%>/memList.ma?cpage=<%=p%>';" class="btn btn-primary btn-sm" ><%= p %></button>
                                 <% } %>
                     
                                 <% if(pi.getCurrentPage() != pi.getMaxPage()){ %>
-                                    <button onclick="location.href='<%=contextPath%>/memList.ma?cpage=<%=pi.getCurrentPage()+1%>';">&gt;</button>
+                                    <button onclick="location.href='<%=contextPath%>/memList.ma?cpage=<%=pi.getCurrentPage()+1%>';" class="btn btn-primary btn-sm" >&gt;</button>
                                 <% } %>
                 </div>
                 
@@ -460,7 +460,7 @@ ArrayList<Member> ulist = (ArrayList<Member>)request.getAttribute("ulist");
 	                                        <td><%=m.getMemberId() %></td>
 	                                        <td><%=m.getMemberName() %></td>
 	                                        <td><%=m.getMemberGrade() %></td>
-	                                        <td><%=m.getTotalpay() %></td>
+	                                        <td><%=m.getTotalpay() %> 원</td>
 	                                        <td>
 	                                            <button type="button" id="btnUpgrade" onclick="memUpgrade(<%=m.getMemberNo() %>);" class="btn btn-outline-secondary btn-sm" style="font-size:15px;">변경</button>
 	                                        </td>

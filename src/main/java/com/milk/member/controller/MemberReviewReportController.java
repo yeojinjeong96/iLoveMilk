@@ -36,7 +36,7 @@ public class MemberReviewReportController extends HttpServlet {
 		
 		int no = Integer.parseInt(request.getParameter("repNo"));
 		int memberNo = ((Member)request.getSession().getAttribute("loginMember")).getMemberNo();
-		int pno = Integer.parseInt(request.getParameter("pNo"));
+		int pno = Integer.parseInt(request.getParameter("pNo2"));
 		
 		String reportContent = request.getParameter("report-content");
 		String reportEtcContent = request.getParameter("etc-content");
