@@ -40,7 +40,7 @@ public class RecipeService {
 	 * 요청한 페이지에 보여질 게시글 리스트 조회
 	 * @author 최주원
 	 * @param pi 페이징처리할 데이터들이 담겨있는 PageInfo객체
-	 * @return select 후 list 반환
+	 * @return 자유게시판 레시피 list 반환
 	 */
 	public ArrayList<Recipe> selectRecipeList(PageInfo pi){
 		Connection conn = getConnection();
@@ -52,6 +52,14 @@ public class RecipeService {
 		
 	}
 	
+	
+	/**
+	 * oldestlist.re
+	 * 오래된순 정렬해서 게시글 리스트 조회
+	 * @author 최주원
+	 * @param pi 페이징처리할 데이터들이 담겨있는 PageInfo객체
+	 * @return 자유게시판 레시피 오래된순으로 list 반환
+	 */
 	public ArrayList<Recipe> selectRecipeOldestList(PageInfo pi){
 		Connection conn = getConnection();
 		
@@ -62,6 +70,13 @@ public class RecipeService {
 		
 	}
 	
+	/**
+	 * countlist.re
+	 * 조회순 정렬해서 게시글 리스트 조회
+	 * @author 최주원
+	 * @param pi 페이징처리할 데이터들이 담겨있는 PageInfo객체
+	 * @return 자유게시판 레시피 조회순으로 list 반환
+	 */
 	public ArrayList<Recipe> selectRecipeCountList(PageInfo pi){
 		Connection conn = getConnection();
 		
@@ -78,7 +93,7 @@ public class RecipeService {
 	 * 요청한 페이지에 보여질 게시글 리스트 조회
 	 * @author 최주원
 	 * @param pi 페이징처리할 데이터들이 담겨있는 PageInfo객체
-	 * @return select 후 list 반환
+	 * @return 추천레시피 list 반환
 	 */
 	public ArrayList<Recipe> selectRecipeListR(PageInfo pi){
 		Connection conn = getConnection();
@@ -90,6 +105,14 @@ public class RecipeService {
 		
 	}
 	
+	
+	/**
+	 * oldestlistR.re
+	 * 오래된순 정렬해서 게시글 리스트 조회
+	 * @author 최주원
+	 * @param pi 페이징처리할 데이터들이 담겨있는 PageInfo객체
+	 * @return 추천레시피 오래된순으로 list 반환
+	 */
 	public ArrayList<Recipe> selectRecipeOldestListR(PageInfo pi){
 		Connection conn = getConnection();
 		
@@ -100,6 +123,14 @@ public class RecipeService {
 		
 	}
 	
+	
+	/**
+	 * countlistR.re
+	 * 조회순 정렬해서 게시글 리스트 조회
+	 * @author 최주원
+	 * @param pi 페이징처리할 데이터들이 담겨있는 PageInfo객체
+	 * @return 추천레시피 조회순으로 list 반환
+	 */
 	public ArrayList<Recipe> selectRecipeCountListR(PageInfo pi){
 		Connection conn = getConnection();
 		
@@ -111,6 +142,16 @@ public class RecipeService {
 	}
 	
 	
+	
+	/**
+	 * insert.re
+	 * 자유게시판 레시피 작성
+	 * @author 최주원
+	 * @param r 레시피제목 / 레시피소개 / 대표이미지 경로 데이터들이 담겨있는 Recipe객체
+	 * @param listIngre 레시피재료 데이터들이 담겨있는 list객체
+	 * @param listOrder 요리순서 데이터들이 담겨있는 list객체
+	 * @return insert 후에 처리된 행 수
+	 */
 	public int insertRecipe(Recipe r, ArrayList<RecipeIngre> listIngre, ArrayList<RecipeOrder> listOrder) {
 		Connection conn = getConnection();
 		
