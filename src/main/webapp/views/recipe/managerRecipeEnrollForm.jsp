@@ -205,7 +205,7 @@
                 </table>
                 <br>
                 
-                <table id="addOrder">
+                <table id="addOrder" width="700px" style="margin-left: 200px;">
                     <thead>
                         <tr>
                             <td colspan="4">
