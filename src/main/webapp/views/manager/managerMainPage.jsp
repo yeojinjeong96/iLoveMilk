@@ -41,7 +41,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                            	<% if(stockList != null){ %>
+                            	<% if(!stockList.isEmpty()){ %>
 									<% for(Product p : stockList){ %>
 		                                <tr>
 		                                    <td><%= p.getPrice() %></td>
@@ -109,7 +109,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-								<% if(recentPayList != null){ %>
+								<% if(!recentPayList.isEmpty()){ %>
 									<% for(Payment p : recentPayList){ %>
 		                                <tr>
 		                                    <td><%= p.getNum() %></td>
