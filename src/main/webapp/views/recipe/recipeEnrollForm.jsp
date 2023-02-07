@@ -320,7 +320,8 @@
     
     
             <script>
-
+            
+				// 재료 순서
 	            function rowAdd1(){
 	
 	                var newRowIngre = $("#addIngre tbody>tr").length;
