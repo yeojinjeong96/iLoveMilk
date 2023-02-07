@@ -74,6 +74,7 @@
                     <option value="주문번호">주문번호</option>
                 </select>
                     <input type="text" name = "searchReport" ><button type="submit"  style="border:none">검색</button>
+                    <br>
                 </div>
             </div>
             <br>
