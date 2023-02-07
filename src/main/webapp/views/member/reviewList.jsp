@@ -4,8 +4,8 @@
 <%@page import = "com.milk.member.model.vo.Review, java.util.ArrayList" %>
 
 <%
-    ArrayList<Review> list = (ArrayList<Review>)request.getAttribute("list");	
-	
+    ArrayList<Review> list = (ArrayList<Review>)request.getAttribute("list");   
+   
 %>
 <!DOCTYPE html>
 <html>
@@ -80,19 +80,19 @@
        }
 
        #rbnn{
-       		color : white;
-       		text-decoration-line: none;
+             color : white;
+             text-decoration-line: none;
        }
    </style>
 </head>
-<body>	
+<body>   
    
    <%@ include file="../common/header.jsp" %>
    
    <div class="outer">
 
        <div class="mainmenubar" >
-           <%@ include file="../common/myPageMenubar.jsp" %> 	
+           <%@ include file="../common/myPageMenubar.jsp" %>    
        </div>
                
        <div class="mainmember">
@@ -108,8 +108,8 @@
             <div class="rbtn2"><br><a id="rbnn" href="<%= contextPath%>/reviewList.me">작성한리뷰</a></div>
        </div>
        
-		<div class="maincontent" align="center">
-			 <form action="<%= contextPath%>/reDelete.me">
+      <div class="maincontent" align="center" style="height:500px; overflow-y: auto;">
+          <form action="<%= contextPath%>/reDelete.me">
                 <table border="1">
                     <tr >
                         <% if(list.isEmpty()){ %>
@@ -120,34 +120,29 @@
                         <% }else{ %>
                         
                             <% for(Review r : list){ %>
-                            	<tr>
-                            		<input type="hidden" name="reviewNo" value="<%= r.getReviewNo() %>">
-                            		
-			                        <td style="width: 150px; height: 150px;" align="center"> <img src="<%= r.getProductImg() %>" style="width: 100%; height: 100%;"alt=""></td>
-			                        <td style="width: 300px;">
-			                            <div style="margin: 10px;"><%= r.getProductName() %></div>
-			                            <div style="margin: 10px;" > 
-			                            	<%for(int i = 1; i <= r.getStar(); i++){ %>
-				                                <img src="resources/images/star.png">
-				                             <%} %>
-			                            </div>
-			                            
-			                            <div style="margin: 10px;"><%= r.getReviewContent1() %>...</div>
-			                        </td>
-		                        
-			                        <td style="width: 100px;" align="center">
-			                            <button type="button" class = "btn btn-secondary btn-sm" data-toggle="modal" data-target="#reviewModify">수정</button>
-			                            <button type="submit" class = "btn btn-secondary btn-sm"> 삭제</button>
-			                        </td>
-                            	</tr>
+                               <tr>
+                                  <input type="hidden" name="reviewNo" value="<%= r.getReviewNo() %>">
+                                  
+                                 <td style="width: 150px; height: 150px;" align="center"> <img src="<%= r.getProductImg() %>" style="width: 100%; height: 100%;"alt=""></td>
+                                 <td style="width: 500px;">
+                                     <div style="margin: 10px;"><%= r.getProductName() %></div>
+                                     <div style="margin: 10px;" > 
+                                        <%for(int i = 1; i <= r.getStar(); i++){ %>
+                                            <img src="resources/images/star.png">
+                                         <%} %>
+                                     </div>
+                                     
+                                     <div style="margin: 10px;" > <textarea name="reviewContent" rows="3" style="resize:none; width:100%; " disabled ><%= r.getReviewContent() %></textarea></div>
+                                 </td>
+                               </tr>
                             <% } %>
                         <% } %>
                     </tr>
                     
                    
                 </table>
-        		
-        		 <!-- 리뷰 수정용 모달 div -->
+              
+               <!-- 리뷰 수정용 모달 div -->
                  <div class="modal" id="reviewModify">
                     <div class="modal-dialog">
                       <div class="modal-content">
@@ -164,30 +159,30 @@
                               
                                <% for(Review r : list){ %>
                                <table border="1">
-                               	
+                                  
                                     <tr>
                                          <td style="width: 100px; height:100px;">
-                                         	<input type="hidden" name="reviewNo" value="<%= r.getReviewNo() %>"> 
-                                         	<img src="<%= r.getProductImg() %>" style="width: 100%; height: 100%;"> 
+                                            <input type="hidden" name="reviewNo" value="<%= r.getReviewNo() %>"> 
+                                            <img src="<%= r.getProductImg() %>" style="width: 100%; height: 100%;"> 
                                          </td>
                                          <td style="width: 400px;">
-                                         		<%= r.getProductName() %> <br>
-                                         		<select name="star" id="star">
-                                                    	<option value="1"> 
-                                                    		★
-                                                    	</option >
-                                                    	<option value="2"> 
-                                                    		★★
-                                                    	</option>
-                                                    	<option value="3"> 
-                                                    		★★★
-                                                    	</option>
-                                                    	<option value="4"> 
-                                                    		★★★★
-                                                    	</option>
-                                                    	<option value="5"> 
-                                                    		★★★★★
-                                                    	</option>
+                                               <%= r.getProductName() %> <br>
+                                               <select name="star" id="star">
+                                                       <option value="1"> 
+                                                          ★
+                                                       </option >
+                                                       <option value="2"> 
+                                                          ★★
+                                                       </option>
+                                                       <option value="3"> 
+                                                          ★★★
+                                                       </option>
+                                                       <option value="4"> 
+                                                          ★★★★
+                                                       </option>
+                                                       <option value="5"> 
+                                                          ★★★★★
+                                                       </option>
                                                     </select>
                                          </td>
                                     </tr>
@@ -268,13 +263,13 @@
                   </div>
 
                    
-		</div>
-	</div>
+      </div>
+   </div>
          
            
       
    
-   <%@ include file="../common/footer.jsp" %> 	 
+   <%@ include file="../common/footer.jsp" %>     
 
 
 </body>

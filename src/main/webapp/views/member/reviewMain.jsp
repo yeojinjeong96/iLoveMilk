@@ -3,8 +3,8 @@
 <%@page import = "com.milk.member.model.vo.Review, java.util.ArrayList" %>
 
 <%
-    ArrayList<Review> list = (ArrayList<Review>)request.getAttribute("list");	
-	
+    ArrayList<Review> list = (ArrayList<Review>)request.getAttribute("list");   
+   
 %>
 <!DOCTYPE html>
 <html>
@@ -79,12 +79,12 @@
        }
 
        #rbnn{
-       		color : white;
-       		text-decoration-line: none;
+             color : white;
+             text-decoration-line: none;
        }
    </style>
 </head>
-<body>	
+<body>   
    
    <%@ include file="../common/header.jsp" %>
    
@@ -94,7 +94,7 @@
    <div class="outer">
 
        <div class="mainmenubar" >
-           <%@ include file="../common/myPageMenubar.jsp" %> 	
+           <%@ include file="../common/myPageMenubar.jsp" %>    
        </div>
                
        <div class="mainmember">
@@ -106,13 +106,13 @@
             <a class="reviewinformation" href="" data-toggle="modal" data-target="#reviewinformation">리뷰운영안내</a>
         </div>
        <div class="reviewTop" align="center">
-       		<div class="rbtn1"><br><a id="rbnn" href="<%= contextPath %>/review.me">리뷰작성</a></div>
-       		<div class="rbtn2"><br><a id="rbnn" href="<%= contextPath%>/reviewList.me">작성한리뷰</a></div>
-       			
+             <div class="rbtn1"><br><a id="rbnn" href="<%= contextPath %>/review.me">리뷰작성</a></div>
+             <div class="rbtn2"><br><a id="rbnn" href="<%= contextPath%>/reviewList.me">작성한리뷰</a></div>
+                
        </div>
        
-		<div class="maincontent" align="center" style="height:500px; overflow-y: auto;" >
-			 <table border="1">
+      <div class="maincontent" align="center" style="height:500px; overflow-y: auto;" >
+          <table border="1">
                 
                  
                         <% if(list.isEmpty()){ %>
@@ -121,7 +121,7 @@
                                 <td colspan="3"> 작성할 수 있는 리뷰가 없습니다.</td>
                             </tr>
                         <% }else{ %>
-                           	
+                              
                             <% for(Review r : list){ %>
                             <tr>
                                 <td style="width: 150px; height: 150px;" align="center"> <img src="<%= r.getProductImg() %>" style="width: 100%; height: 100%;"> </td>
@@ -129,6 +129,8 @@
                                 <td style="width: 100px;" align="center">
                                     <button type="button" class = "btn btn-secondary btn-sm btn-modal" 
                                     data-toggle="modal" data-target="#reviewInsert" onclick="reviewInsert(<%= r.getProductNo() %>);">리뷰작성</button>
+                                    <input type="hidden" name="proImg" value="<%=r.getProductImg() %>">
+                                    
                                 </td>
                             </tr>
                             <% } %>
@@ -137,14 +139,18 @@
                       <script>
                       
                       function reviewInsert(productNo) {
-                    	$(".modal_table").hide() 
-                    	document.getElementById(productNo).style.display="block";
-                      	//$("table tr").hide();
-                      	//$("table tr.productNo").show();
-                      	//alert(productNo);
-                      	//console.log(productNo);
+                       //$(".modal_table").hide() 
+                       //document.getElementById(productNo).style.display="block";
+                         //$("table tr").hide();
+                         //$("table tr.productNo").show();
+                         //alert(productNo);
+                         //console.log(productNo);
+                         $("#productNo").val(productNo);
+                         $("#productName").text($(window.event.target).parent().prev().text());
+                         $("#productImg").attr("src", $(window.event.target).next().val());
+                         
                       }
-                      	
+                         
                       </script>
                     
                 </table>
@@ -152,17 +158,17 @@
             </div>
 
         <%
-    	String memberId = loginMember.getMemberId();
-		int memberNo = loginMember.getMemberNo();
-		String memberPwd = loginMember.getMemberPwd();
-		String profile = loginMember.getProfile();
-		String memberName = loginMember.getMemberName();
-    	String phone = loginMember.getPhone() == null ? "" : loginMember.getPhone(); 
-    	String email = loginMember.getEmail();
-    	String addressNumber = loginMember.getAddressNumber() == null ? "" : loginMember.getAddressNumber();
-    	String address = loginMember.getAddress() == null ? "" : loginMember.getAddress();
-    	String addressDetail = loginMember.getAddressDetail() == null ? "" : loginMember.getAddressDetail();
-    	%>
+       String memberId = loginMember.getMemberId();
+      int memberNo = loginMember.getMemberNo();
+      String memberPwd = loginMember.getMemberPwd();
+      String profile = loginMember.getProfile();
+      String memberName = loginMember.getMemberName();
+       String phone = loginMember.getPhone() == null ? "" : loginMember.getPhone(); 
+       String email = loginMember.getEmail();
+       String addressNumber = loginMember.getAddressNumber() == null ? "" : loginMember.getAddressNumber();
+       String address = loginMember.getAddress() == null ? "" : loginMember.getAddress();
+       String addressDetail = loginMember.getAddressDetail() == null ? "" : loginMember.getAddressDetail();
+       %>
                    <!-- 리뷰 작성용 모달 div -->
                        <div class="modal" id="reviewInsert">
                            <div class="modal-dialog" role="document">
@@ -178,35 +184,34 @@
                                <div class="modal-body">
                                    <form action="<%= contextPath %>/RInsert.me " method="post">
                                    
-                                    <% for(Review r : list){ %>
                                        <input type="hidden" class="body-contents" id="contents" name ="memberNo" value="<%= memberNo %>">
-                                       <input type="hidden" name = "productNo" value="<%= r.getProductNo() %>" >
+                                       <input type="hidden" name = "productNo" id="productNo">
                                       
-                                       <table border="1" id="<%= r.getProductNo() %>"  class="modal_table">
+                                       <table border="1" class="modal_table">
                                        
                                            <tr>
-                                                <td style="width: 100px;"> <img src="<%= r.getProductImg() %>" style="width: 100%; height: 100%;"> </td>
-                                                <td style="width: 400px;"><%= r.getProductName() %></td>
+                                                <td style="width: 100px;"> <img id="productImg" style="width: 100%; height: 100%;"> </td>
+                                                <td style="width: 400px;" id="productName" ></td>
                                            </tr>
                                            <tr>
                                                <th>별점</th>
                                                <td>
                                                     <select name="star" id="star">
-                                                    	<option value="1"> 
-                                                    		★
-                                                    	</option >
-                                                    	<option value="2"> 
-                                                    		★★
-                                                    	</option>
-                                                    	<option value="3"> 
-                                                    		★★★
-                                                    	</option>
-                                                    	<option value="4"> 
-                                                    		★★★★
-                                                    	</option>
-                                                    	<option value="5"> 
-                                                    		★★★★★
-                                                    	</option>
+                                                       <option value="1"> 
+                                                          ★
+                                                       </option >
+                                                       <option value="2"> 
+                                                          ★★
+                                                       </option>
+                                                       <option value="3"> 
+                                                          ★★★
+                                                       </option>
+                                                       <option value="4"> 
+                                                          ★★★★
+                                                       </option>
+                                                       <option value="5"> 
+                                                          ★★★★★
+                                                       </option>
                                                     </select>
                                                </td>
                                            </tr>
@@ -219,10 +224,9 @@
                                            </tr>
                                            
                                        </table>
-                                        <% } %>
                                         <br>
                                        
-                                       <button type="submit" class = "btn btn-secondary btn-sm" onclick="" >리뷰 등록</button>
+                                       <button type="submit" class = "btn btn-secondary btn-sm" onclick="<%=contextPath%>/RDBupdate.me" >리뷰 등록</button>
                                    
                                    </form>
                                </div>
@@ -295,13 +299,13 @@
                   </div>
 
                    
-		</div>
-	</div>
+      </div>
+   </div>
          
            
       
    
-   <%@ include file="../common/footer.jsp" %> 	 
+   <%@ include file="../common/footer.jsp" %>     
 
 
 
