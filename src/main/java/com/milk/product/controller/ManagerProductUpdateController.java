@@ -56,7 +56,6 @@ public class ManagerProductUpdateController extends HttpServlet {
 			} else {
 				pImg = multiRequest.getParameter("productImg");
 			}
-			System.out.println(pImg);
 			
 			Product p = new Product(pNo, pName, price, capacity, brand, pInfo, fCate, sCate, pImg);
 			

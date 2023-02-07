@@ -150,7 +150,7 @@
 				                        </tr>
 				                        <tr>
 				                            <th>입고 수량</td>
-				                            <td><input type="number" name="count">&nbsp;개</td>
+				                            <td><input type="number" name="count" required>&nbsp;개</td>
 				                        </tr>
 				                    </table>
 				                </div>

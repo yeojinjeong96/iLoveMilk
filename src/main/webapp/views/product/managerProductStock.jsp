@@ -68,62 +68,7 @@
                             </td>
                         </tr>
                     </table>
-	<script>
-		// 옵션 변경시 text 초기화
-		function changeOp(){
-			$("#key").val("");
-		}
-	
-		function opNeed(){
-			if($("#op").val() == "- 검색 조건 -"){
-				// 검색조건 미선택시 alert
-				alert("검색 조건을 선택하세요.");
-				return false;
-			}
-		}
-		
-		// 기간 선택 입력 start max 제한
-		function startMax(){
-			$("#start").attr("max", $("#end").val());
-		}
-	
-		// 기간 선택 입력 end min 제한
-		function endMin(){
-			$("#end").attr("min", $("#start").val());
-		}
-	
-		$(function(){
-			// 상품코드시 숫자 이외의 값 불가
-			$("#key").keyup(function(e){
-				if($("#op").val() == "상품코드"){
-					if(isNaN(e.key) || e.key == " "){
-						let str = $("#key").val();
-						$("#key").val(str.substring(0, str.length - 1));
-					}
-				}
-			});
-			
-			// 기간 선택 입력 end max 제한
-			var now_utc = Date.now() // 지금 날짜를 밀리초로
-			// getTimezoneOffset()은 현재 시간과의 차이를 분 단위로 반환
-			var timeOff = new Date().getTimezoneOffset()*60000; // 분단위를 밀리초로 변환
-			// new Date(now_utc-timeOff).toISOString()은 '2022-05-11T18:09:38.134Z'를 반환
-			var today = new Date(now_utc-timeOff).toISOString().split("T")[0];
-			document.getElementById("end").setAttribute("max", today);
-		});
-	
-		// 기간 선택 버튼
-		function seop(){
-			switch($(window.event.target).text()){
-			case "오늘": location.href="<%= contextPath %>/stock.pr?start=SYSDATE-1&end=SYSDATE&cp=1"; break;
-			case "1주일": location.href="<%= contextPath %>/stock.pr?start=SYSDATE-8&end=SYSDATE&cp=1"; break;
-			case "1개월": location.href="<%= contextPath %>/stock.pr?start=TO_CHAR(ADD_MONTHS(SYSDATE, -1),'YYYY-MM-DD')&end=SYSDATE&cp=1"; break;
-			case "3개월": location.href="<%= contextPath %>/stock.pr?start=TO_CHAR(ADD_MONTHS(SYSDATE, -3),'YYYY-MM-DD')&end=SYSDATE&cp=1"; break;
-			}
-		}
-	</script>
-    
-                    <br>
+	                <br>
                     <div align="right">
                     	<div id="periodArea" align="left" style="margin-bottom:10px">
 	                   		<% if(start != null){ %>
@@ -221,13 +166,65 @@
 				        </div>
 			        <% } %>
                 </div>
+        		<br><br><br><br><br>
             </div>
         </div>
     </div>
     
     <script>
-		
-	</script>
+		// 옵션 변경시 text 초기화
+		function changeOp(){
+			$("#key").val("");
+		}
 	
+		function opNeed(){
+			if($("#op").val() == "- 검색 조건 -"){
+				// 검색조건 미선택시 alert
+				alert("검색 조건을 선택하세요.");
+				return false;
+			}
+		}
+		
+		// 기간 선택 입력 start max 제한
+		function startMax(){
+			$("#start").attr("max", $("#end").val());
+		}
+	
+		// 기간 선택 입력 end min 제한
+		function endMin(){
+			$("#end").attr("min", $("#start").val());
+		}
+	
+		$(function(){
+			// 상품코드시 숫자 이외의 값 불가
+			$("#key").keyup(function(e){
+				if($("#op").val() == "상품코드"){
+					if(isNaN(e.key) || e.key == " "){
+						let str = $("#key").val();
+						$("#key").val(str.substring(0, str.length - 1));
+					}
+				}
+			});
+			
+			// 기간 선택 입력 end max 제한
+			var now_utc = Date.now() // 지금 날짜를 밀리초로
+			// getTimezoneOffset()은 현재 시간과의 차이를 분 단위로 반환
+			var timeOff = new Date().getTimezoneOffset()*60000; // 분단위를 밀리초로 변환
+			// new Date(now_utc-timeOff).toISOString()은 '2022-05-11T18:09:38.134Z'를 반환
+			var today = new Date(now_utc-timeOff).toISOString().split("T")[0];
+			document.getElementById("end").setAttribute("max", today);
+		});
+	
+		// 기간 선택 버튼
+		function seop(){
+			switch($(window.event.target).text()){
+			case "오늘": location.href="<%= contextPath %>/stock.pr?start=SYSDATE-1&end=SYSDATE&cp=1"; break;
+			case "1주일": location.href="<%= contextPath %>/stock.pr?start=SYSDATE-8&end=SYSDATE&cp=1"; break;
+			case "1개월": location.href="<%= contextPath %>/stock.pr?start=TO_CHAR(ADD_MONTHS(SYSDATE, -1),'YYYY-MM-DD')&end=SYSDATE&cp=1"; break;
+			case "3개월": location.href="<%= contextPath %>/stock.pr?start=TO_CHAR(ADD_MONTHS(SYSDATE, -3),'YYYY-MM-DD')&end=SYSDATE&cp=1"; break;
+			}
+		}
+	</script>
+    
 </body>
 </html>

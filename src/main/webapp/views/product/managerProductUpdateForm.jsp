@@ -101,7 +101,7 @@
                         
                         <div>
                             <a href="<%= contextPath %>/detail.pr?no=<%= p.getProductNo() %>" class="btn btn-secondary">취소</a>
-                            <button type="submit" class="btn btn-primary">저장</button>
+                            <button type="submit" class="btn btn-primary" onclick="return cateNeed();">저장</button>
                         </div>
                     </form>
                 </div>
