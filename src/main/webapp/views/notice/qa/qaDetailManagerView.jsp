@@ -39,7 +39,7 @@
             <h2 align="left">미답변 문의 </h2>
             <hr>
             <br>
-            <table  width="700px" border="1" class="text-center table">
+            <table  width="700px" class="text-center table">
                 <tr>
                     <th>제목</th>
                     <td><%=q.getqTitle() %></td>

@@ -142,6 +142,16 @@ public class RecipeService {
 	}
 	
 	
+	
+	/**
+	 * insert.re
+	 * 자유게시판 레시피 작성
+	 * @author 최주원
+	 * @param r 레시피제목 / 레시피소개 / 대표이미지 경로 데이터들이 담겨있는 Recipe객체
+	 * @param listIngre 레시피재료 데이터들이 담겨있는 list객체
+	 * @param listOrder 요리순서 데이터들이 담겨있는 list객체
+	 * @return insert 후에 처리된 행 수
+	 */
 	public int insertRecipe(Recipe r, ArrayList<RecipeIngre> listIngre, ArrayList<RecipeOrder> listOrder) {
 		Connection conn = getConnection();
 		
