@@ -200,11 +200,11 @@
 
         <div id="pro-wrap1-1" align="left">
             <a href="<%=contextPath %>">HOME &gt; </a>
-            <a href="<%=contextPath%>/proList.pro?category=<%=p.getfCategory().toString() %>&cpage=1"> 전체상품 </a> <!-- 경로이름 -->
+            <a href="<%=contextPath%>/proList.pro?category=<%=p.getfCategory().toString() %>&cpage=1&order=1"> 전체상품 </a> <!-- 경로이름 -->
         </div>
 
         <div id="pro-wrap1-2">
-          <a href="<%=contextPath%>/proList.pro?category=<%=p.getsCategory().toString() %>&cpage=1" style ="color:gray;font-size:20px;"><%=p.getsCategory() %></a>  <!-- 2차 카테고리명 -->
+          <a href="<%=contextPath%>/proList.pro?category=<%=p.getsCategory().toString() %>&cpage=1&order=1" style ="color:gray;font-size:20px;"><%=p.getsCategory() %></a>  <!-- 2차 카테고리명 -->
         </div>
 
         <div id="pro-wrap1-3">

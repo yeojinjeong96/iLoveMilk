@@ -208,7 +208,7 @@
                     		}else if(type == "2"){
                     			location.href ="<%=contextPath%>/replyM.re?cpage=1";
                     		}else if(type = "3"){ // 리뷰관리 페이지 href 넣기
-                    			location.href ="<%=contextPath%>/recipeDeleteListM.re?cpage=1";
+                    			location.href ="";
                     		}
                     		
                     	}
