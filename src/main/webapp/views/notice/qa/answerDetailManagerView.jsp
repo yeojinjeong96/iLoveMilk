@@ -70,6 +70,12 @@
                 <tr >
                     <td colspan="4" height="300px">
                     	<div class="content-area">
+                    		<%if(at!=null) {%>
+                                  <br>
+                                  <div>
+                                   	<img src="<%=contextPath%>/<%=at.getFilePath()%><%=at.getChangeName()%>" >
+                                  </div> 
+                                  <%} %>
                             <%=q.getqContent()%>
                         </div>
                     </td>
@@ -99,12 +105,7 @@
                     <tr >
                         <td colspan="4" height="300px">
                         	<div class="content-area">
-                                <%if(at!=null) {%>
-                                    <br>
-                                  <div>
-                                    <img src="<%=contextPath%>/<%=at.getFilePath()%><%=at.getChangeName()%>" >
-                                  </div> 
-                                  <%} %>
+                                
                             <%=q.getaContent()%>
                         	</div>
                         </td>
