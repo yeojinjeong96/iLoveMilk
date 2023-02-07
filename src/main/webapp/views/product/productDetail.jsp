@@ -224,7 +224,7 @@
                 </div>
 
 			    <div id="pro-1-3-2-3">
-                    <table class="pro-qna">
+                    <table class="pro-qna" height="150px;">
                         <tr>
                             <td width="100px;">상품코드</td>
                             <td id="pNo"><%= p.getProductNo() %></td>
