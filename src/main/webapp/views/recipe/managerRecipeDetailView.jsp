@@ -77,7 +77,7 @@
         width: 100%;
     }
 
-    .detail-area , .reply-area, .reply-count, .like-report{
+    .detail-area , .reply-area, .reply-count, .report-area{
         width: 700px;
     }
 
@@ -177,7 +177,7 @@
             <% } %>
         </table>
 
-        <table class="order-area">
+        <table class="order-area" width="700px" style="margin-left: 200px;">
             <tr>
                 <td colspan="4">
                     <br>
@@ -203,17 +203,7 @@
         <br><br>
         
         <div width="700px" align="left" style="margin-left: 250px;">
-        <table class="like-report">
-            <tr>
-                <td>
-                    <div id="like" align="left">
-                        <button type="submit" id="btn-buy" data-target="#like-btn" data-toggle="modal" style="background: none; border: 0; color: red;">♡</button>
-                        좋아요
-                        0
-                    </div>
-                </td>
-            </tr>
-        </table>
+        
 
         <div style="border-bottom: 3px solid gray; width: 700px;"></div>
         <br>

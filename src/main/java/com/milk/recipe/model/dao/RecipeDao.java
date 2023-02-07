@@ -885,7 +885,7 @@ public class RecipeDao {
 			
 			while(rset.next()) {
 				list.add(new Reply(rset.getInt("REPLY_NO"),
-						   		   rset.getString("MEMBER_ID"),
+						   		   rset.getString("REPORT_ID"),
 						   		   rset.getString("REPLY_CONTENT"),
 						   		   rset.getString("REPORT_STATUS"), 		   
 						   		   rset.getString("RECIPE_TITLE"),
@@ -2166,4 +2166,107 @@ public class RecipeDao {
 		return replyCount;
 		
 	}
+	
+	
+	public ArrayList<Reply> selectSearchReplyListM(Connection conn, PageInfo pi, String select, String keyword, String option){
+		ArrayList<Reply> list = new ArrayList<>();
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		String sql = prop.getProperty("selectSearchReplyListM");
+		
+		if(select.equals("title") && option.equals("Y")) {
+			
+			sql += " AND R.RECIPE_TITLE LIKE '%' || ? || '%'"
+				 + " AND RE.REPORT_STATUS = 'Y'"
+				 + " ORDER"
+				 + " BY REPLY_NO DESC"
+				 + "  ) A"
+				 + ")"
+				 + "WHERE RNUM BETWEEN ? AND ? ";
+			
+		}else if(select.equals("title") && option.equals("N")) {
+			
+			sql += " AND R.RECIPE_TITLE LIKE '%' || ? || '%'"
+					 + " AND RE.REPORT_STATUS = 'N'"
+					 + " ORDER"
+					 + " BY REPLY_NO DESC"
+					 + "  ) A"
+					 + ")"
+					 + "WHERE RNUM BETWEEN ? AND ? ";
+
+		}else if(select.equals("reporting") && option.equals("Y")) {
+			
+			sql += " AND RE.REPORT_STATUS = 'Y'"
+					+ " AND (SELECT MEMBER_ID"
+					+ " FROM TB_REPORT"
+					+ " JOIN TB_MEMBER ON (REPORTING_MEM_NO = MEMBER_NO)"
+					+ " WHERE REF_NO = REPLY_NO)"
+					+ " IN (SELECT MEMBER_ID"
+					+ " FROM TB_REPORT"
+					+ " JOIN TB_MEMBER ON (REPORTING_MEM_NO = MEMBER_NO)"
+					+ " WHERE REF_NO = REPLY_NO"
+					+ " AND MEMBER_ID = ?)"
+					+ " ORDER"
+					+ " BY REPLY_NO DESC"
+					+ "  ) A"
+					+ ")"
+					+ "WHERE RNUM BETWEEN ? AND ? ";
+
+		}else {
+			
+			sql += " AND RE.REPORT_STATUS = 'N'"
+					+ " AND (SELECT MEMBER_ID"
+					+ " FROM TB_REPORT"
+					+ " JOIN TB_MEMBER ON (REPORTING_MEM_NO = MEMBER_NO)"
+					+ " WHERE REF_NO = REPLY_NO)"
+					+ " IN (SELECT MEMBER_ID"
+					+ " FROM TB_REPORT"
+					+ " JOIN TB_MEMBER ON (REPORTING_MEM_NO = MEMBER_NO)"
+					+ " WHERE REF_NO = REPLY_NO"
+					+ " AND MEMBER_ID = ?)"
+					+ " ORDER"
+					+ " BY REPLY_NO DESC"
+					+ "  ) A"
+					+ ")"
+					+ "WHERE RNUM BETWEEN ? AND ? ";
+			
+		}
+		
+		
+		try {
+			int startRow = (pi.getCurrentPage() -1) * pi.getBoardLimit() + 1;
+			int endRow = startRow + pi.getBoardLimit() -1;
+			
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, keyword);
+			pstmt.setInt(2, startRow);
+			pstmt.setInt(3, endRow);
+
+			
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				list.add(new Reply(rset.getInt("REPLY_NO"),
+						   		   rset.getString("REPORT_ID"),
+						   		   rset.getString("REPLY_CONTENT"),
+						   		   rset.getString("REPORT_STATUS"), 		   
+						   		   rset.getString("RECIPE_TITLE"),
+						   		   rset.getString("REPORT_CONTENT")
+						   		   ));
+						   		   
+			}
+			
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return list;
+		
+	}
+	
 }

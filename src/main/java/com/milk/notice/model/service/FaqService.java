@@ -87,6 +87,22 @@ public class FaqService {
 		return list;
 	}
 	
+	public int selectBestSearchListCount(String searchBFaq) {
+		Connection conn = getConnection();
+		
+		int listCount = new FaqDao().selectBestSearchListCount(conn,searchBFaq);
+		close(conn);
+		return listCount;
+		
+	}
+	
+	public ArrayList<Faq> selectBestSearchList(PageInfo pi, String searchBFaq){
+		Connection conn= getConnection();
+		ArrayList<Faq>list= new FaqDao().selectBestSearchList(conn,pi,searchBFaq);
+		close(conn);
+		return list;
+	}
+	
 	public int insertFaq(Faq f) {
 		
 		Connection conn = getConnection();

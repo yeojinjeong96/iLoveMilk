@@ -43,6 +43,19 @@ public class Review {
 		this.rEnrollDate = rEnrollDate;
 		this.rModifyDate = rModifyDate;
 	}
+	
+	public Review(int reviewNo, int memberNo, String productName, String content, int star, String rEnrollDate,
+			String rModifyDate, int productNo) {
+		super();
+		this.reviewNo = reviewNo;
+		this.memberNo = memberNo;
+		this.productName = productName;
+		this.content = content;
+		this.star = star;
+		this.rEnrollDate = rEnrollDate;
+		this.rModifyDate = rModifyDate;
+		this.productNo = productNo;
+	}
 
 
 

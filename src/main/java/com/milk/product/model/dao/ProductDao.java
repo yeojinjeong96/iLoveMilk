@@ -64,13 +64,34 @@ public class ProductDao {
 	}
 	
 	
-	public ArrayList<Product> selectProductList(Connection conn, PageInfo pi, String category){
+	public ArrayList<Product> selectProductList(Connection conn, PageInfo pi, String category, int order){
 		
 		ArrayList<Product> list = new ArrayList<>();
 		ResultSet rset = null;
 		PreparedStatement pstmt = null;
 		
 		String sql = prop.getProperty("selectProductList");
+		
+		if(order == 1) {
+			sql += "  ORDER BY ENROLL_DATE DESC"
+					+ "	) A"
+					+ " )"
+					+ "WHERE RNUM BETWEEN ? AND ?";
+		}else if(order == 2) {
+			sql += " ORDER BY PRICE DESC"
+					+ "	  ) A"
+					+ "	 )"
+					+ "	WHERE RNUM BETWEEN ? AND ?";
+			
+		}else if(order == 3) {
+			
+			sql += " ORDER BY PRICE ASC"
+					+ "	  ) A"
+					+ "	 )"
+					+ "	WHERE RNUM BETWEEN ? AND ?";
+			
+
+		}
 		
 		try {
 			pstmt = conn.prepareStatement(sql);
@@ -105,6 +126,8 @@ public class ProductDao {
 		return list;
 		
 	}
+	
+
 	
 	
 	public ArrayList<Product> selectCategoryList(Connection conn, String category){
@@ -197,7 +220,8 @@ public class ProductDao {
 						rset.getString("REVIEW_CONTENT"),
 						rset.getInt("star"),
 						rset.getString("R_ENROLL_DATE"),
-						rset.getString("R_MODIFY_DATE")
+						rset.getString("R_MODIFY_DATE"),
+						rset.getInt("PRODUCT_NO")
 						));
 			}
 			
@@ -1181,23 +1205,13 @@ public class ProductDao {
 		int result = 0;
 		PreparedStatement pstmt = null;
 		String sql = prop.getProperty("pointInsert");
-		if(point.getStatus().equals("적립")) {
-			sql += ", " + point.getAmount()
-				 + ", " + point.getStatus()
-				 + ", NVL((SELECT SUM(AMOUNT) FROM TB_POINT WHERE MEMBER_NO = " + point.getMemNo() + "), 0) + " + point.getAmount()
-				 + ", " + point.getContent()
-				 + ", " + point.getOrderNo()
-				 + ", " + point.getMemNo()
-				 + ")";
-		} else {
-			sql += ", " + point.getAmount()
-				 + ", " + point.getStatus()
-				 + ", NVL((SELECT SUM(AMOUNT) FROM TB_POINT WHERE MEMBER_NO = " + point.getMemNo() + "), 0) - " + point.getAmount()
-				 + ", " + point.getContent()
-				 + ", " + point.getOrderNo()
-				 + ", " + point.getMemNo()
-				 + ")";
-		}
+		sql += ", " + point.getAmount()
+			 + ", '" + point.getStatus() + "'"
+			 + ", NVL((SELECT SUM(AMOUNT) FROM TB_POINT WHERE MEMBER_NO = " + point.getMemNo() + "), 0) + " + point.getAmount()
+			 + ", '" + point.getContent() + "'"
+			 + ", '" + point.getOrderNo() + "'"
+			 + ", " + point.getMemNo()
+			 + ")";
 		try {
 			pstmt = conn.prepareStatement(sql);
 			result = pstmt.executeUpdate();

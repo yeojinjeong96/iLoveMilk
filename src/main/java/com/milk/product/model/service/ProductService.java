@@ -41,17 +41,17 @@ public class ProductService {
 	 * @author 이다혜
 	 * @return 상품 ArrayList
 	 */
-	public ArrayList<Product> selectProductList(PageInfo pi, String category){
+	public ArrayList<Product> selectProductList(PageInfo pi, String category, int order){
 		
 		Connection conn = getConnection();
-		ArrayList<Product> list = new ProductDao().selectProductList(conn, pi, category);
+		ArrayList<Product> list = new ProductDao().selectProductList(conn, pi, category, order);
  		
-		
-		
 		close(conn);
 		return list;
 		
 	}
+	
+
 	
 	/**
 	 * 상품목록페이지 카테고리리스트 조회
@@ -376,7 +376,7 @@ public class ProductService {
 	/**
 	 * 상품 등록
 	 * @author 승하
-	 * @return 성공시 1, 실패시 2
+	 * @return 성공시 1, 실패시 0
 	 */
 	public int insertProduct(Product p) {
 		Connection conn = getConnection();
@@ -393,7 +393,7 @@ public class ProductService {
 	/**
 	 * 상품 수정
 	 * @author 승하
-	 * @return 성공시 1, 실패시 2
+	 * @return 성공시 1, 실패시 0
 	 */
 	public int updateProduct(Product p) {
 		Connection conn = getConnection();
@@ -410,7 +410,7 @@ public class ProductService {
 	/**
 	 * 상품 삭제
 	 * @author 승하
-	 * @return 성공시 1, 실패시 2
+	 * @return 성공시 1, 실패시 0
 	 */
 	public int deleteProduct(int[] arrpNo) {
 		Connection conn = getConnection();
@@ -427,7 +427,7 @@ public class ProductService {
 	/**
 	 * 상품 입고
 	 * @author 승하
-	 * @return 성공시 1, 실패시 2
+	 * @return 성공시 1, 실패시 0
 	 */
 	public int receivingProduct(int proNo, int count) {
 		Connection conn = getConnection();
@@ -444,7 +444,7 @@ public class ProductService {
 	/**
 	 * 상품 장바구니에 추가
 	 * @author 승하
-	 * @return 성공시 1, 실패시 2
+	 * @return 성공시 1, 실패시 0
 	 */
 	public int productCartInsert(int proNo, int memNo, int amount) {
 		Connection conn = getConnection();
@@ -473,7 +473,7 @@ public class ProductService {
 	/**
 	 * 장바구니 수량 변경
 	 * @author 승하
-	 * @return 성공시 1, 실패시 2
+	 * @return 성공시 1, 실패시 0
 	 */
 	public int productCartAmount(int memNo, int proNo, int amount) {
 		Connection conn = getConnection();
@@ -490,7 +490,7 @@ public class ProductService {
 	/**
 	 * 장바구니 상품 삭제
 	 * @author 승하
-	 * @return 성공시 1, 실패시 2
+	 * @return 성공시 1, 실패시 0
 	 */
 	public int productCartDelete(int memNo, String[] proNoArr) {
 		Connection conn = getConnection();
@@ -531,7 +531,7 @@ public class ProductService {
 	/**
 	 * 주문 테이블 insert
 	 * @author 승하
-	 * @return 성공시 1, 실패시 2
+	 * @return 성공시 1, 실패시 0
 	 */
 	public int orderInsert(OrderInfo o) {
 		Connection conn = getConnection();
@@ -548,7 +548,7 @@ public class ProductService {
 	/**
 	 * 주문 상세 테이블 insert
 	 * @author 승하
-	 * @return 성공시 1, 실패시 2
+	 * @return 성공시 1, 실패시 0
 	 */
 	public int orderDetailInsert(ArrayList<Product> list) {
 		Connection conn = getConnection();
@@ -565,7 +565,7 @@ public class ProductService {
 	/**
 	 * 결제 테이블 insert
 	 * @author 승하
-	 * @return 성공시 1, 실패시 2
+	 * @return 성공시 1, 실패시 0
 	 */
 	public int paymentInsert(String orderNo, int price) {
 		Connection conn = getConnection();
@@ -594,7 +594,7 @@ public class ProductService {
 	/**
 	 * 회원등급별 적립금 insert
 	 * @author 승하
-	 * @return 성공시 1, 실패시 2
+	 * @return 성공시 1, 실패시 0
 	 */
 	public int pointInsert(PointIn point) {
 		Connection conn = getConnection();

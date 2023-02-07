@@ -81,7 +81,7 @@
         width: 100%;
     }
 
-    .detail-area , .reply-area, .reply-count, .like-report{
+    .detail-area , .reply-area, .reply-count{
         width: 700px;
     }
 
@@ -119,6 +119,8 @@
 <body>
 
 	<%@ include file = "../common/header.jsp" %>
+	
+	<% String loginUserId = loginMember == null ? "" : loginMember.getMemberId(); %>
 
 	<div class="outer" align="center">
         <br>
@@ -212,18 +214,7 @@
         </table>
         <br><br>
         
-        <table class="like-report">
-            <tr>
-                <td>
-                    <div id="like" align="left">
-                        <button type="submit" id="btn-buy" data-target="#like-btn" data-toggle="modal" style="background: none; border: 0; color: red;">♡</button>
-                        좋아요
-                        0
-                    </div>
-                </td>
-            </tr>
-        </table>
-
+        
         <div style="border-bottom: 3px solid gray; width: 700px;"></div>
         <br><br>
 
@@ -285,6 +276,7 @@
 						if(result > 0) {
 							selectReplyList();
 							$(".reply-enroll textarea").val("");
+							location.reload();
 						}else{
 							alert("댓글 등록을 실패했습니다.")
 						}
@@ -320,14 +312,15 @@
         							   +	"<input type='hidden' name='reNo' value='" + list[i].replyNo + "'>";
         							   
         							   
-        							   <% if(loginMember != null && loginMember.getMemberId().equals(loginMember.getMemberId())) { %>
-        								  value += "<td width=''><button type='button' onclick='replyDel();' style='border:none; background:none;'>삭제</button></td>";  
-        							   <% }else if(loginMember == null) { %>
-        							   value += "<td width=''></td>";  
-        							   <% }else { %>
-        							      value += "<td width=''><button type='button' data-toggle='modal' data-target='#report-reply-view' style='border:none; background:none;'>신고</button></td>";
-        							   <% } %>
-        				
+        							   if(list[i].memberNo == '<%= loginUserId %>') {
+        								   value += "<td width=''><button type='button' onclick='replyDel();' style='border:none; background:none;'>삭제</button></td>";  
+        							   }else if('<%= loginUserId %>' == "") {
+     									  value += "<td width=''></td>";
+     								   }else {
+     									  value += "<td width=''><button type='button' onclick='sReply();' data-toggle='modal' data-target='#report-reply-view' style='border:none; background:none;'>신고</button></td>";
+     								   }
+        							   
+        						
         							   
         							   value += "</tr>"
         							   + "<tr>"
@@ -355,7 +348,7 @@
 						if(result > 0) {
 							alert("성공적으로 댓글을 삭제했습니다.")
 							selectReplyList();
-							
+							location.reload();
 						}else{
 							alert("댓글 삭제에 실패했습니다.")
 						}
@@ -364,28 +357,12 @@
 				})
 			}
 			
+			function sReply(){
+            	var rno = $(window.event.target).parent().prev().val();
+            	$("#reNo").val(rno);
+            }
 		</script>
-		
-		
-        <!-- The Modal -->
-        <div class="modal" id="like-btn">
-            <div class="modal-dialog">
-            <div class="modal-content modal-sm">
-        
-                <!-- Modal body -->
-                <br>
-                <div class="modal-body" style="text-align:center; font-size:13px;">
-                    로그인이 필요한 기능입니다. <br>
-                    로그인을 해주세요.
-                </div>
-                <div align="center">
-                    <button type="button" class="btn btn-outline-secondary btn-sm" data-dismiss="modal" style=" width:100px;">확인</button>
-                    </div>
-                    <br>
-            </div>
-            </div>
-        </div>
-
+	
 
 
 	
@@ -417,6 +394,69 @@
                     }
                 }
         </script>
+        
+        <!-- 신고-댓글 모달 div -->
+        <div class="modal" id="report-reply-view" align="center">
+        	<div class="modal-sm">
+        		<div class="modal-content">
+                       
+		        <!-- Modal Header -->
+		        <div class="modal-header">
+		        	<h3 class="modal-title">신고 사유 선택</h4>
+		        </div>
+                   
+        			<!-- Modal body -->
+			        <div class="modal-body">
+			        	<form action="<%= contextPath %>/reportReply.re" method="post">
+			        	<input type="hidden" name="reNo" id="reNo">
+			        	<input type="hidden" name="no" value="<%= r.getRecipeNo() %>">
+				            <table>
+				            	<tr>
+				            		<td>
+				            			<input type="radio" name="selectReport" id="radio1" value="광고성 댓글" checked>
+					        			<label for="radio1">광고성 댓글</label>
+				            		</td>
+				            	</tr>
+				            	<tr>
+				            		<td>
+				            			<input type="radio" name="selectReport" value="도배 및 중복 댓글" id="radio2">
+					        			<label for="radio2">도배 및 중복 댓글</label>
+				            		</td>
+				            	</tr>
+				            	<tr>
+				            		<td>
+				            			<input type="radio" name="selectReport" value="욕설/비방" id="radio3">
+					        			<label for="radio3">욕설/비방</label>
+				            		</td>
+				            	</tr>
+				            	<tr>
+				            		<td>
+				            			<input type="radio" name="selectReport" value="외설적인 댓글" id="radio4">
+					        			<label for="radio4">외설적인 댓글</label>
+				            		</td>
+				            	</tr>
+				            	<tr>
+				            		<td>
+				            			<input type="radio" name="selectReport" value="기타" id="radio5">
+					        			<label for="radio5">기타</label>
+				            		</td>
+				            	</tr>
+				            	<tr>
+				            		<td>
+				            			<textarea name="etc" placeholder="신고 내용을 입력해주세요." style="resize:none;"></textarea>
+				            		</td>
+				            	</tr>
+				            </table>
+				            <br>
+				            <input type="submit" value="신고하기">
+				            
+
+				        </form>
+                       
+        			</div>   
+            	</div>
+        	</div>
+    	</div>
 
     </div>
     

@@ -42,12 +42,7 @@
         background-color: lightgray;
     }
 
-    .list-area tr td{
-        overflow: hidden;
-        white-space: nowrap;
-        text-overflow: ellipsis;
-        -webkit-box-orient: vertical;
-    }
+  
     
     .list-area tbody a{
     	text-decoration: none;
@@ -72,28 +67,30 @@
 
 	<div class="outer" align="center">
         <br>
+        
+        <form action="<%= contextPath %>/searchReply.re?cpage=1" method="post">
+        
         <div id="search">
             <table class="search-area" border="1">
                 <tr>
                     <td width="50px">
-                        <select name="" style="border: none;">
-                            <option value="">전체</option>
-                            <option value="">제목</option>
-                            <option value="">작성자</option>
+                        <select name="search-select" style="border: none;">
+                            <option value="title">제목</option>
+                            <option value="reporting">신고자</option>
                         </select>
                     </td>
                     <td width="500px">
-                        <input type="text" name="" value="검색어를 입력하세요." style="border: none;" size="55" required>
+                        <input type="text" name="keyword" placeholder="검색어를 입력하세요." style="border: none;" size="55" required>
                     </td>
                 </tr>
                 <tr>
                     <td>신고 여부</td>
                     <td>
-                        <input type="radio" name="" id="">
-                        <label for="">Y</label>
+                        <input type="radio" name="option" id="y" value="Y" checked>
+                        <label for="y">Y</label>
                         
-                        <input type="radio" name="" id="">
-                        <label for="">N</label>
+                        <input type="radio" name="option" id="n" value="N">
+                        <label for="n">N</label>
                     </td>
                 </tr>
                 <tr>
@@ -103,8 +100,10 @@
                 </tr>
             </table>
         </div>
-        <br><br>
         
+        </form>
+        
+        <br><br>
         <div id="title" align="left"><h4>댓글 관리</h4></div>
         <table class="list-area" border="1"> 
             <thead>
@@ -116,11 +115,11 @@
 	                    </div>
                     </th>
                     <th width="70px">신고 여부</th>
-                    <th width="80px">댓글번호</th>
+                    <th width="60px">댓글번호</th>
                     <th width="140px">신고 사유</th>
-                    <th width="90px">신고자</th>
-                    <th width="140px">게시글 제목</th>
-                    <th width="130px">댓글 내용</th>
+                    <th width="60px">신고자</th>
+                    <th width="200px">게시글 제목</th>
+                    <th width="180px">댓글 내용</th>
                 </tr>
             </thead>
             <tbody>

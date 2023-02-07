@@ -78,7 +78,7 @@
         
         <div class="order" align="right">
             <button onclick="desc();" type="button" class="btn btn-secondary btn-sm">최신순</button>
-            <button onclick="asc();" type="button" class="btn btn-secondary btn-sm">좋아요순</button>
+            <button onclick="asc();" type="button" class="btn btn-secondary btn-sm">오래된순</button>
             <button onclick="count();" type="button" class="btn btn-secondary btn-sm">조회순</button>
         </div>
         <br><br>

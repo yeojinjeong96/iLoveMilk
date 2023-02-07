@@ -135,13 +135,13 @@
             <%if(searchFaq!=null &&!list.isEmpty()){ %>
             <div class="paging-area" >
                 <%if(pi.getCurrentPage()!=1){ %>
-                <button onclick="location.href='<%=contextPath%>/search.faq?cpage=<%=pi.getCurrentPage()-1%>';" class="btn btn-primary btn-sm">&lt;</button>
+                <button onclick="location.href='<%=contextPath%>/search.faq?cpage=<%=pi.getCurrentPage()-1%>&searchFaq=<%=searchFaq%>';" class="btn btn-primary btn-sm">&lt;</button>
 	            <%} %>   
 	            <%for(int p= pi.getStartPage(); p<=pi.getEndPage(); p++){ %>
-	                <button onclick="location.href='<%=contextPath%>/search.faq?cpage=<%=p%>';" class="btn btn-primary btn-sm"><%=p %></button>
+	                <button onclick="location.href='<%=contextPath%>/search.faq?cpage=<%=p%>&searchFaq=<%=searchFaq%>';" class="btn btn-primary btn-sm"><%=p %></button>
 	            <%} %>
 	            <%if(pi.getCurrentPage()!=pi.getMaxPage()){ %>
-	                <button onclick="location.href='<%=contextPath%>/search.faq?cpage=<%=pi.getCurrentPage()+1%>';" class="btn btn-primary btn-sm">&gt;</button>
+	                <button onclick="location.href='<%=contextPath%>/search.faq?cpage=<%=pi.getCurrentPage()+1%>&searchFaq=<%=searchFaq%>';" class="btn btn-primary btn-sm">&gt;</button>
             	<%} %>
            	</div>
          	 <%}else{ %>

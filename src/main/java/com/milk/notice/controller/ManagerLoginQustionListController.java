@@ -1,6 +1,8 @@
-package com.milk.member.controller;
+package com.milk.notice.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -8,20 +10,22 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import com.milk.member.model.service.MemberService;
-import com.milk.member.model.vo.Member;
+import com.milk.common.model.vo.PageInfo;
+import com.milk.manager.model.vo.Manager;
+import com.milk.notice.model.service.QAService;
+import com.milk.notice.model.vo.QA;
 
 /**
- * Servlet implementation class MemberUpdate1Controller
+ * Servlet implementation class ManagerLoginQustionListController
  */
-@WebServlet("/update1.me")
-public class MemberUpdate1Controller extends HttpServlet {
+@WebServlet("/ManagerLoginQustionListController")
+public class ManagerLoginQustionListController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public MemberUpdate1Controller() {
+    public ManagerLoginQustionListController() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -31,25 +35,12 @@ public class MemberUpdate1Controller extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		String memberId = request.getParameter("memberId");
-		String memberPwd = request.getParameter("memberPwd");
 		
-		Member updateCheck = new MemberService().updateCheckPwd(memberId, memberPwd);
-		
-		
-		HttpSession session = request.getSession();
-		if(updateCheck==null) { //조회결과 없음 
-			request.getSession().setAttribute("alertMsg", "비밀번호를 확인해주세요");
-			response.sendRedirect(request.getContextPath() + "/myPageUpdate.me"); 
-		
-		}else { //조회결과 있음 
-			
-			
-			session.setAttribute("updateCheck", updateCheck);
-			response.sendRedirect(request.getContextPath() + "/myPageUpdate2.me" );
-			
-		}
-		
+
+		ArrayList<QA>list = new QAService().selectManagerQList();
+		request.setAttribute("qList",list);
+
+		request.getRequestDispatcher("views/manager/managerMainPage.jsp").forward(request, response);
 	}
 
 	/**

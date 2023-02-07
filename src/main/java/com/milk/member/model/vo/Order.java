@@ -119,6 +119,22 @@ public class Order {
 	      this.price = price;
 	      this.count = count;
 	   }
+	
+	
+
+	public Order(String orderNo, Date paymentDate, String productImg, String productName, int productCount, int price,
+			int status, String waybill, String courier) {
+		super();
+		this.orderNo = orderNo;
+		this.paymentDate = paymentDate;
+		this.productImg = productImg;
+		this.productName = productName;
+		this.productCount = productCount;
+		this.price = price;
+		this.status = status;
+		this.waybill = waybill;
+		this.courier = courier;
+	}
 
 	public String getOrderNo() {
 		return orderNo;
