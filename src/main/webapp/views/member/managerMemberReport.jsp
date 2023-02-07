@@ -131,6 +131,8 @@
                     			data:{memNo:memNo},
                     			success:function(result){
                    				
+                    				console.log(result);
+                    				
                     				$("#modalMemId1").text(result.memberId);
                     				$("#modalMemCount1 > b").text(result.count);
                     				$("#modalMemGrade1").text(result.memberGrade);

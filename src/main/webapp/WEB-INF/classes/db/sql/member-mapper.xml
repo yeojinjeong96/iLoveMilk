@@ -306,6 +306,7 @@
 		          FROM (   
                               SELECT 
                                     DISTINCT M.MEMBER_ID,
+                                     M.MEMBER_NO,
                                     REPORT_NO,
                                     R.REF_NO,
                                     REPORT_CONTENT,
@@ -402,12 +403,12 @@
 	</entry>
 	
 	<entry key="selectReportDetail">
-	   SELECT 
+ 	   SELECT 
 		      MEMBER_ID,
 		      COUNT(*) COUNT,
 		      MEMBER_GRADE
-		 FROM TB_REPORT
-		 LEFT JOIN TB_MEMBER ON (MEMBER_NO = REPORTING_MEM_NO)
+		 FROM TB_MEMBER
+		 LEFT JOIN  TB_REPORT ON (MEMBER_NO = REPORTING_MEM_NO)
 		 WHERE MEMBER_NO = ?
 		 GROUP BY MEMBER_ID, MEMBER_GRADE
 	</entry>

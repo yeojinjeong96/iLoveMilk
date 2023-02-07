@@ -577,6 +577,7 @@ public Member updateCheckPwd(Connection conn, String memberId, String memberPwd)
 			while(rset.next()) {
 				list.add(new Report(	
 						rset.getString("MEMBER_ID"),
+						rset.getInt("MEMBER_NO"),
 						rset.getInt("REPORT_NO"),
 						rset.getInt("REF_NO"),
 						rset.getString("REPORT_CONTENT"),
@@ -586,7 +587,7 @@ public Member updateCheckPwd(Connection conn, String memberId, String memberPwd)
 						));
 			}
 			
-			System.out.println(list);
+			
 			
 		} catch (SQLException e) {
 			e.printStackTrace();

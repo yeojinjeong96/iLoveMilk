@@ -50,9 +50,10 @@ public class Report {
 	
 	
 
-	public Report(String memberId, int reportNo, int refNo, String repContent, String repDate, String repType ) {
+	public Report(String memberId, int repMemNo, int reportNo, int refNo, String repContent, String repDate, String repType ) {
 		super();
 		this.memberId = memberId;
+		this.repMemNo = repMemNo;
 		this.reportNo = reportNo;
 		this.refNo = refNo;
 		this.repContent = repContent;
