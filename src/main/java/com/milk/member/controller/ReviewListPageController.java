@@ -40,7 +40,7 @@ public class ReviewListPageController extends HttpServlet {
 		ArrayList<Review> list = new MemberService().ReviewListY(memberNo);
 		request.setAttribute("list", list);
 		
-		System.out.println(list);
+		//System.out.println(list);
 		
 		request.getRequestDispatcher("views/member/reviewList.jsp").forward(request, response);
 	}
