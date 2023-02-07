@@ -95,7 +95,8 @@
 		                   FROM TB_FAQ
 		                JOIN TB_MANAGER ON (FAQ_WRITER = MANAGER_NO)
 		               AND QUESTION LIKE '%'||?||'%'
-		               and best_faq = 'Y') E)
+		               and best_faq = 'Y'
+		                order by faq_no DESC) E)
 		               WHERE RNUM BETWEEN ? AND ?
 	
 	</entry>
