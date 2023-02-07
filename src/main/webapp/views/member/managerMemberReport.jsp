@@ -107,16 +107,16 @@
                             <!-- 내가 보고있는 페이지가 1번 페이지가 아닐때에만 나타내기 -->
                             
                                         <% if(pi.getCurrentPage() != 1){ %>
-                                            <button onclick="location.href='<%=contextPath%>/repList.ma?cpage=<%=pi.getCurrentPage()-1%>';">&lt;</button>
+                                            <button onclick="location.href='<%=contextPath%>/repList.ma?cpage=<%=pi.getCurrentPage()-1%>';" class="btn btn-primary btn-sm" >&lt;</button>
                                         <% } %>
                             
                                         <% for(int p=pi.getStartPage(); p<=pi.getEndPage(); p++){ %>
-                                            <button onclick="location.href='<%=contextPath%>/repList.ma?cpage=<%=p%>';"><%= p %></button>
+                                            <button onclick="location.href='<%=contextPath%>/repList.ma?cpage=<%=p%>';" class="btn btn-primary btn-sm" ><%= p %></button>
                                         <% } %>
                             <!--  내가 보고있는 페이지가 마지막 페이지가 아닐 때에만 나타내기 -->
                             
                                         <% if(pi.getCurrentPage() != pi.getMaxPage()){ %>
-                                            <button onclick="location.href='<%=contextPath%>/repList.ma?cpage=<%=pi.getCurrentPage()+1%>';">&gt;</button>
+                                            <button onclick="location.href='<%=contextPath%>/repList.ma?cpage=<%=pi.getCurrentPage()+1%>';" class="btn btn-primary btn-sm" >&gt;</button>
                                         <% } %>
                         </div>
                         

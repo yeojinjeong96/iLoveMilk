@@ -301,7 +301,7 @@
 		                    <p style="width:680px;">번호 : <%=r.getReviewNo()%> <br>상품명 : <%= r.getProductName() %> <br>
 		                    	<%if(loginMember != null && !(loginMember.getMemberNo() ==r.getMemberNo())){ %>
 		                            <!--조건문 써서 작성자 아니면 신고  -->
-		                            <a href="" onclick="sendReport(<%=r.getReviewNo()%>, <%= r.getProductNo() %>);" style="float:right;" data-toggle="modal" data-target="#mem-report" >신고</a>
+		                          <!--  <a href="" onclick="sendReport(<%=r.getReviewNo()%>);" style="float:right;" data-toggle="modal" data-target="#mem-report" >신고</a> --> 
 		                        <%} else if(loginMember != null && (loginMember.getMemberNo()== r.getMemberNo())){ %>    
 		                            <!-- 조건문 써서 작성자일때에는 수정 | 삭제 -->
 		                            <a href="<%=contextPath %>/review.me"  onclick="return confirm('내가 쓴 리뷰 페이지로 이동합니다.');" style="float:right;">수정 / 삭제</a>
@@ -465,7 +465,6 @@
 			function sendReport(rno, pno){
 				
 				$("#repNo").val(rno);
-				$("#pNo").val(pno)
 				
 			}
 
@@ -489,7 +488,7 @@
                             <input type="hidden" name="" value="">
                             <table  style="width:100%; height:150px;">
                             <input type="hidden" name="repNo" id="repNo" >
-                            <input type="hidden" name="pNo" id="pNo" >
+                            <input type="hidden" name="pNo2" id="pNo2" value=<%=p.getProductNo() %>>
                                     <tr>
                                         <td><input type="radio" name="report-content" value="광고성게시물"> </td>
                                         <td>광고성 게시물</td>

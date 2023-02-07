@@ -58,12 +58,12 @@
                </div>
             <br>
             <div align="right" style="width:700px; font-size: 13px;">
-                조회기간 
+              <!--   조회기간 
                 <button class="btn btn-outline-secondary btn-sm">오늘</button>
                 <button class="btn btn-outline-secondary btn-sm">1주일</button>
                 <button class="btn btn-outline-secondary btn-sm">1개월</button>
                 <button class="btn btn-outline-secondary btn-sm">3개월</button>
-                <input type="date" name = "searchDate1" > - <input type="date" name = "searchDate1" >
+                <input type="date" name = "searchDate1" > - <input type="date" name = "searchDate1" > -->
             </div>
             
             <div align="right" style="width:700px">
@@ -115,16 +115,16 @@
                     <!-- 내가 보고있는 페이지가 1번 페이지가 아닐때에만 나타내기 -->
                     
                                 <% if(pi.getCurrentPage() != 1){ %>
-                                    <button onclick="location.href='<%=contextPath%>/purchaseList.ma?cpage=<%=pi.getCurrentPage()-1%>';">&lt;</button>
+                                    <button onclick="location.href='<%=contextPath%>/purchaseList.ma?cpage=<%=pi.getCurrentPage()-1%>';" class="btn btn-primary btn-sm" >&lt;</button>
                                 <% } %>
                     
                                 <% for(int p=pi.getStartPage(); p<=pi.getEndPage(); p++){ %>
-                                    <button onclick="location.href='<%=contextPath%>/purchaseList.ma?cpage=<%=p%>';"><%= p %></button>
+                                    <button onclick="location.href='<%=contextPath%>/purchaseList.ma?cpage=<%=p%>';" class="btn btn-primary btn-sm" ><%= p %></button>
                                 <% } %>
                     <!--  내가 보고있는 페이지가 마지막 페이지가 아닐 때에만 나타내기 -->
                     
                                 <% if(pi.getCurrentPage() != pi.getMaxPage()){ %>
-                                    <button onclick="location.href='<%=contextPath%>/purchaseList.ma?cpage=<%=pi.getCurrentPage()+1%>';">&gt;</button>
+                                    <button onclick="location.href='<%=contextPath%>/purchaseList.ma?cpage=<%=pi.getCurrentPage()+1%>';" class="btn btn-primary btn-sm" >&gt;</button>
                                 <% } %>
                 </div>
                 
