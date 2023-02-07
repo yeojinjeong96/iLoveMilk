@@ -40,7 +40,7 @@ public class RecipeService {
 	 * 요청한 페이지에 보여질 게시글 리스트 조회
 	 * @author 최주원
 	 * @param pi 페이징처리할 데이터들이 담겨있는 PageInfo객체
-	 * @return select 후 list 반환
+	 * @return 자유게시판 레시피 list 반환
 	 */
 	public ArrayList<Recipe> selectRecipeList(PageInfo pi){
 		Connection conn = getConnection();
@@ -52,6 +52,14 @@ public class RecipeService {
 		
 	}
 	
+	
+	/**
+	 * oldestlist.re
+	 * 오래된순 정렬해서 게시글 리스트 조회
+	 * @author 최주원
+	 * @param pi 페이징처리할 데이터들이 담겨있는 PageInfo객체
+	 * @return 자유게시판 레시피 오래된순으로 list 반환
+	 */
 	public ArrayList<Recipe> selectRecipeOldestList(PageInfo pi){
 		Connection conn = getConnection();
 		
@@ -62,6 +70,13 @@ public class RecipeService {
 		
 	}
 	
+	/**
+	 * countlist.re
+	 * 조회순 정렬해서 게시글 리스트 조회
+	 * @author 최주원
+	 * @param pi 페이징처리할 데이터들이 담겨있는 PageInfo객체
+	 * @return 자유게시판 레시피 조회순으로 list 반환
+	 */
 	public ArrayList<Recipe> selectRecipeCountList(PageInfo pi){
 		Connection conn = getConnection();
 		
@@ -78,7 +93,7 @@ public class RecipeService {
 	 * 요청한 페이지에 보여질 게시글 리스트 조회
 	 * @author 최주원
 	 * @param pi 페이징처리할 데이터들이 담겨있는 PageInfo객체
-	 * @return select 후 list 반환
+	 * @return 추천레시피 list 반환
 	 */
 	public ArrayList<Recipe> selectRecipeListR(PageInfo pi){
 		Connection conn = getConnection();
@@ -90,6 +105,14 @@ public class RecipeService {
 		
 	}
 	
+	
+	/**
+	 * oldestlistR.re
+	 * 오래된순 정렬해서 게시글 리스트 조회
+	 * @author 최주원
+	 * @param pi 페이징처리할 데이터들이 담겨있는 PageInfo객체
+	 * @return 추천레시피 오래된순으로 list 반환
+	 */
 	public ArrayList<Recipe> selectRecipeOldestListR(PageInfo pi){
 		Connection conn = getConnection();
 		
@@ -100,6 +123,14 @@ public class RecipeService {
 		
 	}
 	
+	
+	/**
+	 * countlistR.re
+	 * 조회순 정렬해서 게시글 리스트 조회
+	 * @author 최주원
+	 * @param pi 페이징처리할 데이터들이 담겨있는 PageInfo객체
+	 * @return 추천레시피 조회순으로 list 반환
+	 */
 	public ArrayList<Recipe> selectRecipeCountListR(PageInfo pi){
 		Connection conn = getConnection();
 		
