@@ -69,6 +69,7 @@
 		               FROM (SELECT 
 		                        FAQ_NO
 		                       ,QUESTION
+		                       ,answer
 		                       ,CATEGORY_NAME
 		                   FROM TB_FAQ
 		                JOIN TB_MANAGER ON (FAQ_WRITER = MANAGER_NO)
@@ -89,6 +90,7 @@
 		               FROM (SELECT 
 		                        FAQ_NO
 		                       ,QUESTION
+		                       ,answer
 		                       ,CATEGORY_NAME
 		                   FROM TB_FAQ
 		                JOIN TB_MANAGER ON (FAQ_WRITER = MANAGER_NO)

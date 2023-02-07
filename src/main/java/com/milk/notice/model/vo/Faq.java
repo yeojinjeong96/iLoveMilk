@@ -22,6 +22,13 @@ public class Faq {
 	
 	
 	
+	public Faq(int faqNo, String question, String answer, String categoryName) {
+		super();
+		this.faqNo = faqNo;
+		this.question = question;
+		this.answer = answer;
+		this.categoryName = categoryName;
+	}
 	public Faq(int faqNo, String question, String answer, int faqWriter, String categoryName) {
 		super();
 		this.faqNo = faqNo;

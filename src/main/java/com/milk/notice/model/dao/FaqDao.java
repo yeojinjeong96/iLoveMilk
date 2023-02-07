@@ -276,8 +276,9 @@ public class FaqDao {
 			rset = pstmt.executeQuery();
 			while(rset.next()) {
 				list.add(new Faq(
-						rset.getInt("FAQ_NO")
+						rset.getInt("FAQ_NO")	
 					   ,rset.getString("QUESTION")
+					   ,rset.getString("answer")
 					   ,rset.getString("CATEGORY_NAME")			
 						));
 			}
@@ -342,6 +343,7 @@ public class FaqDao {
 				list.add(new Faq(
 						rset.getInt("FAQ_NO")
 					   ,rset.getString("QUESTION")
+					   ,rset.getString("answer")
 					   ,rset.getString("CATEGORY_NAME")			
 						));
 			}
